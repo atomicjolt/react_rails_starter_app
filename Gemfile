@@ -16,7 +16,7 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
-gem 'font_assets' # sets headers and mimetypes for fonts in the asset pipeline
+gem 'font_assets', github: 'atomicjolt/font_assets'
 gem 'autoprefixer-rails'
 gem 'non-stupid-digest-assets' # also compile assets without digest (fixes font problem)
 gem "bower-rails"
