@@ -8,6 +8,10 @@ import SettingsStore from '../stores/settings';
 import _             from "lodash";
 
 const TIMEOUT = 10000;
+const GET = 'get';
+const POST = 'post';
+const PUT = 'put';
+const DEL = 'del';
 
 var _pendingRequests = {};
 var _cache = {};
@@ -111,9 +115,9 @@ function dispatchResponse(key) {
   };
 }
 
-function doRequest(key, url, requestMethod){
-  
-  var requestContainer = buildRequest(url, requestMethod);
+function doRequest(key, url, requestMethod, requestType){
+
+  var requestContainer = buildRequest(url, requestMethod, requestType);
   if(requestContainer.promise){
     return requestContainer.promise;
   }
@@ -134,9 +138,13 @@ function doRequest(key, url, requestMethod){
   return promise;
 }
 
-function buildRequest(url, requestMethod){
+function buildRequest(url, requestMethod, requestType){
   //abortPendingRequests(url);
-  if (!_pendingRequests[url]) {
+  if (requestType === POST) {
+    return {
+      request: requestMethod(makeUrl(url))
+    };
+  } else if (!_pendingRequests[url]) {
     _pendingRequests[url] = {
       request: requestMethod(makeUrl(url))
     };
@@ -160,9 +168,9 @@ function promisify(request) {
   });
 }
 
-function *doCacheRequest(url, key, requestMethod){
-  
-  var promise;  
+function *doCacheRequest(url, key, requestMethod, requestType){
+
+  var promise;
   var fullUrl = makeUrl(url);
 
   if (_cache[fullUrl]) {
@@ -176,8 +184,8 @@ function *doCacheRequest(url, key, requestMethod){
 
     yield promise;
   };
-  
-  var requestContainer = buildRequest(url, requestMethod);
+
+  var requestContainer = buildRequest(url, requestMethod, requestType);
   if(requestContainer.promise){
     yield requestContainer.promise;
   } else {
@@ -202,32 +210,32 @@ var API = {
   get(key, url){
     return doRequest(key, url, (fullUrl) => {
       return get(fullUrl);
-    });
+    }, GET);
   },
 
   post(key, url, body){
     return doRequest(key, url, (fullUrl) => {
       return post(fullUrl, body);
-    });
+    }, POST);
   },
 
   put(key, url, body){
     return doRequest(key, url, (fullUrl) => {
       return put(fullUrl, body);
-    });
+    }, PUT);
   },
 
   del(key, url){
     return doRequest(key, url, (fullUrl) => {
       return del(fullUrl);
-    });
+    }, DEL);
   },
 
   async cacheGet(url, params, key, refresh){
     url = `${url}${API.queryStringFrom(params)}`;
     var request = doCacheRequest(url, key, (fullUrl) => {
       return get(fullUrl);
-    });
+    }, GET);
     if (key) {
       // We have a key. Invoke the generate to get data and dispatch.
       var response = request.next();
@@ -244,7 +252,7 @@ var API = {
     var query = _.chain(params)
       .map((val, key) => {
         if(val){
-          return `${key}=${val}`;  
+          return `${key}=${val}`;
         } else {
           return "";
         }
