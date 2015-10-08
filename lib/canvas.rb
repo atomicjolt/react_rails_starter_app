@@ -15,7 +15,11 @@ class Canvas
   end
 
   def full_url(api_url)
-    "#{@canvas_uri}/api/v1/#{api_url}"
+    if api_url[0...4] == 'http'
+      api_url
+    else
+      "#{@canvas_uri}/api/v1/#{api_url}"
+    end
   end
 
   def api_put_request(api_url, payload)
@@ -97,7 +101,6 @@ class Canvas
   end
 
   def account_users(account_id, per_page = 25)
-    #api_get_request("accounts/#{account_id}/users?per_page=#{per_page}")
     make_paged_api_request("accounts/#{account_id}/users?per_page=#{per_page}")
   end
 
@@ -121,6 +124,11 @@ class Canvas
     end
   end
 
+#This is used to list sections in a particular course, given a course_id.
+  def sections(course_id)
+    api_get_request("courses/#{course_id}/sections")
+  end
+
   def recent_logins(course_id)
     api_get_request("courses/#{course_id}/recent_students")
   end
@@ -129,7 +137,18 @@ class Canvas
     make_paged_api_request("courses/#{course_id}/users?enrollment_type=student")
   end
 
-  # TODO allow all methods to accept a hash of options
+  def tas(course_id)
+    make_paged_api_request("courses/#{course_id}/users?enrollment_type=ta")
+  end
+
+  def enrollments(course_id)
+    make_paged_api_request("courses/#{course_id}/enrollments")
+  end
+
+  def user_enrollments(user_id)
+    make_paged_api_request("users/#{user_id}/enrollments")
+  end
+
   def all_courses(account_id, options = {})
     make_paged_api_request("accounts/#{account_id}/courses?#{options.to_param}")
   end
@@ -154,11 +173,15 @@ class Canvas
     api_get_request("courses/#{course_id}/analytics/users/#{student_id}/assignments")
   end
 
+  def course_assignment_data(course_id)
+    api_get_request("courses/#{course_id}/analytics/assignments")
+  end
+
   def get_user(user_id)
     api_get_request("users/#{user_id}")
   end
 
-  def get_user_grades(user_id)
+  def get_user_enrollments(user_id)
     api_get_request("users/#{user_id}/enrollments")
   end
 
