@@ -8,6 +8,19 @@ end
 Rails.application.routes.draw do
 
   root to: "home#index"
+
+  resources :lti_launches do
+    collection do
+      post :index
+      get :index
+    end
+  end
+
+  resources :lti_installs do
+    collection do
+      get :xml
+    end
+  end
   
   devise_for :users, controllers: {
     sessions: "sessions",
@@ -25,6 +38,7 @@ Rails.application.routes.draw do
   end
 
   resources :users
+  resources :canvas_authentications
   
   resources :admin, only: [:index]
 

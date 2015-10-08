@@ -38,11 +38,11 @@ class Api::AccountsController < ApplicationController
   private
 
     def create_params
-      params.require(:account).permit(:name, :domain, :code)
+      params.require(:account).permit(:name, :domain, :canvas_uri, :code)
     end
 
     def update_params
-      params.require(:account).permit(:name, :domain, :code)
+      params.require(:account).permit(:name, :domain, :canvas_uri, :code)
     end
 
 end

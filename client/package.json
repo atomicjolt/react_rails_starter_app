@@ -1,10 +1,10 @@
 {
-  "name": "react_starter_app",
+  "name": "canvas_starter_app",
   "version": "0.0.1",
-  "description": "Javascript for the React Starter App.",
+  "description": "Javascript for the Canvas Starter App.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/atomicjolt/react_starter_app"
+    "url": "https://github.com/atomicjolt/canvas_starter_app"
   },
   "scripts": {
     "test": "karma start",
@@ -14,7 +14,7 @@
   },
   "author": "atomicjolt",
   "license": "MIT",
-  "homepage": "https://github.com/atomicjolt/react_starter_app",
+  "homepage": "https://github.com/atomicjolt/canvas_starter_app",
   "dependencies": {
     "babel": "^5.6.14",
     "babel-runtime": "^5.6.20",

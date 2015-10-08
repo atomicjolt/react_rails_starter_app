@@ -1,1 +1,6 @@
 <p>Home Page</p>
+
+<% if signed_in? -%>
+  <%= link_to("Install #{ Rails.application.secrets.lti_tool_name } into your Canvas account", new_lti_install_path) %>
+  <p><%= link_to "Connect a Canvas Account", new_canvas_authentication_path, class: "btn btn-primary" %></p>
+<% end -%>

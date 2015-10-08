@@ -1,6 +1,6 @@
 # If bundler starts to act up run these commands to start over and clean up:
 # rm -rf ~/.bundle/ ~/.gem/; rm -rf $GEM_HOME/bundler/ $GEM_HOME/cache/bundler/; rm -rf .bundle/; rm -rf vendor/cache/; rm -rf Gemfile.lock
-# rvm gemset empty reactstarterapp
+# rvm gemset empty canvasstarterapp
 # bundle install
 
 source 'https://rubygems.org'
@@ -16,7 +16,7 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
-gem 'font_assets', github: 'atomicjolt/font_assets'
+gem 'font_assets', github: 'atomicjolt/font_assets' # sets headers and mimetypes for fonts in the asset pipeline
 gem 'autoprefixer-rails'
 gem 'non-stupid-digest-assets' # also compile assets without digest (fixes font problem)
 gem "bower-rails"
@@ -24,7 +24,9 @@ gem "bower-rails"
 # authentication, authorization, integrations
 gem 'devise'
 gem 'omniauth', '~> 1.2.2'
+gem 'omniauth-canvas', '~> 0.1.0' #, :path => '~/projects/omniauth-canvas'
 gem 'oauth', '~> 0.4.7'
+gem 'ims-lti', '~> 1.1.8' # IMS LTI tool consumers and providers
 gem 'cancancan'
 gem 'attr_encrypted'
 gem 'jwt', '~> 1.5.0' # json web token
@@ -43,7 +45,7 @@ gem 'unicorn-rails'
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 # API Related
-gem 'httparty'
+gem 'httparty', '~> 0.13.5'
 gem 'rack-cors', :require => 'rack/cors'
 
 # Paging

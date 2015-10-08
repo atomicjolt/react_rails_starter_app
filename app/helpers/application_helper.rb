@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def canvas_url
+    session[:canvas_url] || Rails.application.secrets.canvas_url
+  end
+
   def application_base_url
     File.join(request.base_url, "/")
   end

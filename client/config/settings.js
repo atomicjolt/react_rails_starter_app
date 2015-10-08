@@ -9,7 +9,8 @@ var prodRelativeOutput    = '/assets/';
 var devOutput     = path.join(__dirname, '../../app/assets/javascripts');
 var prodOutput    = path.join(__dirname, '../../public/assets');
 
-require('dotenv').load({path: '../.env'});
+require('dotenv').load({path: path.join(__dirname, '../../.env')});
+
 var hotPort = process.env.ASSETS_PORT || 8080;
 var devAssetsUrl = process.env.ASSETS_URL; // null will use localhost
 

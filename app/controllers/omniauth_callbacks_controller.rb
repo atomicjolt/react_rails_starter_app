@@ -8,6 +8,15 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
   end
 
+  def canvas
+    canvas_url = session[:canvas_url].strip
+    auth = current_user.authentications.find_by(provider_url: canvas_url, provider: 'canvas')
+    auth = @user.authentications.find_by(provider: 'canvas')
+    create_external_identifier_with_url(auth, @user)
+    flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => 'Canvas'
+    redirect_to '/'
+  end
+
   protected
 
     def verify_oauth_response
@@ -23,7 +32,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         else
           error = "There was a problem communicating with the remote service. "
         end
-        flash[:error] = "#{error} If this problem persists try signing up with a different service or create an #{Rails.application.secrets.application_name} account with just an email and password.".html_safe
+        if request.env["omniauth.strategy"].name == 'canvas'
+          flash[:error] = "#{error}"
+        else
+          flash[:error] = "#{error} If this problem persists try signing up with a different service or create an #{Rails.application.secrets.application_name} account with just an email and password.".html_safe
+        end
         if request.env["omniauth.origin"].present?
           redirect_to request.env["omniauth.origin"]
         else
@@ -113,6 +126,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     def should_redirect?
+      return false if ['canvas'].include?(params[:action]) # Don't redirect we need to do more configuration
       true
     end
 

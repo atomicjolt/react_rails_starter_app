@@ -1,0 +1,9 @@
+<div class="container">
+  <%= form_for(:lti_install, url: lti_installs_path, html: { role: 'form' }) do |f| %>
+    <%= render partial: "lti_installs/selection", locals: {title: "accounts", field: :account_ids, values: @accounts} %>
+    <%= render partial: "lti_installs/selection", locals: {title: "courses", field: :course_ids, values: @courses} %>
+    <div class="actions">
+      <%= f.submit "Install", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

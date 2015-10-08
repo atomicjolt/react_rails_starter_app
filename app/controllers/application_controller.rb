@@ -85,6 +85,12 @@ class ApplicationController < ActionController::Base
     # OAuth related functionality:
     #
 
+    def find_consumer
+      key = params[:oauth_consumer_key].strip
+      Account.find_by(lti_key: key) ||
+      User.find_by(lti_key: key)
+    end
+
     def check_external_identifier(user, only_build=false)
       if session[:external_identifier]
         exid = user.external_identifiers.build(:identifier => session[:external_identifier], :provider => session[:provider])
@@ -99,6 +105,72 @@ class ApplicationController < ActionController::Base
       json = Yajl::Parser.parse(auth['json_response'])
       key = UrlHelper.host(json['info']['url'])
       user.external_identifiers.create(:identifier => auth.uid, :provider => key) # If they already have an exernal identifier this can just fail silently
+    end
+
+    # **********************************************
+    #
+    # LTI related functionality:
+    #
+    def lti_provider
+      params[:tool_consumer_instance_guid] ||
+      UrlHelper.safe_host(request.referer) ||
+      UrlHelper.safe_host(params["launch_presentation_return_url"]) ||
+      UrlHelper.safe_host(params["custom_canvas_api_domain"])
+    end
+
+    def do_lti
+
+      provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
+
+      if provider.valid_request?(request)
+
+        @lti_provider = lti_provider
+        @identifier = params[:user_id]
+
+        @external_identifier = ExternalIdentifier.find_by(provider: @lti_provider, identifier: @identifier)
+
+        @user = @external_identifier.user if @external_identifier
+
+        if @user
+          # If we do LTI and find a different user. Log out the current user and log in the new user.
+          # Log the user in
+          sign_in(@user, :event => :authentication)
+        else
+          # Ask them to login or create an account
+
+          # Generate a name from the LTI params
+          name = params[:lis_person_name_full] ? params[:lis_person_name_full] : "#{params[:lis_person_name_given]} #{params[:lis_person_name_family]}"
+          name = name.strip
+          name = params[:roles] if name.blank? # If the name is blank then use their
+
+          # If there isn't an email then we have to make one up. We use the user_id and instance guid
+          email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
+
+          @user = User.new(email: email, name: name)
+          @user.password             = ::SecureRandom::hex(15)
+          @user.password_confirmation = @user.password
+          @user.account = current_account
+          @user.skip_confirmation!
+
+          count = 0
+          while !safe_save_email(@user) && count < 10 do
+            # Email was taken. Generate a fake email and save again
+            @user.email = "#{params[:user_id]}_#{count}_#{params[:tool_consumer_instance_guid]}@example.com"
+            count = count + 1
+          end
+          
+          @external_identifier = @user.external_identifiers.create!(
+            identifier: @identifier,
+            provider: @lti_provider,
+            custom_canvas_user_id: params[:custom_canvas_user_id]
+          )
+
+          sign_in(@user, :event => :authentication)
+        end
+      else
+        user_not_authorized
+      end
+
     end
 
     def safe_save_email(user)

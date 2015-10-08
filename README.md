@@ -1,8 +1,8 @@
-# React Starter App
+# Canvas Starter App
 
-This project provides a starting point for building a React or OAuth application.
+This project provides a starting point for building a Canvas LTI or OAuth application.
 
-## Running React Starter App
+## Running Canvas Starter App
 
 ### With Foreman
 Foreman makes it simple to startup all the services required to run the application in development mode. To start the application using foreman simply run:
@@ -23,10 +23,10 @@ If you need to run services individually or just don't like Foreman you can run 
 $ rails server
 $ cd client && nodemon webpack.hot.js
 $ ngrok --subdomain master_assets --log stdout 8080
-$ ngrok --subdomain reactstarterapp --log stdout 3000
+$ ngrok --subdomain canvasstarterapp --log stdout 3000
 ```
 
-## Setting up React Starter App
+## Setting up Canvas Starter App
 
 ### File Modifications
 
@@ -36,16 +36,16 @@ Rename `.env.example` to `.env` and configure it to your liking.
 Note: the App and Assets subdomains must be different.
 
 #### Modify application name
-1. Open application.rb and change `ReactStarterApp` to the name you choose.
-2. Do a global search and replace for `react_starter_app` and change it to the name you choose.
-3. Do a global search and replace for `reactstarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
+1. Open application.rb and change `CanvasStarterApp` to the name you choose.
+2. Do a global search and replace for `canvas_starter_app` and change it to the name you choose.
+3. Do a global search and replace for `canvasstarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
 
 #### Secrets file
 Rename `config/secrets.example.yml` to `config/secrets.yml`. Open the file and change each entry to values that are relevant for your application.
 
 *This file should not be committed to your repository.*
 
-You will need to [request a Key ID and Secret from the desired provider](#developer_key). You will also
+You will need to [request a Canvas ID and Secret from Instructure](#developer_key). You will also
 need to setup a default account and provide that account's "code" for the "application_code" entry in secrets.yml. See the [seeds](#seeds) section below for information on setting up the default account.
 
 ### Project Dependencies
@@ -61,11 +61,11 @@ This application requires:
 Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
 
 #### NGROK
-To test your application with an OAuth provider you will need to provide a public SSL url. The simpliest way to do this is to use ngrok which can be downloaded from [ngrok](https://ngrok.io/).
+To test your application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to use ngrok which can be downloaded from [ngrok](https://ngrok.com/).
 
-Running 'ngrok --subdomain reactstarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
+Running 'ngrok --subdomain canvasstarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
 
-`https://reactstarterapp.ngrok.io`
+`https://canvasstarterapp.ngrok.com`
 
 #### Webpack
 Packs CommonJs/AMD modules for the browser.
@@ -108,7 +108,8 @@ $ npm shrinkwrap
 ```
 
 #### React
-The React Starter App uses React. During development run the [React Hot Loader](https://github.com/gaearon/react-hot-loader).
+Most LTI applications need to be single page applications in order to avoid a bug that prevents cookies from being written in some
+browsers. The Canvas Starter App uses React. During development run the [React Hot Loader](https://github.com/gaearon/react-hot-loader).
 
 
 ### <a name="seeds"></a>Setting up Database
@@ -119,6 +120,11 @@ Open db/seeds.rb and configuration a default account for development and product
 applications on a single domain.
 - **domain:** Custom domain name.
 - **name:** Name the account anything you'd like.
+- **lti_key:** A unique key for the LTI application you are building. This will be provided to Canvas.
+- **lti_secret:** The shared secret for your LTI application. This will be provided to Canvas
+and will be used to sign the LTI request. Generate this value using `rake secret`. Alternatively if you leave this field empty an LTI secret will be automatically generated for the account.
+- **canvas_uri:** The URI of the Canvas institution to be associated with a specific account.
+
 
 Once you've setup your seeds file run it to setup database defaults:
 
@@ -134,20 +140,19 @@ $ rake db:seed
 ```
 
 
-### <a name="developer_key"></a>Setting up OAuth
+### <a name="developer_key"></a>Request a Canvas Developer Key
 
-Visit the provider (Facebook, Twitter, Google, etc) to obtain an OAuth key and secret. Most of the fields will be specific to your organization. 
-The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `reactstarterapp.ngrok.io` with your domain. 
-You will need an ID and secret for development and for production. The
+Go to the [Canvas Developer Key Request Form](https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform)
+Most of the fields will be specific to your organization. The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `canvasstarterapp.ngrok.com` with your domain. You will need an ID and secret for development and for production. The
 development URI will use ngrok while the production URI will use your domain.
 
 **Oauth2 Redirect URI:**
-https://reactstarterapp.ngrok.io/auth/[provider]/callback
+https://canvasstarterapp.ngrok.io/users/auth/canvas/callback
 
 **Icon URL:**
-https://reactstarterapp.ngrok.io/oauth_icon.png
+https://canvasstarterapp.ngrok.io/oauth_icon.png
 
-Once your request is approved you will receive a Key and Secret. Add these credentials to the `config/secrets.yml`.
+Once your request is approved you will receive a Canvas ID and Secret. Add these credentials to the `config/secrets.yml` file under `canvas_id` and `canvas_secret`.
 
 
 ## Deployment
@@ -173,6 +178,12 @@ By default `config/unicorn.rb` is setup to deploy to Heroku. Open that file, com
 ## Examples
 
 Atomic Jolt has built a number of applications based on this source.
+
+### Demo Arigato
+
+This project was created for the Sales team at Instructure. It makes it simple to populate a sample Canvas course using values from Google Drive Spreadsheets.
+
+Source Code: [https://github.com/atomicjolt/demo_arigato](https://github.com/atomicjolt/demo_arigato)
 
 
 ## Database
