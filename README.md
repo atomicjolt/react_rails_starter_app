@@ -89,17 +89,26 @@ npm-shrinkwrap.json is included in the project. To verify your package.json & no
 $ npm shrinkwrap
 ```
 
-To find outdated modules run:
+##### npm-check-updates
+[npm-check-updates](https://www.npmjs.com/package/npm-check-updates) is used to find out of date modules and automatically update them.
+To find outdated modules install npm-check-updates:
 
 ```
-$ npm outdated
+$ npm install -g npm-check-updates
 ```
 
-Packages must be updated manually. For example:
+and then run:
 
 ```
-$ npm update lodash
+$ npm-check-updates
 ```
+
+to update all out of date packages run:
+
+```
+$ npm-check-updates -u
+```
+
 
 After updating be sure to run shrinkwrap again:
 
@@ -114,13 +123,16 @@ browsers. The Canvas Starter App uses React. During development run the [React H
 
 ### <a name="seeds"></a>Setting up Database
 
-Open db/seeds.rb and configuration a default account for development and production. Here's a summary of the values and their purpose:
+If you have setup .env and the secrets.yml file then the seeds file shouldn't need to be changed. However,
+if you need to customize the values in the database or add addition records to the database, 
+open db/seeds.rb and configuration a default account for development and production. 
+Here's a summary of the values and their purpose:
 
 - **code:** Uniquely identifies the account. This is used for the subdomain when running
-applications on a single domain.
-- **domain:** Custom domain name.
-- **name:** Name the account anything you'd like.
-- **lti_key:** A unique key for the LTI application you are building. This will be provided to Canvas.
+applications on a single domain. By default this will be set to APP_SUBDOMAIN from the .env file.
+- **domain:** Custom domain name. By default this is set to application_url from the secrets.yml file.
+- **name:** Name the account anything you'd like. By default this is set to application_name from the secrets.yml file.
+- **lti_key:** A unique key for the LTI application you are building. This will be provided to Canvas. By default this will be set to APP_SUBDOMAIN from the .env file.
 - **lti_secret:** The shared secret for your LTI application. This will be provided to Canvas
 and will be used to sign the LTI request. Generate this value using `rake secret`. Alternatively if you leave this field empty an LTI secret will be automatically generated for the account.
 - **canvas_uri:** The URI of the Canvas institution to be associated with a specific account.
