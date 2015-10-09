@@ -12,7 +12,7 @@ new webpackDevServer(webpack(webpackConfig), {
   progress: true,
   headers: { "Access-Control-Allow-Origin": "*" },
   filename: '[name]_web_pack_bundle.js',
-}).listen(settings.ports.hotPort, 'localhost', function(err, result){
+}).listen(settings.hotPort, 'localhost', function(err, result){
   if(err){
     console.log('webpack-dev-server', err);
   }

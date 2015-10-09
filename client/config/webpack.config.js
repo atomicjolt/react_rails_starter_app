@@ -26,19 +26,19 @@ module.exports = function(release){
   var entries;
 
   if(release){
-    entries = settings.scripts.paths.entries;
+    entries = settings.entries;
   } else {
     jsLoaders.unshift("react-hot-loader");
 
     // Configure entries with hotloader
-    var originalEntries = settings.scripts.paths.entries;
+    var originalEntries = settings.entries;
     entries = {};
     for(var name in originalEntries){
       entries[name] = ['webpack-dev-server/client?' + settings.devAssetsUrl, 'webpack/hot/only-dev-server', originalEntries[name]];
     }
   }
 
-  var cssEntries = settings.styles.paths.entries;
+  var cssEntries = settings.cssEntries;
   for(var name in cssEntries){
     entries[name] = cssEntries[name];
   }
@@ -50,7 +50,7 @@ module.exports = function(release){
       path: release ? settings.prodOutput : settings.devOutput,
       filename: release ? '[name]-[chunkhash]_web_pack_bundle.js' : '[name]_web_pack_bundle.js',
       chunkFilename: release ? '[id]-[chunkhash]_web_pack_bundle.js' : "[id].js",
-      publicPath: release ? settings.scripts.paths.relativeOutput.prod : settings.devAssetsUrl + settings.devRelativeOutput,
+      publicPath: release ? settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput,
       sourceMapFilename: "debugging/[file].map",
       pathinfo: !release // http://webpack.github.io/docs/configuration.html#output-pathinfo
     },
