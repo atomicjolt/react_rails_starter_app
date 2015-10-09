@@ -5,8 +5,6 @@ import Router         from 'react-router';
 import Routes         from './routes';
 import SettingsAction from './actions/settings';
 
-import ThemeManager   from 'material-ui/lib/styles/theme-manager';
-
 //Needed for onTouchTap
 //Can go away when react 1.0 release
 //Check this repo:
