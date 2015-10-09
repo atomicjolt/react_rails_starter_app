@@ -1,13 +1,15 @@
 var info      = require('../package.json');
 var path      = require('path');
 
-var clientAppPath = path.join(__dirname, '../app/');
+var clientAppPath = path.join(__dirname, '../');
 
 var devRelativeOutput     = '/assets/';
 var prodRelativeOutput    = '/assets/';
 
-var devOutput     = path.join(__dirname, '../app', devRelativeOutput);
-var prodOutput    = path.join(__dirname, '../build', prodRelativeOutput);
+var devOutput     = path.join(__dirname, '../../app', devRelativeOutput);
+var prodOutput    = path.join(__dirname, '../../build', prodRelativeOutput);
+
+require('dotenv').load({path: path.join(__dirname, '../../.env')});
 
 var hotPort = process.env.ASSETS_PORT || 8080;
 
