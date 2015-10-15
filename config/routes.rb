@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     resources :accounts do
       resources :users
     end
+    resources :sessions
   end
 
   mount MailPreview => 'mail_view' if Rails.env.development?
