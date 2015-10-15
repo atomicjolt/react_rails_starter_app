@@ -1,31 +1,22 @@
 "use strict";
 
 import React                from "react";
-import UserStore            from "../../stores/user";
-import BaseComponent        from "../base_component";
-import Router               from "react-router";
 import { LeftNav }          from "material-ui";
 
-class LeftNavigation extends BaseComponent {
+class LeftNavigation extends React.Component {
 
-  constructor() {
+  constructor(props, context) {
     super();
-
-    this.stores = [UserStore];
-    this.state = this.getState();
-
-    this._bind("_getSelectedIndex", "toggle", "_onLeftNavChange", "_onHeaderClick");
+    this.state = this.getState(props);
     this.selectedIndex = null;
   }
 
-  getState(){
-    var loggedIn = UserStore.loggedIn();
-
+  getState(props){
     var menuItems = [
       { route: 'home', text: 'Home' }
     ];
 
-    if (loggedIn) {
+    if (props.loggedIn) {
       menuItems.push({ route: 'logout', text: 'Logout' });
       menuItems.push({ route: 'dashboard', text: 'Dashboard' });
       menuItems.push({ route: 'connections', text: 'Connections' });
@@ -35,7 +26,6 @@ class LeftNavigation extends BaseComponent {
     }
 
     return {
-      loggedIn: loggedIn,
       menuItems: menuItems
     };
   }
@@ -81,7 +71,7 @@ class LeftNavigation extends BaseComponent {
         isInitiallyOpen={false}
         header={header}
         menuItems={this.state.menuItems}
-        selectedIndex={this._getSelectedIndex()}
+        selectedIndex={ (e) => { this._getSelectedIndex() }}
         onChange={(e, key, payload) => this._onLeftNavChange(e, key, payload)} />
     );
   }
