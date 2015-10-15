@@ -17,7 +17,12 @@ class SessionsController < Devise::SessionsController
     # to any JS based client.
     token = AuthToken.issue_token({ user_id: resource.id })
     respond_with resource, location: after_sign_in_path_for(resource) do |format|
-      format.json { render json: {email: resource.email, displayName: resource.name, jwt_token: token} }
+      format.json { render json: {
+        userId: resource.id,
+        email: resource.email, 
+        displayName: resource.name, 
+        jwt_token: token
+      } }
     end
   end
 
