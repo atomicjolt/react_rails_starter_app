@@ -6,29 +6,30 @@ import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 
 var _user = {};
-var logoutState = 1;
 
 // log the user in
 function login(payload){
-  _user.email = payload.data.body.email;
-  _user.displayName = payload.data.body.displayName;
-  logoutState = 1;
+  _user.id = payload.userId;
+  _user.email = payload.email;
+  _user.displayName = payload.displayName;
 }
 
 // Register
 function register(user){
+  _user.id = user.id;
   _user.email = user.email;
   _user.displayName = user.displayName;
 }
 
+// Retrieve user from default settings
 function loadUserFromSettings(payload) {
+  _user.id = payload.data.userId;
   _user.email = payload.data.email;
   _user.displayName = payload.data.displayName;
 }
 
 function logout(){
   _user = {};
-  logoutState = 2;
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -40,11 +41,7 @@ var UserStore = assign({}, StoreCommon, {
   },
 
   loggedIn(){
-    return _user == {};
-  },
-
-  logoutStatus(){
-    return logoutState;
+    return _user.id !== undefined;
   }
 
 });
@@ -67,6 +64,10 @@ Dispatcher.register((payload) => {
 
     case Constants.LOGOUT:
       logout(payload);
+      break;
+
+    case Constants.SETTINGS_LOAD:
+      loadUserFromSettings(payload);
       break;
 
     default:
