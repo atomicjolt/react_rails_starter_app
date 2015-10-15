@@ -18,28 +18,21 @@ class Logout extends BaseComponent {
 
   getState(){
     return {
-      logoutState: UserStore.logoutStatus()
+      loggedIn: UserStore.loggedIn()
     };
   }
 
   render(){
-    var content;
-    if (this.state.logoutState === 1) {
+    if (this.state.loggedIn) {
       return <h3>One Moment</h3>;
-    } else if (this.state.logoutState === 2) {
+    } else {
       return (
         <div>
           <h2>You have successfully logged out</h2>
           <Link to="login">Home</Link>
         </div>
       );
-    } else {
-      return <h3>There was an error logging out, please try again</h3>;
     }
-
-    return (
-      {content}
-    );
   }
 }
 
