@@ -12,9 +12,6 @@ var logoutState = 1;
 function login(payload){
   _user.email = payload.data.body.email;
   _user.displayName = payload.data.body.displayName;
-  // We get a JWT back.
-  var jwt = payload.data.body.jwt_token;
-  localStorage.setItem('jwt', jwt);
   logoutState = 1;
 }
 
@@ -30,7 +27,7 @@ function loadUserFromSettings(payload) {
 }
 
 function logout(){
-  localStorage.removeItem('jwt');
+  _user = {};
   logoutState = 2;
 }
 
@@ -43,11 +40,7 @@ var UserStore = assign({}, StoreCommon, {
   },
 
   loggedIn(){
-    return localStorage.getItem('jwt') !== null;
-  },
-
-  jwt(){
-    return localStorage.getItem('jwt');
+    return _user == {};
   },
 
   logoutStatus(){

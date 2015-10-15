@@ -8,6 +8,11 @@ import QueryString    from '../utils/query_string';
 
 var _settings = {};
 
+// Grab the jwt from the payload
+function login(payload){
+  _settings.jwt = payload.data.body.jwt_token;
+}
+
 function loadSettings(defaultSettings){
 
   defaultSettings = defaultSettings || {};
@@ -16,16 +21,10 @@ function loadSettings(defaultSettings){
     return defaultSettings[settings_prop] || QueryString.params()[params_prop] || default_prop;
   };
 
-  var jwt = (defaultSettings.jwt && defaultSettings.jwt.length) ? defaultSettings.jwt : null;
-  if(jwt!==null) {
-    localStorage.setItem('jwt', jwt);
-  } else {
-    localStorage.removeItem('jwt');
-  }
-
   _settings = {
     apiUrl           : bestValue('apiUrl', 'api_url', '/'),
-    csrfToken        : defaultSettings.csrfToken || null
+    csrfToken        : defaultSettings.csrfToken || null,
+    jwt              : defaultSettings.jwt
   };
 
 }
@@ -46,9 +45,16 @@ Dispatcher.register(function(payload) {
 
   switch(payload.action){
 
-    // Respond to TIMEOUT action
     case Constants.SETTINGS_LOAD:
       loadSettings(payload.data);
+      break;
+
+    case Constants.LOGIN:
+      login(payload);
+      break;
+
+    case Constants.LOGOUT:
+      logout(payload);
       break;
 
     default:
