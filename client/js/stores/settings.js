@@ -29,6 +29,9 @@ function loadSettings(defaultSettings){
 
 }
 
+function refreshJwt(payload){
+  _settings.jwt = JSON.parse(payload.data.text).jwt;
+}
 
 // Extend Message Store with EventEmitter to add eventing capabilities
 var SettingsStore = assign({}, StoreCommon, {
@@ -55,6 +58,10 @@ Dispatcher.register(function(payload) {
 
     case Constants.LOGOUT:
       logout(payload);
+      break;
+
+    case Constants.REFRESH_JWT:
+      refreshJwt(payload)
       break;
 
     default:

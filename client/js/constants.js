@@ -9,6 +9,7 @@ export default {
   REGISTER_PENDING: "register_pending",
   LOGOUT_PENDING: "logout_pending",
   LOGOUT: "logout",
+  REFRESH_JWT: "refresh_jwt",
 
   ADD_MESSAGE: "add_message",
   REMOVE_MESSAGE: "remove_message",
