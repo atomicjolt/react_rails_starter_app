@@ -6,12 +6,12 @@ RSpec.describe Api::AccountsController, type: :controller do
     @account = FactoryGirl.create(:account)
     @account2 = FactoryGirl.create(:account)
     @user = FactoryGirl.create(:user, account: @account)
-    @user.confirm!
+    @user.confirm
 
     @admin = CreateAdminService.new.call
 
     @account_admin = FactoryGirl.create(:user, account: @account2)
-    @user.confirm!
+    @user.confirm
     @account_admin.make_account_admin({account_id: @account2.id})
 
     @user_token = AuthToken.issue_token({ user_id: @user.id })

@@ -5,7 +5,7 @@ FactoryGirl.define do
     email { FactoryGirl.generate(:email) }
     password { FactoryGirl.generate(:password) }
     account
-    after(:build) { |user| user.confirm! }
+    after(:build) { |user| user.confirm }
 
     factory :user_facebook do
       active_avatar 'facebook'
