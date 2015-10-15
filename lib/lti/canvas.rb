@@ -16,6 +16,39 @@ module Lti
       self.config(args).to_xml(:indent => 2)
     end
 
+    def self.basic_config(code)
+      {
+        launch_url: "https://#{code}.#{Rails.application.secrets.lti_launch_domain}/lti_launches",
+        env: Rails.env,
+        title: Rails.application.secrets.lti_tool_name,
+        description: Rails.application.secrets.lti_tool_description,
+        icon: "No ICO",
+        domain: "#{code}.#{Rails.application.secrets.lti_launch_domain}"
+      }
+    end
+
+    def self.course_navigation_config(code)
+      config = self.basic_config(code)
+      config[:course_navigation] = {
+          text: Rails.application.secrets.lti_tool_name,
+          visibility: "admins",
+          default: "enabled",
+          enabled: true
+        }
+      config
+    end
+
+    def self.account_navigation_config(code)
+      config = self.basic_config(code)
+      config[:account_navigation] = {
+          text: Rails.application.secrets.lti_tool_name,
+          visibility: "admins",
+          default: "enabled",
+          enabled: true
+        }
+      config
+    end
+
     def self.config(args = {})
       title = args[:title] || self.tool_name(args[:env])
 

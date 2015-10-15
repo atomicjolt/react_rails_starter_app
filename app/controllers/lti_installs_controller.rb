@@ -8,7 +8,8 @@ class LtiInstallsController < ApplicationController
   end
 
   def xml
-    @config_xml = Lti::Canvas.config_xml(lti_options)
+    config = Lti::Canvas.basic_config(main_account.code)
+    @config_xml = Lti::Canvas.config_xml(config)
   end
 
   def create
@@ -21,24 +22,6 @@ class LtiInstallsController < ApplicationController
 
     def main_account
       current_user.account
-    end
-
-    def lti_options
-      account_code = "#{main_account.code}"
-      {
-        launch_url: "https://#{account_code}.#{Rails.application.secrets.lti_launch_domain}/lti_launches",
-        env: Rails.env,
-        title: Rails.application.secrets.lti_tool_name,
-        description: Rails.application.secrets.lti_tool_description,
-        icon: "No ICO",
-        domain: "#{account_code}.#{Rails.application.secrets.lti_launch_domain}",
-        course_navigation: {
-          text: Rails.application.secrets.lti_tool_name,
-          visibility: "admins",
-          default: "enabled",
-          enabled: true
-        } 
-      }
     end
 
     # This method finds the accounts or courses that were selected by the user, generates
