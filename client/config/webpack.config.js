@@ -13,8 +13,7 @@ module.exports = function(release){
   ];
 
   var autoprefix = '{browsers:["Android 2.3", "Android >= 4", "Chrome >= 20", "Firefox >= 24", "Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
-  var jsLoaders = ["babel-loader?stage=0"];
-  //var jsLoaders = ["babel-loader?stage=0&optional=runtime"]; // include the runtime 
+  var jsLoaders = ["babel-loader?stage=0&optional=runtime"]; // include the runtime 
 
   var cssLoaders = ['style-loader', 'css-loader', 'autoprefixer-loader?' + autoprefix];
 
@@ -27,19 +26,19 @@ module.exports = function(release){
   var entries;
 
   if(release){
-    entries = settings.scripts.paths.entries;
+    entries = settings.entries;
   } else {
     jsLoaders.unshift("react-hot-loader");
 
     // Configure entries with hotloader
-    var originalEntries = settings.scripts.paths.entries;
+    var originalEntries = settings.entries;
     entries = {};
     for(var name in originalEntries){
       entries[name] = ['webpack-dev-server/client?' + settings.devAssetsUrl, 'webpack/hot/only-dev-server', originalEntries[name]];
     }
   }
 
-  var cssEntries = settings.styles.paths.entries;
+  var cssEntries = settings.cssEntries;
   for(var name in cssEntries){
     entries[name] = cssEntries[name];
   }
@@ -51,7 +50,7 @@ module.exports = function(release){
       path: release ? settings.prodOutput : settings.devOutput,
       filename: release ? '[name]-[chunkhash]_web_pack_bundle.js' : '[name]_web_pack_bundle.js',
       chunkFilename: release ? '[id]-[chunkhash]_web_pack_bundle.js' : "[id].js",
-      publicPath: release ? settings.scripts.paths.relativeOutput.prod : settings.devAssetsUrl + settings.devRelativeOutput,
+      publicPath: release ? settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput,
       sourceMapFilename: "debugging/[file].map",
       pathinfo: !release // http://webpack.github.io/docs/configuration.html#output-pathinfo
     },
