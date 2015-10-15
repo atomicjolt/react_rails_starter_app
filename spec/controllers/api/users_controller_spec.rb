@@ -13,7 +13,7 @@ RSpec.describe Api::UsersController, type: :controller do
     @account.users.create(user3)
 
     @user = FactoryGirl.create(:user, account: @account)
-    @user.confirm!
+    @user.confirm
 
     @admin = CreateAdminService.new.call
     @admin.make_account_admin({account_id: @account.id})
