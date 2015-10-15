@@ -106,7 +106,7 @@ class LeftNavigation extends BaseComponent {
         isInitiallyOpen={false}
         header={header}
         menuItems={this.state.menuItems}
-        selectedIndex={this._getSelectedIndex()}
+        selectedIndex={ (e) => { this._getSelectedIndex() }}
         onChange={(e, key, payload) => this._onLeftNavChange(e, key, payload)} />
     );
   }

@@ -96,7 +96,7 @@ class Page extends BaseComponent {
 
     if(!_.contains(noNavRoutes, currentRoute)){
       showMenuIconButton = true;
-      leftNav = <LeftNav ref="leftNav" docked={false} isInitiallyOpen={false} />;
+      leftNav = <LeftNav ref="leftNav" docked={false} isInitiallyOpen={false} loggedIn={this.state.loggedIn} />;
       leftIcon = (
         <span style={styles.span}>
           <IconButton

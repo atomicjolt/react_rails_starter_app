@@ -18,11 +18,16 @@ describe('left_nav', function() {
   });
 
   it('renders signed in nav', function() {
-    localStorage.setItem('jwt', "aoeuaoeu");
+    var settings = {
+      userId: 1,
+      email: "test@example.com",
+      displayName: "test guy",
+      jwt: "asdf"
+    };
+    SettingsActions.load(settings);
     result = TestUtils.renderIntoDocument(<Subject />);
     expect(React.findDOMNode(result).textContent).toContain("Dashboard");
     expect(React.findDOMNode(result).textContent).toContain("Logout");
-    localStorage.removeItem('jwt');
   });
 
   it('does not render the signed in nav if you are not logged in', function() {
