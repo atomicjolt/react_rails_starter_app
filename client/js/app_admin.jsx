@@ -34,7 +34,7 @@ SettingsAction.load(window.DEFAULT_SETTINGS);
 
 
 Router.run(AdminRoutes, (Handler) => {
-  return React.render(<Handler />, document.body);
+  return React.render(<Handler />, document.getElementById("main"));
 });
 
 
