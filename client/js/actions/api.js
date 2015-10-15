@@ -1,7 +1,6 @@
 "use strict";
 
 import Request       from "superagent";
-import User          from "../stores/user";
 import Constants     from "../constants";
 import Dispatcher    from "../dispatcher";
 import SettingsStore from '../stores/settings';
@@ -24,9 +23,9 @@ function abortPendingRequests(url) {
   }
 }
 
-// Get the JWT from the user
+// Get the JWT from settings
 function jwt() {
-  return User.jwt();
+  return SettingsStore.current().jwt;
 }
 
 function csrfToken() {
