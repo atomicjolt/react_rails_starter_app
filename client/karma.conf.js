@@ -65,8 +65,8 @@ module.exports = function(config) {
       devtool: 'eval',
       module: {
         loaders: [
-          { test: /\.js$/,   exclude: /node_modules/, loader: "babel-loader?stage=0" },
-          { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader?stage=0" }
+          { test: /\.js$/,   exclude: /node_modules/, loader: "babel-loader?stage=0&optional=runtime" },
+          { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader?stage=0&optional=runtime" }
         ]
       },
       resolve: {
