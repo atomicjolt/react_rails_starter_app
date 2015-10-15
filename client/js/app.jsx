@@ -29,7 +29,7 @@ if (window.matchMedia("(max-width: 639px)").matches){
 SettingsAction.load(window.DEFAULT_SETTINGS);
 
 Router.run(Routes, (Handler) => {
-  return React.render(<Handler />, document.body);
+  return React.render(<Handler />, document.getElementById("main"));
 });
 
 // Router.run(routes, (Handler) => {
