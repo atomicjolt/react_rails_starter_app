@@ -1,11 +1,13 @@
 class Account < ActiveRecord::Base
   
   include Lti::Methods
-  
+
   validates :domain, uniqueness: true
   validates :code, uniqueness: true
   validates :code, presence: true
   validates :lti_secret, uniqueness: true
+
+  attr_encrypted :canvas_token, key: Rails.application.secrets.encryption_key, mode: :per_attribute_iv_and_salt
 
   before_save :clean_domain
 

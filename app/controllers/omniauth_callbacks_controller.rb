@@ -10,8 +10,52 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def canvas
     canvas_url = session[:canvas_url].strip
-    auth = current_user.authentications.find_by(provider_url: canvas_url, provider: 'canvas')
-    auth = @user.authentications.find_by(provider: 'canvas')
+    auth = @user.authentications.find_by(provider_url: canvas_url, provider: 'canvas')
+    
+    # Option 1
+    # Assume that accounts will be created through seeds or an admin ui.
+    # We get the 'code' using the subdomain of the request which will be something like
+    # canvasstarterapp.ngrok.io
+    
+    code = request.subdomains.first 
+
+    # Option 2
+    # Build new accounts based on the canvas_url subdomain.
+    # This will build new accounts using the canvas url. 
+    # i.e. Doing the OAuth dance with http://atomicjolt.instructure.com will result
+    # in a new account with code 'atomicjolt'
+
+    # url = URI.parse(canvas_url)
+    # code = url.hostname.split('.')[0]
+
+    account = Account.find_by(code: code)
+
+    if account.blank?
+      # This is the first time. Create an account based on the Canvas subdomain.
+      account = Account.create!(
+        name: code,
+        code: code,
+        domain: "#{code}.#{request.domain}",
+        canvas_uri: canvas_url
+      )
+    end
+
+    # If the account canvas token has been set and the user is an admin, grab the token
+    # and store it for account level access.
+    # The first admin user to log in sets the account level token.
+    if account.canvas_token.blank?
+      api = Canvas.new(auth.provider_url, auth.token)
+      if api.is_account_admin
+        account.canvas_token = auth.token
+        account.save!
+      end
+    end
+
+    @user.account_id = account.id
+    @user.add_account(account)
+
+    @user.save!
+
     create_external_identifier_with_url(auth, @user)
     flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => 'Canvas'
     redirect_to '/'

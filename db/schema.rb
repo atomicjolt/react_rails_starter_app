@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312162723) do
+ActiveRecord::Schema.define(version: 20150817203909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,8 +23,13 @@ ActiveRecord::Schema.define(version: 20150312162723) do
     t.string   "lti_secret"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "canvas_uri", limit: 2048
+    t.string   "canvas_uri",                  limit: 2048
     t.string   "code"
+    t.string   "salt"
+    t.string   "pass"
+    t.string   "encrypted_canvas_token"
+    t.string   "encrypted_canvas_token_salt"
+    t.string   "encrypted_canvas_token_iv"
   end
 
   add_index "accounts", ["code"], name: "index_accounts_on_code", using: :btree
