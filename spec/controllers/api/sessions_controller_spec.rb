@@ -19,7 +19,7 @@ RSpec.describe Api::SessionsController, type: :controller do
         get :show, id: @user.id, format: :json
         expect(response).to have_http_status(:success)
         result = JSON.parse(response.body)
-        expect(result['jwt_token']).to be_present
+        expect(result['jwt']).to be_present
       end
     end
 
