@@ -45,7 +45,12 @@ describe Lti::Canvas do
       expect(xml).to include(course_navigation[:text])
     end
     it "generates extended configuration xml for an LTI tool with a account navigation" do
-      account_navigation = "Account level tool"
+      account_navigation = {
+        text: "test",
+        visibility: "admins",
+        default: "enabled",
+        enabled: true
+      }
       args = {
         launch_url: @launch_url,
         env: @env,
@@ -54,7 +59,7 @@ describe Lti::Canvas do
       xml = Lti::Canvas.config_xml(args)
       expect(xml).to be_present
 
-      expect(xml).to include(account_navigation)
+      expect(xml).to include(account_navigation[:text])
     end
     it "generates xml with the given title" do
       title = "LTI Tool Title"

@@ -13,6 +13,7 @@ class LtiInstallsController < ApplicationController
   end
 
   def create
+    lti_options = Lti::Canvas.basic_config(main_account.code)
     account_errors, @account_installs = setup_lti(main_account, lti_options, Integrations::CanvasAccountsLti, @accounts, :account_ids)
     course_errors, @course_installs = setup_lti(main_account, lti_options, Integrations::CanvasCoursesLti, @courses, :course_ids)
     @errors = account_errors.concat(course_errors)
