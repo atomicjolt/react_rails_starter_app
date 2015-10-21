@@ -1,6 +1,30 @@
-<p>Home Page</p>
+<h1>Install the <%= Rails.application.secrets.application_name %> LTI App</h1>
 
-<% if signed_in? -%>
-  <%= link_to("Install #{ Rails.application.secrets.lti_tool_name } into your Canvas account", new_lti_install_path) %>
-  <p><%= link_to "Connect a Canvas Account", new_canvas_authentication_path, class: "btn btn-primary" %></p>
-<% end -%>
+<h3>Option 1 - OAuth</h3>
+<p>By logging into your instance of Canvas and authorizing the LTI App, you can install it automatically. This will also enable interaction with the Canvas API.</p>
+<p>Steps:</p>
+<ol>
+  <li>First <a href="https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform">request a canvas_id and canvas_secret from Instructure</a> and put them in the secrets.yml file.</li>
+  <li><%= link_to "Connect Your Canvas Account", new_canvas_authentication_path, class: "btn btn-primary" %></li>
+  <li><%= link_to("Install #{ Rails.application.secrets.lti_tool_name } into your Canvas account", new_lti_install_path) %></li>
+</ol>
+
+<h3>Option 2 - Manual</h3>
+<p>Manually Install the <%= Rails.application.secrets.application_name %> LTI App</p>
+<ol>
+  <li>Go to a course</li>
+  <li>Settings</li>
+  <li>Apps</li>
+  <li>View App Configurations</li>
+  <li>Add App</li>
+  <li>Configuration Type: Paste XML</li>
+  <li>Give it a name, eg: <%= Rails.application.secrets.application_name %></li>
+  <li>Paste in this Consumer Key: <strong><%= current_account.lti_key %></strong></li>
+  <li>Paste in this Shared Secret: <strong><%= current_account.lti_secret %></strong></li>
+  <li>Paste in the following XML:</li>
+</ol>
+<textarea style="width:100%;height:500px;">
+  <%= current_account.basic_lti_xml %>
+</textarea>
+<p>See <a href="https://canvas.instructure.com/doc/api/file.tools_xml.html">Instructure's Tool Configuration documentation</a> for details about Canvas External Tool Configuration XML options.</p>
+
