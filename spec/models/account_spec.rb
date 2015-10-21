@@ -33,4 +33,11 @@ RSpec.describe Account, :type => :model do
     end
   end
 
+  describe "basic_lti_xml" do
+    it "generates basic xml for an LTI install" do
+      result = @account.basic_lti_xml
+      expect(result).to include(@account.code)
+    end
+  end
+
 end

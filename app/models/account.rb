@@ -21,4 +21,10 @@ class Account < ActiveRecord::Base
   def self.main
     Account.find_by(code: Rails.application.secrets.application_code)
   end
+
+  def basic_lti_xml
+    config = Lti::Canvas.basic_config(self.code)
+    Lti::Canvas.config_xml(config)
+  end
+
 end
