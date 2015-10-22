@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150817203909) do
+ActiveRecord::Schema.define(version: 20151022003236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150817203909) do
     t.string   "provider"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "custom_canvas_user_id"
+    t.string   "external_user_id"
   end
 
   add_index "external_identifiers", ["identifier", "provider"], name: "index_external_identifiers_on_identifier_and_provider", using: :btree

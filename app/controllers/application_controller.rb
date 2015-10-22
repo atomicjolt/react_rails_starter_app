@@ -147,9 +147,9 @@ class ApplicationController < ActionController::Base
           email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
 
           @user = User.new(email: email, name: name)
-          @user.password             = ::SecureRandom::hex(15)
+          @user.password              = ::SecureRandom::hex(15)
           @user.password_confirmation = @user.password
-          @user.account = current_account
+          @user.account               = current_account
           @user.skip_confirmation!
 
           count = 0
@@ -159,11 +159,11 @@ class ApplicationController < ActionController::Base
             count = count + 1
           end
           
-          @external_identifier = @user.external_identifiers.create!(
+          @external_identifier = @user.external_identifiers.create!({
             identifier: @identifier,
             provider: @lti_provider,
-            custom_canvas_user_id: params[:custom_canvas_user_id]
-          )
+            external_user_id: params[:user_id] || params[:custom_canvas_user_id]
+          })
 
           sign_in(@user, :event => :authentication)
         end
