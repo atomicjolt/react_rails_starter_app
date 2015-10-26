@@ -9,6 +9,9 @@ var prodRelativeOutput    = '/assets/';
 var devOutput     = path.join(__dirname, '../../app', devRelativeOutput);
 var prodOutput    = path.join(__dirname, '../../build', prodRelativeOutput);
 
+// There is a warning if the .env file is missing
+// This is fine in a production setting, where settings
+// are loaded from the env and not from a file
 require('dotenv').load({path: path.join(__dirname, '../../.env')});
 
 var hotPort = process.env.ASSETS_PORT || 8080;

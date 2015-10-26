@@ -2,7 +2,7 @@ require 'pp'
 
 desc 'compile bundles using webpack'
 task "assets:precompile" do
-  cmd    = 'cd client && webpack --config webpack.release.js --progress --profile --colors --json'
+  cmd    = 'cd client && node_modules/.bin/webpack --config webpack.release.js --progress --profile --colors --json'
   output = `#{cmd}`
   stats  = JSON.parse output
 
