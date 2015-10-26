@@ -6,7 +6,7 @@
     "node": "0.10.32"
   },
   "scripts": {
-    "postinstall": "cd ./client && npm install",
+    "postinstall": "if [ \"$RAILS_ENV\" = \"production\" ] ; then cd ./client && npm install --production; else cd ./client && npm install; fi",
     "gulp": "cd ./client && npm run gulp",
     "test": "rspec && client/bin/lint && (cd client && npm run jscs .)"
   },
