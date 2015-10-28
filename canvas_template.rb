@@ -1,10 +1,18 @@
-# run with rails new testtmp -m ./tmp/canvas_template.rb
+# run with rails new testtmp -m ./canvas_starter_app/canvas_template.rb
 
 require "fileutils"
 require "byebug"
 
-repo = "git@github.com:atomicjolt/tmp.git"
+repo = "git@github.com:atomicjolt/canvas_starter_app.git"
 working_dir = destination_root
+
+###########################################################
+# 
+# Overrides
+# 
+def source_paths
+  [File.expand_path(File.dirname(__FILE__))]
+end
 
 ###########################################################
 # 
@@ -39,7 +47,7 @@ end
 # Gather information
 # 
 app_name = app_dir.titleize # ask("What is the application name?")
-add_remote = true     # yes?("Add Tmp as upstream?")
+add_remote = true     # yes?("Add Canvas Starter App as upstream?")
 git_repo_url
 rails_port = ask_with_default("Port for Rails?", :blue, 3000)
 assets_port = ask_with_default("Port for assets server?", :blue, 8000)
@@ -66,21 +74,6 @@ end
 
 ###########################################################
 # 
-# secrets.yml
-# 
-inside 'config' do
-  copy_file "secrets.example.yml", "secrets.yml"
-  
-  line = "<Run rake secret to get a value to put here>"
-  gsub_file("secrets.yml", /(#{Regexp.escape(line)})/mi) do |match|
-    app_name
-  end
-
-end
-
-
-###########################################################
-# 
 # .env
 # 
 create_file '.env' do <<-EOF
@@ -99,35 +92,29 @@ end
 # 
 # Modify application name
 #
-modify_files = Dir.glob("**/*").reject do |f| 
-  File.directory?(f) || !["rb", "js", "yml", "erb", "json", "md", "jsx"].include?(File.extname(f)) 
-end
+allowed = [".rb", ".js", ".yml", ".erb", ".json", ".md", ".jsx"]
+modify_files = Dir.glob("#{working_dir}/**/*").reject { |f| File.directory?(f) || !allowed.include?(File.extname(f)) }
 modify_files << ".env"
 modify_files << "Gemfile"
 modify_files << ".ruby-gemset"
-
 
 modify_files.each do |f|
   
   puts "processing: #{f}"
 
-  line = "tmp"
-  gsub_file(f, /(#{Regexp.escape(line)})/mi) do |match|
+  gsub_file(f, "canvas_starter_app") do |match|
     app_name.parameterize.underscore
   end
 
-  line = "tmp"
-  gsub_file(f, /(#{Regexp.escape(line)})/mi) do |match|
-    app_name.parameterize
-  end
-  
-  line = "tmp"
-  gsub_file(f, /(#{Regexp.escape(line)})/mi) do |match|
+  gsub_file(f, "CanvasStarterApp") do |match|
     app_name.classify
   end
 
-  line = "Tmp"
-  gsub_file(f, /(#{Regexp.escape(line)})/mi) do |match|
+  gsub_file(f, "canvasstarterapp") do |match|
+    app_name.parameterize
+  end
+
+  gsub_file(f, "Canvas Starter App") do |match|
     app_name
   end
 
@@ -136,20 +123,41 @@ end
 
 ###########################################################
 # 
-# Initialize the database
+# Install Gems
 # 
-rake("db:create")
-rake("db:schema:load")
-rake("db:seed")
+run "bundle install"
 
 
 ###########################################################
 # 
-# Commit changes to git
+# After bundling
 # 
 after_bundle do
-  git add: '.'
-  git commit: "-a -m 'Initial commit'"
+
+  #Commit changes to git
+ # git add: '.'
+ # git commit: "-a -m 'Initial commit'"
+ # git push: "origin master" if add_remote
+
+  # Initialize the database
+  rake("db:create")
+  rake("db:schema:load")
+  rake("db:seed")
+
+  ###########################################################
+  # 
+  # secrets.yml
+  # 
+  inside 'config' do
+    copy_file "secrets.example.yml", "secrets.yml"
+    
+    secret = rake "secret"
+
+    gsub_file("secrets.yml", "<Run rake secret to get a value to put here>") do |match|
+      secret
+    end
+
+  end
 end
 
 
@@ -164,7 +172,7 @@ puts "Notes:"
 puts "Assuming you have ngrok installed and want to use foreman start the application by running:"
 puts "foreman start -f Procfile.dev"
 
-if !origin_repo
+if !git_repo_specified?
   puts "To set your git remote repository run:"
   puts 'git remote set-url origin [URL_OF_YOUR_GIT_REPOSITORY]'
 end
