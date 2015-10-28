@@ -1,4 +1,6 @@
-# run with rails new testtmp -m ./canvas_starter_app/canvas_template.rb
+# run with:
+# rails new my_app -m ./canvas_starter_app/template.rb
+#rails new my_app -m https://github.com/atomicjolt/canvas_starter_app/blob/master/template.rb
 
 require "fileutils"
 require 'securerandom'
@@ -19,7 +21,7 @@ end
 # Helper methods
 # 
 def git_repo_url
-  @git_repo_url ||= ask_with_default("What is the git or bitbucket remote URL for this project?", :blue, "skip")
+  @git_repo_url ||= ask_with_default("What is the Github or bitbucket remote URL for this project?", :blue, "skip")
 end
 
 def git_repo_specified?
