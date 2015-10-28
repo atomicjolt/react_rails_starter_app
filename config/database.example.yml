@@ -16,7 +16,7 @@ development:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: tmp_development
+  database: canvas_starter_app_development
   pool:     5
   username:
   password:
@@ -44,7 +44,7 @@ test:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: tmp_test
+  database: canvas_starter_app_test
   pool:     5
   username:
   password:
@@ -54,7 +54,7 @@ production:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: tmp_production
+  database: canvas_starter_app_production
   pool:     5
   username:
   password:

@@ -42,7 +42,7 @@ class Index extends React.Component {
 
     return (
       <AppCanvas predefinedLayout={1}>
-        <h1>Tmp</h1>
+        <h1>Canvas Starter App</h1>
         <RouteHandler />
         <div className="footer">
           <p>

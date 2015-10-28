@@ -28,7 +28,7 @@ import routes             from './routes';
       var rootSlashLocation = new Router.TestLocation(['/']);
       Router.run(routes, rootSlashLocation, function (Handler, state){
         var html = React.renderToString(<Handler params={state.params} />);
-        expect(html).toContain("Tmp");
+        expect(html).toContain("Canvas Starter App");
         expect(html).toContain("Login");
         expect(html).toContain("Atomic Jolt");
         done();

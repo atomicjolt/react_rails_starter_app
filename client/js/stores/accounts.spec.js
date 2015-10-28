@@ -15,10 +15,10 @@ describe('AccountsStore', () => {
       "status"        : 200,
       "contentType"     : "text/plain",
       "responseText" : JSON.stringify({canvas_uri: "https://canvas.instructure.com",
-        code: "tmp",
+        code: "canvasstarterapp",
         created_at: "2015-05-08T19:06:02.755Z",
-        domain: "tmp.ngrok.io",
-        id: 1, lti_key: "tmp",
+        domain: "canvasstarterapp.ngrok.io",
+        id: 1, lti_key: "canvasstarterapp",
         lti_secret: "d52ca2c9892975bbb9def56e68eefe8e92a338d9b74d73ec5dad64803a376b2f1f5129c0bd9f7e73684526c234e0835bd1635e09d427cd45cb0de4296278682f",
         name: "Canvas Stater App",
         updated_at: "2015-05-08T19:06:02.755Z"})
