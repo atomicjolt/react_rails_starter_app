@@ -1,8 +1,8 @@
-# Canvas Starter App
+# Tmp
 
 This project provides a starting point for building a Canvas LTI or OAuth application.
 
-## Running Canvas Starter App
+## Running Tmp
 
 ### With Foreman
 Foreman makes it simple to startup all the services required to run the application in development mode. To start the application using foreman simply run:
@@ -23,10 +23,10 @@ If you need to run services individually or just don't like Foreman you can run 
 $ rails server
 $ cd client && nodemon webpack.hot.js
 $ ngrok --subdomain master_assets --log stdout 8080
-$ ngrok --subdomain canvasstarterapp --log stdout 3000
+$ ngrok --subdomain tmp --log stdout 3000
 ```
 
-## Setting up Canvas Starter App
+## Setting up Tmp
 
 ### File Modifications
 
@@ -36,9 +36,9 @@ Rename `.env.example` to `.env` and configure it to your liking.
 Note: the App and Assets subdomains must be different.
 
 #### Modify application name
-1. Open application.rb and change `CanvasStarterApp` to the name you choose.
-2. Do a global search and replace for `canvas_starter_app` and change it to the name you choose.
-3. Do a global search and replace for `canvasstarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
+1. Open application.rb and change `tmp` to the name you choose.
+2. Do a global search and replace for `tmp` and change it to the name you choose.
+3. Do a global search and replace for `tmp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
 
 #### Secrets file
 Rename `config/secrets.example.yml` to `config/secrets.yml`. Open the file and change each entry to values that are relevant for your application.
@@ -63,9 +63,9 @@ Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.
 #### NGROK
 To test your application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to use ngrok which can be downloaded from [ngrok](https://ngrok.com/).
 
-Running 'ngrok --subdomain canvasstarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
+Running 'ngrok --subdomain tmp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
 
-`https://canvasstarterapp.ngrok.com`
+`https://tmp.ngrok.com`
 
 #### Webpack
 Packs CommonJs/AMD modules for the browser.
@@ -118,7 +118,7 @@ $ npm shrinkwrap
 
 #### React
 Most LTI applications need to be single page applications in order to avoid a bug that prevents cookies from being written in some
-browsers. The Canvas Starter App uses React. During development run the [React Hot Loader](https://github.com/gaearon/react-hot-loader).
+browsers. The Tmp uses React. During development run the [React Hot Loader](https://github.com/gaearon/react-hot-loader).
 
 
 ### <a name="seeds"></a>Setting up Database
@@ -155,14 +155,14 @@ $ rake db:seed
 ### <a name="developer_key"></a>Request a Canvas Developer Key
 
 Go to the [Canvas Developer Key Request Form](https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform)
-Most of the fields will be specific to your organization. The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `canvasstarterapp.ngrok.com` with your domain. You will need an ID and secret for development and for production. The
+Most of the fields will be specific to your organization. The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `tmp.ngrok.com` with your domain. You will need an ID and secret for development and for production. The
 development URI will use ngrok while the production URI will use your domain.
 
 **Oauth2 Redirect URI:**
-https://canvasstarterapp.ngrok.io/users/auth/canvas/callback
+https://tmp.ngrok.io/users/auth/canvas/callback
 
 **Icon URL:**
-https://canvasstarterapp.ngrok.io/oauth_icon.png
+https://tmp.ngrok.io/oauth_icon.png
 
 Once your request is approved you will receive a Canvas ID and Secret. Add these credentials to the `config/secrets.yml` file under `canvas_id` and `canvas_secret`.
 

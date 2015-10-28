@@ -1,7 +1,7 @@
 {
-  "name": "canvas_starter_app",
+  "name": "tmp",
   "version": "0.0.1",
-  "description": "Javascript for the Canvas Starter App.",
+  "description": "Javascript for the Tmp.",
   "engines": {
     "node": "0.10.32"
   },
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/atomicjolt/canvas_starter_app"
+    "url": "https://github.com/atomicjolt/tmp"
   },
   "keywords": [
     "react",
@@ -23,7 +23,7 @@
   ],
   "author": "atomicjolt",
   "license": "MIT",
-  "homepage": "https://github.com/atomicjolt/canvas_starter_app",
+  "homepage": "https://github.com/atomicjolt/tmp",
   "dependencies": {
   }
 }

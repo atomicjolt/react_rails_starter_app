@@ -32,9 +32,9 @@ function helpStubAjax(SettingsActions){
     // Stub request to load problems
     var accounts_payload = JSON.stringify([{
       "id":1,
-      "name":"Canvas Starter App",
+      "name":"Tmp",
       "domain":"bfcoderServer.ngrok.io",
-      "lti_key":"canvasstarterapp",
+      "lti_key":"tmp",
       "lti_secret":"d52ca2",
       "canvas_uri":"https://canvas.instructure.com",
       "code":"bfcoderServer"

@@ -1,9 +1,9 @@
-# run with rails new testtmp -m ./canvas_starter_app/canvas_template.rb
+# run with rails new testtmp -m ./tmp/canvas_template.rb
 
 require "fileutils"
 require "byebug"
 
-repo = "git@github.com:atomicjolt/canvas_starter_app.git"
+repo = "git@github.com:atomicjolt/tmp.git"
 working_dir = destination_root
 
 ###########################################################
@@ -39,7 +39,7 @@ end
 # Gather information
 # 
 app_name = app_dir.titleize # ask("What is the application name?")
-add_remote = true     # yes?("Add Canvas Starter App as upstream?")
+add_remote = true     # yes?("Add Tmp as upstream?")
 git_repo_url
 rails_port = ask_with_default("Port for Rails?", :blue, 3000)
 assets_port = ask_with_default("Port for assets server?", :blue, 8000)
@@ -111,22 +111,22 @@ modify_files.each do |f|
   
   puts "processing: #{f}"
 
-  line = "canvas_starter_app"
+  line = "tmp"
   gsub_file(f, /(#{Regexp.escape(line)})/mi) do |match|
     app_name.parameterize.underscore
   end
 
-  line = "canvasstarterapp"
+  line = "tmp"
   gsub_file(f, /(#{Regexp.escape(line)})/mi) do |match|
     app_name.parameterize
   end
   
-  line = "CanvasStarterApp"
+  line = "tmp"
   gsub_file(f, /(#{Regexp.escape(line)})/mi) do |match|
     app_name.classify
   end
 
-  line = "Canvas Starter App"
+  line = "Tmp"
   gsub_file(f, /(#{Regexp.escape(line)})/mi) do |match|
     app_name
   end
