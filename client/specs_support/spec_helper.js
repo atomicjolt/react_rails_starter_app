@@ -59,12 +59,18 @@ var helpDefaultSettings = {
   apiUrl: "http://www.example.com/api"
 };
 
-function helpLoadSettings(SettingsActions){
+function helpLoadSettings(SettingsActions, optionalSettings) {
+  var settings = {};
+  for (var attrname in helpDefaultSettings) { settings[attrname] = helpDefaultSettings[attrname]; }
+
+  if(optionalSettings){
+    for (var attrname in optionalSettings) { settings[attrname] = optionalSettings[attrname]; }
+  }
 
   helpMockClock();
 
-  beforeEach(function(){
-    SettingsActions.load(helpDefaultSettings);
+  beforeEach(function() {
+    SettingsActions.load(settings);
     jasmine.clock().tick(); // Advance the clock to the next tick
   });
 
