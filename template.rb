@@ -48,7 +48,8 @@ end
 # 
 # Gather information
 # 
-app_name = app_dir.titleize
+app_name = app_dir
+url_safe_name = app_name.parameterize.gsub("-", "")
 git_repo_url
 rails_port = ask_with_default("Port for Rails?", :blue, 3000)
 assets_port = ask_with_default("Port for assets server?", :blue, 8000)
@@ -91,12 +92,12 @@ end
 # .env
 # 
 create_file '.env' do <<-EOF
-APP_SUBDOMAIN=#{app_name.parameterize}
+APP_SUBDOMAIN=#{url_safe_name}
 APP_URL=ngrok.io
 APP_PORT=#{rails_port}
-ASSETS_SUBDOMAIN=#{app_name.parameterize}assets
+ASSETS_SUBDOMAIN=#{url_safe_name}assets
 ASSETS_PORT=#{assets_port}
-ASSETS_URL=https://#{app_name.parameterize}assets.ngrok.io
+ASSETS_URL=https://#{url_safe_name}assets.ngrok.io
 APP_DEFAULT_CANVAS_URL=https://atomicjolt.instructure.com
 EOF
 end
@@ -115,19 +116,19 @@ modify_files << ".ruby-gemset"
 modify_files.each do |f|
   
   gsub_file(f, "canvas_starter_app") do |match|
-    app_name.parameterize.underscore
+    app_name.underscore
   end
 
   gsub_file(f, "CanvasStarterApp") do |match|
-    app_name.parameterize.classify
+    app_name.classify
   end
 
   gsub_file(f, "canvasstarterapp") do |match|
-    app_name.parameterize
+    url_safe_name
   end
 
   gsub_file(f, "Canvas Starter App") do |match|
-    app_name
+    app_name.titleize
   end
 
 end
