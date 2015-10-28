@@ -1,7 +1,7 @@
 # run with rails new testtmp -m ./canvas_starter_app/canvas_template.rb
 
 require "fileutils"
-require "byebug"
+require 'securerandom'
 
 repo = "git@github.com:atomicjolt/canvas_starter_app.git"
 working_dir = destination_root
@@ -74,6 +74,19 @@ end
 
 ###########################################################
 # 
+# secrets.yml
+# 
+inside 'config' do
+  copy_file "secrets.example.yml", "secrets.yml"
+
+  gsub_file("secrets.yml", "<Run rake secret to get a value to put here>") do |match|
+    SecureRandom.hex(64)
+  end
+end
+
+
+###########################################################
+# 
 # .env
 # 
 create_file '.env' do <<-EOF
@@ -137,27 +150,13 @@ after_bundle do
   #Commit changes to git
  # git add: '.'
  # git commit: "-a -m 'Initial commit'"
- # git push: "origin master" if add_remote
+ # git push: "origin master" if git_repo_specified?
 
   # Initialize the database
   rake("db:create")
   rake("db:schema:load")
   rake("db:seed")
 
-  ###########################################################
-  # 
-  # secrets.yml
-  # 
-  inside 'config' do
-    copy_file "secrets.example.yml", "secrets.yml"
-    
-    secret = rake "secret"
-
-    gsub_file("secrets.yml", "<Run rake secret to get a value to put here>") do |match|
-      secret
-    end
-
-  end
 end
 
 
