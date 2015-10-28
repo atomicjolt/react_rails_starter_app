@@ -46,8 +46,7 @@ end
 # 
 # Gather information
 # 
-app_name = app_dir.titleize # ask("What is the application name?")
-add_remote = true     # yes?("Add Canvas Starter App as upstream?")
+app_name = app_dir.titleize
 git_repo_url
 rails_port = ask_with_default("Port for Rails?", :blue, 3000)
 assets_port = ask_with_default("Port for assets server?", :blue, 8000)
@@ -60,7 +59,7 @@ assets_port = ask_with_default("Port for assets server?", :blue, 8000)
 FileUtils.rm_rf("#{working_dir}/.")               # Get rid of the rails generated code.
 run "cd .. && git clone #{repo} #{working_dir}"   # Replace it with our repo.
 git remote: "set-url origin #{git_repo_url}" if git_repo_specified?
-git remote: "add upstream #{repo}" if add_remote
+git remote: "add upstream #{repo}"
 
 
 ###########################################################
@@ -138,33 +137,40 @@ end
 # 
 # Install Gems
 # 
+run "gem install bundler"
+run "gem install foreman"
 run "bundle install"
 
 
 ###########################################################
 # 
-# After bundling
+# npm install
 # 
-after_bundle do
+run "cd client && npm install"
 
-  #Commit changes to git
- # git add: '.'
- # git commit: "-a -m 'Initial commit'"
- # git push: "origin master" if git_repo_specified?
 
-  # Initialize the database
-  rake("db:create")
-  rake("db:schema:load")
-  rake("db:seed")
+###########################################################
+# 
+# Initialize the database
+# 
+rake("db:create")
+rake("db:schema:load")
+rake("db:seed")
 
-end
+
+###########################################################
+# 
+# Commit changes to git
+# 
+git add: '.'
+git commit: "-a -m 'Initial commit'"
+git push: "origin master" if git_repo_specified?
 
 
 ###########################################################
 # 
 # Notes
 # 
-
 puts "***********************************************"
 puts "Notes:"
 
