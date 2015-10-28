@@ -1,6 +1,6 @@
 # run with:
 # rails new my_app -m ./canvas_starter_app/template.rb
-#rails new my_app -m https://github.com/atomicjolt/canvas_starter_app/blob/master/template.rb
+# rails new my_app -m https://github.com/atomicjolt/canvas_starter_app/blob/master/template.rb
 
 require "fileutils"
 require 'securerandom'
@@ -114,14 +114,12 @@ modify_files << ".ruby-gemset"
 
 modify_files.each do |f|
   
-  puts "processing: #{f}"
-
   gsub_file(f, "canvas_starter_app") do |match|
     app_name.parameterize.underscore
   end
 
   gsub_file(f, "CanvasStarterApp") do |match|
-    app_name.classify
+    app_name.parameterize.classify
   end
 
   gsub_file(f, "canvasstarterapp") do |match|
