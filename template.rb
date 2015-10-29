@@ -3,7 +3,8 @@
 # rails new my_app -m https://github.com/atomicjolt/canvas_starter_app/blob/master/template.rb
 
 require "fileutils"
-require 'securerandom'
+require "securerandom"
+
 
 repo = "git@github.com:atomicjolt/canvas_starter_app.git"
 working_dir = destination_root
@@ -49,7 +50,7 @@ end
 # Gather information
 # 
 app_name = app_dir
-url_safe_name = app_name.parameterize.gsub("-", "")
+url_safe_name = app_name.parameterize.gsub("-", "").gsub("_", "")
 git_repo_url
 rails_port = ask_with_default("Port for Rails?", :blue, 3000)
 assets_port = ask_with_default("Port for assets server?", :blue, 8000)
@@ -107,7 +108,7 @@ end
 # 
 # Modify application name
 #
-allowed = [".rb", ".js", ".yml", ".erb", ".json", ".md", ".jsx"]
+allowed = [".rb", ".js", ".yml", ".erb", ".json", ".md", ".jsx", ".example"]
 modify_files = Dir.glob("#{working_dir}/**/*").reject { |f| File.directory?(f) || !allowed.include?(File.extname(f)) }
 modify_files << ".env"
 modify_files << "Gemfile"
@@ -138,6 +139,22 @@ end
 # 
 # Install Gems
 # 
+
+begin
+  require "rvm"
+
+  RVM.gemset_create url_safe_name
+
+  begin
+    RVM.gemset_use! app_name
+  rescue => ex
+    puts "Unable to use gemset #{app_name}: #{ex}"
+  end
+
+rescue LoadError
+  puts "RVM gem is currently unavailable."
+end
+
 run "gem install bundler"
 run "gem install foreman"
 run "bundle install"
@@ -164,7 +181,7 @@ rake("db:seed")
 # Commit changes to git
 # 
 git add: '.'
-git commit: "-a -m 'Initial commit'"
+git commit: "-a -m 'Initial Project Commit'"
 git push: "origin master" if git_repo_specified?
 
 
