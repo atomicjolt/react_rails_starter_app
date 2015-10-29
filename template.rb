@@ -146,18 +146,19 @@ begin
   RVM.gemset_create url_safe_name
 
   begin
-    RVM.gemset_use! app_name
+    RVM.gemset_use! url_safe_name
+
+    run "gem install bundler"
+    run "gem install foreman"
+    run "bundle install"
+
   rescue => ex
-    puts "Unable to use gemset #{app_name}: #{ex}"
+    puts "Unable to use gemset #{url_safe_name}: #{ex}"
   end
 
 rescue LoadError
   puts "RVM gem is currently unavailable."
 end
-
-run "gem install bundler"
-run "gem install foreman"
-run "bundle install"
 
 
 ###########################################################
@@ -190,17 +191,19 @@ git push: "origin master" if git_repo_specified?
 # Notes
 # 
 puts "***********************************************"
-puts "Notes:"
+puts "*"
+puts "*               Notes                          "
+puts "*"
 
 puts "Assuming you have ngrok installed and want to use foreman start the application by running:"
 puts "foreman start -f Procfile.dev"
 
 if !git_repo_specified?
   puts "To set your git remote repository run:"
-  puts 'git remote set-url origin [URL_OF_YOUR_GIT_REPOSITORY]'
+  puts "git remote set-url origin [URL_OF_YOUR_GIT_REPOSITORY]"
 end
 
-puts 'If you need API access you will need to request a Canvas ID and Secret from Instructure - https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform .'
+puts "If you need API access you will need to request a Canvas ID and Secret from Instructure - https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform ."
 
-
-
+puts "*                                             *"
+puts "***********************************************"
