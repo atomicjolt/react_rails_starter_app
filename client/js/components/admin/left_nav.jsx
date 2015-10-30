@@ -4,12 +4,16 @@ import React                from "react";
 import UserStore            from "../../stores/user";
 import AccountsStore        from "../../stores/accounts";
 import BaseComponent        from "../base_component";
-import Router               from "react-router";
 import Defines              from "../defines";
 import AccountSelection     from './account_selection';
+import history              from '../../history';
 import { LeftNav, IconButton, FontIcon, FlatButton }          from "material-ui";
 
-class LeftNavigation extends BaseComponent {
+export default class LeftNavigation extends BaseComponent {
+
+  static contextTypes = {
+     muiTheme: React.PropTypes.object
+  }
 
   constructor(props, context) {
     super(props, context);
@@ -52,7 +56,7 @@ class LeftNavigation extends BaseComponent {
 
     for (var i = this.state.menuItems.length - 1; i >= 0; i--) {
       currentItem = this.state.menuItems[i];
-      if (currentItem.route && this.context.router.isActive(currentItem.route)) return i;
+      if (currentItem.route && this.props.path == currentItem.route) return i;
     }
   }
 
@@ -62,8 +66,8 @@ class LeftNavigation extends BaseComponent {
 
   _onLeftNavChange(e, key, payload) {
     var id = payload.accountId ? {accountId: payload.accountId} : null;
-    this.context.router.transitionTo(payload.route, id);
-
+    //this.context.router.transitionTo(payload.route, id);
+    history.pushState({}, payload.route);
   }
 
   getStyles() {
@@ -99,6 +103,8 @@ class LeftNavigation extends BaseComponent {
         {name}
       </div>;
 
+    var selectedIndex = this._getSelectedIndex();
+
     return (
       <LeftNav
         ref="leftNav"
@@ -106,16 +112,9 @@ class LeftNavigation extends BaseComponent {
         isInitiallyOpen={false}
         header={header}
         menuItems={this.state.menuItems}
-        selectedIndex={ (e) => { this._getSelectedIndex() }}
+        selectedIndex={selectedIndex}
         onChange={(e, key, payload) => this._onLeftNavChange(e, key, payload)} />
     );
   }
 
 }
-
-LeftNavigation.contextTypes = {
-  router: React.PropTypes.func.isRequired,
-  muiTheme: React.PropTypes.object
-};
-
-module.exports = LeftNavigation;

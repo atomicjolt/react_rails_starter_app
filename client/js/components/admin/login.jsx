@@ -8,9 +8,10 @@ import BaseComponent from "../base_component";
 import _             from "lodash";
 import assign        from "object-assign";
 import Defines       from "../defines";
+import history       from '../../history';
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
 
-class Login extends BaseComponent {
+export default class Login extends BaseComponent {
 
   constructor(props, context){
     super(props, context);
@@ -20,7 +21,7 @@ class Login extends BaseComponent {
 
     this._bind("handleLogin", "validateAll", "validate", "validateEmail");
     if(this.state.loggedIn) {
-      context.router.transitionTo("home");
+      history.push({}, "/home");
     }
   }
 
@@ -35,7 +36,7 @@ class Login extends BaseComponent {
   storeChanged(){
     super.storeChanged();
     if(this.state.loggedIn) {
-      this.context.router.transitionTo("home");
+      history.push({}, "home");
       return null;
     }
   }
@@ -116,9 +117,3 @@ class Login extends BaseComponent {
       </div>);
   }
 }
-
-Login.contextTypes = {
-  router: React.PropTypes.func
-};
-
-module.exports = Login;

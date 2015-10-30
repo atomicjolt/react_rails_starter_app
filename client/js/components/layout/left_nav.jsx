@@ -2,6 +2,7 @@
 
 import React                from "react";
 import { LeftNav }          from "material-ui";
+import history              from '../../history';
 
 class LeftNavigation extends React.Component {
 
@@ -44,11 +45,11 @@ class LeftNavigation extends React.Component {
   }
 
   _onLeftNavChange(e, key, payload) {
-    this.context.router.transitionTo(payload.route);
+    history.pushState({}, payload.route);
   }
 
   _onHeaderClick() {
-    this.context.router.transitionTo('root');
+    history.pushState({}, "/");
     this.refs.leftNav.close();
   }
 

@@ -3,36 +3,31 @@
 import React                from "react";
 import Messages             from "../common/messages";
 import LeftNav              from "./left_nav";
-import {RouteHandler}       from "react-router";
-import AdminTheme           from "./admin_theme";
 import Defines              from "../defines";
 import BaseComponent        from "../base_component";
 import AdminStore           from "../../stores/admin";
 import AdminActions         from "../../actions/admin";
 import _                    from "lodash";
+import { Styles, AppCanvas, AppBar, IconButton, FullWidthSection } from "material-ui";
 
+const ThemeManager = Styles.ThemeManager;
 
-var mui = require('material-ui');
-var Typography = mui.Styles.Typography;
-var ThemeManager = new mui.Styles.ThemeManager();
-var { AppCanvas, AppBar, IconButton, FullWidthSection } = mui;
+export default class Page extends BaseComponent {
 
-var { Spacing } = mui.Styles;
-var { StyleResizable } = mui.Mixins;
-
-class Page extends BaseComponent {
+  static childContextTypes = {
+    muiTheme: React.PropTypes.object
+  }
 
   constructor() {
     super();
     this.state = this.getState();
-    ThemeManager.setTheme(AdminTheme);
     this._onMenuIconButtonTouchTap = this._onMenuIconButtonTouchTap.bind(this);
     this.stores = [AdminStore];
   }
 
   getChildContext() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(Styles.LightRawTheme)
     };
   }
 
@@ -51,11 +46,11 @@ class Page extends BaseComponent {
     var marginLeft = status ? "256px" : "0px";
     var styles = {
       root: {
-        paddingTop: Spacing.desktopKeylineIncrement + 'px'
+        paddingTop: Styles.Spacing.desktopKeylineIncrement + 'px'
       },
       content: {
         boxSizing: 'border-box',
-        padding: Spacing.desktopGutter + 'px'
+        padding: Styles.Spacing.desktopGutter + 'px'
       },
       a: {
         color: Defines.colors.grey
@@ -91,10 +86,9 @@ class Page extends BaseComponent {
     var showMenuIconButton = false;
     var leftIcon;
 
-    var currentRoute = _.last(this.context.router.getCurrentRoutes()).name;
     var noNavRoutes = ["login", "logout"];
 
-    if(!_.contains(noNavRoutes, currentRoute)){
+    if(!_.contains(noNavRoutes, this.props.route.path)){
       showMenuIconButton = true;
       leftNav = <LeftNav ref="leftNav" docked={false} isInitiallyOpen={false} loggedIn={this.state.loggedIn} />;
       leftIcon = (
@@ -119,19 +113,9 @@ class Page extends BaseComponent {
         <div style={styles.root}>
           <Messages />
           <div style={styles.content}>
-            <RouteHandler />
+            {this.props.children}
           </div>
         </div>
       </AppCanvas>;
   }
 }
-
-Page.contextTypes = {
-  router: React.PropTypes.func
-};
-
-Page.childContextTypes = {
-  muiTheme: React.PropTypes.object
-};
-
-module.exports = Page;

@@ -2,6 +2,7 @@
 
 import React            from "react";
 import AdminActions     from "../../actions/admin";
+import history          from '../../history';
 import { RaisedButton, IconButton, Checkbox } from "material-ui";
 
 export default class UserControls extends React.Component {
@@ -13,7 +14,7 @@ export default class UserControls extends React.Component {
   }
 
   edit(id){
-    this.context.router.transitionTo("userEdit", {accountId: this.props.metadata.accountId, userId: id});
+    history.push({}, `/accounts/${this.props.metadata.accountId}/users/${id}/userEdit`);
   }
 
   destroy(id){

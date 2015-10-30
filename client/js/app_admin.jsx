@@ -1,10 +1,12 @@
 "use strict";
 
 import React          from 'react';
+import ReactDOM       from 'react-dom';
 import Router         from 'react-router';
-import AdminRoutes    from './routes_admin';
+import Routes         from './routes_admin';
 import SettingsAction from './actions/settings';
 import AdminActions   from "./actions/admin";
+import history        from './history';
 
 // Include the admin styling
 require('../styles/styles_admin.less');
@@ -32,17 +34,4 @@ if (window.matchMedia("(max-width: 639px)").matches){
 // Initialize store singletons
 SettingsAction.load(window.DEFAULT_SETTINGS);
 
-
-Router.run(AdminRoutes, (Handler) => {
-  return React.render(<Handler />, document.getElementById("main"));
-});
-
-
-// Router.run(routes, (Handler) => {
-//   return React.render(<Handler routerState={state} deviceType={deviceType} environment="browser" />, document.body);
-// });
-
-// Use the HTML5 history API for cleaner URLs:
-// Router.run(routes, Router.HistoryLocation, (Handler) => {
-//   return React.render(<Handler/>, document.body);
-// });
+ReactDOM.render((<Router history={history}>{Routes}</Router>), document.getElementById("main"));

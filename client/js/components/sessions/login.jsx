@@ -7,6 +7,7 @@ import _             from "lodash";
 import assign        from "object-assign";
 import UserStore     from "../../stores/user";
 import BaseComponent from "../base_component";
+import history       from '../../history';
 import { Link }      from "react-router";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
 
@@ -20,7 +21,7 @@ class Login extends BaseComponent {
 
     this._bind("handleLogin", "validateAll", "validate", "validateEmail");
     if(this.state.loggedIn) {
-      context.router.transitionTo("dashboard");
+      history.pushState({}, '/dashboard');
     }
   }
 

@@ -9,6 +9,7 @@ import Defines          from "../defines";
 import { Link }         from "react-router";
 import { FloatingActionButton } from "material-ui";
 import ToolBar          from "./tool_bar";
+import history          from '../../history';
 
 class AccountsList extends BaseComponent {
 
@@ -19,7 +20,7 @@ class AccountsList extends BaseComponent {
     this.state = this.getState();
     AdminActions.loadAccounts();
     if(!UsersStore.loggedIn()) {
-      context.router.transitionTo("login");
+      history.pushState({}, '/login');
     }
   }
 

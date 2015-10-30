@@ -1,11 +1,11 @@
 "use strict";
 
 import React          from 'react';
+import ReactDOM       from 'react-dom';
 import Router         from 'react-router';
 import Routes         from './routes';
 import SettingsAction from './actions/settings';
-
-import ThemeManager   from 'material-ui/lib/styles/theme-manager';
+import history        from './history';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -30,15 +30,4 @@ if (window.matchMedia("(max-width: 639px)").matches){
 // Initialize store singletons
 SettingsAction.load(window.DEFAULT_SETTINGS);
 
-Router.run(Routes, (Handler) => {
-  return React.render(<Handler />, document.getElementById("main"));
-});
-
-// Router.run(routes, (Handler) => {
-//   return React.render(<Handler routerState={state} deviceType={deviceType} environment="browser" />, document.body);
-// });
-
-// Use the HTML5 history API for cleaner URLs:
-// Router.run(routes, Router.HistoryLocation, (Handler) => {
-//   return React.render(<Handler/>, document.body);
-// });
+ReactDOM.render((<Router history={history}>{Routes}</Router>), document.getElementById("main"));

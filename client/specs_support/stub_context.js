@@ -15,7 +15,6 @@ export default (Component, props, stubs) => {
   assign(RouterStub, {
     makePath(){},
     makeHref(){},
-    transitionTo(){},
     replaceWith(){},
     goBack(){},
     getCurrentPath(){},

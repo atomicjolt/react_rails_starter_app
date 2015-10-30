@@ -4,9 +4,15 @@ import React                                                                    
 import User                                                                               from "../../stores/user";
 import { Paper, FlatButton, RaisedButton, FontIcon, Dialog, DropDownMenu, TextField }     from "material-ui";
 import AdminActions                                                                       from "../../actions/admin";
+import history                                                                            from '../../history';
 
-class EditUserForm extends React.Component {
+export default class EditUserForm extends React.Component {
   
+  static propTypes = {
+    user: React.PropTypes.object.isRequired,
+    accountId: React.PropTypes.string.isRequired
+  }
+
   constructor(){
     super();
     this.state = {
@@ -41,7 +47,7 @@ class EditUserForm extends React.Component {
   }
 
   dismiss(){
-    this.context.router.transitionTo("users", { accountId: this.props.accountId });
+    history.pushState({}, `/accounts/${this.props.accountId}/users?`);
   }
 
   componentDidUpdate(){
@@ -86,14 +92,3 @@ class EditUserForm extends React.Component {
   }
 
 }
-
-EditUserForm.propTypes = {
-  user: React.PropTypes.object.isRequired,
-  accountId: React.PropTypes.string.isRequired,
-};
-
-EditUserForm.contextTypes = {
-  router: React.PropTypes.func.isRequired
-};
-
-module.exports = EditUserForm;

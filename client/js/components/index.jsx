@@ -3,24 +3,26 @@
 import React          from "react";
 import Messages       from "./common/messages";
 import LeftNav        from "./layout/left_nav";
-import {RouteHandler} from "react-router";
 import UsersStore     from "../stores/user";
+import history        from '../history';
 
 var mui = require('material-ui');
-var Colors = mui.Styles.Colors;
-var Typography = mui.Styles.Typography;
 var ThemeManager = new mui.Styles.ThemeManager();
 
 var { AppCanvas } = mui;
 
 class Index extends React.Component {
 
+  static childContextTypes = {
+    muiTheme: React.PropTypes.object
+  }
+
   constructor(props, context) {
     super(props, context);
     this.stores = [UsersStore];
     this.state = this.getState(props, context);
     if(!this.state.loggedIn){
-      context.router.transitionTo('login');
+      history.pushState({}, '/login');
     }
   }
 
@@ -43,7 +45,7 @@ class Index extends React.Component {
     return (
       <AppCanvas predefinedLayout={1}>
         <h1>React Starter App</h1>
-        <RouteHandler />
+        {this.props.children}
         <div className="footer">
           <p>
             Built by <a href="http://www.atomicjolt.com">Atomic Jolt</a>.
@@ -54,13 +56,5 @@ class Index extends React.Component {
   }
 
 }
-
-Index.contextTypes = {
-  router: React.PropTypes.func
-};
-
-Index.childContextTypes = {
-  muiTheme: React.PropTypes.object
-};
 
 module.exports = Index;
