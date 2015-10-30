@@ -1,0 +1,24 @@
+*.rbc
+capybara-*.html
+/log
+/tmp
+/public/system
+/coverage/
+/spec/tmp
+**.orig
+rerun.txt
+pickle-email-*.html
+secrets.js
+*_web_pack_bundle.js
+.idea/
+.env
+
+config/secrets.js
+s3_website.yml
+
+## Environment normalisation:
+/.bundle
+/vendor/bundle
+
+node_modules
+npm-debug.log
