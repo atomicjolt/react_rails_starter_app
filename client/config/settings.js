@@ -34,8 +34,7 @@ module.exports = {
   hotPort: hotPort,
   
   entries: {
-    app: clientAppPath + 'js/app.jsx',
-    app_admin: clientAppPath + 'js/app_admin.jsx'
+    app: clientAppPath + 'js/app.jsx'
   },
 
   cssEntries: {
