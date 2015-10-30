@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "description": "Javascript for the Canvas Starter App.",
   "engines": {
-    "node": "0.10.32"
+    "node": "0.12.2"
   },
   "scripts": {
     "postinstall": "if [ \"$RAILS_ENV\" = \"production\" ] ; then cd ./client && npm install --production; else cd ./client && npm install; fi",
-    "gulp": "cd ./client && npm run gulp",
-    "test": "rspec && client/bin/lint && (cd client && npm run jscs .)"
+    "build": "cd ./client && npm run gulp",
+    "hot": "cd ./client && npm run gulp",
+    "test": "cd ./client && karma start"
   },
   "repository": {
     "type": "git",
