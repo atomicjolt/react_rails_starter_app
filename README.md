@@ -48,9 +48,9 @@ Inside the client directory run:
 
     For more details see the [s3_website gem instructions](https://github.com/laurilehmijoki/s3_website).
 
-    #IAM Policy:
-    ----------------------
-    `
+    ###IAM Policy:
+    ```json
+
       {
         "Statement": [
             {
@@ -70,9 +70,9 @@ Inside the client directory run:
             }
         ]
       }
-    `
+    ```
 
-   4. Configure bucket as website:
+  4. Configure bucket as website:
 
     `s3_website cfg apply`
    
