@@ -129,7 +129,7 @@ gulp.task('build', ['clean'], function(cb){
   runSequence(['vendor', 'assets', 'styles', 'javascript', 'tpl', 'html', 'approot'], cb);
 });
 
-gulp.task('deploy', ['build'] function () {
+gulp.task('deploy', ['build'], function () {
   return gulp.src('*.js', {read: false})
     .pipe(shell([
       'echo <%= f(file.path) %>',
