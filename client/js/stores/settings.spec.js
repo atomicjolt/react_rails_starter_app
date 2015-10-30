@@ -2,7 +2,6 @@
 
 import React           from "react";
 import Router          from "react-router";
-import assign          from "object-assign";
 import Constants       from "../constants";
 import SettingsStore   from "./settings";
 import SettingsActions from "../actions/settings";
@@ -17,7 +16,7 @@ describe("SettingsStore", () => {
     describe("current", () => {
       it("returns current settings", (done) => {
         var settings = SettingsStore.current();
-        expect(settings).toEqual(assign({ csrfToken: null, jwt: undefined }, helpDefaultSettings));
+        expect(settings).toEqual({...{ csrfToken: null, jwt: undefined }, ...helpDefaultSettings});
         done();
       });
     });
