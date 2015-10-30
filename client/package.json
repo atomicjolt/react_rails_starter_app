@@ -23,8 +23,6 @@
     "griddle-react": "^0.2.14",
     "history": "^1.12.6",
     "lodash": "^3.10.1",
-    "material-design-icons": "^2.0.0",
-    "material-ui": "^0.13.0",
     "null-loader": "^0.1.1",
     "object-assign": "^4.0.1",
     "path-is-absolute": "^1.0.0",
