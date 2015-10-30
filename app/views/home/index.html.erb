@@ -20,7 +20,13 @@
   <li>Configuration Type: Paste XML</li>
   <li>Give it a name, eg: <%= Rails.application.secrets.application_name %></li>
   <li>Paste in this Consumer Key: <strong><%= current_account.lti_key %></strong></li>
-  <li>Paste in this Shared Secret: <strong><%= current_account.lti_secret %></strong></li>
+  <li>Paste in this Shared Secret: 
+    <% if signed_in? && current_user.admin? -%>
+      <strong><%= current_account.lti_secret %></strong>
+    <% else -%>
+      Please log in as an admin to view the LTI secret.
+    <% end -%>
+  </li>
   <li>Paste in the following XML:</li>
 </ol>
 <textarea style="width:100%;height:500px;">
