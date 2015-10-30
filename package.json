@@ -1,19 +1,19 @@
 {
-  "name": "react_starter_app",
+  "name": "react_client_starter_app",
   "version": "0.0.1",
   "description": "Client only React project.",
   "engines": {
-    "node": "0.12.2"
+    "node": "4.2.1"
   },
   "scripts": {
-    "postinstall": "if [ \"$RAILS_ENV\" = \"production\" ] ; then cd ./client && npm install --production; else cd ./client && npm install; fi",
+    "postinstall": "cd ./client && npm install",
     "build": "cd ./client && npm run gulp",
     "hot": "cd ./client && npm run gulp",
-    "test": "cd ./client && karma start"
+    "test": "cd ./client/node_modules/karma/bin/ && karma start"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/atomicjolt/react_starter_app"
+    "url": "https://github.com/atomicjolt/react_client_starter_app"
   },
   "keywords": [
     "react",
@@ -22,7 +22,7 @@
   ],
   "author": "atomicjolt",
   "license": "MIT",
-  "homepage": "https://github.com/atomicjolt/react_starter_app",
+  "homepage": "https://github.com/atomicjolt/react_client_starter_app",
   "dependencies": {
   }
 }
