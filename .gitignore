@@ -19,6 +19,7 @@ secrets.js
 config/secrets.yml
 config/database.yml
 bin/deploy
+s3_website.yml
 
 ## Environment normalisation:
 /.bundle
@@ -36,6 +37,7 @@ bin/deploy
 bower.json
 
 client/node_modules
+node_modules
 npm-debug.log
 /app/assets/javascripts/styles.css
 
