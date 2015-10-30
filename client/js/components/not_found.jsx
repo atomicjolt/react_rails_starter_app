@@ -7,4 +7,3 @@ export default class NotFound extends React.Component{
     return <h2>Not Found</h2>;
   }
 };
-module.export = NotFound;
