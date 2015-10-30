@@ -2,24 +2,25 @@
 -----------------------
 Start server with:
 
-npm run start
+  `npm run hot`
 
 then visit http://localhost:8080
 
 
 #Development:
 -----------------------
-Source code lives in the app directory. 
+Source code lives in the client directory. 
 
 
 #Tests
 -----------
-  `karma start`
+  `npm run test`
     
 
 #Check for updates
 -----------
-  
+Inside the client directory run:
+
   `npm-check-updates`
 
 
@@ -34,7 +35,10 @@ Source code lives in the app directory.
 
   `gulp build --release`
   
+  Configure 
+
   Deploy:
+  
   `s3_website push`
 
 
