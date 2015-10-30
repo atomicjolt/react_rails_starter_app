@@ -203,7 +203,5 @@ if !git_repo_specified?
   puts "git remote set-url origin [URL_OF_YOUR_GIT_REPOSITORY]"
 end
 
-puts "If you need API access you will need to request a React ID and Secret from Instructure - https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform ."
-
 puts "*                                             *"
 puts "***********************************************"
