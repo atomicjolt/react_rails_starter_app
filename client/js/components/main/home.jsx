@@ -7,4 +7,3 @@ export default class Home extends React.Component{
     return <h2>Home</h2>;
   }
 };
-module.export = Home;

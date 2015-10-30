@@ -1,11 +1,10 @@
 "use strict";
 
-import assign         from "object-assign";
 import EventEmitter   from "events";
 
 const CHANGE_EVENT = 'change';
 
-export default assign({}, EventEmitter.prototype, {
+export default {...EventEmitter.prototype, ...{
 
   // Emit Change event
   emitChange(){
@@ -22,4 +21,4 @@ export default assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-});
+}};

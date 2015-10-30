@@ -3,7 +3,6 @@
 import Dispatcher     from "../dispatcher";
 import Constants      from "../constants";
 import StoreCommon    from "./store_common";
-import assign         from "object-assign";
 import QueryString    from '../utils/query_string';
 
 var _settings = {};
@@ -34,14 +33,14 @@ function refreshJwt(payload){
 }
 
 // Extend Message Store with EventEmitter to add eventing capabilities
-var SettingsStore = assign({}, StoreCommon, {
+var SettingsStore = {...StoreCommon, ...{
 
   // Return current messages
   current(){
     return _settings;
   }
 
-});
+}};
 
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
