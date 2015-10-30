@@ -9,7 +9,7 @@
     "postinstall": "if [ \"$RAILS_ENV\" = \"production\" ] ; then cd ./client && npm install --production; else cd ./client && npm install; fi",
     "build": "cd ./client && npm run gulp",
     "hot": "cd ./client && npm run gulp",
-    "test": "rspec && client/bin/lint && (cd client && npm run jscs .)"
+    "test": "cd ./client && karma start"
   },
   "repository": {
     "type": "git",
