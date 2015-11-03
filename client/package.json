@@ -12,7 +12,7 @@
     "build": "webpack --config webpack.release.js --progress --profile --colors",
     "hot": "node webpack.hot.js"
   },
-  "author": "atomicjolt",
+  "author": "atomicjolt, jbasdf",
   "license": "MIT",
   "homepage": "https://github.com/atomicjolt/canvas_starter_app",
   "dependencies": {
@@ -26,6 +26,7 @@
     "react-dom": "^0.14.1",
     "react-proxy-loader": "^0.3.4",
     "react-router": "^1.0.0-rc3",
+    "react-tap-event-plugin": "^0.2.1",
     "superagent": "^1.4.0",
     "uuid": "^2.0.1"
   },
@@ -43,11 +44,9 @@
     "extend-shallow": "^2.0.1",
     "extract-text-webpack-plugin": "^0.8.2",
     "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^3.1.0",
     "gulp-file-include": "^0.13.7",
     "gulp-load-plugins": "^1.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.1.0",
     "gulp-util": "^3.0.7",
     "html-minifier": "^1.0.0",
     "imports-loader": "~0.6.5",

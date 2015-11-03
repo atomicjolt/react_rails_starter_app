@@ -6,10 +6,10 @@
     "node": "0.12.2"
   },
   "scripts": {
-    "postinstall": "if [ \"$RAILS_ENV\" = \"production\" ] ; then cd ./client && npm install --production; else cd ./client && npm install; fi",
-    "build": "cd ./client && npm run gulp",
-    "hot": "cd ./client && npm run gulp",
-    "test": "cd ./client && karma start"
+    "postinstall": "cd ./client && npm install",
+    "hot": "cd ./client && node webpack.hot.js",
+    "test": "cd ./client && node_modules/karma/bin/karma start",
+    "coveralls": "cat coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
