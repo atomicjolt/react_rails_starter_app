@@ -1,29 +1,20 @@
 'use strict';
 
-// Include Gulp and other build automation tools and utilities
-// See: https://github.com/gulpjs/gulp/blob/master/docs/API.md
 var gulp          = require('gulp');
 var $             = require('gulp-load-plugins')();
 var es            = require('event-stream');
-var path          = require('path');
 var runSequence   = require('run-sequence');
 var webpack       = require('webpack');
 var fileinclude   = require('gulp-file-include');
 var rename        = require('gulp-rename');
-var url           = require('url');
 var settings      = require('./config/settings.js');
 var argv          = require('minimist')(process.argv.slice(2));
-var sass          = require('gulp-sass');
-var prefix        = require('gulp-autoprefixer');
 
 // Settings
 var release       = argv.release;
 var outputPath    = release ? settings.prodOutput : settings.devOutput;
 var webpackConfig = require('./config/webpack.config.js')(release);
 
-// Node.js runtime dependencies and their version numbers
-var pkgs = require('./package.json').dependencies;
-Object.keys(pkgs).forEach(function (key) { return pkgs[key] = pkgs[key].substring(1); });
 
 // Clean up
 // -----------------------------------------------------------------------------
@@ -45,21 +36,24 @@ gulp.task('vendor', function(){
   );
 });
 
-// Copy static files / assets
+// Copy images
 // -----------------------------------------------------------------------------
-gulp.task('assets', function(){
-  return es.merge(
-    gulp.src('./app/images/**')
-      .pipe(gulp.dest(outputPath + '/images/')),
-    gulp.src('./app/styles/fonts/**')
-      .pipe(gulp.dest(outputPath + '/css/fonts/'))
-  );
+gulp.task('images', function(){
+  gulp.src('./images/**/*')
+    .pipe(gulp.dest(outputPath + '/images/'));
 });
 
-// Compile html
+// Copy fonts
+// -----------------------------------------------------------------------------
+gulp.task('fonts', function(){
+  gulp.src('./fonts/**/*')
+    .pipe(gulp.dest(outputPath + '/styles/fonts/'));  
+});
+
+// Compile html templates
 // -----------------------------------------------------------------------------
 gulp.task('tpl', function(){
-  return gulp.src('./app/**/*.tpl.html')
+  return gulp.src('./html/**/*.tpl.html')
     .pipe(fileinclude())
     .pipe(rename({
       extname: ""
@@ -78,7 +72,7 @@ gulp.task('tpl', function(){
 // Copy html files
 // -----------------------------------------------------------------------------
 gulp.task('html', function(){
-  return gulp.src('./app/**/*.html')
+  return gulp.src('./html/**/*.html')
     .pipe(!release ? $.util.noop() : $.htmlmin({
         removeComments: true,
         collapseWhitespace: true,
@@ -89,21 +83,9 @@ gulp.task('html', function(){
 
 // Copy other files
 // -----------------------------------------------------------------------------
-gulp.task('approot', function(){
-  return gulp.src('./app/**/*')
+gulp.task('assets', function(){
+  return gulp.src('./assets/**/*')
     .pipe(gulp.dest(outputPath));
-});
-
-// CSS stylesheets
-// -----------------------------------------------------------------------------
-gulp.task('styles', function(){
-  return gulp.src('./app/styles/*.scss')
-    .pipe($.plumber())
-    .pipe(sass({sourceMap: 'sass', sourceComments: 'map'}))
-    .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
-    .on('error', $.util.log)
-    .pipe(release ? $.minifyCss() : $.util.noop())
-    .pipe(gulp.dest(outputPath + '/css'));
 });
 
 // Create JavaScript bundle
@@ -122,26 +104,12 @@ gulp.task('javascript', function(cb){
   bundler.run(bundle);
 });
 
-
 // Build the app from source code
 // -----------------------------------------------------------------------------
 gulp.task('build', ['clean'], function(cb){
-  runSequence(['vendor', 'assets', 'styles', 'javascript', 'tpl', 'html', 'approot'], cb);
+  runSequence(['vendor', 'fonts', 'images', 'javascript', 'tpl', 'html', 'assets'], cb);
 });
 
-gulp.task('deploy', ['build'], function () {
-  return gulp.src('*.js', {read: false})
-    .pipe(shell([
-      'echo <%= f(file.path) %>',
-      'ls -l <%= file.path %>'
-    ], {
-      templateData: {
-        f: function (s) {
-          return s.replace(/$/, '.bak')
-        }
-      }
-    }))
-});
 
 // The default task
-gulp.task('default', ['hot']);
+gulp.task('default', ['build']);

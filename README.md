@@ -1,6 +1,7 @@
 #Notes:
 -----------------------
-Start server with:
+1. Rename .env.example to .env and change the values as appropriate
+2. Start server with:
 
   `npm run hot`
 

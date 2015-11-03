@@ -3,8 +3,8 @@ var path      = require('path');
 
 var clientAppPath = path.join(__dirname, '../');
 
-var devRelativeOutput     = '/assets/';
-var prodRelativeOutput    = '/assets/';
+var devRelativeOutput     = '/';
+var prodRelativeOutput    = '/';
 
 var devOutput     = path.join(__dirname, '../../app', devRelativeOutput);
 var prodOutput    = path.join(__dirname, '../../build', prodRelativeOutput);
