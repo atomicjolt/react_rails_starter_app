@@ -10,7 +10,8 @@ then visit http://localhost:8080
 
 #Development:
 -----------------------
-Source code lives in the client directory. 
+Source code lives in the client directory. Modify html and js files in that directory to build your 
+application.
 
 
 #Tests
