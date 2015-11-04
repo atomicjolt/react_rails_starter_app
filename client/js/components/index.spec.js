@@ -1,6 +1,7 @@
 "use strict";
 
 import React       from 'react';
+import ReactDOM    from 'react-dom';
 import TestUtils   from 'react/lib/ReactTestUtils';
 import Index       from './index';
 
@@ -12,10 +13,11 @@ describe('index', function() {
   });
 
   it('renders the index', function() {
-    expect(React.findDOMNode(result)).toBeDefined();
+    expect(ReactDOM.findDOMNode(result)).toBeDefined();
   });
 
   afterEach(()=>{
-    React.unmountComponentAtNode(React.findDOMNode(result).parentNode)
+    React.unmountComponentAtNode(ReactDOM.findDOMNode(result).parentNode)
   });
 });
+
