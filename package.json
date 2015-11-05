@@ -8,7 +8,8 @@
   "scripts": {
     "postinstall": "cd ./client && npm install",
     "build": "cd ./client && gulp build",
-    "hot": "cd ./client && gulp hot && node webpack.hot.js",
+    "release": "cd ./client && gulp build --release",
+    "hot": "cd ./client && gulp build && node webpack.hot.js",
     "test": "cd ./client && node_modules/karma/bin/karma start",
     "coveralls": "cat coverage/lcov.info | coveralls"
   },

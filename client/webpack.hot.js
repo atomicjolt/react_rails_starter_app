@@ -5,6 +5,7 @@ var settings          = require('./config/settings.js');
 var webpackConfig     = require('./config/webpack.config.js')(release);
 
 new webpackDevServer(webpack(webpackConfig), {
+  contentBase: settings.devOutput,
   publicPath: webpackConfig.output.publicPath,
   watch: true,
   hot: true,
