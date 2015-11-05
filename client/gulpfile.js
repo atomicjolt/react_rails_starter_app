@@ -3,7 +3,7 @@
 var gulp          = require('gulp');
 var gulpFilter    = require('gulp-filter');
 var gulpIgnore    = require('gulp-ignore');
-var inject        = require('gulp-inject');
+var htmlReplace   = require('gulp-html-replace');
 var $             = require('gulp-load-plugins')();
 var es            = require('event-stream');
 var runSequence   = require('run-sequence');
@@ -62,9 +62,7 @@ gulp.task('html', function(){
 
   var tplFilter     = gulpFilter('**/*.tpl.html', {restore: true});
   var htmlFilter    = gulpFilter('**/*.html', {restore: true});
-
-  var sources = gulp.src([outputPath + '/**/*.js'], {read: false});
- 
+  
   return gulp.src('./html/**/*')
     .pipe(gulpIgnore.exclude("partials/**"))
     .pipe(gulpIgnore.exclude("partials"))
@@ -78,7 +76,7 @@ gulp.task('html', function(){
      }))
     .pipe(tplFilter.restore)
     .pipe(htmlFilter)
-    .pipe(inject(sources))
+    .pipe(htmlReplace({js: './app_web_pack_bundle.js'}))
     .pipe(!release ? $.util.noop() : $.htmlmin({
         removeComments: true,
         collapseWhitespace: true,
@@ -111,6 +109,20 @@ gulp.task('build', ['clean'], function(cb){
   runSequence(['vendor', 'fonts', 'images', 'javascript', 'html'], cb);
 });
 
+// Compile index.tpl.html for webpack to use
+// -----------------------------------------------------------------------------
+gulp.task('hot', function(cb){
+  return gulp.src('./html/index.tpl.html')
+    .pipe(fileinclude())  // Compile html (tpl) templates
+    .pipe(rename({
+      extname: ""
+     }))
+    .pipe(rename({
+      extname: ".html"
+     }))
+    .pipe(htmlReplace({js: './app_web_pack_bundle.js'}))
+    .pipe(gulp.dest('./'));
+});
 
 // The default task
 gulp.task('default', ['build']);
