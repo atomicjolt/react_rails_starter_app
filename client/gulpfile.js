@@ -1,6 +1,9 @@
 'use strict';
 
 var gulp          = require('gulp');
+var gulpFilter    = require('gulp-filter');
+var gulpIgnore    = require('gulp-ignore');
+var htmlReplace   = require('gulp-html-replace');
 var $             = require('gulp-load-plugins')();
 var es            = require('event-stream');
 var runSequence   = require('run-sequence');
@@ -19,14 +22,14 @@ var webpackConfig = require('./config/webpack.config.js')(release);
 // Clean up
 // -----------------------------------------------------------------------------
 gulp.task('clean', function(cb){
-  if(release){
-    var rimraf = require('rimraf');
-    rimraf(outputPath, cb);
-  }
+  var rimraf = require('rimraf');
+  rimraf(outputPath, cb);
 });
+
 
 // Copy vendor files
 // -----------------------------------------------------------------------------
+// Use this task to copy assets (ie fonts) from node modules
 gulp.task('vendor', function(){
   return es.merge(
     gulp.src('./node_modules/bootstrap-sass/assets/fonts/**')
@@ -36,12 +39,14 @@ gulp.task('vendor', function(){
   );
 });
 
+
 // Copy images
 // -----------------------------------------------------------------------------
 gulp.task('images', function(){
   gulp.src('./images/**/*')
     .pipe(gulp.dest(outputPath + '/images/'));
 });
+
 
 // Copy fonts
 // -----------------------------------------------------------------------------
@@ -50,41 +55,34 @@ gulp.task('fonts', function(){
     .pipe(gulp.dest(outputPath + '/styles/fonts/'));  
 });
 
-// Compile html templates
+
+// Copy html files
 // -----------------------------------------------------------------------------
-gulp.task('tpl', function(){
-  return gulp.src('./html/**/*.tpl.html')
-    .pipe(fileinclude())
+gulp.task('html', function(){
+
+  var tplFilter     = gulpFilter('**/*.tpl.html', {restore: true});
+  var htmlFilter    = gulpFilter('**/*.html', {restore: true});
+  
+  return gulp.src('./html/**/*')
+    .pipe(gulpIgnore.exclude("partials/**"))
+    .pipe(gulpIgnore.exclude("partials"))
+    .pipe(tplFilter)
+    .pipe(fileinclude())  // Compile html (tpl) templates
     .pipe(rename({
       extname: ""
      }))
     .pipe(rename({
       extname: ".html"
      }))
+    .pipe(tplFilter.restore)
+    .pipe(htmlFilter)
+    .pipe(htmlReplace({js: './app_web_pack_bundle.js'}))
     .pipe(!release ? $.util.noop() : $.htmlmin({
         removeComments: true,
         collapseWhitespace: true,
         minifyJS: true
     }))
-    .pipe(gulp.dest(outputPath));
-});
-
-// Copy html files
-// -----------------------------------------------------------------------------
-gulp.task('html', function(){
-  return gulp.src('./html/**/*.html')
-    .pipe(!release ? $.util.noop() : $.htmlmin({
-        removeComments: true,
-        collapseWhitespace: true,
-        minifyJS: true
-    }))
-    .pipe(gulp.dest(outputPath));
-});
-
-// Copy other files
-// -----------------------------------------------------------------------------
-gulp.task('assets', function(){
-  return gulp.src('./assets/**/*')
+    .pipe(htmlFilter.restore)
     .pipe(gulp.dest(outputPath));
 });
 
@@ -104,12 +102,27 @@ gulp.task('javascript', function(cb){
   bundler.run(bundle);
 });
 
+
 // Build the app from source code
 // -----------------------------------------------------------------------------
 gulp.task('build', ['clean'], function(cb){
-  runSequence(['vendor', 'fonts', 'images', 'javascript', 'tpl', 'html', 'assets'], cb);
+  runSequence(['vendor', 'fonts', 'images', 'javascript', 'html'], cb);
 });
 
+// Compile index.tpl.html for webpack to use
+// -----------------------------------------------------------------------------
+gulp.task('hot', function(cb){
+  return gulp.src('./html/index.tpl.html')
+    .pipe(fileinclude())  // Compile html (tpl) templates
+    .pipe(rename({
+      extname: ""
+     }))
+    .pipe(rename({
+      extname: ".html"
+     }))
+    .pipe(htmlReplace({js: './app_web_pack_bundle.js'}))
+    .pipe(gulp.dest('./'));
+});
 
 // The default task
 gulp.task('default', ['build']);
