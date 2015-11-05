@@ -1,4 +1,7 @@
+"use strict";
+
 import React              from 'react';
+import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import NotFound           from './not_found';
 
@@ -10,10 +13,10 @@ describe('not_found', function() {
   });
 
   it('renders a not found message', function() {
-    expect(React.findDOMNode(result).textContent).toEqual('Not Found');
+    expect(ReactDOM.findDOMNode(result).textContent).toEqual('Not Found');
   });
 
   afterEach(()=>{
-    React.unmountComponentAtNode(React.findDOMNode(result).parentNode)
+    React.unmountComponentAtNode(ReactDOM.findDOMNode(result).parentNode)
   });
 });
