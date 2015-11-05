@@ -79,14 +79,17 @@ Inside the client directory run:
     `s3_website cfg apply`
    
 
-  Build:
+#Setup Deploy:
+-----------------------
 
-  `gulp build --release`
+  Build a release without deploying:
+
+  `npm run build`
   
 
-  Deploy:
+  Build a release and deploy:
   
-  `s3_website push`
+  `npm run release`
 
 
 License and attribution
