@@ -6,8 +6,8 @@ var clientAppPath = path.join(__dirname, '../');
 var devRelativeOutput     = '/';
 var prodRelativeOutput    = '/';
 
-var devOutput     = path.join(__dirname, '../../app', devRelativeOutput);
-var prodOutput    = path.join(__dirname, '../../build', prodRelativeOutput);
+var devOutput     = path.join(__dirname, '../../build/dev', devRelativeOutput);
+var prodOutput    = path.join(__dirname, '../../build/prod', prodRelativeOutput);
 
 // There is a warning if the .env file is missing
 // This is fine in a production setting, where settings
