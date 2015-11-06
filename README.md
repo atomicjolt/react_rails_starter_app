@@ -79,7 +79,7 @@ Inside the client directory run:
     `s3_website cfg apply`
    
 
-#Setup Deploy:
+#Deploy:
 -----------------------
 
   Build a release without deploying:
