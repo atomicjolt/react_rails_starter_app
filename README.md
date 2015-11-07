@@ -2,6 +2,9 @@
 
 This project provides a starting point for building a React or OAuth application.
 
+## Build a new application using the React Starter App Rails application template:
+rails new testapp -m https://raw.githubusercontent.com/atomicjolt/react_starter_app/master/template.rb
+
 ## Running React Starter App
 
 ### With Foreman
