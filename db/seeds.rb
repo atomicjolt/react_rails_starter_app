@@ -4,13 +4,13 @@ puts 'CREATED ADMIN USER: ' << admin.email
 # Setup default accounts
 if Rails.env.production?
   accounts = [{
-    code: ENV["APP_SUBDOMAIN"],
+    code: Rails.application.secrets.application_code,
     name: Rails.application.secrets.application_name,
     domain: Rails.application.secrets.application_url
   }]
 else
   accounts = [{
-    code: ENV["APP_SUBDOMAIN"],
+    code: Rails.application.secrets.application_code,
     name: Rails.application.secrets.application_name,
     domain: Rails.application.secrets.application_url
   }]
@@ -25,5 +25,5 @@ accounts.each do |account|
   end
 end
 
-admin.account = Account.find_by(code: ENV["APP_SUBDOMAIN"])
+admin.account = Account.find_by(code: Rails.application.secrets.application_code)
 admin.save!
