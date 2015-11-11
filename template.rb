@@ -5,22 +5,21 @@
 require "fileutils"
 require "securerandom"
 
-
 #repo = "git@github.com:atomicjolt/react_starter_app.git"
 repo = "https://github.com/atomicjolt/react_starter_app.git"
 
-working_dir = destination_root
+# keep track if the initial directory
+@working_dir = destination_root
 
 ###########################################################
 # 
 # Overrides
 #
 def source_paths
-  puts "*******************************************************************"
-  puts File.expand_path(File.dirname(__FILE__))
-  puts "*******************************************************************"
-  Array(super) + 
-    [File.expand_path(File.dirname(__FILE__)), destination_root]
+  paths = Array(super) + 
+    [File.expand_path(File.dirname(__FILE__))]
+  paths << @working_dir
+  paths
 end
 
 ###########################################################
@@ -48,13 +47,13 @@ def ask_with_default(question, color, default)
 end
 
 def app_dir
-  destination_root.split('/').last
+  @working_dir.split('/').last
 end
 
 ###########################################################
 # 
 # Gather information
-# 
+#
 app_name = app_dir
 url_safe_name = app_name.parameterize.gsub("-", "").gsub("_", "")
 git_repo_url
@@ -66,8 +65,8 @@ assets_port = ask_with_default("Port for assets server?", :blue, 8000)
 # 
 # Clone and add remote
 # 
-FileUtils.rm_rf("#{working_dir}/.")               # Get rid of the rails generated code.
-run "cd .. && git clone #{repo} #{working_dir}"   # Replace it with our repo.
+FileUtils.rm_rf("#{@working_dir}/.")               # Get rid of the rails generated code.
+run "cd .. && git clone #{repo} #{@working_dir}"   # Replace it with our repo.
 git remote: "set-url origin #{git_repo_url}" if git_repo_specified?
 git remote: "add upstream #{repo}"
 
@@ -76,7 +75,7 @@ git remote: "add upstream #{repo}"
 # 
 # Database.yml
 #
-inside 'config' do 
+inside 'config' do
   copy_file "database.example.yml", "database.yml"
 end
 
@@ -115,7 +114,7 @@ end
 # Modify application name
 #
 allowed = [".rb", ".js", ".yml", ".erb", ".json", ".md", ".jsx", ".example"]
-modify_files = Dir.glob("#{working_dir}/**/*").reject { |f| File.directory?(f) || !allowed.include?(File.extname(f)) }
+modify_files = Dir.glob("#{@working_dir}/**/*").reject { |f| File.directory?(f) || !allowed.include?(File.extname(f)) }
 modify_files << ".env"
 modify_files << "Gemfile"
 modify_files << ".ruby-gemset"
