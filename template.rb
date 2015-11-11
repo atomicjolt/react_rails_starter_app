@@ -1,6 +1,6 @@
 # run with:
 # rails new my_app -m ./react_starter_app/template.rb
-# rails new my_app -m https://github.com/atomicjolt/react_starter_app/blob/master/template.rb
+# rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_starter_app/master/template.rb
 
 require "fileutils"
 require "securerandom"
@@ -14,9 +14,13 @@ working_dir = destination_root
 ###########################################################
 # 
 # Overrides
-# 
+#
 def source_paths
-  [File.expand_path(File.dirname(__FILE__))]
+  puts "*******************************************************************"
+  puts File.expand_path(File.dirname(__FILE__))
+  puts "*******************************************************************"
+  Array(super) + 
+    [File.expand_path(File.dirname(__FILE__))]
 end
 
 ###########################################################
