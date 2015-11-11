@@ -6,7 +6,9 @@ require "fileutils"
 require "securerandom"
 
 
-repo = "git@github.com:atomicjolt/canvas_starter_app.git"
+#repo = "git@github.com:atomicjolt/canvas_starter_app.git"
+repo = "https://github.com/atomicjolt/canvas_starter_app.git"
+
 working_dir = destination_root
 
 ###########################################################
