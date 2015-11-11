@@ -20,7 +20,7 @@ def source_paths
   puts File.expand_path(File.dirname(__FILE__))
   puts "*******************************************************************"
   Array(super) + 
-    [File.expand_path(File.dirname(__FILE__))]
+    [File.expand_path(File.dirname(__FILE__)), destination_root]
 end
 
 ###########################################################
