@@ -1,20 +1,12 @@
-admin = CreateAdminService.new.call
-puts 'CREATED ADMIN USER: ' << admin.email
-
 # Setup default accounts
-if Rails.env.production?
-  accounts = [{
-    code: Rails.application.secrets.application_code,
-    name: Rails.application.secrets.application_name,
-    domain: Rails.application.secrets.application_url
-  }]
-else
-  accounts = [{
-    code: Rails.application.secrets.application_code,
-    name: Rails.application.secrets.application_name,
-    domain: Rails.application.secrets.application_url
-  }]
-end
+accounts = [{
+  code: Rails.application.secrets.application_code,
+  name: Rails.application.secrets.application_name,
+  domain: Rails.application.secrets.application_url,
+  lti_key: Rails.application.secrets.default_lti_key,
+  lti_secret: Rails.application.secrets.default_lti_secret,
+  canvas_uri: Rails.application.secrets.canvas_url
+}]
 
 # Setup accounts
 accounts.each do |account|
@@ -25,5 +17,9 @@ accounts.each do |account|
   end
 end
 
-admin.account = Account.find_by(code: Rails.application.secrets.application_code)
+# add an admin to the default account
+admin = CreateAdminService.new.call
+puts 'CREATED ADMIN USER: ' << admin.email
+admin.account = Account.first
 admin.save!
+
