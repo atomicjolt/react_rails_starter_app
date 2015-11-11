@@ -2,6 +2,9 @@
 
 This project provides a starting point for building a Canvas LTI or OAuth application.
 
+## Build a new application using the Canvas Starter App Rails application template:
+rails new my_app -m https://raw.githubusercontent.com/atomicjolt/canvas_starter_app/master/template.rb
+
 ## Running Canvas Starter App
 
 ### With Foreman
