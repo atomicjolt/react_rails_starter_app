@@ -127,7 +127,7 @@ modify_files.each do |f|
   end
 
   gsub_file(f, "CanvasStarterApp") do |match|
-    app_name.classify
+    app_name.titleize.gsub(' ', '')
   end
 
   gsub_file(f, "canvasstarterapp") do |match|
