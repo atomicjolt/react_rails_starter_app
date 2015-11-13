@@ -14,7 +14,7 @@ module.exports = function(release){
   ];
 
   var autoprefix = '{browsers:["Android 2.3", "Android >= 4", "Chrome >= 20", "Firefox >= 24", "Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
-  var jsLoaders = ["babel-loader?stage=0&optional=runtime"]; // include the runtime 
+  var jsLoaders = ["babel?presets[]=es2015&presets[]=react&presets[]=stage-0&plugins[]=transform-runtime"];
 
   var cssLoaders = ['css-loader', 'autoprefixer-loader?' + autoprefix];
 
@@ -24,18 +24,21 @@ module.exports = function(release){
   var lessLoaders = cssLoaders.slice(0);
       lessLoaders.push("less-loader");
  
-  var entries;
-
+  var originalEntries = settings.entries;
+  var entries = {};
+    
   if(release){
-    entries = _.cloneDeep(settings.entries);
+    // Configure entries with hotloader
+    for(var name in originalEntries){
+      entries[name] = ['babel-polyfill', originalEntries[name]];
+    }
+
   } else {
     jsLoaders.unshift("react-hot-loader");
 
     // Configure entries with hotloader
-    var originalEntries = settings.entries;
-    entries = {};
     for(var name in originalEntries){
-      entries[name] = ['webpack-dev-server/client?' + settings.devAssetsUrl, 'webpack/hot/only-dev-server', originalEntries[name]];
+      entries[name] = ['webpack-dev-server/client?' + settings.devAssetsUrl, 'webpack/hot/only-dev-server', 'babel-polyfill', originalEntries[name]];
     }
   }
 
