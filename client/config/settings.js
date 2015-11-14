@@ -7,7 +7,7 @@ var devRelativeOutput     = '/assets/';
 var prodRelativeOutput    = '/assets/';
 
 var devOutput     = path.join(__dirname, '../../app', devRelativeOutput);
-var prodOutput    = path.join(__dirname, '../../build', prodRelativeOutput);
+var prodOutput    = path.join(__dirname, '../../public', prodRelativeOutput);
 
 // There is a warning if the .env file is missing
 // This is fine in a production setting, where settings
