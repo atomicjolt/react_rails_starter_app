@@ -27,4 +27,9 @@ class Account < ActiveRecord::Base
     Lti::Canvas.config_xml(config)
   end
 
+  def course_nav_lti_xml
+    config = Lti::Canvas.course_navigation_config(self.code)
+    Lti::Canvas.config_xml(config)
+  end
+
 end
