@@ -14,10 +14,6 @@ describe Integrations::CanvasCoursesLti do
     @env = "test"
   end
 
-  describe "courses" do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-  
   describe "setup" do
     before do
       @result = JSON.parse(lti_tool_json)
