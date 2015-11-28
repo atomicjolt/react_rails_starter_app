@@ -230,7 +230,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :canvas, Rails.application.secrets.canvas_id, Rails.application.secrets.canvas_secret, :setup => lambda{|env|
+  config.omniauth :canvas, Rails.application.secrets.developer_id, Rails.application.secrets.developer_key, :setup => lambda{|env|
     request = Rack::Request.new(env)
     env['omniauth.strategy'].options[:client_options].site = request.params['canvas_url'] || request.session['canvas_url'] || 'https://canvas.instructure.com'
   }

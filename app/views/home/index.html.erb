@@ -4,7 +4,7 @@
 <p>By logging into your instance of Canvas and authorizing the LTI App, you can install it automatically. This will also enable interaction with the Canvas API.</p>
 <p>Steps:</p>
 <ol>
-  <li>First <a href="https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform">request a canvas_id and canvas_secret from Instructure</a> and put them in the secrets.yml file.</li>
+  <li>First obtain a Canvas Developer ID and Developer Key from an Account Admin for the instance of Canvas that the tool will be installed in and put them in the secrets.yml or .env file.</li>
   <li><%= link_to "Connect Your Canvas Account", new_canvas_authentication_path, class: "btn btn-primary" %></li>
   <li><%= link_to("Install #{ Rails.application.secrets.lti_tool_name } into your Canvas account", new_lti_install_path) %></li>
 </ol>
