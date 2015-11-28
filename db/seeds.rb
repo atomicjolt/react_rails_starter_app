@@ -1,25 +1,21 @@
-# Setup default accounts
-accounts = [{
+# setup default account
+account_attrs = {
   code: Rails.application.secrets.application_code,
   name: Rails.application.secrets.application_name,
   domain: Rails.application.secrets.application_url,
   lti_key: Rails.application.secrets.default_lti_key,
   lti_secret: Rails.application.secrets.default_lti_secret,
   canvas_uri: Rails.application.secrets.canvas_url
-}]
+}
 
 # Setup accounts
-accounts.each do |account|
-  if a = Account.find_by(code: account[:code])
-    a.update_attributes!(account)
-  else
-    Account.create!(account)
-  end
+if account = Account.find_by(code: account_attrs[:code])
+  account.update_attributes!(account_attrs)
+else
+  account = Account.create!(account_attrs)
 end
 
 # add an admin to the default account
-admin = CreateAdminService.new.call
+admin = CreateAdminService.create_admin(account)
 puts 'CREATED ADMIN USER: ' << admin.email
-admin.account = Account.first
-admin.save!
 

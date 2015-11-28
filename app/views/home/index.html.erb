@@ -9,7 +9,7 @@
   <li><%= link_to("Install #{ Rails.application.secrets.lti_tool_name } into your Canvas account", new_lti_install_path) %></li>
 </ol>
 
-<% if current_user && current_user.role == 'admin' %>
+<% if current_user && current_user.admin %>
 
 <h3>Option 2 - Manual</h3>
 <p>Manually Install the <%= Rails.application.secrets.application_name %> LTI App</p>

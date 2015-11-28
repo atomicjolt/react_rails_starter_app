@@ -16,7 +16,6 @@ describe User do
 
   it { should belong_to(:account) }
 
-  it { should have_many(:accounts) }
   it { should have_many(:external_identifiers) }
   it { should have_one(:profile) }
 
@@ -200,7 +199,7 @@ describe User do
     #   it "should add an authentication for an existing user account" do
     #     user = FactoryGirl.create(:user, :email => 'test@example.com')
     #     auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @new_email})
-    #     user.associate_account(auth)
+    #     user.associate_oauth_account(auth)
     #     expect(user.authentications.length).to eq(1)
     #     expect(user.authentications.first.uid).to eq(@uid)
     #   end
@@ -231,31 +230,4 @@ describe User do
     end
   end
 
-  describe "roles" do
-    describe "add_to_role" do
-      it "adds the user to given role" do
-        user = FactoryGirl.create(:user)
-        user.add_to_role('thefoo')
-        expect(user.role?('thefoo')).to be true
-      end
-    end
-    describe "any_role?" do
-      it "checks to see if the user is any of the specified roles" do
-        user = FactoryGirl.create(:user)
-        user.add_to_role('thefoo')
-        user.add_to_role('thewall')
-        expect(user.any_role?('thewall', 'brick')).to be true
-        expect(user.any_role?('brick', 'foo')).to be false 
-      end
-    end
-  end
-
-  describe 'after account creation' do
-    it 'should set the current user to account_administrator' do
-      @user = FactoryGirl.create(:user)
-      @account_new = FactoryGirl.create(:account)
-      @user.make_account_admin(:account_id => @account_new.id)
-      expect(@user.accounts.last).to eq(@account_new)
-    end
-  end
 end

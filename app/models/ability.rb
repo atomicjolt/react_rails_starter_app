@@ -32,8 +32,9 @@ class Ability
     user ||= User.new # guest user (not logged in)
 
     basic(user, account)
-    admin(user, account) if user.admin?
-    account_admin(user, account) if account.present? && user.account_admin?(account)
+    admin(user, account) if user.admin
+    account_admin(user, account) if account && user.account_id == account.id && user.admin
+    super_admin(user) if user.super_admin
 
   end
 
@@ -46,7 +47,11 @@ class Ability
   end
 
   def account_admin(user, account)
-    can :read, Account, id: user.account_ids
     can :update, Account, id: account.id
+  end
+
+  def super_admin(user)
+    can :read, Account
+    can :update, Account
   end
 end

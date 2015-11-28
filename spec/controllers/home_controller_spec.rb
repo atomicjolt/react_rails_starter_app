@@ -21,7 +21,7 @@ RSpec.describe HomeController, type: :controller do
       login_user
 
       it "include LTI instructions" do
-        @user.update_attribute(:role, 'admin')
+        @user.update_attribute(:admin, true)
         config = Lti::Canvas.course_navigation_config(@account.code)
         xml = Lti::Canvas.config_xml(config)
         get :index

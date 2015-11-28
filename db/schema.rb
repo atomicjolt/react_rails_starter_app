@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022003236) do
+ActiveRecord::Schema.define(version: 20151128051934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,16 +107,6 @@ ActiveRecord::Schema.define(version: 20151022003236) do
     t.datetime "updated_at"
   end
 
-  create_table "user_accounts", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "account_id"
-    t.string   "role"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_accounts", ["user_id", "account_id"], name: "index_user_accounts_on_user_id_and_account_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",        null: false
     t.string   "encrypted_password",     default: "",        null: false
@@ -135,7 +125,6 @@ ActiveRecord::Schema.define(version: 20151022003236) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "role"
     t.integer  "account_id"
     t.string   "username"
     t.string   "avatar"
@@ -147,6 +136,8 @@ ActiveRecord::Schema.define(version: 20151022003236) do
     t.string   "profile_privacy",        default: "private"
     t.string   "profile_privacy_token"
     t.string   "active_avatar",          default: "none"
+    t.boolean  "admin",                  default: false
+    t.boolean  "super_admin",            default: false
   end
 
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree

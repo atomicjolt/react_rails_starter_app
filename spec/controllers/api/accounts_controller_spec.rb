@@ -8,11 +8,12 @@ RSpec.describe Api::AccountsController, type: :controller do
     @user = FactoryGirl.create(:user, account: @account)
     @user.confirm
 
-    @admin = CreateAdminService.new.call
+    @admin = CreateAdminService.create_admin(@account)
 
     @account_admin = FactoryGirl.create(:user, account: @account2)
+    @account_admin.update_attribute(:super_admin, true)
     @user.confirm
-    @account_admin.make_account_admin({account_id: @account2.id})
+    @account_admin.admin = true
 
     @user_token = AuthToken.issue_token({ user_id: @user.id })
     @admin_token = AuthToken.issue_token({ user_id: @admin.id })
@@ -93,7 +94,7 @@ RSpec.describe Api::AccountsController, type: :controller do
 
   end
 
-  context "as account admin" do
+  context "as super admin" do
     before do
       request.headers['Authorization'] = @account_admin_token
       allow(controller.request).to receive(:host).and_return(@account2.domain)

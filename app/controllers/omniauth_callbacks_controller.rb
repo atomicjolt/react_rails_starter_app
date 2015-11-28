@@ -52,7 +52,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     @user.account_id = account.id
-    @user.add_account(account)
 
     @user.save!
 
@@ -95,7 +94,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         @user = current_user
         auth = request.env["omniauth.auth"]
         kind = params[:action].titleize # Should give us Facebook, Twitter, Linked In, etc
-        authentication = current_user.associate_account(auth)
+        authentication = current_user.associate_oauth_account(auth)
         current_user.save!
         check_external_identifier(@user)
         flash[:notice] = "Your #{Rails.application.secrets.application_name} account has been associated with #{kind}"
@@ -124,7 +123,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user = User.find_for_oauth(request.env["omniauth.auth"])
       if @user
         @user.update_oauth(request.env["omniauth.auth"])
-        @user.add_account(current_account)
+        @user.account_id = current_account.id
         @user.skip_confirmation!
         @user.save # do we want to log an error if save fails?
         check_external_identifier(@user)
@@ -139,7 +138,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user = User.new
       @user.apply_oauth(auth)
       @user.account_id = current_account.id
-      @user.add_account(current_account)
       @user.skip_confirmation!
       @user.save!
       check_external_identifier(@user)
