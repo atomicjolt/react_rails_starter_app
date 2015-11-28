@@ -53,9 +53,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     @user.account_id = account.id
 
+    json = Yajl::Parser.parse(auth['json_response'])
+    @user.lti_provider = UrlHelper.host(json['info']['url'])
+
+    @user.lti_identifier = auth.uid
+
     @user.save!
 
-    create_external_identifier_with_url(auth, @user)
     flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => 'Canvas'
     redirect_to '/'
   end
@@ -96,7 +100,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         kind = params[:action].titleize # Should give us Facebook, Twitter, Linked In, etc
         authentication = current_user.associate_oauth_account(auth)
         current_user.save!
-        check_external_identifier(@user)
+        check_lti_identifier(@user)
         flash[:notice] = "Your #{Rails.application.secrets.application_name} account has been associated with #{kind}"
         redirect_to after_sign_in_path_for(current_user) if should_redirect?
       end
@@ -126,7 +130,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         @user.account_id = current_account.id
         @user.skip_confirmation!
         @user.save # do we want to log an error if save fails?
-        check_external_identifier(@user)
+        check_lti_identifier(@user)
         sign_in_or_register(params[:action].titleize)
       end
     end
@@ -140,7 +144,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user.account_id = current_account.id
       @user.skip_confirmation!
       @user.save!
-      check_external_identifier(@user)
+      check_lti_identifier(@user)
       sign_in_or_register(kind)
     rescue ActiveRecord::RecordInvalid => ex
       # A user is already registered with the same email and he tried to sign in using facebook but the account is not connected to facebook.

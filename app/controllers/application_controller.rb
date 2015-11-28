@@ -91,20 +91,12 @@ class ApplicationController < ActionController::Base
       User.find_by(lti_key: key)
     end
 
-    def check_external_identifier(user, only_build=false)
+    def check_lti_identifier(user)
       if session[:external_identifier]
-        exid = user.external_identifiers.build(:identifier => session[:external_identifier], :provider => session[:provider])
-        exid.save! unless only_build
+        user.update_attributes(lti_identifier: session[:external_identifier], lti_provider: session[:provider])
         session[:external_identifier] = nil
         session[:provider] = nil
-        exid
       end
-    end
-
-    def create_external_identifier_with_url(auth, user)
-      json = Yajl::Parser.parse(auth['json_response'])
-      key = UrlHelper.host(json['info']['url'])
-      user.external_identifiers.create(:identifier => auth.uid, :provider => key) # If they already have an exernal identifier this can just fail silently
     end
 
     # **********************************************
@@ -125,11 +117,8 @@ class ApplicationController < ActionController::Base
       if provider.valid_request?(request)
 
         @lti_provider = lti_provider
-        @identifier = params[:user_id]
 
-        @external_identifier = ExternalIdentifier.find_by(provider: @lti_provider, identifier: @identifier)
-
-        @user = @external_identifier.user if @external_identifier
+        @user = User.find_by(lti_provider: @lti_provider, lti_identifier: params[:user_id])
 
         if @user
           # If we do LTI and find a different user. Log out the current user and log in the new user.
@@ -149,7 +138,10 @@ class ApplicationController < ActionController::Base
           @user = User.new(email: email, name: name)
           @user.password              = ::SecureRandom::hex(15)
           @user.password_confirmation = @user.password
-          @user.account               = current_account
+          @user.account_id            = current_account.id
+          @user.lti_identifier        = params[:user_id]
+          @user.lti_provider          = @lti_provider
+          @user.lti_user_id           = params[:custom_canvas_user_id] || params[:user_id]
           @user.skip_confirmation!
 
           count = 0
@@ -158,12 +150,6 @@ class ApplicationController < ActionController::Base
             @user.email = "#{params[:user_id]}_#{count}_#{params[:tool_consumer_instance_guid]}@example.com"
             count = count + 1
           end
-          
-          @external_identifier = @user.external_identifiers.create!({
-            identifier: @identifier,
-            provider: @lti_provider,
-            external_user_id: params[:user_id] || params[:custom_canvas_user_id]
-          })
 
           sign_in(@user, :event => :authentication)
         end

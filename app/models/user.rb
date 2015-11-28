@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
-  has_many :external_identifiers, :dependent => :destroy, :inverse_of => :user
   has_many :authentications, :dependent => :destroy, :inverse_of => :user
 
   belongs_to :account

@@ -16,7 +16,6 @@ describe User do
 
   it { should belong_to(:account) }
 
-  it { should have_many(:external_identifiers) }
   it { should have_one(:profile) }
 
   it "should create a new instance given a valid attribute" do
