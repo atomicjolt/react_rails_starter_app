@@ -26,7 +26,7 @@
   <li>Paste in the following XML:</li>
 </ol>
 <textarea style="width:100%;height:500px;">
-  <%= current_account.course_nav_lti_xml %>
+  <%= current_account.course_nav_lti_xml(nil) %>
 </textarea>
 <p>See <a href="https://canvas.instructure.com/doc/api/file.tools_xml.html">Instructure's Tool Configuration documentation</a> for details about Canvas External Tool Configuration XML options.</p>
 <% end %>

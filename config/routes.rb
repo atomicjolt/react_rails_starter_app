@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   root to: "home#index"
 
+  get 'iframe_cookies_fix_redirect' => 'lti_launches#iframe_cookies_fix_redirect'
+  get 'relaunch_lti_tool' => 'lti_launches#relaunch_lti_tool'
+
   resources :lti_launches do
     collection do
       post :index

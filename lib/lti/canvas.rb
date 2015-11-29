@@ -17,24 +17,25 @@ module Lti
     end
 
     def self.basic_config(code)
+      domain = "https://#{code}.#{Rails.application.secrets.lti_launch_domain}"
       {
-        launch_url: "https://#{code}.#{Rails.application.secrets.lti_launch_domain}/lti_launches",
+        launch_url: "#{domain}/lti_launches",
         env: Rails.env,
         title: Rails.application.secrets.lti_tool_name,
         description: Rails.application.secrets.lti_tool_description,
-        icon: "No ICO",
+        icon: "#{domain}/images/oauth_icon.png",
         domain: "#{code}.#{Rails.application.secrets.lti_launch_domain}"
       }
     end
 
-    def self.course_navigation_config(code)
+    def self.course_navigation_config(code, visibility)
       config = self.basic_config(code)
       config[:course_navigation] = {
           text: Rails.application.secrets.lti_tool_name,
-          visibility: "admins",
           default: "enabled",
           enabled: true
         }
+      config[:course_navigation][:visibility] = visibility if visibility
       config
     end
 
@@ -77,10 +78,10 @@ module Lti
         config['course_navigation'] = {
           'url' => args[:launch_url],
           'default' => args[:course_navigation][:default] || 'enabled',
-          'visibility' => args[:course_navigation][:visibility] || 'public',
           'text' => args[:course_navigation][:text],
           'enabled' => args[:course_navigation][:enabled]
         }
+        config['course_navigation']['visibility'] = args[:course_navigation][:visibility] if args[:course_navigation][:visibility]
       end
 
       if args[:account_navigation].present?

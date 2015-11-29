@@ -20,13 +20,20 @@ RSpec.describe LtiLaunchesController, type: :controller do
       end
 
       describe "POST - correct params" do
-        context "matching external identifier" do
-          it "setups the user, log them in and redirect" do
-            params = lti_params({"launch_url" => lti_launches_url})
-            post :index, params
-            expect(response).to have_http_status(200)
-            expect(assigns(:user)).to be
-            expect(assigns(:user).email).to eq(params["lis_person_contact_email_primary"])
+        context "matching lti identifier" do
+
+          context "existing authentication" do
+
+            before do
+            end
+
+            it "sets up the user, logs them in and redirects" do
+              params = lti_params({"launch_url" => lti_launches_url})
+              post :index, params
+              expect(response).to have_http_status(200)
+              expect(assigns(:user)).to be
+              expect(assigns(:user).email).to eq(params["lis_person_contact_email_primary"])
+            end
           end
         end
       end

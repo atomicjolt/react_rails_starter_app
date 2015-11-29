@@ -27,8 +27,8 @@ class Account < ActiveRecord::Base
     Lti::Canvas.config_xml(config)
   end
 
-  def course_nav_lti_xml
-    config = Lti::Canvas.course_navigation_config(self.code)
+  def course_nav_lti_xml(visibility='admins')
+    config = Lti::Canvas.course_navigation_config(self.code, visibility)
     Lti::Canvas.config_xml(config)
   end
 

@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
           # Generate a name from the LTI params
           name = params[:lis_person_name_full] ? params[:lis_person_name_full] : "#{params[:lis_person_name_given]} #{params[:lis_person_name_family]}"
           name = name.strip
-          name = params[:roles] if name.blank? # If the name is blank then use their
+          name = params[:roles] if name.blank? # If the name is blank then use their role
 
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
           email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
