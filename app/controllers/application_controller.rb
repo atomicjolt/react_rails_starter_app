@@ -91,14 +91,6 @@ class ApplicationController < ActionController::Base
       User.find_by(lti_key: key)
     end
 
-    def check_lti_identifier(user)
-      if session[:external_identifier]
-        user.update_attributes(lti_identifier: session[:external_identifier], lti_provider: session[:provider])
-        session[:external_identifier] = nil
-        session[:provider] = nil
-      end
-    end
-
     # **********************************************
     #
     # LTI related functionality:
@@ -112,13 +104,13 @@ class ApplicationController < ActionController::Base
 
     def do_lti
 
-      provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
+      @provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
-      if provider.valid_request?(request)
+      if @provider.valid_request?(request)
 
         @lti_provider = lti_provider
 
-        @user = User.find_by(lti_provider: @lti_provider, lti_identifier: params[:user_id])
+        @user = current_account.users.find_by(lti_provider: @lti_provider, lti_identifier: params[:user_id])
 
         if @user
           # If we do LTI and find a different user. Log out the current user and log in the new user.

@@ -20,21 +20,30 @@ RSpec.describe LtiLaunchesController, type: :controller do
       end
 
       describe "POST - correct params" do
-        context "matching lti identifier" do
 
-          context "existing authentication" do
+        context "as a student" do
 
-            before do
-            end
-
-            it "sets up the user, logs them in and redirects" do
-              params = lti_params({"launch_url" => lti_launches_url})
-              post :index, params
-              expect(response).to have_http_status(200)
-              expect(assigns(:user)).to be
-              expect(assigns(:user).email).to eq(params["lis_person_contact_email_primary"])
-            end
+          it "sets up the user, logs them in and redirects" do
+            params = lti_params({"launch_url" => lti_launches_url, "roles" => "Learner"})
+            post :index, params
+            expect(response).to have_http_status(200)
+            expect(assigns(:user)).to be
+            expect(assigns(:user).email).to eq(params["lis_person_contact_email_primary"])
           end
+
+        end
+
+        context "as an instructor without an authorization" do
+
+          it "should ask them to authorize the lti app" do
+            params = lti_params({"launch_url" => lti_launches_url, "roles" => "Instructor"})
+            post :index, params
+            expect(response).to have_http_status(302)
+            expect(response).to redirect_to(user_omniauth_authorize_path(:canvas, :canvas_url => @account.canvas_uri))
+            expect(assigns(:user)).to be
+            expect(assigns(:user).email).to eq(params["lis_person_contact_email_primary"])
+          end
+
         end
       end
 
