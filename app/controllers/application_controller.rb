@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
 
         @lti_provider = lti_provider
 
-        @user = current_account.users.find_by(lti_provider: @lti_provider, lti_identifier: params[:user_id])
+        @user = current_account.users.find_by(lti_provider: @lti_provider, lti_user_id: params[:user_id])
 
         if @user
           # If we do LTI and find a different user. Log out the current user and log in the new user.
@@ -131,9 +131,9 @@ class ApplicationController < ActionController::Base
           @user.password              = ::SecureRandom::hex(15)
           @user.password_confirmation = @user.password
           @user.account_id            = current_account.id
-          @user.lti_identifier        = params[:user_id]
+          @user.lti_user_id           = params[:user_id]
           @user.lti_provider          = @lti_provider
-          @user.lti_user_id           = params[:custom_canvas_user_id] || params[:user_id]
+          @user.lms_user_id           = params[:custom_canvas_user_id] || params[:user_id]
           @user.skip_confirmation!
 
           count = 0
@@ -183,7 +183,7 @@ class ApplicationController < ActionController::Base
     end
 
     def generate_email(lti_identifier)
-      "#{lti_identifier}@generatedemail.com"
+      "#{lti_user_id}@generatedemail.com"
     end
 
 end

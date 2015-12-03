@@ -8,7 +8,7 @@ RSpec.describe LtiLaunchesController, type: :controller do
     allow(controller).to receive(:current_account).and_return(@account)
     allow(Account).to receive(:find_by).with(:lti_key).and_return(@account)
 
-    @user = FactoryGirl.create(:user, account: @account, lti_identifier: "292832126") # identifier is from lti_params in support/lti.rb
+    @user = FactoryGirl.create(:user, account: @account, lti_user_id: "292832126") # identifier is from lti_params in support/lti.rb
     @lti_url = 'school.edu'
   end
 
