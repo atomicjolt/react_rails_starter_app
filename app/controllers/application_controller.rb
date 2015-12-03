@@ -125,7 +125,7 @@ class ApplicationController < ActionController::Base
           name = params[:roles] if name.blank? # If the name is blank then use their role
 
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
-          email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
+          email = params[:lis_person_contact_email_primary] || generate_email(params[:user_id])
 
           @user = User.new(email: email, name: name)
           @user.password              = ::SecureRandom::hex(15)
@@ -139,7 +139,7 @@ class ApplicationController < ActionController::Base
           count = 0
           while !safe_save_email(@user) && count < 10 do
             # Email was taken. Generate a fake email and save again
-            @user.email = "#{params[:user_id]}_#{count}_#{params[:tool_consumer_instance_guid]}@example.com"
+            @user.email = generate_email(params[:user_id])
             count = count + 1
           end
 
@@ -180,6 +180,10 @@ class ApplicationController < ActionController::Base
 
     def user_not_authorized
       render :file => "public/401.html", :status => :unauthorized
+    end
+
+    def generate_email(lti_identifier)
+      "#{lti_identifier}@generatedemail.com"
     end
 
 end
