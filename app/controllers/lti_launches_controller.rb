@@ -40,7 +40,7 @@ class LtiLaunchesController < ApplicationController
   # This should be based on roles. Default is instructor.
   def check_for_user_auth
     # if you need to check for different roles, see: https://github.com/instructure/ims-lti/blob/master/lib/ims/lti/role_checks.rb
-    if @provider.context_instructor?
+    if !@provider.context_student?
       unless current_user.authentications.find_by(provider_url: current_account.canvas_uri)
         
         # store the lti launch url in the session, so we can relaunch the tool after the oauth
