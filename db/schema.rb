@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151203205630) do
+ActiveRecord::Schema.define(version: 20151204161101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,15 +143,15 @@ ActiveRecord::Schema.define(version: 20151203205630) do
     t.boolean  "super_admin",            default: false
     t.string   "lti_user_id"
     t.string   "lms_user_id"
-    t.string   "lti_sis_user_id"
+    t.string   "sis_user_id"
     t.string   "lti_provider"
   end
 
   add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["lms_user_id"], name: "index_users_on_lms_user_id", using: :btree
-  add_index "users", ["lti_sis_user_id"], name: "index_users_on_lti_sis_user_id", using: :btree
   add_index "users", ["lti_user_id"], name: "index_users_on_lti_user_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["sis_user_id"], name: "index_users_on_sis_user_id", using: :btree
 
 end
