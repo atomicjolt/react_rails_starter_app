@@ -182,7 +182,7 @@ class ApplicationController < ActionController::Base
       render :file => "public/401.html", :status => :unauthorized
     end
 
-    def generate_email(lti_identifier)
+    def generate_email(lti_user_id)
       "#{lti_user_id}@generatedemail.com"
     end
 
