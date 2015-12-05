@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Client only React project.",
   "engines": {
-    "node": "4.2.1"
+    "node": "5.1.1"
   },
   "scripts": {
     "postinstall": "cd ./client && npm install",
