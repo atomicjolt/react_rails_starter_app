@@ -133,8 +133,19 @@ class Canvas
     api_get_request("courses/#{course_id}/recent_students")
   end
 
-  def students(course_id)
-    make_paged_api_request("courses/#{course_id}/users?enrollment_type=student")
+  def students(course_id, *include_options)
+    include_param = include_options.map{|option| "&include[]=#{option}"}.join
+    make_paged_api_request("courses/#{course_id}/users?enrollment_type=student#{include_param}")
+  end
+
+  def students_and_observers(course_id, *include_options)
+    include_param = include_options.map{|option| "&include[]=#{option}"}.join
+    make_paged_api_request("courses/#{course_id}/users?enrollment_type[]=student&enrollment_type[]=observer#{include_param}")
+  end
+
+  def section_students_and_observers(section_id, *include_options)
+    include_param = include_options.map{|option| "&include[]=#{option}"}.join
+    make_paged_api_request("sections/#{section_id}/enrollments?type[]=StudentEnrollment&type[]=ObserverEnrollment")
   end
 
   def tas(course_id)

@@ -86,6 +86,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
   gem 'webmock'
+  gem 'vcr'
 end
 
 group :production do

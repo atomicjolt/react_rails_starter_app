@@ -9,9 +9,25 @@ class User < ActiveRecord::Base
 
   belongs_to :account
 
+  has_many :user_courses
+  has_many :courses, through: :user_courses
+  has_many :sections, through: :courses
+
   has_one :profile, :dependent => :destroy
 
   after_create {|user| user.create_profile unless user.profile }
+
+  def canvas_api
+    if auth = self.canvas_auth
+      Canvas.new(self.account.canvas_uri, auth.token)
+    else
+      return nil
+    end
+  end
+
+  def canvas_auth
+    self.authentications.find_by(provider_url: self.account.canvas_uri)
+  end
 
   def display_name
     self.name || self.email
@@ -104,6 +120,15 @@ class User < ActiveRecord::Base
   def can_edit?(user)
     return false if user.nil?
     self.id == user.id || user.admin
+  end
+
+  def self.convert_name_to_initials(sortable_name)
+    parts = sortable_name.split(',')
+    initials = "#{parts[1].strip[0]}#{parts[0].strip[0]}".upcase
+  rescue
+    return "?" unless sortable_name && !sortable_name.empty?
+    return sortable_name[0..1].upcase if sortable_name.length > 1
+    sortable_name[0]
   end
 
 end
