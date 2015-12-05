@@ -7,6 +7,7 @@ RSpec.describe Account, :type => :model do
   end
 
   it { should have_many(:users) }
+  it { should have_many(:courses) }
 
   describe "clean_domain" do
     it "gets the host from the domain" do
