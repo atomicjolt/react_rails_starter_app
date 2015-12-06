@@ -73,7 +73,7 @@ class Section < ActiveRecord::Base
     self.seatings.update_all(left: 0, top: 0)
   end
 
-  def as_json(options = nil)
+  def as_json
     {
       id: id,
       canvas_section_id: lms_section_id,
