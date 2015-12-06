@@ -77,12 +77,7 @@ class Section < ActiveRecord::Base
     {
       id: id,
       canvas_section_id: lms_section_id,
-      name: name,
-      chart: {
-        id: self.chart_id,
-        path: ApplicationHelper.chart_url(self)
-      },
-      student_choose: student_choose
+      name: name
     }  
   end
 
