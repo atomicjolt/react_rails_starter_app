@@ -4,8 +4,9 @@ class Course < ActiveRecord::Base
   belongs_to :chart
   has_many :notes
 
-  has_many :user_courses
+  has_many :user_courses, dependent: :destroy
   has_many :users, :through => :user_courses
+  alias_attribute :enrollments, :user_courses
   has_many :instructors, -> {where('user_courses.role_id = ?', UserCourse::INSTRUCTOR)}, :through => :user_courses, :foreign_key => :user_id, :class_name => "User", :source => :user
   has_many :students, -> {where('user_courses.role_id = ?', UserCourse::STUDENT)}, :through => :user_courses, :foreign_key => :user_id, :class_name => "User", :source => :user
 
@@ -65,6 +66,14 @@ class Course < ActiveRecord::Base
   def canvas_api
     u = self.users.find {|u| u.canvas_api != nil}
     u ? u.canvas_api : nil
+  end
+
+  def as_json(options = nil)
+    {
+      id: id,
+      name: name,
+      sections: sections
+    }
   end
 
 end

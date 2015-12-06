@@ -50,6 +50,12 @@ Rails.application.routes.draw do
       resources :users
     end
     resources :sessions
+    resources :courses, only: [] do
+      resources :students, only: [:index]
+      resources :sections, only: [] do
+        resources :students, only: [:index]
+      end
+    end
   end
 
   mount MailPreview => 'mail_view' if Rails.env.development?

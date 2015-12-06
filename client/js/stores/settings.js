@@ -23,7 +23,8 @@ function loadSettings(defaultSettings){
   _settings = {
     apiUrl           : bestValue('apiUrl', 'api_url', '/'),
     csrfToken        : defaultSettings.csrfToken || null,
-    jwt              : defaultSettings.jwt
+    jwt              : defaultSettings.jwt,
+    course           : defaultSettings.course
   };
 
 }

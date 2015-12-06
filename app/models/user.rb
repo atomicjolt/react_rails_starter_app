@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   belongs_to :account
 
-  has_many :user_courses
+  has_many :user_courses, dependent: :destroy
   has_many :courses, through: :user_courses
   has_many :sections, through: :courses
 

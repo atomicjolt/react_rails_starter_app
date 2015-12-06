@@ -4,7 +4,7 @@ class Section < ActiveRecord::Base
 
   has_many :notes
 
-  has_many :user_courses
+  has_many :user_courses, dependent: :destroy
   alias_attribute :enrollments, :user_courses
   has_many :students, -> {where('user_courses.role_id = ?', UserCourse::STUDENT)}, :through => :user_courses, :foreign_key => :user_id, :class_name => "User", :source => :user
 
@@ -56,7 +56,7 @@ class Section < ActiveRecord::Base
         end
         # puts "Adding student: #{student['name']}"
         num_added_students += 1
-        UserCourse.create!(user_id: new_student_id, section_id: self.id)
+        UserCourse.create!(user_id: new_student_id, section_id: self.id, course_id: course.id)
       end
     end
 
