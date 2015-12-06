@@ -5,7 +5,7 @@ class Section < ActiveRecord::Base
   has_many :notes
 
   has_many :user_courses
-  alias_attribute :seatings, :user_courses
+  alias_attribute :enrollments, :user_courses
   has_many :students, -> {where('user_courses.role_id = ?', UserCourse::STUDENT)}, :through => :user_courses, :foreign_key => :user_id, :class_name => "User", :source => :user
 
   def sync_students
@@ -60,17 +60,13 @@ class Section < ActiveRecord::Base
       end
     end
 
-    # remove seatings for students that are no longer enrolled
+    # remove enrollments for students that are no longer enrolled
     old_students.each do |k, student|
       "Removing student: #{student.name}"
-      self.seatings.where(user_id: student.id).destroy_all
+      self.enrollments.where(user_id: student.id).destroy_all
     end
     # puts "Added #{num_added_students} students"
     # puts "Deleted #{old_students.count} students"
-  end
-
-  def reset_seating_positions
-    self.seatings.update_all(left: 0, top: 0)
   end
 
   def as_json(options = nil)
