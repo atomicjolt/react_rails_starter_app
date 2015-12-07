@@ -1,6 +1,6 @@
 class LtiLaunchesController < ApplicationController
 
-  layout "bare"
+  layout "client"
   
   skip_before_filter :verify_authenticity_token
   before_action :check_for_iframes_problem, :only => [:index]
