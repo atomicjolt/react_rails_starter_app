@@ -10,21 +10,25 @@ class Course < ActiveRecord::Base
   has_many :instructors, -> {where('user_courses.role_id = ?', UserCourse::INSTRUCTOR)}, :through => :user_courses, :foreign_key => :user_id, :class_name => "User", :source => :user
   has_many :students, -> {where('user_courses.role_id = ?', UserCourse::STUDENT)}, :through => :user_courses, :foreign_key => :user_id, :class_name => "User", :source => :user
 
-  def self.for_lti_launch(user, lms_course_id, name)
+  def self.for_lti_launch(user, lms_course_id, name, referer)
+    lms_course_id ||= Course.lms_course_id_from_referer(referer)
     course = user.courses.find_by(lms_course_id: lms_course_id)
     unless course
       course = user.account.courses.find_by(lms_course_id: lms_course_id)
-      if course
-        user.courses << course
-      else
-        course = user.courses.create!(
+      unless course
+        course = Course.create!(
           lms_course_id: lms_course_id,
           account_id: user.account_id,
           name: name)
-        course.sync_students
       end
+      UserCourse.create!(user_id: user.id, course_id: course.id, role_id: UserCourse::INSTRUCTOR)
+      course.sync_students
     end
     course
+  end
+
+  def self.lms_course_id_from_referer(referer)
+    /courses\/([0-9]+)/.match(referer.to_s)[1]
   end
 
   def sync_students
