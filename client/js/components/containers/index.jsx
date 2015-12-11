@@ -4,7 +4,7 @@ import React                    from 'react';
 import { Component }            from 'react';
 import { connect }              from 'react-redux';
 
-@connect((state) => (state))
+@connect((state) => (state), null, null, {withRef: true})
 class Index extends Component {
   
   constructor(){
