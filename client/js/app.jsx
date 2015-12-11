@@ -14,7 +14,7 @@ import Immutable          from 'immutable';
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-require("../../styles/styles.less");
+require("../styles/styles.less");
 
 class Root extends React.Component {
   render(){
