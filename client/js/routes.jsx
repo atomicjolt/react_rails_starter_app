@@ -1,14 +1,16 @@
 "use strict";
 
-import React                  from 'react';
+import React                  from 'react'; // if you use jsx, you have to have React imported
+import Router                 from 'react-router';
 import { Route, IndexRoute }  from 'react-router';
-import Index                  from './components/index';
-import Home                   from './components/main/home';
-import NotFound               from './components/not_found';
+import history                from './history';
+import Index                  from './components/containers/index';
+import Home                   from './components/views/home';
 
 export default (
-  <Route path="/" component={Index}>
-    <IndexRoute component={Home}/>
-    <Route path="*" component={NotFound}/>
-  </Route>
+  <Router history={history}>
+    <Route path="/" component={Index}>
+      <IndexRoute component={Home}/>
+    </Route>
+  </Router>
 );

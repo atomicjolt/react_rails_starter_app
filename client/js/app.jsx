@@ -1,12 +1,12 @@
 "use strict";
-
-import React          from 'react';
-import ReactDOM       from 'react-dom';
-import Router         from 'react-router';
-import Routes         from './routes';
-import SettingsAction from './actions/settings';
-import history        from './history';
-
+import 'babel-core/polyfill';
+import React              from 'react';
+import ReactDOM           from 'react-dom';
+import { Provider }       from 'react-redux';
+import routes             from './routes';
+import DevTools           from './dev/dev_tools';
+import configureStore     from './store/configure_store';
+import Immutable          from 'immutable';
 //Needed for onTouchTap
 //Can go away when react 1.0 release
 //Check this repo:
@@ -14,7 +14,26 @@ import history        from './history';
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-// Initialize store singletons
-SettingsAction.load(window.DEFAULT_SETTINGS);
+require("../../styles/styles.less");
 
-ReactDOM.render((<Router history={history}>{Routes}</Router>), document.getElementById("main"));
+class Root extends React.Component {
+  render(){
+    const devTools = __DEV__ ? <DevTools /> : null;
+    const { store } = this.props;
+    return (
+      <Provider store={store}>
+        <div>
+          {routes}
+          {devTools}
+        </div>
+      </Provider>
+    );
+  }
+}
+
+const store = configureStore({settings: Immutable.fromJS(window.DEFAULT_SETTINGS)});
+
+ReactDOM.render(
+  <Root store={store} />,
+  document.getElementById("main-app")
+);
