@@ -1,10 +1,11 @@
 // karma config info: http://karma-runner.github.io/0.12/config/configuration-file.html
+var webpack             = require('webpack');
 module.exports = function(config) {
-  
+
   function isCoverage(argument) {
     return argument === '--coverage';
   }
-  
+
   // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
   var reporters = ['spec'];
 
@@ -27,6 +28,7 @@ module.exports = function(config) {
     port: 9876,
 
     files: [
+      './specs_support/mocks/*.js',
       './specs_support/spec_helper.js',
       //'./js/**/*.spec.js'         // Use webpack to build each test individually. If changed here, match the change in preprocessors
       './webpack.tests.js'          // More performant but tests cannot be run individually
@@ -34,8 +36,8 @@ module.exports = function(config) {
 
     // Transpile tests with the karma-webpack plugin
     preprocessors: {
-      //'./js/**/*.spec.js': ['webpack', 'sourcemap']  // Use webpack to build each test individually. If changed here, match the change in files
-      './webpack.tests.js': ['webpack', 'sourcemap']      // More performant but tests cannot be run individually
+      //'./js/**/*.spec.js': ['webpack', 'sourcemap']      // Use webpack to build each test individually. If changed here, match the change in files
+      './webpack.tests.js': ['webpack', 'sourcemap'],      // More performant but tests cannot be run individually
     },
 
     // Run the tests using any of the following browsers
@@ -63,10 +65,15 @@ module.exports = function(config) {
     // Use istanbul-transformer post loader to generate code coverage report.
     webpack: {
       devtool: 'eval',
+      plugins: [
+        new webpack.DefinePlugin({'process.env.NODE_ENV': '"development"', '__DEV__': true})
+      ],
       module: {
         loaders: [
           { test: /\.js$/,   exclude: /node_modules/, loader: "babel-loader?stage=0&optional=runtime" },
-          { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader?stage=0&optional=runtime" }
+          { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader?stage=0&optional=runtime" },
+          { test: /\.(png|woff|woff2|eot|ttf|svg)($|\?)/, loader: 'url-loader' },
+          { test: /\.css$/, loader: 'css-loader'}
         ]
       },
       resolve: {
