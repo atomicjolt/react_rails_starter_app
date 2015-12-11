@@ -26,9 +26,5 @@
   "license": "MIT",
   "homepage": "https://github.com/atomicjolt/react_client_starter_app",
   "dependencies": {},
-  "devDependencies": {
-    "file-loader": "^0.8.5",
-    "less": "^2.5.3",
-    "node-sass": "^3.4.2"
-  }
+  "devDependencies": {}
 }
