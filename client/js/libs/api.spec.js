@@ -1,5 +1,4 @@
 import api                from "./api";
-import Network            from "../constants/network";
 import Helper             from '../../specs_support/helper';
 
 describe('api', function() {

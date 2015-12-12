@@ -1,4 +1,4 @@
-import constants  from '../constants/action_types';
+import constants  from '../constants';
 
 export default {
   loadSettings: function (settings){

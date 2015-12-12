@@ -1,7 +1,7 @@
 "use strict";
 
 import Request          from "superagent";
-import Network          from "../constants/network";
+import Constants        from "../constants";
 import _                from "lodash";
  
 var _pendingRequests = {};
@@ -10,19 +10,19 @@ var _cache = {};
 export default class Api{
 
   static get(url, jwt, apiUrl, csrf, params){
-    return Api.execRequest(Network.GET, url, jwt, apiUrl, csrf, params, null);
+    return Api.execRequest(Constants.GET, url, jwt, apiUrl, csrf, params, null);
   }
 
   static post(url, jwt, apiUrl, csrf, params, body){
-    return Api.execRequest(Network.POST, url, jwt, apiUrl, csrf, params, body);
+    return Api.execRequest(Constants.POST, url, jwt, apiUrl, csrf, params, body);
   }
 
   static put(url, jwt, apiUrl, csrf, params, body){
-    return Api.execRequest(Network.PUT, url, jwt, apiUrl, csrf, params, body);
+    return Api.execRequest(Constants.PUT, url, jwt, apiUrl, csrf, params, body);
   }
 
   static del(url, jwt, apiUrl, csrf, params){
-    return Api.execRequest(Network.DEL, url, jwt, apiUrl, csrf, params, null);
+    return Api.execRequest(Constants.DEL, url, jwt, apiUrl, csrf, params, null);
   }
 
   static execRequest(method, url, jwt, apiUrl, csrf, params, body){
@@ -30,22 +30,22 @@ export default class Api{
       var request;
 
       switch (method){
-        case Network.GET:
+        case Constants.GET:
           request = Request.get(url);
           break;
-        case Network.POST:
+        case Constants.POST:
           request = Request.post(url).send(body);
           break;
-        case Network.PUT:
+        case Constants.PUT:
           request = Request.put(url).send(body);
           break;
-        case Network.DEL:
+        case Constants.DEL:
           request = Request.del(url);
           break;
       }
       
       request.set('Accept', 'application/json')
-            .timeout(Network.TIMEOUT)
+            .timeout(Constants.TIMEOUT)
             .set('Authorization', 'Bearer ' + jwt)
             .set('X-CSRF-Token', csrf);
       return request;
@@ -85,7 +85,7 @@ export default class Api{
   }
 
   static _wrapRequest(url, requestMethod, requestType){
-    if (requestType === Network.POST) {
+    if (requestType === Constants.POST) {
       return {
         request: requestMethod(url)
       };

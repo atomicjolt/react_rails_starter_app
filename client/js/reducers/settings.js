@@ -1,5 +1,4 @@
 import Immutable  from 'immutable';
-import constants  from '../constants/action_types';
 
 const initialState = Immutable.fromJS({});
 

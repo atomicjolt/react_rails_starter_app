@@ -1,5 +1,7 @@
 export default {
   
+  LOAD_SETTINGS: 'LOAD_SETTINGS',
+
   GET            : 'get',
   POST           : 'post',
   PUT            : 'put',

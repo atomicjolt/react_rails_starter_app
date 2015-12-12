@@ -1,5 +1,4 @@
 import api        from "../libs/api";
-import Network    from "../constants/network";
 
 const API = store => next => action => {
   var promise;
