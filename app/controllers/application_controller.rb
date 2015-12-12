@@ -133,6 +133,7 @@ class ApplicationController < ActionController::Base
           @user.account_id            = current_account.id
           @user.lti_user_id           = params[:user_id]
           @user.lti_provider          = @lti_provider
+          @user.admin                 = @provider.institution_admin?
           @user.lms_user_id           = params[:custom_canvas_user_id] || params[:user_id]
           @user.skip_confirmation!
 
