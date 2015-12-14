@@ -1,11 +1,10 @@
 "use strict";
 
-import React                    from 'react';
-import { Component }            from 'react';
-import { connect }              from 'react-redux';
+import React                    from "react";
+import { connect }              from "react-redux";
 
 @connect((state) => (state), null, null, {withRef: true})
-class Index extends Component {
+class Index extends React.Component {
   
   constructor(){
     super();
