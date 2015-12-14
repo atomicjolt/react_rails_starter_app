@@ -3,16 +3,17 @@ import { reduxReactRouter }                      from 'redux-router';
 import { persistState }                          from 'redux-devtools';
 import thunk                                     from 'redux-thunk';
 import rootReducer                               from '../reducers';
-import history                                   from '../history';
 import routes                                    from '../routes';
 import DevTools                                  from '../dev/dev_tools.jsx'
 import API                                       from '../middleware/api';
+
+import { createHashHistory as createHistory } from 'history';
 
 let middleware = [ thunk, API ];
 
 let enhancers = [
   applyMiddleware(...middleware),
-  reduxReactRouter({ routes, history })
+  reduxReactRouter({ createHistory })
 ];
 
 // In production, we want to use just the middleware.
