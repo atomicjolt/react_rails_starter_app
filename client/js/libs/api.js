@@ -1,7 +1,7 @@
 "use strict";
 
 import Request          from "superagent";
-import Constants        from "../constants";
+import NetworkConstants from "../constants/network";
 import _                from "lodash";
  
 var _pendingRequests = {};
@@ -9,43 +9,43 @@ var _cache = {};
 
 export default class Api{
 
-  static get(url, jwt, apiUrl, csrf, params){
-    return Api.execRequest(Constants.GET, url, jwt, apiUrl, csrf, params, null);
+  static get(url, apiUrl, jwt, csrf, params){
+    return Api.execRequest(NetworkConstants.GET, url, apiUrl, jwt, csrf, params, null);
   }
 
-  static post(url, jwt, apiUrl, csrf, params, body){
-    return Api.execRequest(Constants.POST, url, jwt, apiUrl, csrf, params, body);
+  static post(url, apiUrl, jwt, csrf, params, body){
+    return Api.execRequest(NetworkConstants.POST, url, apiUrl, jwt, csrf, params, body);
   }
 
-  static put(url, jwt, apiUrl, csrf, params, body){
-    return Api.execRequest(Constants.PUT, url, jwt, apiUrl, csrf, params, body);
+  static put(url, apiUrl, jwt, csrf, params, body){
+    return Api.execRequest(NetworkConstants.PUT, url, apiUrl, jwt, csrf, params, body);
   }
 
-  static del(url, jwt, apiUrl, csrf, params){
-    return Api.execRequest(Constants.DEL, url, jwt, apiUrl, csrf, params, null);
+  static del(url, apiUrl, jwt, csrf, params){
+    return Api.execRequest(NetworkConstants.DEL, url, apiUrl, jwt, csrf, params, null);
   }
 
-  static execRequest(method, url, jwt, apiUrl, csrf, params, body){
+  static execRequest(method, url, apiUrl, jwt, csrf, params, body){
     return Api._doRequest(Api._makeUrl(`${url}${Api.queryStringFrom(params)}`, apiUrl), (fullUrl) => {
       var request;
 
       switch (method){
-        case Constants.GET:
+        case NetworkConstants.GET:
           request = Request.get(url);
           break;
-        case Constants.POST:
+        case NetworkConstants.POST:
           request = Request.post(url).send(body);
           break;
-        case Constants.PUT:
+        case NetworkConstants.PUT:
           request = Request.put(url).send(body);
           break;
-        case Constants.DEL:
+        case NetworkConstants.DEL:
           request = Request.del(url);
           break;
       }
       
       request.set('Accept', 'application/json')
-            .timeout(Constants.TIMEOUT)
+            .timeout(NetworkConstants.TIMEOUT)
             .set('Authorization', 'Bearer ' + jwt)
             .set('X-CSRF-Token', csrf);
       return request;
@@ -85,7 +85,7 @@ export default class Api{
   }
 
   static _wrapRequest(url, requestMethod, requestType){
-    if (requestType === Constants.POST) {
+    if (requestType === NetworkConstants.POST) {
       return {
         request: requestMethod(url)
       };
