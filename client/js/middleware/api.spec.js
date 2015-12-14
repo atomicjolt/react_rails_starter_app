@@ -1,5 +1,5 @@
 import api                from "./api";
-import Contants            from "../constants";
+import Network            from "../constants/network";
 import Helper             from '../../specs_support/helper';
 
 describe('api middleware', function() {
@@ -35,7 +35,7 @@ describe('api middleware', function() {
   it('calls the api library', () => {
     const action = {
       type: "TEST",
-      method: Contants.GET,
+      method: Network.GET,
       url: "http://www.example.com/api/stuff.json"
     };
     const middleware = api(Helper.makeStore());
