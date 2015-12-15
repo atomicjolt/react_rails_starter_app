@@ -28,7 +28,7 @@ class Course < ActiveRecord::Base
   end
 
   def self.lms_course_id_from_referer(referer)
-    /courses\/([0-9]+)/.match(referer.to_s)[1]
+    /courses\/([0-9]+)/.match(referer.to_s)[1] rescue nil
   end
 
   def sync_students

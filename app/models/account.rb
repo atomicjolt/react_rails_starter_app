@@ -12,6 +12,7 @@ class Account < ActiveRecord::Base
   before_save :clean_domain
 
   has_many :users
+  has_many :courses
 
   def clean_domain
     self.domain = "http://#{self.domain}" unless self.domain.include?("http://") || self.domain.include?("https://")

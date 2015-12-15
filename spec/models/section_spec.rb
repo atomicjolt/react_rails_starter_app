@@ -41,45 +41,45 @@ RSpec.describe Section, type: :model do
       expect(student.initials).to eq(User.convert_name_to_initials(student.sortable_name))
     end
 
-    it "should add a student and a seating for students that aren't already in the database" do
+    it "should add a student and a user_course for students that aren't already in the database" do
       old_number_of_users = @section.students.count
-      old_number_of_seatings_in_section = @section.students.count
-      @section.seatings.last.destroy
+      old_number_of_user_courses_in_section = @section.students.count
+      @section.user_courses.last.destroy
 
       expect(@section.students.count).to eq(old_number_of_users - 1)
-      expect(@section.seatings.count).to eq(old_number_of_seatings_in_section - 1)
+      expect(@section.user_courses.count).to eq(old_number_of_user_courses_in_section - 1)
 
       do_sync_students
       @section.reload
       expect(@section.students.count).to eq(old_number_of_users)
-      expect(@section.seatings.count).to eq(old_number_of_seatings_in_section)
+      expect(@section.user_courses.count).to eq(old_number_of_user_courses_in_section)
     end
-    it "should add seatings for students that are in the db but not in the section" do
+    it "should add user_courses for students that are in the db but not in the section" do
       old_number_of_users = @section.course.account.users.count
-      old_number_of_seatings_in_section = @section.students.count
-      @section.seatings.last.destroy
+      old_number_of_user_courses_in_section = @section.students.count
+      @section.user_courses.last.destroy
 
       expect(@section.course.account.users.count).to eq(old_number_of_users)
-      expect(@section.seatings.count).to eq(old_number_of_seatings_in_section - 1)
+      expect(@section.user_courses.count).to eq(old_number_of_user_courses_in_section - 1)
 
       do_sync_students
       @section.reload
       expect(@section.course.account.users.count).to eq(old_number_of_users)
-      expect(@section.seatings.count).to eq(old_number_of_seatings_in_section)
+      expect(@section.user_courses.count).to eq(old_number_of_user_courses_in_section)
     end
-    it "should destroy the seatings for students that are no longer in the section" do
-      old_number_of_seatings_in_section = @section.students.count
-      seating = FactoryGirl.create(:user_course, section: @section)
-      expect(@section.seatings.count).to eq(old_number_of_seatings_in_section + 1)
+    it "should destroy the user_courses for students that are no longer in the section" do
+      old_number_of_user_courses_in_section = @section.students.count
+      user_course = FactoryGirl.create(:user_course, section: @section)
+      expect(@section.user_courses.count).to eq(old_number_of_user_courses_in_section + 1)
       do_sync_students
       @section.reload
-      expect(@section.seatings.count).to eq(old_number_of_seatings_in_section)
+      expect(@section.user_courses.count).to eq(old_number_of_user_courses_in_section)
     end
     it "should not destroy the student for students who are no longer in the class" do
       old_number_of_users = @section.course.account.users.count
-      old_number_of_seatings_in_section = @section.students.count
-      seating = FactoryGirl.create(:user_course, section: @section)
-      expect(@section.seatings.count).to eq(old_number_of_seatings_in_section + 1)
+      old_number_of_user_courses_in_section = @section.students.count
+      user_course = FactoryGirl.create(:user_course, section: @section)
+      expect(@section.user_courses.count).to eq(old_number_of_user_courses_in_section + 1)
       do_sync_students
       @section.reload
       expect(@section.course.account.users.count).to eq(old_number_of_users)
