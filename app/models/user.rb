@@ -19,7 +19,14 @@ class User < ActiveRecord::Base
 
   def canvas_api
     if auth = self.canvas_auth
-      Canvas.new(self.account.canvas_uri, auth.token)
+      options = {
+        auth: auth,
+        client_id: Rails.application.secrets.developer_id,
+        client_secret: Rails.application.secrets.developer_key,
+        redirect_uri: 'https://bryan-attendance.lvh.me/auth/canvas/callback',#user_omniauth_callback_path(:canvas),
+        refresh_token: auth.refresh_token
+      }
+      Canvas.new(self.account.canvas_uri, auth.token, options)
     else
       return nil
     end

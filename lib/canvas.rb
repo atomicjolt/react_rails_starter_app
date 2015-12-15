@@ -1,9 +1,10 @@
 class Canvas
 
-  def initialize(canvas_uri, canvas_api_key)
+  def initialize(canvas_uri, canvas_api_key, refresh_token_options=nil)
     @per_page = 100
     @canvas_uri = UrlHelper.scheme_host(canvas_uri)
     @canvas_api_key = canvas_api_key
+    @refresh_token_options = refresh_token_options
   end
 
   def headers
@@ -14,28 +15,75 @@ class Canvas
     }
   end
 
-  def full_url(api_url)
+  def full_url(api_url, use_api_prefix=true)
     if api_url[0...4] == 'http'
       api_url
     else
-      "#{@canvas_uri}/api/v1/#{api_url}"
+      if use_api_prefix
+        "#{@canvas_uri}/api/v1/#{api_url}"
+      else
+        "#{@canvas_uri}/#{api_url}"
+      end
     end
   end
 
   def api_put_request(api_url, payload)
+    @method = 'PUT'
+    @api_url = api_url
+    @payload = payload
     check_result(HTTParty.put(full_url(api_url), :headers => headers, :body => payload))
   end
 
-  def api_post_request(api_url, payload)
-    check_result(HTTParty.post(full_url(api_url), :headers => headers, :body => payload))
+  def api_post_request(api_url, payload, use_api_prefix=true)
+    @method = 'POST'
+    @api_url = api_url
+    @payload = payload
+    result = HTTParty.post(full_url(api_url, use_api_prefix), :headers => headers, :body => payload)
+    check_result(result)
   end
 
   def api_get_request(api_url)
+    @method = 'GET'
+    @api_url = api_url
     check_result(HTTParty.get(full_url(api_url), :headers => headers))
+  end
+
+  def refresh_token
+    result = api_post_request("login/oauth2/token", {
+      grant_type: 'refresh_token',
+      client_id: @refresh_token_options[:client_id],
+      client_secret: @refresh_token_options[:client_secret],
+      refresh_token:@refresh_token_options[:refresh_token]
+    }, false)
+    if result
+      @canvas_api_key = result['token']
+      @refresh_token_options['auth'].update_attribute(token: @canvas_api_key)
+      repeat_request_once
+    end
+  end
+
+  def repeat_request_once    
+    case @method
+      when 'GET'
+        api_get_request(@api_url)
+      when 'POST'
+        api_post_request(@api_url, @payload)
+      when 'PUT'
+        api_put_request(@api_url, @payload)
+    end
+  end
+
+  def refresh_token_and_try_again
+    if @refresh_token_options
+      @refreshing_token = true
+      refresh_token
+    end
   end
 
   def check_result(result)
     if result.response.code == '401'
+      refresh_token_and_try_again unless @refreshing_token
+      @refreshing_token = false
       raise Canvas::UnauthorizedException, result['errors']
     elsif result.response.code == '404'
       raise Canvas::NotFoundException, result['errors']
@@ -152,6 +200,10 @@ class Canvas
     make_paged_api_request("courses/#{course_id}/users?enrollment_type=ta")
   end
 
+  def course_info(course_id)
+    api_get_request("courses/#{course_id}")
+  end
+
   def enrollments(course_id)
     make_paged_api_request("courses/#{course_id}/enrollments")
   end
@@ -169,7 +221,7 @@ class Canvas
   end
 
   def quiz_submissions(course_id, quiz_id)
-    api_get_request("courses/#{course_id}/submissions")
+    api_get_request("courses/#{course_id}/quizzes/#{quiz_id}/submissions")
   end
 
   def quizzes(course_id)
