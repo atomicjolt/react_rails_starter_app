@@ -1,5 +1,5 @@
-import api        from "../libs/api";
-import Network    from "../constants/network";
+import api         from "../libs/api";
+import actionTypes from "../constants/action_types";
 
 const API = store => next => action => {
   var promise;
@@ -9,12 +9,13 @@ const API = store => next => action => {
   if(action.method){
     promise = api.execRequest(action.method, action.url, state.settings.get("apiUrl"), state.settings.get("jwt"), state.settings.get("csrf"), action.params, action.body);
     if(promise){
-      promise.then((res, err) => {
+      promise.then((response, error) => {
         store.dispatch({
-          type:     action.type + "_DONE",
-          res:      res.body,
+          type:     action.type + actionTypes.FINISHED,
+          payload:  response.body,
           original: action,
-          err:      err
+          response,
+          error
         }); // Dispatch the new data
       });
     }

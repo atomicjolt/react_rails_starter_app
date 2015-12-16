@@ -1,14 +1,10 @@
 export default {
-  
-  GET            : 'get',
-  POST           : 'post',
-  PUT            : 'put',
-  DEL            : 'del',
 
-  TIMEOUT        : 20000,
+  GET                       : 'get',
+  POST                      : 'post',
+  PUT                       : 'put',
+  DEL                       : 'del',
 
-  TIMEOUT        : 'NETWORK_TIMEOUT',
-  NOT_AUTHORIZED : 'NETWORK_NOT_AUTHORIZED',
-  ERROR          : 'NETWORK_ERROR'
+  TIMEOUT                   : 20000,
 
 };

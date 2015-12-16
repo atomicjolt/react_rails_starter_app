@@ -1,4 +1,5 @@
 "use strict";
+
 import 'babel-core/polyfill';
 import React              from 'react';
 import ReactDOM           from 'react-dom';
@@ -7,6 +8,7 @@ import routes             from './routes';
 import DevTools           from './dev/dev_tools';
 import configureStore     from './store/configure_store';
 import Immutable          from 'immutable';
+
 //Needed for onTouchTap
 //Can go away when react 1.0 release
 //Check this repo:

@@ -6,6 +6,18 @@ import configureStore     from "../js/store/configure_store";
 
 export default class Helper{
   
+  // Create a fake store for testing
+  static mockStore(state) {
+    return {
+      subscribe: () => {},
+      dispatch: () => {},
+      getState: () => {
+        return {...state};
+      }
+    };
+  }
+
+  // Create a real store that can be used for testing
   static makeStore(settings){
     var initialSettings = _.assign({
         jwt: "jwt_token",
