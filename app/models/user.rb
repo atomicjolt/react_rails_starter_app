@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
         auth: auth,
         client_id: Rails.application.secrets.developer_id,
         client_secret: Rails.application.secrets.developer_key,
-        redirect_uri: 'https://bryan-attendance.lvh.me/auth/canvas/callback',#user_omniauth_callback_path(:canvas),
+        redirect_uri: "#{self.account.canvas_uri}/auth/canvas/callback",
         refresh_token: auth.refresh_token
       }
       Canvas.new(self.account.canvas_uri, auth.token, options)

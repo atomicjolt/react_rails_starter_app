@@ -53,16 +53,16 @@ class Canvas
       grant_type: 'refresh_token',
       client_id: @refresh_token_options[:client_id],
       client_secret: @refresh_token_options[:client_secret],
-      refresh_token:@refresh_token_options[:refresh_token]
+      refresh_token: @refresh_token_options[:refresh_token]
     }, false)
     if result
-      @canvas_api_key = result['token']
-      @refresh_token_options['auth'].update_attribute(token: @canvas_api_key)
+      @canvas_api_key = result['access_token']
+      @refresh_token_options[:auth].update_attribute(:token, @canvas_api_key)
       repeat_request_once
     end
   end
 
-  def repeat_request_once    
+  def repeat_request_once
     case @method
       when 'GET'
         api_get_request(@api_url)
