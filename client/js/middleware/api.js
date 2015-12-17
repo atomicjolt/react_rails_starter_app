@@ -7,11 +7,11 @@ const API = store => next => action => {
 
   // send the api request
   if(action.method){
-    promise = api.execRequest(action.method, action.url, state.settings.get("apiUrl"), state.settings.get("jwt"), state.settings.get("csrf"), action.params, action.body);
+    promise = api.execRequest(action.method, action.url, state.settings.get("apiUrl"), state.settings.get("jwt"), state.settings.get("csrfToken"), action.params, action.body);
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
-          type:     action.type + actionTypes.FINISHED,
+          type:     action.type + actionTypes.DONE,
           payload:  response.body,
           original: action,
           response,
