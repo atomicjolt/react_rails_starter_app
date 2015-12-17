@@ -11,5 +11,9 @@ desc "Generate LTI test params. Call using: rake lti_test_params['lti_launch_url
 task :lti_test_params, [:lti_launch_url] => :environment do |t, args|
   require File.join(File.dirname(__FILE__), "../../spec/support/lti.rb")
   url = args[:code] || "https://www.example.com/lti/launch"
+
+  puts "LTI key: #{oauth_consumer_key}"
+  puts "LTI secret: #{oauth_consumer_secret}"
+  puts "--------------------------------------"
   puts lti_params({"launch_url" => url}).to_json
 end
