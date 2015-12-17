@@ -2,7 +2,8 @@
 
 import _ from "lodash";
 
-const finished = "_DONE";
+const done = "_DONE";
+
 const actionTypes = [
 
   // MESSAGES  
@@ -12,12 +13,15 @@ const actionTypes = [
 
 ];
 
-var types = _.reduce(actionTypes, (result, key) => {
+const asyncActionTypes = [
+];
+
+var types = _.reduce(asyncActionTypes, (result, key) => {
   result[key] = key;
-  result[`${key}${finished}`] = `${key}${finished}`;
+  result[`${key}${done}`] = `${key}${done}`;
   return result
 }, {});
 
-types.FINISHED = finished;
+types.DONE = done;
 
 export default types;
