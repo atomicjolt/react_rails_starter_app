@@ -1,7 +1,7 @@
 import CanvasConstants  from "../constants/canvas";
 import Network          from "../constants/network";
 
-const CanvasActions = {
+export default {
 
   accounts() {
     return {
@@ -13,12 +13,10 @@ const CanvasActions = {
 
   account(accountId) {
     return {
-      type: CanvasConstants.ACCOUNTS_LOAD,
+      type: CanvasConstants.ACCOUNT_LOAD,
       method: Network.GET,
       url: `/api/canvas/accounts/${accountId}`
     };
   }
 
 };
-
-export default CanvasActions;
