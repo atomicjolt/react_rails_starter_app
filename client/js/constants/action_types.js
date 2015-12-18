@@ -1,8 +1,4 @@
-"use strict";
-
-import _ from "lodash";
-
-const done = "_DONE";
+import wrapper from "./constants_wrapper";
 
 // These action types will have a _DONE action added
 const actionTypes = [
@@ -18,17 +14,4 @@ const actionTypes = [
 const asyncActionTypes = [
 ];
 
-var types = _.reduce(actionTypes, (result, key) => {
-  result[key] = key;
-  return result
-}, {});
-
-types = _.reduce(asyncActionTypes, (result, key) => {
-  result[key] = key;
-  result[`${key}${done}`] = `${key}${done}`;
-  return result
-}, types);
-
-types.DONE = done;
-
-export default types;
+export default wrapper(actionTypes, asyncActionTypes);
