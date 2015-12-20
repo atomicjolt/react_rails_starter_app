@@ -7,7 +7,7 @@ export default {
     return {
       type: CanvasConstants.ACCOUNTS_LOAD,
       method: Network.GET,
-      url: `/api/canvas/accounts`
+      url: `/api/v1/accounts`
     };
   },
 
