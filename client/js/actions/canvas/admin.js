@@ -11,7 +11,7 @@ export default {
     };
   },
 
-remove_admins(account_id, user_id) {
+  remove_admins(account_id, user_id) {
     return {
       type: CanvasConstants.REMOVE_ADMINS,
       method: Network.DEL,
