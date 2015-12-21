@@ -3,6 +3,9 @@ import Network          from "../constants/network";
 
 export default {
 
+//=====================================================================
+                      //Account analytics
+
   account_term_analytics(account_id, term_id) {
     return {
       type: CanvasConstants.ACCOUNT_TERM_ANALYTICS,
@@ -75,6 +78,10 @@ export default {
     };
   },
 
+
+// =================================================================
+                     //Course analytics
+
   course_analytics(course_id) {
     return {
       type: CanvasConstants.COURSE_ANALYTICS,
@@ -91,11 +98,35 @@ export default {
     };
   },
 
-  course_analytics_assignments(course_id) {
+  course_analytics_student_summaries(course_id) {
     return {
-      type: CanvasConstants.COURSE_ANALYTICS_ASSIGNMENTS,
+      type: CanvasConstants.COURSE_ANALYTICS_STUDENT_ID,
       method: Network.GET,
-      url: `/api/v1/courses/${course_id}/analytics/assignments`
+      url: `/api/v1/courses/${course_id}/analytics/student_summaries`
+    };
+  },
+
+  course_analytics_student_id(course_id, student_id) {
+    return {
+      type: CanvasConstants.COURSE_ANALYTICS_STUDENT_ID,
+      method: Network.GET,
+      url: `/api/v1/courses/${course_id}/analytics/users/${student_id}/activity`
+    };
+  },
+
+  course_analytics_student_assignments(course_id, student_id) {
+    return {
+      type: CanvasConstants.COURSE_ANALYTICS_STUDENT_ASSIGNMENTS,
+      method: Network.GET,
+      url: `/api/v1/courses/${course_id}/analytics/users/${student_id}/assignments`
+    };
+  },
+
+  course_analytics_student_message(course_id, student_id) {
+    return {
+      type: CanvasConstants.COURSE_ANALYTICS_STUDENT_MESSAGE,
+      method: Network.GET,
+      url: `/api/v1/courses/${course_id}/analytics/users/${student_id}/communication`
     };
   },
 
