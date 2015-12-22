@@ -122,6 +122,20 @@ class Canvas
     end
   end
 
+  # Proxy a request through to canvas. Add headers as needed.
+  def proxy(url, payload = nil, method = :get, use_api_prefix=true)
+    case method
+    when :get
+      api_get_request(url)
+    when :post
+      api_post_request(url, payload, use_api_prefix)
+    when :put
+      api_put_request(url, payload)
+    else
+      raise "invalid method type"
+    end
+  end
+
   def is_account_admin
     api_get_request("accounts/self") # If user can access this endpoint they are an account admin
     true
