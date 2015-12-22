@@ -123,13 +123,13 @@ class Canvas
   end
 
   # Proxy a request through to canvas. Add headers as needed.
-  def proxy(url, payload = nil, method = :get, use_api_prefix=true)
+  def proxy(url, method = 'GET', payload = nil, use_api_prefix=true)
     case method
-    when :get
+    when 'GET'
       api_get_request(url)
-    when :post
+    when 'POST'
       api_post_request(url, payload, use_api_prefix)
-    when :put
+    when 'PUT'
       api_put_request(url, payload)
     else
       raise "invalid method type"

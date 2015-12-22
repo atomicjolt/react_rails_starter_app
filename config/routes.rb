@@ -60,4 +60,6 @@ Rails.application.routes.draw do
 
   mount MailPreview => 'mail_view' if Rails.env.development?
 
+  get 'api/canvas' => 'api/canvas_proxy#proxy'
+
 end
