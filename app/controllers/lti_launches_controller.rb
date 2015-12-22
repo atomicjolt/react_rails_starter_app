@@ -19,7 +19,7 @@ class LtiLaunchesController < ApplicationController
   def check_for_iframes_problem
     agent = request.env['HTTP_USER_AGENT']
     if ((cookies.count == 0 && agent) && (
-         agent.match(/[^\(]*[^\)]Safari\//) || 
+         (agent.match(/[^\(]*[^\)]Safari\//) && !agent.match(/[^\(]*[^\)]Chrome\//)) || 
          agent.match(/[^\(]*[^\)]MSIE\//)
        ))
       @redirect_url = request.referer # this is the Canvas LTI Launch URL
