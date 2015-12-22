@@ -20,12 +20,12 @@ class UserCourse < ActiveRecord::Base
   end
 
   def self.lti_role_id(provider)
-    return UserCourse.INSTRUCTOR if provider.context_instructor?
-    return UserCourse.TA if provider.context_ta?
-    return UserCourse.MENTOR if provider.context_mentor?
-    return UserCourse.ADMIN if provider.context_admin?
-    return UserCourse.CONTENT_DEVELOPER if provider.context_content_developer?
-    return UserCourse.STUDENT if provider.context_student?
+    return UserCourse::INSTRUCTOR if provider.context_instructor?
+    return UserCourse::TA if provider.context_ta?
+    return UserCourse::MENTOR if provider.context_mentor?
+    return UserCourse::ADMIN if provider.context_admin?
+    return UserCourse::CONTENT_DEVELOPER if provider.context_content_developer?
+    return UserCourse::STUDENT if provider.context_student?
   end
 
 end
