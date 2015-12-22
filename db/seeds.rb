@@ -5,7 +5,8 @@ account_attrs = {
   domain: Rails.application.secrets.application_url,
   lti_key: Rails.application.secrets.default_lti_key,
   lti_secret: Rails.application.secrets.default_lti_secret,
-  canvas_uri: Rails.application.secrets.canvas_url
+  canvas_uri: Rails.application.secrets.canvas_url,
+  canvas_token: Rails.application.secrets.canvas_token
 }
 
 # Setup accounts
