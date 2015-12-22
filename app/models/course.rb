@@ -10,7 +10,7 @@ class Course < ActiveRecord::Base
   has_many :instructors, -> {where('user_courses.role_id = ?', UserCourse::INSTRUCTOR)}, :through => :user_courses, :foreign_key => :user_id, :class_name => "User", :source => :user
   has_many :students, -> {where('user_courses.role_id = ?', UserCourse::STUDENT)}, :through => :user_courses, :foreign_key => :user_id, :class_name => "User", :source => :user
 
-  def self.for_lti_launch(user, lms_course_id, name, referer)
+  def self.for_lti_launch(user, lms_course_id, name, referer, role_id)
     lms_course_id ||= Course.lms_course_id_from_referer(referer)
     course = user.courses.find_by(lms_course_id: lms_course_id)
     unless course
@@ -21,8 +21,8 @@ class Course < ActiveRecord::Base
           account_id: user.account_id,
           name: name)
       end
-      UserCourse.create!(user_id: user.id, course_id: course.id, role_id: UserCourse::INSTRUCTOR)
-      course.sync_students
+      UserCourse.create!(user_id: user.id, course_id: course.id, role_id: role_id)
+      course.sync_students if role_id == UserCourse::INSTRUCTOR
     end
     course
   end

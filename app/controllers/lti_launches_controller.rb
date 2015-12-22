@@ -9,7 +9,7 @@ class LtiLaunchesController < ApplicationController
 
   def index
     @course = Course.for_lti_launch(current_user, params[:custom_canvas_course_id], 
-      params[:context_title], request.referer)
+      params[:context_title], request.referer, UserCourse.lti_role_id(@provider))
   end
 
   # IE and Safari don't let you set cookies when you are loaded in an iframe and
