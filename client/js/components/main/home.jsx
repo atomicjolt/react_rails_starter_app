@@ -2,10 +2,10 @@
 
 import React from 'react';
 
-import StudentActions from "../actions/student";
+import StudentActions from "../../actions/student";
 
-import SettingsStore  from "../stores/settings";
-import StudentsStore  from "../stores/students";
+import SettingsStore  from "../../stores/settings";
+import StudentsStore  from "../../stores/students";
 
 export default class Home extends React.Component{
 
@@ -31,9 +31,11 @@ export default class Home extends React.Component{
   render(){
     return <div>
       <h2>Students</h2>
+      <ul>
       {this.state.students.map((student) => {
-          return({student.name});
+          return <li>{student.name}</li>;
       })}
+      </ul>
     </div>;
   }
 };
