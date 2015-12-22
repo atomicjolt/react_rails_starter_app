@@ -39,11 +39,11 @@ module Lti
       config
     end
 
-    def self.account_navigation_config(code)
+    def self.account_navigation_config(code, visibility = "admins")
       config = self.basic_config(code)
       config[:account_navigation] = {
           text: Rails.application.secrets.lti_tool_name,
-          visibility: "admins",
+          visibility: visibility,
           default: "enabled",
           enabled: true
         }
