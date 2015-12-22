@@ -33,4 +33,25 @@ class Account < ActiveRecord::Base
     Lti::Canvas.config_xml(config)
   end
 
+  def canvas_api
+    self.canvas_token ? Canvas.new(self.canvas_uri, self.canvas_token) : nil
+  end
+
+  def sync_courses
+    self.canvas_api.all_courses(self.id).each do |canvas_course|
+      course = Course.find_by(lms_course_id: canvas_course['id'])
+      if course
+        unless canvas_course['name'] == course.name && canvas_course['sis_course_id'] == course.sis_course_id
+          course.update_attributes(name: canvas_course['name'], sis_course_id: canvas_course['sis_course_id'])
+        end
+      else
+        Course.create!(
+          lms_course_id: canvas_course['id'],
+          account_id: self.id,
+          sis_course_id: canvas_course['sis_course_id'],
+          name: canvas_course['name'])
+      end
+    end
+  end
+
 end
