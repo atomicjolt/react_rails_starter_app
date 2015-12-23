@@ -3,7 +3,7 @@
 import _           from "lodash";
 import Immutable   from "immutable";
 import ErrorTypes  from "../constants/error";
-import admin    from "./admin";
+import admin       from "./admin";
 
 describe("canvas admins reducer", () => {
 
@@ -13,7 +13,6 @@ describe("canvas admins reducer", () => {
       const state = account_admins(undefined, {});
       expect(state.toJS()).toEqual({});
     });
-
   });
 
   describe("ACCOUNT_ADMINS_DONE", () => {
@@ -28,11 +27,23 @@ describe("canvas admins reducer", () => {
         }]
       }
       const state = accounts(initialState, action);
-      expect(state.getIn(['account_admins', 1]).name).toBe("bobby");
+      expect(state.getIn(['account_admins', 1]).name).toBe("Bobby");
     });
 
+  describe("REMOVE_ADMINS_DONE", () => {
 
-
+    it("Deletes an admin", () => {
+      const initialState = Immutable.fromJS({});
+      const action = {
+        type: ActionTypes.REMOVE_ADMINS_DONE,
+        payload: [{
+          id: 1,
+          name: "Bobby"
+        }]
+      }
+      const state = accounts(initialState, action);
+      expect(state.getIn(['remove_admins', 1]).name).toBe(null);
+    });
   });
 
 });
