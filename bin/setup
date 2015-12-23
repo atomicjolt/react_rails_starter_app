@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+
+set -o nounset
+set -o errexit
+set -o pipefail
+
+# If need be nginx can proxy to another ip eg for docker env, or virtual machine
+
+set -a
+source .env
+set +a
+
+# Create config file for the app / site.
+
+cat > "/usr/local/etc/nginx/servers/${APP_SUBDOMAIN}.conf" <<-EOF
+server {
+    listen *:443;
+    server_name ${ASSETS_SUBDOMAIN}.atomicjolt.xyz;
+
+    ssl on;
+    ssl_session_cache         builtin:1000  shared:SSL:10m;
+    ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers               HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+    ssl_prefer_server_ciphers on;
+
+    ssl_certificate     ssl/STAR_atomicjolt_xyz.crt;
+    ssl_certificate_key ssl/STAR_atomicjolt_xyz.key;
+
+    location / {
+
+      proxy_set_header   Host \$host;
+      proxy_set_header   X-Forwarded-Ssl on;
+      proxy_set_header   X-Forwarded-For \$proxy_add_x_forwarded_for;
+      proxy_set_header   X-Forwarded-Proto  \$http_x_forwarded_proto;
+      proxy_set_header   X-Real-IP        \$remote_addr;
+      proxy_set_header   Upgrade \$http_upgrade;
+      proxy_set_header   Connection "upgrade";
+      proxy_http_version 1.1;
+
+      proxy_pass         http://127.0.0.1:${ASSETS_PORT}/;
+
+    }
+}
+
+server {
+
+    listen *:443;
+    server_name ${APP_SUBDOMAIN}.atomicjolt.xyz;
+
+    ssl on;
+    ssl_session_cache         builtin:1000  shared:SSL:10m;
+    ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers               HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+    ssl_prefer_server_ciphers on;
+
+    ssl_certificate     ssl/STAR_atomicjolt_xyz.crt;
+    ssl_certificate_key ssl/STAR_atomicjolt_xyz.key;
+
+    location / {
+
+      proxy_set_header   Host \$host;
+      proxy_set_header   X-Forwarded-Ssl on;
+      proxy_set_header   X-Forwarded-For \$proxy_add_x_forwarded_for;
+      proxy_set_header   X-Forwarded-Proto  \$http_x_forwarded_proto;
+      proxy_set_header   X-Real-IP        \$remote_addr;
+      proxy_http_version 1.1;
+      proxy_pass         http://127.0.0.1:${APP_PORT}/;
+
+    }
+}
+EOF
+
+#Add app subdomains
+if ! [ -z ${APP_SUBDOMAINS+x} ];
+then
+  IFS=, SUBDOMAINS=($APP_SUBDOMAINS)
+  for SUBDOMAIN in ${SUBDOMAINS[@]}; do
+
+    cat >> "/usr/local/etc/nginx/servers/${APP_SUBDOMAIN}.conf" <<-EOFSINGLE
+
+server {
+
+  listen *:443;
+  server_name ${SUBDOMAIN}.atomicjolt.xyz;
+
+  ssl on;
+  ssl_session_cache         builtin:1000  shared:SSL:10m;
+  ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers               HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+  ssl_prefer_server_ciphers on;
+
+  ssl_certificate     ssl/STAR_atomicjolt_xyz.crt;
+  ssl_certificate_key ssl/STAR_atomicjolt_xyz.key;
+
+  location / {
+
+    proxy_set_header   Host \$host;
+    proxy_set_header   X-Forwarded-Ssl on;
+    proxy_set_header   X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header   X-Forwarded-Proto  \$http_x_forwarded_proto;
+    proxy_set_header   X-Real-IP        \$remote_addr;
+    proxy_http_version 1.1;
+    proxy_pass         http://127.0.0.1:${APP_PORT}/;
+
+  }
+}
+EOFSINGLE
+
+
+
+  done
+fi
+
+
+
+# Restarting nginx
+echo "Restarting nginx..."
+sudo launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist
+sudo launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist && echo "nginx started."
+echo "-------------------------------------"
+echo "Your app has been added."
+echo "Your next steps..."
+echo "Run: foreman start -f Procfile.dev"
+echo "If your rails server is not run by foreman run: rails s -p ${APP_PORT}"
+echo "Visit your assets here: https://${ASSETS_SUBDOMAIN}.atomicjolt.xyz"
+echo "Visit your app / project here: https://${APP_SUBDOMAIN}.atomicjolt.xyz"
+echo "-------------------------------------"
