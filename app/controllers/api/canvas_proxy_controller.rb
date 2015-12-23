@@ -12,7 +12,7 @@ class Api::CanvasProxyController < ApplicationController
     result.headers.each do |name, val|
       response.headers[name] = val
     end
-    response.close
+    response.commit!
   end
 
 end
