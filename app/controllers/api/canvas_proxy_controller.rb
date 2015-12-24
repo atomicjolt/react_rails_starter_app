@@ -7,12 +7,11 @@ class Api::CanvasProxyController < ApplicationController
   def proxy
     api = current_account.canvas_api
     result = api.proxy(params[:url], request.method, request.body)
-    response.body = result.body
     response.status = result.code
     result.headers.each do |name, val|
       response.headers[name] = val
     end
-    response.commit!
+    render text: result.body
   end
 
 end
