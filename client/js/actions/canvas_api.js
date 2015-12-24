@@ -21,7 +21,7 @@ export default class CanvasApi{
   static get(url, key, cb){
     Api.get(key, proxyUrl(url)).then(
     (response) => {
-      cb(response);
+      cb(response.body || JSON.parse(response.text));
       if(response.header){
         var next_url = get_next_url(response.headers['link']);
         if(next_url){
