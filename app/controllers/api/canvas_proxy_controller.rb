@@ -8,9 +8,6 @@ class Api::CanvasProxyController < ApplicationController
     api = current_account.canvas_api
     result = api.proxy(params[:url], request.method, request.body)
     response.status = result.code
-    result.headers.each do |name, val|
-      response.headers[name] = val
-    end
     render text: result.body
   end
 
