@@ -10,6 +10,7 @@ import routes                 from './routes';
 import DevTools               from './dev/dev_tools';
 import configureStore         from './store/configure_store';
 import history                from './history';
+import jwt                    from './loaders/jwt';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -38,6 +39,9 @@ class Root extends React.Component {
 const store = configureStore({settings: Immutable.fromJS(window.DEFAULT_SETTINGS)});
 
 syncReduxAndRouter(history, store);
+
+// Setup JWT refresh
+jwt(store.dispatch, window.DEFAULT_SETTINGS.userId);
 
 ReactDOM.render(
   <Root store={store} />,
