@@ -2,7 +2,7 @@
 
 import _           from "lodash";
 import Immutable   from "immutable";
-import ErrorTypes  from "../constants/error";
+import ErrorTypes  from "../../constants/error";
 import admin       from "./admin";
 
 describe("canvas admins reducer", () => {

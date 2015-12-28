@@ -2,18 +2,18 @@
 
 import _           from "lodash";
 import Immutable   from "immutable";
-import ErrorTypes  from "../constants/error";
+import ErrorTypes  from "../../constants/error";
 import accounts    from "./accounts";
 
 describe("canvas accounts reducer", () => {
 
   describe("initial state", () => {
-    
+
     it("has no accounts", () => {
       const state = accounts(undefined, {});
       expect(state.toJS()).toEqual({});
     });
-    
+
   });
 
   describe("ACCOUNTS_LOAD_DONE", () => {

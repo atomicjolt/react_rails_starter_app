@@ -1,9 +1,9 @@
 "use strict";
 
-import _           from "lodash";
-import Immutable   from "immutable";
-import ErrorTypes  from "../constants/error";
-import admin       from "./admin";
+import _                      from "lodash";
+import Immutable              from "immutable";
+import ErrorTypes             from "../../constants/error";
+import assignment_group       from "./assignment_group";
 
 
 describe("canvas assignment_group reducer", () => {
@@ -11,7 +11,7 @@ describe("canvas assignment_group reducer", () => {
   describe("initial state", () => {
 
     it("has no groups", () => {
-      const state = course_assignment_groups(undefined, {});
+      const state = assignment_group(undefined, {});
       expect(state.toJS()).toEqual({});
     });
   });
@@ -28,7 +28,7 @@ describe("canvas assignment_group reducer", () => {
           name: "Group13"
         }]
       }
-      const state = accounts(initialState, action);
+      const state = assignment_group(initialState, action);
       expect(state.getIn(['course_assignment_groups', 1]).name).toBe("Group13");
     });
 
@@ -44,7 +44,7 @@ describe("canvas assignment_group reducer", () => {
           name: "Group13"
         }]
       }
-      const state = accounts(initialState, action);
+      const state = assignment_group(initialState, action);
       expect(state.getIn(['course_assignment_groups', 1]).id).toBe(7);
     });
 
@@ -60,7 +60,7 @@ describe("canvas assignment_group reducer", () => {
           name: "Group13"
         }]
       }
-      const state = accounts(initialState, action);
+      const state = assignment_group(initialState, action);
       expect(state.getIn(['course_assignment_groups', 1]).name).toEqual({});
     });
   });

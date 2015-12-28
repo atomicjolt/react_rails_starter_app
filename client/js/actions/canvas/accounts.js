@@ -1,5 +1,5 @@
-import CanvasConstants  from "../constants/canvas";
-import Network          from "../constants/network";
+import CanvasConstants  from "../../constants/canvas";
+import Network          from "../../constants/network";
 
 export default {
 
