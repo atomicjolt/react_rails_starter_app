@@ -35,9 +35,11 @@ class Canvas
   end
 
   def api_post_request(api_url, payload, use_api_prefix=true)
-    @method = 'POST'
-    @api_url = api_url
-    @payload = payload
+    unless @refreshing_token
+      @method = 'POST'
+      @api_url = api_url
+      @payload = payload
+    end
     result = HTTParty.post(full_url(api_url, use_api_prefix), :headers => headers, :body => payload)
     check_result(result)
   end
