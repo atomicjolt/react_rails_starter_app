@@ -42,7 +42,7 @@ describe("canvas admins reducer", () => {
         }]
       }
       const state = accounts(initialState, action);
-      expect(state.getIn(['remove_admins', 1]).name).toBe(null);
+      expect(state.getIn(['account_admins', 1]).name).toEqual({});
     });
   });
 
