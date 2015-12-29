@@ -1,9 +1,9 @@
 "use strict";
 
-import _           from "lodash";
-import Immutable   from "immutable";
-import ErrorTypes  from "../../constants/error";
-import accounts    from "./accounts";
+import _             from "lodash";
+import Immutable     from "immutable";
+import CanvasConstants   from "../../constants/canvas";
+import accounts      from "./accounts";
 
 describe("canvas accounts reducer", () => {
 
@@ -21,7 +21,7 @@ describe("canvas accounts reducer", () => {
     it("Adds new accounts", () => {
       const initialState = Immutable.fromJS({});
       const action = {
-        type: ActionTypes.ACCOUNTS_LOAD_DONE,
+        type: CanvasConstants.ACCOUNTS_LOAD_DONE,
         payload: [{
           id: 1,
           name: "test"
@@ -30,7 +30,6 @@ describe("canvas accounts reducer", () => {
       const state = accounts(initialState, action);
       expect(state.getIn(['accounts', 1]).name).toBe("test");
     });
-
   });
 
 });

@@ -2,7 +2,7 @@
 
 import Immutable   from "immutable";
 import CanvasConstants  from "../../constants/canvas";
-import ErrorTypes  from "../constants/error";
+import ErrorTypes  from "../../constants/error";
 import _ from "lodash";
 
 const initialState = Immutable.fromJS({});
@@ -11,15 +11,15 @@ export default (state = initialState, action) => {
 
   switch(action.type){
 
-    case ActionTypes.LIST_OVERRIDE_ASSIGNMENT_DONE:
+    case CanvasConstants.LIST_OVERRIDE_ASSIGNMENT_DONE:
       return state.set("override_assignment", Immutable.fromJS(action.payload));
       break;
 
-    case ActionTypes.OVERRIDE_ASSIGNMENT_DONE:
+    case CanvasConstants.OVERRIDE_ASSIGNMENT_DONE:
       return state.set("override_assignment", Immutable.fromJS(action.payload));
       break;
 
-    case ActionTypes.LIST_OVERRIDE_ASSIGNMENT_GROUP_DONE:
+    case CanvasConstants.LIST_OVERRIDE_ASSIGNMENT_GROUP_DONE:
       return state.set("override_assignment", Immutable.fromJS(action.payload));
       break;
 

@@ -3,10 +3,10 @@ import wrapper from "./constants_wrapper";
 // These action types will have a _DONE action added
 const actionTypes = [
 
-  // MESSAGES  
+  // MESSAGES
   "ADD_MESSAGE",
   "REMOVE_MESSAGE",
-  "CLEAR_MESSAGES"
+  "CLEAR_MESSAGES",
 
 ];
 

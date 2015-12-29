@@ -1,7 +1,7 @@
 import wrapper from "./constants_wrapper";
 
-const actionTypes = [];
-const asyncActionTypes = [
+
+const  actionTypes = [
 
   // ACCOUNTS
   "ACCOUNTS_LOAD",
@@ -46,11 +46,8 @@ const asyncActionTypes = [
   "SINGLE_ASSIGNMENT",
   "EDIT_ASSIGNMENT",
 
-
-
-
-
-
 ];
+
+const asyncActionTypes = [];
 
 export default wrapper(actionTypes, asyncActionTypes);

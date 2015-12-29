@@ -11,15 +11,15 @@ export default (state = initialState, action) => {
 
   switch(action.type){
 
-    case ActionTypes.COURSE_ASSIGNMENT_GROUPS_DONE:
+    case CanvasConstants.COURSE_ASSIGNMENT_GROUPS_DONE:
       return state.set("course_assignment_groups", Immutable.fromJS(action.payload));
       break;
 
-    case ActionTypes.COURSE_ASSIGNMENT_SINGLE_GROUP_DONE:
+    case CanvasConstants.COURSE_ASSIGNMENT_SINGLE_GROUP_DONE:
       return state.set("course_assignment_groups", Immutable.fromJS(action.payload));
       break;
 
-    case ActionTypes.COURSE_ASSIGNMENT_SINGLE_GROUP_DEL_DONE:
+    case CanvasConstants.COURSE_ASSIGNMENT_SINGLE_GROUP_DEL_DONE:
       var deletedGroup = action.response.body
       var newState = state.get("course_assignment_groups").filter(group=>group.get("id") != deletedGroup.id)
       return state.set("course_assignment_groups", Immutable.fromJS(newState));
