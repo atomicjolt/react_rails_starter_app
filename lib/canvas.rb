@@ -84,13 +84,15 @@ class Canvas
 
   def check_result(result)
     if result.response.code == '401'
-      refresh_token_and_try_again unless @refreshing_token
-      @refreshing_token = false
+      unless @refreshing_token
+        @refreshing_token = false
+        return refresh_token_and_try_again
+      end
       raise Canvas::UnauthorizedException, result['errors']
     elsif result.response.code == '404'
       raise Canvas::NotFoundException, result['errors']
     elsif !['200', '201'].include?(result.response.code)
-      raise Canvas::InvalidRequestException, result['errors']
+      raise Canvas::InvalidRequestException, "#{result.response.code} - #{result['errors']} (#{@api_url})"
     end
     result
   end
