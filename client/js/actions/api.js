@@ -86,16 +86,17 @@ function del(url) {
     .set('X-CSRF-Token', csrfToken());
 }
 
-function dispatch(key, response) {
+function dispatch(key, response, payload) {
   Dispatcher.dispatch({
     action: key,
-    data: response
+    data: response,
+    payload: payload
   });
   return true;
 }
 
 // Dispatch a response based on the server response
-function dispatchResponse(key) {
+function dispatchResponse(key, payload) {
   return (err, response) => {
     if(err && err.timeout === TIMEOUT) {
       return dispatch(Constants.TIMEOUT, response);
@@ -110,13 +111,13 @@ function dispatchResponse(key) {
     } else if(!response.ok) {
       return dispatch(Constants.ERROR, response);
     } else if(key) {
-      return dispatch(key, response);
+      return dispatch(key, response, payload);
     }
     return false;
   };
 }
 
-function doRequest(key, url, requestMethod, requestType){
+function doRequest(key, url, requestMethod, requestType, payload){
 
   var requestContainer = buildRequest(url, requestMethod, requestType);
   if(requestContainer.promise){
@@ -126,7 +127,7 @@ function doRequest(key, url, requestMethod, requestType){
   var promise = new Promise((resolve, reject) => {
     requestContainer.request.end((error, res) => {
       disposeRequest(url);
-      var handled = dispatchResponse(key)(error, res);
+      var handled = dispatchResponse(key, payload)(error, res);
       if(error && !handled){
         reject(error);
       } else {
@@ -206,12 +207,55 @@ function *doCacheRequest(url, key, requestMethod, requestType){
 
 }
 
+var getRequests = [];
+var getRequestTimer;
+var getRequestDelay = 10;
+var getRequestsOutstanding = 0;
+var getRequestLimit = 10;
+
+function handleGetResponse(result){
+  getRequestsOutstanding = getRequestsOutstanding - 1;
+  if(result){
+    result.headers["x-response-time"]  
+  }
+}
+
 var API = {
 
-  get(key, url){
+  queuedGet(key, url, payload, cb){
+    getRequests.push({ key, url, payload });
+
+    if(!getRequestTimer){
+      getRequestTimer = setInterval(() => {
+        
+        if(getRequestsOutstanding > getRequestLimit){ return; }
+        if(getRequests.length <= 0 && getRequestTimer){
+          clearTimeout(getRequestTimer);
+          getRequestTimer = null;
+        }
+
+        getRequestsOutstanding = getRequestsOutstanding + 1;
+
+        var { key, url, payload } = getRequests.shift();
+        API.get(key, url, payload).then(
+          (result) => {
+            handleGetResponse(result);
+            if(cb){ cb(result); }
+          },
+          (error) => {
+            handleGetResponse();
+            console.log(error);
+          }
+        );
+      }, getRequestDelay);  
+    }
+    
+  },
+
+  get(key, url, payload){
     return doRequest(key, url, (fullUrl) => {
       return get(fullUrl);
-    }, GET);
+    }, GET, payload);
   },
 
   post(key, url, body){
