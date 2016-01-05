@@ -31,23 +31,26 @@ class Canvas
     @method = 'PUT'
     @api_url = api_url
     @payload = payload
-    check_result(HTTParty.put(full_url(api_url), :headers => headers, :body => payload))
+    url = full_url(api_url)
+    check_result(HTTParty.put(url, :headers => headers, :body => payload), url)
   end
 
   def api_post_request(api_url, payload, use_api_prefix=true)
-    unless @refreshing_token
+	unless @refreshing_token
       @method = 'POST'
       @api_url = api_url
       @payload = payload
     end
-    result = HTTParty.post(full_url(api_url, use_api_prefix), :headers => headers, :body => payload)
-    check_result(result)
+    url = full_url(api_url, use_api_prefix)
+    result = HTTParty.post(url, :headers => headers, :body => payload)
+    check_result(result, url)
   end
 
   def api_get_request(api_url)
     @method = 'GET'
     @api_url = api_url
-    check_result(HTTParty.get(full_url(api_url), :headers => headers))
+    url = full_url(api_url)
+    check_result(HTTParty.get(url, :headers => headers), url)
   end
 
   def refresh_token
@@ -82,7 +85,7 @@ class Canvas
     end
   end
 
-  def check_result(result)
+  def check_result(result, url)
     if result.response.code == '401'
       unless @refreshing_token
         @refreshing_token = false
@@ -92,7 +95,7 @@ class Canvas
     elsif result.response.code == '404'
       raise Canvas::NotFoundException, result['errors']
     elsif !['200', '201'].include?(result.response.code)
-      raise Canvas::InvalidRequestException, "#{result.response.code} - #{result['errors']} (#{@api_url})"
+      raise Canvas::InvalidRequestException, "Status: #{result.response.code} Error: #{result['errors']} Url: #{url}"
     end
     result
   end
@@ -191,14 +194,23 @@ class Canvas
   end
 
 #This is used to list sections in a particular course, given a course_id.
-  def sections(course_id)
-    api_get_request("courses/#{course_id}/sections")
+  def sections(course_id, *include_options)
+    include_param = include_options.map{|option| "include[]=#{option}"}.join("&")
+    api_get_request("courses/#{course_id}/sections?#{include_param}")
+  end
+
+  def course_groups(course_id)
+    api_get_request("courses/#{course_id}/groups")
+  end
+
+  def group_memberships(group_id)
+    api_get_request("groups/#{group_id}/memberships")
   end
 
   def recent_logins(course_id)
     api_get_request("courses/#{course_id}/recent_students")
   end
-
+  
   def students(course_id, *include_options)
     include_param = include_options.map{|option| "&include[]=#{option}"}.join
     make_paged_api_request("courses/#{course_id}/users?enrollment_type=student#{include_param}")
@@ -260,6 +272,10 @@ class Canvas
 
   def get_user(user_id)
     api_get_request("users/#{user_id}")
+  end
+
+  def get_user_custom_data(user_id, namespace, scope=nil)
+    api_get_request("users/#{user_id}/custom_data#{scope}?ns=#{namespace}")
   end
 
   def get_user_enrollments(user_id)
