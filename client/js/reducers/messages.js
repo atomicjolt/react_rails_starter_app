@@ -7,7 +7,7 @@ import ErrorTypes  from "../constants/error";
 const initialState = Immutable.fromJS([]);
 
 export default (state = initialState, action) => {
-  
+
   switch(action.type){
 
     case ErrorTypes.TIMEOUT:
@@ -37,5 +37,5 @@ export default (state = initialState, action) => {
     default:
       return state;
 
-  } 
-}  
+  }
+}
