@@ -7,7 +7,7 @@ import ErrorTypes             from "../../constants/error";
 import assignment_group       from "./assignment_group";
 
 
-fdescribe("canvas assignment_group reducer", () => {
+describe("canvas assignment_group reducer", () => {
 
     it("has no groups", () => {
       const state = assignment_group(undefined, {});

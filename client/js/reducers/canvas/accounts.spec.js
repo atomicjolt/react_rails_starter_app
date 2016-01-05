@@ -33,4 +33,3 @@ describe("canvas accounts reducer", () => {
   });
 
 });
-hello Iidiomeikiejid

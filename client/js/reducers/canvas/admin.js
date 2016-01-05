@@ -16,9 +16,11 @@ export default (state = initialState, action) => {
       break;
 
       case CanvasConstants.REMOVE_ADMINS_DONE:
-      var deletedPerson = action.response.body
-      var currentAdmins = state.get("account_admins").filter(admin=>admin.get("id") != deletedPerson.id)
-      return state.set("account_admins", Immutable.fromJS(currentAdmins));
+      //debugger
+      //var deletedPerson = action.response.body
+      // var currentAdmins = state.get("account_admins").filter(admin=>admin.get("id") != deletedPerson.id)
+      //return state.set("account_admins", Immutable.fromJS(currentAdmins));
+      return state.delete(action.response.body.id);
       break;
 
     default:
