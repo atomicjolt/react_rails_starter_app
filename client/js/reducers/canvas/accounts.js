@@ -56,12 +56,10 @@ export default (state = initialState, action) => {
     case ActionTypes.CREATE_SUB_DONE:
       const create_sub_account = _.reduce(action.payload, (result, create_sub_account) => {
       }, {accountId});
-      return state.set("create_sub_account", create_sub_account);
-
+      return state.set("create_sub_account", create_sub_account)
 
     default:
       return state;
 
   }
 }
-
