@@ -5,7 +5,7 @@ function proxyUrl(url){
   return `api/canvas?url=${encodeURIComponent(url)}`;
 }
 
-function get_next_url(link){
+function getNextUrl(link){
   if(link){
     const url = _.find(link.split(','), (l) => {
       return _.trim(l.split(";")[1]) == 'rel="next"';
@@ -18,22 +18,20 @@ function get_next_url(link){
 
 export default class CanvasApi{
 
-  static get(url, key, cb){
-    Api.get(key, proxyUrl(url)).then(
-    (response) => {
+  static get(url, key, cb, payload){
+
+    function getNext(response){
       if(cb) { cb(response.body || JSON.parse(response.text)); }
       if(response.header){
-        var next_url = get_next_url(response.headers['link']);
-        if(next_url){
-          this.get(next_url, key, cb);
-        } else {
-          return;
+        var nextUrl = getNextUrl(response.headers['link']);
+        if(nextUrl){
+          CanvasApi.get(nextUrl, key, cb, payload);
         }
       }
-    },
-    (error) => {
-      console.log(error);
-    });
+    }
+
+    Api.queuedGet(key, proxyUrl(url), payload, getNext);
+      
   }
 
   static post(url, body, key){
