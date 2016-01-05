@@ -46,14 +46,14 @@ courses(accountId) {
 update_account(accountId) {
   return {
     type: CanvasConstants.UPDATE_ACCOUNT,
-    method: Network.PUT,
+    method: Network.POST,
     url: `/api/v1/accounts/${accountId}`
   };
 },
 
-delete_user_root_account(accountId, userId) {
+delete_account(accountId, userId) {
   return {
-    type: CanvasConstants.DELETE_USER_ROOT_ACCOUNT,
+    type: CanvasConstants.DELETE_ACCOUNT,
     method: Network.DELETE,
     url: `/api/v1/accounts/${accountId}/user/${userId}`
   };
@@ -62,7 +62,7 @@ delete_user_root_account(accountId, userId) {
 create_sub_account (accountId) {
   return {
     type: CanvasConstants.CREATE_SUB_ACCOUNT,
-    method: Network.Post,
+    method: Network.POST,
     url: `api/v1/accounts/${accountId}/sub_accounts`
   };
 }

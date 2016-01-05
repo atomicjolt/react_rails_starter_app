@@ -8,12 +8,12 @@ import accounts    from "./accounts";
 describe("canvas accounts reducer", () => {
 
   describe("initial state", () => {
-    
+
     it("has no accounts", () => {
       const state = accounts(undefined, {});
       expect(state.toJS()).toEqual({});
     });
-    
+
   });
 
   describe("ACCOUNTS_LOAD_DONE", () => {
@@ -34,3 +34,4 @@ describe("canvas accounts reducer", () => {
   });
 
 });
+hello Iidiomeikiejid
