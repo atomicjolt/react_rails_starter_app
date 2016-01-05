@@ -8,21 +8,19 @@ import _ from "lodash";
 const initialState = Immutable.fromJS({});
 
 export default (state = initialState, action) => {
-
+debugger
   switch(action.type){
 
-    case CanvasConstants.COURSE_ASSIGNMENT_GROUPS_DONE:
-      return state.set("course_assignment_groups", Immutable.fromJS(action.payload));
-      break;
-
     case CanvasConstants.COURSE_ASSIGNMENT_SINGLE_GROUP_DONE:
-      return state.set("course_assignment_groups", Immutable.fromJS(action.payload));
+    case CanvasConstants.COURSE_ASSIGNMENT_GROUPS_DONE:
+      _.each(action.payload, (assignment_group) => {
+        state = state.set(assignment_group.id, assignment_group);
+      });
+      return state;
       break;
 
     case CanvasConstants.COURSE_ASSIGNMENT_SINGLE_GROUP_DEL_DONE:
-      var deletedGroup = action.response.body
-      var newState = state.get("course_assignment_groups").filter(group=>group.get("id") != deletedGroup.id)
-      return state.set("course_assignment_groups", Immutable.fromJS(newState));
+      return state.delete(action.response.body.id);
       break;
 
     default:

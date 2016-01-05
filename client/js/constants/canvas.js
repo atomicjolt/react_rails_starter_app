@@ -1,7 +1,7 @@
 import wrapper from "./constants_wrapper";
 
-
-const  actionTypes = [
+// These action types will have a _DONE action added
+const  asyncActionTypes = [
 
   // ACCOUNTS
   "ACCOUNTS_LOAD",
@@ -68,6 +68,7 @@ const  actionTypes = [
   "STUDENT_GROUP_PARTICIPANTS"
 ];
 
-const asyncActionTypes = [];
+// These types will receive a _DONE
+const  actionTypes = [];
 
 export default wrapper(actionTypes, asyncActionTypes);

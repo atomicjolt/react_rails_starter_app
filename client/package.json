@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "karma start",
+    "dev-test": "karma --reporters=dots start",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "build": "webpack --config webpack.release.js --progress --profile --colors",
     "hot": "node webpack.hot.js",

@@ -6,13 +6,13 @@ import ErrorTypes      from "../../constants/error";
 import CanvasConstants     from "../../constants/canvas";
 import admin           from "./admin";
 
-fdescribe("canvas admins reducer", () => {
+describe("canvas admins reducer", () => {
 
   describe("initial state", () => {
 
     it("has no admins", () => {
       const state = admin(undefined, {});
-      expect(state.toJS()).toEqual({});
+      expect(state.getIn(['account_admins', 0])).toEqual(undefined);
     });
   });
 
@@ -24,22 +24,18 @@ fdescribe("canvas admins reducer", () => {
         type: CanvasConstants.ACCOUNT_ADMINS_DONE,
         payload: [{
           id: 1,
-          name: "Bobby"
+          name: "Bobby Flay"
         }]
       }
       const state = admin(initialState, action);
-        console.log(action.payload)
-        console.log("++++++++++====================")
-        console.log(initialState)
-        console.log("+++++++++++++++++++++++++++++++++")
-        console.log(state)
-      expect(state.getIn(['account_admins', 0]).name).toBe("Bobby");
+      expect(state.getIn(['account_admins', 0, 'name'])).toEqual('Bobby Flay');
     });
   });
 
   describe("REMOVE_ADMINS_DONE", () => {
 
     it("Deletes an admin", () => {
+
       const initialState = Immutable.fromJS({});
       const action = {
         type: CanvasConstants.REMOVE_ADMINS_DONE,
@@ -49,7 +45,7 @@ fdescribe("canvas admins reducer", () => {
         }]
       }
       const state = admin(initialState, action);
-      expect(state.getIn(['account_admins', 1]).name).toEqual({});
+      expect(state.getIn(['account_admins', 0, 'name'])).toEqual('Bobby');
     });
   });
 
