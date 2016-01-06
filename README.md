@@ -3,7 +3,11 @@
 This project provides a starting point for building an LTI or OAuth application.
 
 ## Build a new application using the LTI Starter App Rails application template:
-rails new my_app -m https://raw.githubusercontent.com/atomicjolt/lti_starter_app/master/template.rb
+Since the project is not public you will need to have a local copy of the lti_starter_app project.
+Be sure to use the correct relative path:
+
+`rails new my_app -m ./lti_starter_app/template.rb`
+
 
 ## Running LTI Starter App
 
