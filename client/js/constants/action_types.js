@@ -1,8 +1,6 @@
-"use strict";
+import wrapper from "./constants_wrapper";
 
-import _ from "lodash";
-
-const finished = "_DONE";
+// These action types will have a _DONE action added
 const actionTypes = [
 
   // MESSAGES  
@@ -12,12 +10,8 @@ const actionTypes = [
 
 ];
 
-var types = _.reduce(actionTypes, (result, key) => {
-  result[key] = key;
-  result[`${key}${finished}`] = `${key}${finished}`;
-  return result
-}, {});
+// These types will receive a _DONE
+const asyncActionTypes = [
+];
 
-types.FINISHED = finished;
-
-export default types;
+export default wrapper(actionTypes, asyncActionTypes);
