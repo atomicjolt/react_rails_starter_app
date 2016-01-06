@@ -215,41 +215,55 @@ var getRequestLimit = 10;
 
 function handleGetResponse(result){
   getRequestsOutstanding = getRequestsOutstanding - 1;
-  if(result){
-    result.headers["x-response-time"]  
-  }
+  // if(result){
+  //   result.headers["x-response-time"]  
+  // }
 }
 
-var API = {
+function doGetRequest(){
+  
+  if(getRequestsOutstanding > getRequestLimit){ return; }
+  
+  if(getRequests.length <= 0 && getRequestTimer){
+    clearTimeout(getRequestTimer);
+    getRequestTimer = null;
+  }
 
-  queuedGet(key, url, payload, cb){
-    getRequests.push({ key, url, payload });
+  getRequestsOutstanding = getRequestsOutstanding + 1;
 
+  var { key, url, payload, resolve, reject } = getRequests.shift();
+  API.get(key, url, payload).then(
+    (result) => {
+      handleGetResponse(result);
+      resolve(result);
+    },
+    (error) => {
+      handleGetResponse();
+      reject(error);
+    }
+  );
+}
+
+const API = {
+
+  queuedGet(key, url, payload, priority = false){
+    
+    const promise = new Promise((resolve, reject) => {
+      const request = { key, url, payload, resolve, reject };
+
+      if(priority){
+        getRequests.unshift(request); // Put request at the front
+      } else {
+        getRequests.push(request);  
+      }
+
+    });
+    
     if(!getRequestTimer){
-      getRequestTimer = setInterval(() => {
-        
-        if(getRequestsOutstanding > getRequestLimit){ return; }
-        if(getRequests.length <= 0 && getRequestTimer){
-          clearTimeout(getRequestTimer);
-          getRequestTimer = null;
-        }
-
-        getRequestsOutstanding = getRequestsOutstanding + 1;
-
-        var { key, url, payload } = getRequests.shift();
-        API.get(key, url, payload).then(
-          (result) => {
-            handleGetResponse(result);
-            if(cb){ cb(result); }
-          },
-          (error) => {
-            handleGetResponse();
-            console.log(error);
-          }
-        );
-      }, getRequestDelay);  
+      getRequestTimer = setInterval(doGetRequest, getRequestDelay);  
     }
     
+    return promise;
   },
 
   get(key, url, payload){
