@@ -1,11 +1,11 @@
-# Canvas Starter App
+# LTI Starter App
 
-This project provides a starting point for building a Canvas LTI or OAuth application.
+This project provides a starting point for building an LTI or OAuth application.
 
-## Build a new application using the Canvas Starter App Rails application template:
-rails new my_app -m https://raw.githubusercontent.com/atomicjolt/canvas_starter_app/master/template.rb
+## Build a new application using the LTI Starter App Rails application template:
+rails new my_app -m https://raw.githubusercontent.com/atomicjolt/lti_starter_app/master/template.rb
 
-## Running Canvas Starter App
+## Running LTI Starter App
 
 ### With Foreman
 Foreman makes it simple to startup all the services required to run the application in development mode. To start the application using foreman simply run:
@@ -26,10 +26,10 @@ If you need to run services individually or just don't like Foreman you can run 
 $ rails server
 $ cd client && nodemon webpack.hot.js
 $ ngrok --subdomain master_assets --log stdout 8080
-$ ngrok --subdomain canvasstarterapp --log stdout 3000
+$ ngrok --subdomain ltistarterapp --log stdout 3000
 ```
 
-## Setting up Canvas Starter App
+## Setting up LTI Starter App
 
 ### File Modifications
 
@@ -39,9 +39,9 @@ Rename `.env.example` to `.env` and configure it to your liking.
 Note: the App and Assets subdomains must be different.
 
 #### Modify application name
-1. Open application.rb and change `CanvasStarterApp` to the name you choose.
-2. Do a global search and replace for `canvas_starter_app` and change it to the name you choose.
-3. Do a global search and replace for `canvasstarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
+1. Open application.rb and change `ltistarterapp` to the name you choose.
+2. Do a global search and replace for `lti_starter_app` and change it to the name you choose.
+3. Do a global search and replace for `ltistarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
 
 #### Secrets file
 Rename `config/secrets.example.yml` to `config/secrets.yml`. Open the file and change each entry to values that are relevant for your application.
@@ -66,9 +66,9 @@ Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.
 #### NGROK
 To test your application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to use ngrok which can be downloaded from [ngrok](https://ngrok.com/).
 
-Running 'ngrok --subdomain canvasstarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
+Running 'ngrok --subdomain ltistarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
 
-`https://canvasstarterapp.ngrok.com`
+`https://ltistarterapp.ngrok.com`
 
 #### Webpack
 Packs CommonJs/AMD modules for the browser.
@@ -121,7 +121,7 @@ $ npm shrinkwrap
 
 #### React
 Most LTI applications need to be single page applications in order to avoid a bug that prevents cookies from being written in some
-browsers. The Canvas Starter App uses React. During development run the [React Hot Loader](https://github.com/gaearon/react-hot-loader).
+browsers. The LTI Starter App uses React. During development run the [React Hot Loader](https://github.com/gaearon/react-hot-loader).
 
 
 ### <a name="seeds"></a>Setting up Database
@@ -158,26 +158,26 @@ $ rake db:seed
 ### <a name="developer_key"></a>Obtain a Canvas Developer Key
 
 Only a Canvas Account Admin can create a developer key for your LTI Application. To create a key, go to 
-Accounts, Developer Keys and enter the info described below below. Be sure to replace `canvasstarterapp.ngrok.io` with your domain. You will need an ID and secret for development and for production. The development URI will use ngrok while the production URI will use your domain (e.g. canvasstarterapp.herokuapp.com).
+Accounts, Developer Keys and enter the info described below below. Be sure to replace `ltistarterapp.ngrok.io` with your domain. You will need an ID and secret for development and for production. The development URI will use ngrok while the production URI will use your domain (e.g. ltistarterapp.herokuapp.com).
 
 **Key Name:**
-Can be anything you choose (e.g. Canvas Starter App)
+Can be anything you choose (e.g. LTI Starter App)
 
 **Owner Email:***
 Address that will receive email about technical issues related to the tool.
 
 **Tool ID:**
-Unique ID for the tool (e.g. canvasstarterapp)
+Unique ID for the tool (e.g. ltistarterapp)
 
 **Redirect URI:**
-https://canvasstarterapp.ngrok.io/auth/canvas/callback
+https://ltistarterapp.ngrok.io/auth/canvas/callback
 OR
-https://canvasstarterapp.herokuapp.com/auth/canvas/callback
+https://ltistarterapp.herokuapp.com/auth/canvas/callback
 
 **Icon URL:**
-https://canvasstarterapp.ngrok.io/images/icon.png
+https://ltistarterapp.ngrok.io/images/icon.png
 OR
-https://canvasstarterapp.herokuapp.com/images/icon.png
+https://ltistarterapp.herokuapp.com/images/icon.png
 
 Once you press Save Key, a Developer ID and Key will be generated and displayed in the Details column of the Developer Keys table when you mouse over the row. Add these credentials to your .env file or `config/secrets.yml` file under DEVELOPER_ID and DEVELOPER_KEY (in .env) or `developer_id` and `developer_key` (in secrets.yml).
 

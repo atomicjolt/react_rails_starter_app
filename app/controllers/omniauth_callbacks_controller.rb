@@ -15,7 +15,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Option 1
     # Assume that accounts will be created through seeds or an admin ui.
     # We get the 'code' using the subdomain of the request which will be something like
-    # canvasstarterapp.ngrok.io
+    # ltistarterapp.ngrok.io
     
     code = request.subdomains.first 
 
