@@ -18,20 +18,25 @@ function getNextUrl(link){
 
 export default class CanvasApi{
 
-  static get(url, key, cb, payload){
+  static get(url, key, cb = null, payload = null, priority = false){
 
-    function getNext(response){
-      if(cb) { cb(response.body || JSON.parse(response.text)); }
-      if(response.header){
-        var nextUrl = getNextUrl(response.headers['link']);
-        if(nextUrl){
-          CanvasApi.get(nextUrl, key, cb, payload);
+    Api.queuedGet(key, proxyUrl(url), payload, priority).then(
+      (response) => {
+        if(cb) { 
+          cb(response.body || JSON.parse(response.text)); 
         }
+        if(response.header){
+          const nextUrl = getNextUrl(response.headers['link']);
+          if(nextUrl){
+            CanvasApi.get(nextUrl, key, cb, payload, priority);
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
       }
-    }
+    );
 
-    Api.queuedGet(key, proxyUrl(url), payload, getNext);
-      
   }
 
   static post(url, body, key){
