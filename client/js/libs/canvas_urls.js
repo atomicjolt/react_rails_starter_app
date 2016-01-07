@@ -1,10 +1,7 @@
-import wrapper from "./constants_wrapper";
-import _       from "lodash";
-
-const CanvasMethods = {
+const CanvasUrls = {
 
   // ACCOUNTS
-  "ACCOUNTS_LOAD": Network.GET,
+  "ACCOUNTS_LOAD": `/api/v1/accounts`,
   "ACCOUNT_LOAD": Network.GET,
   "COURSE_ACCOUNTS",
   "SUB_ACCOUNTS",
@@ -67,11 +64,3 @@ const CanvasMethods = {
   "LIST_USER_PARTICIPANTS",
   "STUDENT_GROUP_PARTICIPANTS",
 };
-
-const asyncActionTypes = _.map(CanvasMethods, (v, k) => {
-  return k;
-});
-const actionTypes = [];
-
-export { CanvasMethods };
-export default wrapper(actionTypes, asyncActionTypes);
