@@ -28,7 +28,7 @@ describe("canvas accounts reducer", () => {
         }]
       }
       const state = accounts(initialState, action);
-      expect(state.getIn(['accounts', 1]).name).toBe("test");
+      expect(state.getIn(['accounts', 1, 'name'])).toBe("test");
     });
   });
 

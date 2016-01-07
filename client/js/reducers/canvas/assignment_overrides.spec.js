@@ -16,7 +16,6 @@ describe("canvas assignment_overrides reducer", () => {
     });
   });
 
-  describe("LIST_OVERRIDE_ASSIGNMENT_DONE", () => {
 
     it("Adds new override", () => {
       const initialState = Immutable.fromJS({});
@@ -31,10 +30,7 @@ describe("canvas assignment_overrides reducer", () => {
       const state = override(initialState, action);
       expect(state.getIn(['override_assignment', 1]).id).toEqual(4);
     });
-  });
 
-
-    describe("OVERRIDE_ASSIGNMENT_DONE", () => {
 
     it("Adds new override", () => {
       const initialState = Immutable.fromJS({});
@@ -49,10 +45,8 @@ describe("canvas assignment_overrides reducer", () => {
       const state = override(initialState, action);
       expect(state.getIn(['override_assignment', 1]).assignment_id).toEqual(45);
     });
-  });
 
 
-  describe("LIST_OVERRIDE_ASSIGNMENT_GROUP_DONE", () => {
 //Responds with a redirect to the override for the given group, if any. (404 otherwise).
     it("Adds new override", () => {
       const initialState = Immutable.fromJS({});
@@ -67,6 +61,6 @@ describe("canvas assignment_overrides reducer", () => {
       const state = override(initialState, action);
       expect(state.getIn(['override_assignment', 1]).group_id).toEqual(2);
     });
-  });
+
 
 });

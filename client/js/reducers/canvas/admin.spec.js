@@ -6,7 +6,7 @@ import ErrorTypes      from "../../constants/error";
 import CanvasConstants     from "../../constants/canvas";
 import admin           from "./admin";
 
-fdescribe("canvas admins reducer", () => {
+describe("canvas admins reducer", () => {
 
 
     it("has no admins", () => {
@@ -40,7 +40,7 @@ fdescribe("canvas admins reducer", () => {
         }]
       }
       const state = admin(initialState, action);
-      expect(state.getIn(['account_admins', 0, 'name'])).toEqual(undefined);
+      expect(state.getIn([1])).toEqual(undefined);
     });
 
 
