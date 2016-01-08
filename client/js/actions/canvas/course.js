@@ -117,7 +117,7 @@ export default {
 
   get_single_course_from_account(account_id, course_id) {
     return {
-      type: CanvasConstants.GET_SINGLE_COURSE,
+      type: CanvasConstants.GET_SINGLE_COURSE_FROM_ACCOUNT,
       method: Network.GET,
       url: `/api/v1/accounts/${account_id}/courses/${course_id}`
     };
@@ -133,7 +133,7 @@ export default {
 
   update_courses(account_id) {
     return {
-      type: CanvasConstants.UPDATE_SINGLE_COURSE,
+      type: CanvasConstants.UPDATE_COURSES,
       method: Network.PUT,
       url: `/api/v1/account/${account_id}/courses`
     };

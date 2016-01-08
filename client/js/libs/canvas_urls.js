@@ -10,8 +10,8 @@ const CanvasUrls = {
   "DELETE_USER_ROOT_ACCOUNT",
   "CREATE_SUB_ACCOUNT",
   //ADMINS
-  "ACCOUNT_ADMINS": Network.GET,
-  "REMOVE_ADMINS": Network.DEL,
+  "ACCOUNT_ADMINS": `/api/v1/accounts/${account_id}/admins`,
+  "REMOVE_ADMINS": `/api/v1/accounts/${account_id}/admins/${user_id}`,
   //ANALYTICS
   "ACCOUNT_TERM_ANALYTICS",
   "ACCOUNT_CURRENT_ANALYTICS",
