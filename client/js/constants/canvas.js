@@ -68,6 +68,7 @@ const CanvasMethods = {
   "GET_SINGLE_COURSE_FROM_ACCOUNT": Network.GET,
   "UPDATE_SINGLE_COURSE": Network.PUT,
   "UPDATE_COURSES": Network.PUT,
+  //SUBMISSIONS
 
 };
 

@@ -59,4 +59,7 @@ const CanvasUrls = {
   "DELETE_APPOINMENT_GROUP": `/api/v1/appointment_groups/${accountId}`,
   "LIST_USER_PARTICIPANTS": `/api/v1/appointment_groups/${accountId}/users`,
   "STUDENT_GROUP_PARTICIPANTS":`/api/v1/appointment_groups/${accountId}`,
+
+  //SUBMISSIONS
+  "LIIST_ASSIGNMENT_SUBMISSIONS": `/api/v1/courses/:course_id/assignments/:assignment_id/submissions`,
 };
