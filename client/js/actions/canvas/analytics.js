@@ -106,7 +106,7 @@ export default {
     };
   },
 
-  course_analytics_student_id(course_id, student_id) {
+  COURSE_ANALYTICS_STUDENT_ID(course_id, student_id) {
     return {
       type: CanvasConstants.COURSE_ANALYTICS_STUDENT_ID,
       method: Network.GET,
