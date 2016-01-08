@@ -100,7 +100,7 @@ export default {
 
   course_analytics_student_summaries(course_id) {
     return {
-      type: CanvasConstants.COURSE_ANALYTICS_STUDENT_ID,
+      type: CanvasConstants.COURSE_ANALYTICS_STUDENT_SUMMARIES,
       method: Network.GET,
       url: `/api/v1/courses/${course_id}/analytics/student_summaries`
     };

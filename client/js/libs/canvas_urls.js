@@ -2,13 +2,13 @@ const CanvasUrls = {
 
   // ACCOUNTS
   "ACCOUNTS_LOAD": `/api/v1/accounts`,
-  "ACCOUNT_LOAD": Network.GET,
-  "COURSE_ACCOUNTS",
-  "SUB_ACCOUNTS",
-  "COURSES",
-  "UPDATE_ACCOUNT",
-  "DELETE_USER_ROOT_ACCOUNT",
-  "CREATE_SUB_ACCOUNT",
+  "ACCOUNT_LOAD": `/api/v1/accounts/${accountId}`,
+  "COURSE_ACCOUNTS": `/api/v1/course_accounts`,
+  "SUB_ACCOUNTS": `/api/v1/accounts/${accountId}/sub_accounts`,
+  "COURSES": `/api/v1/accounts/${accountId}/courses`,
+  "UPDATE_ACCOUNT": `/api/v1/accounts/${accountId}`,
+  "DELETE_ACCOUNT": `/api/v1/accounts/${accountId}/user/${userId}`,
+  "CREATE_SUB_ACCOUNT": `api/v1/accounts/${accountId}/sub_accounts`,
   //ADMINS
   "ACCOUNT_ADMINS": `/api/v1/accounts/${account_id}/admins`,
   "REMOVE_ADMINS": `/api/v1/accounts/${account_id}/admins/${user_id}`,
@@ -27,6 +27,7 @@ const CanvasUrls = {
       //course-level
   "COURSE_ANALYTICS": `/api/v1/courses/${course_id}/analytics/activity`,
   "COURSE_ANALYTICS_ASSIGNMENTS": `/api/v1/courses/${course_id}/analytics/assignments`,
+  "COURSE_ANALYTICS_STUDENT_SUMMARIES": `/api/v1/courses/${course_id}/analytics/student_summaries`,
   "COURSE_ANALYTICS_STUDENT_ID": `/api/v1/courses/${course_id}/analytics/users/${student_id}/activity`,
   "COURSE_ANALYTICS_STUDENT_ASSIGNMENTS": `/api/v1/courses/${course_id}/analytics/users/${student_id}/assignments`,
   "COURSE_ANALYTICS_STUDENT_MESSAGE": `/api/v1/courses/${course_id}/analytics/users/${student_id}/communication`,
@@ -54,7 +55,7 @@ const CanvasUrls = {
   "LIST_APPOINTMENT_GROUPS": `/api/v1/appointment_groups`,
   "CREATE_APPOINTMENT_ACCOUNT": `/api/v1/appointment_groups`,
   "SINGLE_APPOINTMENT_GROUP": `/api/v1/appointment_groups/${accountId}`,
-  "UPDATE_APPOINTMENT": `/api/v1/appointment_groups/${accountId}`,
+  "UPDATE_APPOINTMENT_GROUPS": `/api/v1/appointment_groups/${accountId}`,
   "DELETE_APPOINMENT_GROUP": `/api/v1/appointment_groups/${accountId}`,
   "LIST_USER_PARTICIPANTS": `/api/v1/appointment_groups/${accountId}/users`,
   "STUDENT_GROUP_PARTICIPANTS":`/api/v1/appointment_groups/${accountId}`,

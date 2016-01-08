@@ -39,7 +39,7 @@ courses(accountId) {
   return {
     type: CanvasConstants.COURSES,
     method: Network.GET,
-    url: `/api/v1/accounts/${accountId}/courses
+    url: `/api/v1/accounts/${accountId}/courses`
   };
 },
 
