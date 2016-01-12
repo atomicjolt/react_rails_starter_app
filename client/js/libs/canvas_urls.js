@@ -8,7 +8,7 @@ const CanvasUrls = {
   // ACCOUNTS
   "ACCOUNTS_LOAD": `/api/v1/accounts`,
   "ACCOUNT_LOAD": `/api/v1/accounts/${accountId}`,
-  "COURSE_ACCOUNTS": `/api/v1/course_accounts`,
+  "COURSE_ACCOUNTS": `/api/v1/course/accounts`,
   "SUB_ACCOUNTS": `/api/v1/accounts/${accountId}/sub_accounts`,
   "COURSES": `/api/v1/accounts/${accountId}/courses`,
   "UPDATE_ACCOUNT": `/api/v1/accounts/${accountId}`,
@@ -39,23 +39,10 @@ const CanvasUrls = {
   "COURSE_EXTERNAL_FEED": `/api/v1/courses/${course_id}/external_feeds/${external_feed_id}`,
   "GROUP_EXTERNAL_FEED": `/api/v1/groups/${groups_id}/external_feeds/${external_feed_id}`,
   // ASSIGNMENT GROUP
-
-
-
-
-
-
-
   "COURSE_ASSIGNMENT_GROUPS": `/api/v1/courses/${course_id}/assignment_groups`,
   "COURSE_ASSIGNMENT_SINGLE_GROUP": `/api/v1/courses/${course_id}/assignment_groups/${assignment_group_id}`,
   "COURSE_ASSIGNMENT_SINGLE_GROUP_EDIT": `/api/v1/courses/${course_id}/assignment_groups/${assignment_group_id}`,
   "COURSE_ASSIGNMENT_SINGLE_GROUP_DEL": `/api/v1/courses/${course_id}/assignment_groups/${assignment_group_id}`,
-
-
-
-
-
-
    //ASSIGNMENT OVERRIDE
   "LIST_OVERRIDE_ASSIGNMENT": `/api/v1/courses/${course_id}/assignments/${assignment_id}/overrides`,
   "OVERRIDE_ASSIGNMENT": `/api/v1/courses/${course_id}/assignments/${assignment_id}/overrides/${id}`,
@@ -65,7 +52,6 @@ const CanvasUrls = {
   "LIST_ASSIGNMENT": `/api/v1/courses/${course_id}/assignments`,
   "SINGLE_ASSIGNMENT": `/api/v1/courses/${course_id}/assignments/${assignment_id}`,
   "EDIT_ASSIGNMENT": `/api/v1/courses/${course_id}/assignments/${assignment_id}`,
-
   //Appointment Groups
   "LIST_APPOINTMENT_GROUPS": `/api/v1/appointment_groups`,
   "CREATE_APPOINTMENT_ACCOUNT": `/api/v1/appointment_groups`,
@@ -74,7 +60,24 @@ const CanvasUrls = {
   "DELETE_APPOINMENT_GROUP": `/api/v1/appointment_groups/${accountId}`,
   "LIST_USER_PARTICIPANTS": `/api/v1/appointment_groups/${accountId}/users`,
   "STUDENT_GROUP_PARTICIPANTS":`/api/v1/appointment_groups/${accountId}/groups`,
-
   //SUBMISSIONS
   "LIIST_ASSIGNMENT_SUBMISSIONS": `/api/v1/courses/:course_id/assignments/:assignment_id/submissions`,
+  //COURSES
+  "COURSES_PER_USER": `/api/v1/courses`
+  "COURSES_SINGLE_USER": `/api/v1/users/${user_id}/courses`
+  "STUDENTS_IN_COURSE": `/api/v1/users/${course_id}/students`
+  "USERS_IN_COURSE": `/api/v1/courses/${course_id}/users`
+  "SEARCH_USERS_IN_COURSE": `/api/v1/courses/${course_id}/search_users`
+  "RECENT_STUDENTS_IN_COURSE": `/api/v1/courses/${course_id}/recent_students`
+  "GET_SINGLE_USER": `/api/v1/courses/${course_id}/users/${user_id}`
+  "COURSE_ACTIVITY_STREAM": `/api/v1/courses/${course_id}/activity_stream`
+  "COURSE_ACTIVITY_STREAM_SUMMARY": `/api/v1/courses/${course_id}/activity_stream/summary`
+  "COURSE_TODO_ITEMS": `/api/v1/courses/${course_id}/todo`
+  "CONCLUDE_COURSE": `/api/v1/courses/${course_id}`
+  "COURSE_SETTINGS": `/api/v1/courses/${course_id}/settings`
+  "UPDATE_COURSE_SETTINGS": `/api/v1/courses/${course_id}/settings`
+  "GET_SINGLE_COURSE": `/api/v1/courses/${course_id}`
+  "GET_SINGLE_COURSE_FROM_ACCOUNT": `/api/v1/accounts/${account_id}/courses/${course_id}`
+  "UPDATE_SINGLE_COURSE": `/api/v1/courses/${course_id}`
+  "UPDATE_COURSES": `/api/v1/accounts/${account_id}/courses`
 };
