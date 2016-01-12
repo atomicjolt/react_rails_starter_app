@@ -2,12 +2,16 @@
 
 import React                    from 'react';
 import { Component }            from 'react';
+import assets                   from '../libs/assets';
 
 class Home extends Component {
 
   render(){
+    
+    const img = assets("./images/atomicjolt.png");
+
     return<div>
-      Home
+      <img src={img} />
     </div>;
   }
 
