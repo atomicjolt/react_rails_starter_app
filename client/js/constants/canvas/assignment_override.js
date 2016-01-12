@@ -3,11 +3,10 @@ import wrapper from "../../constants_wrapper";
 import _       from "lodash";
 
 const CanvasMethods = {
-
- // [List assignment submissions](https://canvas.instructure.com/doc/api/all_resources.html#method.submissions.create)
-  // `return canvasRequest(CanvasConstants.LIST_ASSIGNMENT_SUBMISSIONS, {courseId, assignmentId}, query);`
-"LIST_ASSIGNMENT_SUBMISSIONS": Network.GET,
-
+   //ASSIGNMENT OVERRIDE
+  "LIST_OVERRIDE_ASSIGNMENT": Network.GET,
+  "OVERRIDE_ASSIGNMENT": Network.GET,
+  "LIST_OVERRIDE_ASSIGNMENT_GROUP": Network.GET,
 
 };
 

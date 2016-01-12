@@ -1,5 +1,10 @@
-const CanvasUrls = {
 
+
+
+const CanvasUrls = {
+  //ADMINS
+  "ACCOUNT_ADMINS": `/api/v1/accounts/${account_id}/admins`,
+  "REMOVE_ADMINS": `/api/v1/accounts/${account_id}/admins/${user_id}`,
   // ACCOUNTS
   "ACCOUNTS_LOAD": `/api/v1/accounts`,
   "ACCOUNT_LOAD": `/api/v1/accounts/${accountId}`,
@@ -9,9 +14,6 @@ const CanvasUrls = {
   "UPDATE_ACCOUNT": `/api/v1/accounts/${accountId}`,
   "DELETE_ACCOUNT": `/api/v1/accounts/${accountId}/user/${userId}`,
   "CREATE_SUB_ACCOUNT": `api/v1/accounts/${accountId}/sub_accounts`,
-  //ADMINS
-  "ACCOUNT_ADMINS": `/api/v1/accounts/${account_id}/admins`,
-  "REMOVE_ADMINS": `/api/v1/accounts/${account_id}/admins/${user_id}`,
   //ANALYTICS
   "ACCOUNT_TERM_ANALYTICS": `/api/v1/accounts/${account_id}/analytics/terms/${term_id}/activity`,
   "ACCOUNT_CURRENT_ANALYTICS": `/api/v1/accounts/${account_id}/analytics/current/activity`,
@@ -37,10 +39,23 @@ const CanvasUrls = {
   "COURSE_EXTERNAL_FEED": `/api/v1/courses/${course_id}/external_feeds/${external_feed_id}`,
   "GROUP_EXTERNAL_FEED": `/api/v1/groups/${groups_id}/external_feeds/${external_feed_id}`,
   // ASSIGNMENT GROUP
+
+
+
+
+
+
+
   "COURSE_ASSIGNMENT_GROUPS": `/api/v1/courses/${course_id}/assignment_groups`,
   "COURSE_ASSIGNMENT_SINGLE_GROUP": `/api/v1/courses/${course_id}/assignment_groups/${assignment_group_id}`,
   "COURSE_ASSIGNMENT_SINGLE_GROUP_EDIT": `/api/v1/courses/${course_id}/assignment_groups/${assignment_group_id}`,
   "COURSE_ASSIGNMENT_SINGLE_GROUP_DEL": `/api/v1/courses/${course_id}/assignment_groups/${assignment_group_id}`,
+
+
+
+
+
+
    //ASSIGNMENT OVERRIDE
   "LIST_OVERRIDE_ASSIGNMENT": `/api/v1/courses/${course_id}/assignments/${assignment_id}/overrides`,
   "OVERRIDE_ASSIGNMENT": `/api/v1/courses/${course_id}/assignments/${assignment_id}/overrides/${id}`,
@@ -58,7 +73,7 @@ const CanvasUrls = {
   "UPDATE_APPOINTMENT_GROUPS": `/api/v1/appointment_groups/${accountId}`,
   "DELETE_APPOINMENT_GROUP": `/api/v1/appointment_groups/${accountId}`,
   "LIST_USER_PARTICIPANTS": `/api/v1/appointment_groups/${accountId}/users`,
-  "STUDENT_GROUP_PARTICIPANTS":`/api/v1/appointment_groups/${accountId}`,
+  "STUDENT_GROUP_PARTICIPANTS":`/api/v1/appointment_groups/${accountId}/groups`,
 
   //SUBMISSIONS
   "LIIST_ASSIGNMENT_SUBMISSIONS": `/api/v1/courses/:course_id/assignments/:assignment_id/submissions`,
