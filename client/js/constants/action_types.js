@@ -3,6 +3,9 @@ import wrapper from "./constants_wrapper";
 // These action types will have a _DONE action added
 const actionTypes = [
 
+  // Jwt
+  "REFRESH_JWT",
+
   // MESSAGES  
   "ADD_MESSAGE",
   "REMOVE_MESSAGE",

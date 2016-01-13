@@ -1,13 +1,16 @@
 "use strict";
 
 import React                    from 'react';
-import { Component }            from 'react';
+import assets                   from '../libs/assets';
 
-class Home extends Component {
+class Home extends React.Component {
 
   render(){
+    
+    const img = assets("./images/atomicjolt.jpg");
+
     return<div>
-      Home
+      <img src={img} />
     </div>;
   }
 
