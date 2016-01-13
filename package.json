@@ -7,11 +7,11 @@
   },
   "scripts": {
     "postinstall": "cd ./client && npm install",
-    "build": "cd ./client && gulp build --release",
-    "release": "cd ./client && gulp build --release && cd .. && s3_website push",
-    "hot": "cd ./client && gulp build && node webpack.hot.js",
-    "test": "cd ./client && node_modules/karma/bin/karma start",
-    "coveralls": "cat coverage/lcov.info | coveralls"
+    "build": "cd ./client && npm run build",
+    "release": "cd ./client && npm run build && cd .. && s3_website push",
+    "hot": "cd ./client && npm run hot",
+    "test": "cd ./client && npm run test",
+    "coveralls": "cd ./client && npm run coveralls"
   },
   "repository": {
     "type": "git",
