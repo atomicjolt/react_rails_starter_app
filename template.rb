@@ -107,6 +107,9 @@ ASSETS_SUBDOMAIN=#{url_safe_name}assets
 ASSETS_PORT=#{assets_port}
 ASSETS_URL=https://#{url_safe_name}assets.ngrok.io
 APP_DEFAULT_CANVAS_URL=https://atomicjolt.instructure.com
+# Get developer id and key from canvas
+DEVELOPER_ID=1234
+DEVELOPER_KEY=1234
 EOF
 end
 
