@@ -10,7 +10,14 @@ const CanvasApi = store => next => action => {
   // send the api request
   if(action.canvas){
     const state = store.getState();
-    const promise = api.execRequest(CanvasMethods[action.type], canvasProxyUrl, state.settings.get("apiUrl"), state.settings.get("jwt"), state.settings.get("csrfToken"), action.params, action.body);
+    const promise = api.execRequest(
+      CanvasMethods[action.type], 
+      canvasProxyUrl, 
+      state.settings.get("apiUrl"), 
+      state.settings.get("jwt"), 
+      state.settings.get("csrfToken"), 
+      action.params, action.body
+    );
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
