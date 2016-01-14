@@ -5,8 +5,6 @@ import rootReducer                               from '../reducers';
 import DevTools                                  from '../dev/dev_tools.jsx'
 import API                                       from '../middleware/api';
 
-import { createHashHistory as createHistory } from 'history';
-
 let middleware = [ thunk, API ];
 
 let enhancers = [

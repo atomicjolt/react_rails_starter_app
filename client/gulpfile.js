@@ -1,7 +1,6 @@
 'use strict';
 
 var gulp          = require('gulp');
-var gulpIgnore    = require('gulp-ignore');
 var $             = require('gulp-load-plugins')();
 var util          = require('util');
 var through2      = require('through2');
@@ -51,22 +50,6 @@ gulp.task('vendor', function(){
     gulp.src('./node_modules/font-awesome/fonts/**')
       .pipe(gulp.dest(outputPath + '/fonts'))
   );
-});
-
-
-// Copy images
-// -----------------------------------------------------------------------------
-gulp.task('images', function(){
-  gulp.src('./images/**/*')
-    .pipe(gulp.dest(outputPath + '/images/'));
-});
-
-
-// Copy fonts
-// -----------------------------------------------------------------------------
-gulp.task('fonts', function(){
-  gulp.src('./fonts/**/*')
-    .pipe(gulp.dest(outputPath + '/styles/fonts/'));  
 });
 
 
@@ -130,7 +113,7 @@ gulp.task('javascript', function(cb){
 // Build the app from source code
 // -----------------------------------------------------------------------------
 gulp.task('build', ['clean'], function(cb){
-  runSequence(['vendor', 'fonts', 'images', 'javascript', 'html'], cb);
+  runSequence(['html'], cb);
 });
 
 

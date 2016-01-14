@@ -1,5 +1,7 @@
 // karma config info: http://karma-runner.github.io/0.12/config/configuration-file.html
-var webpack             = require('webpack');
+var webpack           = require('webpack');
+var webpackConfig     = require('./config/webpack.config.js')(false);
+
 module.exports = function(config) {
 
   function isCoverage(argument) {
@@ -68,18 +70,8 @@ module.exports = function(config) {
       plugins: [
         new webpack.DefinePlugin({'process.env.NODE_ENV': '"development"', '__DEV__': true})
       ],
-      module: {
-        loaders: [
-          { test: /\.js$/,   exclude: /node_modules/, loader: "babel-loader?stage=0&optional=runtime" },
-          { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader?stage=0&optional=runtime" },
-          { test: /\.(png|woff|woff2|eot|ttf|svg)($|\?)/, loader: 'url-loader' },
-          { test: /\.css$/, loader: 'css-loader'}
-        ]
-      },
-      resolve: {
-        extensions: ['', '.js', '.jsx'],
-        modulesDirectories: ["node_modules", "web_modules", "vendor"]
-      }
+      module: webpackConfig.module,
+      resolve: webpackConfig.resolve
     },
 
     // Reduce the noise to the console
