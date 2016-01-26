@@ -19,7 +19,7 @@
   "dependencies": {
     "babel": "5.8.29",
     "babel-runtime": "5.8.29",
-    "history": "1.16.0",
+    "history": "1.17.0",
     "immutable": "3.7.5",
     "lodash": "3.10.1",
     "null-loader": "0.1.1",
@@ -27,7 +27,7 @@
     "react-dom": "0.14.3",
     "react-proxy-loader": "0.3.4",
     "react-redux": "4.0.0",
-    "react-router": "1.0.2",
+    "react-router": "1.0.3",
     "react-tap-event-plugin": "0.2.1",
     "redux": "3.0.4",
     "redux-simple-router": "^1.0.2",
