@@ -9,9 +9,7 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start",
     "coveralls": "cat coverage/lcov.info | coveralls",
-    "build": "gulp build && webpack --config webpack.release.js --progress --profile --colors",
-    "hot": "gulp build && node webpack.hot.js",
-    "release": "cd ./client && gulp build --release && cd .. && s3_website push"
+    "hot": "node webpack.hot.js"
   },
   "author": "atomicjolt, jbasdf",
   "license": "MIT",
