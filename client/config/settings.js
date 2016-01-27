@@ -3,10 +3,10 @@ var path      = require('path');
 
 var clientAppPath = path.join(__dirname, '../');
 
-var devRelativeOutput     = '/assets/';
+var devRelativeOutput     = '/';
 var prodRelativeOutput    = '/assets/';
 
-var devOutput     = path.join(__dirname, '../../app', devRelativeOutput);
+var devOutput     = path.join(__dirname, '../html', devRelativeOutput);
 var prodOutput    = path.join(__dirname, '../../public', prodRelativeOutput);
 
 // There is a warning if the .env file is missing
