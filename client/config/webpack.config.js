@@ -15,7 +15,7 @@ module.exports = function(release){
   var autoprefix = '{browsers:["Android 2.3", "Android >= 4", "Chrome >= 20", "Firefox >= 24", "Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
   var jsLoaders = ["babel-loader?stage=0&optional=runtime"]; // include the runtime 
 
-  var cssLoaders = ['style-loader', 'css-loader', 'autoprefixer-loader?' + autoprefix];
+  var cssLoaders = ['css-loader', 'autoprefixer-loader?' + autoprefix];
 
   var scssLoaders = cssLoaders.slice(0);
     scssLoaders.push('sass-loader?outputStyle=expanded&includePaths[]=' + (path.resolve(__dirname, './node_modules/bootstrap-sass')));
@@ -42,6 +42,8 @@ module.exports = function(release){
   for(var name in cssEntries){
     entries[name] = cssEntries[name];
   }
+
+  var extractCSS = new ExtractTextPlugin('[name].css');
 
   return {
     context: __dirname,
@@ -76,11 +78,11 @@ module.exports = function(release){
       new ChunkManifestPlugin({
         filename: 'webpack-common-manifest.json',
         manfiestVariable: 'webpackBundleManifest'
-      })
-      //new ExtractTextPlugin("[name]_web_pack_bundle.css"),
+      }),
+      extractCSS
       //new webpack.optimize.CommonsChunkPlugin('init.js') // Use to extract common code from multiple entry points into a single init.js
     ] : [
-      //new ExtractTextPlugin("[name]_web_pack_bundle.css"),
+      extractCSS,
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', '__DEV__': true }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin()
@@ -89,9 +91,9 @@ module.exports = function(release){
       loaders: [
         { test: /\.js$/,              loaders: jsLoaders, exclude: /node_modules/ },
         { test: /\.jsx?$/,            loaders: jsLoaders, exclude: /node_modules/ },
-        { test: /\.scss$/,            loader: scssLoaders.join('!') },
-        { test: /\.css$/ ,            loader: cssLoaders.join('!') },
-        { test: /\.less$/ ,           loader: lessLoaders.join('!') },
+        { test: /\.scss$/i,           loader: extractCSS.extract(scssLoaders) },
+        { test: /\.css$/i ,           loader: extractCSS.extract(cssLoaders) },
+        { test: /\.less$/i ,          loader: extractCSS.extract(lessLoaders) },
         //{ test: /\.html$/,            loader: 'webpack-compile-templates' }, // Add if you need to compile underscore.js - https://www.npmjs.com/package/webpack-compile-templates
         { test: /.*\.(gif|png|jpg|jpeg|svg)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]']}, //'image-webpack-loader?optimizationLevel=7&interlaced=false'
         { test: /.*\.(eot|woff2|woff|ttf)$/,   loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=cd [name]-[hash].[ext]']}

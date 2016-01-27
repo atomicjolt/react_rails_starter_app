@@ -11,6 +11,7 @@ var fileinclude   = require('gulp-file-include');
 var rename        = require('gulp-rename');
 var settings      = require('./config/settings.js');
 var argv          = require('minimist')(process.argv.slice(2));
+var path          = require('path');
 
 // Settings
 var release       = argv.release;
