@@ -19,8 +19,6 @@ import jwt                    from './loaders/jwt';
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-require("../styles/styles.less");
-
 class Root extends React.Component {
   render(){
     const devTools = __DEV__ ? <DevTools /> : null;
