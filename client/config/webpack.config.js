@@ -43,7 +43,7 @@ module.exports = function(release){
     entries[name] = cssEntries[name];
   }
 
-  var extractCSS = new ExtractTextPlugin('[name].css');
+  var extractCSS = new ExtractTextPlugin('[name]-[chunkhash].css');
 
   return {
     context: __dirname,
