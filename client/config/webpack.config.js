@@ -43,7 +43,8 @@ module.exports = function(release){
     entries[name] = cssEntries[name];
   }
 
-  var extractCSS = new ExtractTextPlugin('[name]-[chunkhash].css');
+  var cssName = release ? '[name]-[chunkhash].css' : '[name].css';
+  var extractCSS = new ExtractTextPlugin(cssName);
 
   return {
     context: __dirname,
@@ -51,7 +52,7 @@ module.exports = function(release){
     output: {
       path: release ? settings.prodOutput : settings.devOutput,
       filename: release ? '[name]-[chunkhash]' + settings.buildSuffix : '[name]' + settings.buildSuffix,
-      chunkFilename: release ? '[id]-[chunkhash]' + settings.buildSuffix : "[id].js",
+      chunkFilename: release ? '[id]-[chunkhash]' + settings.buildSuffix : '[id]'  + settings.buildSuffix,
       publicPath: release ? settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput,
       sourceMapFilename: "debugging/[file].map",
       pathinfo: !release // http://webpack.github.io/docs/configuration.html#output-pathinfo
