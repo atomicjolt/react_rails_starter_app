@@ -4,8 +4,6 @@
 <meta name="description" content="<%= content_for?(:description) ? yield(:description) : Rails.application.secrets.application_name %>">
 <meta name="author" content="">
 <link rel="icon" href="/favicon.ico">
-
 <title><%= content_for?(:title) ? yield(:title) : Rails.application.secrets.application_name %></title>
-
-<%= stylesheet_link_tag 'application', media: 'all' %>
 <%= csrf_meta_tags %>
+<%= yield(:head) %>
