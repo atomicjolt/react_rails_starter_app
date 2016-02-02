@@ -12,10 +12,11 @@ new webpackDevServer(webpack(webpackConfig), {
   inline: true,
   progress: true,
   headers: { "Access-Control-Allow-Origin": "*" },
-  filename: '[name]_web_pack_bundle.js',
+  filename: '[name]' + settings.buildSuffix,
 }).listen(settings.hotPort, 'localhost', function(err, result){
   if(err){
     console.log('webpack-dev-server', err);
   }
   console.log('Webpack hot load server listening on: ' + webpackConfig.output.publicPath);
+  console.log('Webpack hot load server serving content from: ' + settings.devOutput);
 });
