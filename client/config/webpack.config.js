@@ -5,6 +5,7 @@ var path                = require('path');
 var ExtractTextPlugin   = require('extract-text-webpack-plugin');
 var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 var settings            = require('./settings.js');
+var _                   = require('lodash');
 
 module.exports = function(release){
 
@@ -26,7 +27,7 @@ module.exports = function(release){
   var entries;
 
   if(release){
-    entries = settings.entries;
+    entries = _.cloneDeep(settings.entries);
   } else {
     jsLoaders.unshift("react-hot-loader");
 
@@ -43,7 +44,7 @@ module.exports = function(release){
     entries[name] = cssEntries[name];
   }
 
-  var extractCSS = new ExtractTextPlugin('[name].css');
+  var extractCSS = new ExtractTextPlugin(release ? '[name]-[chunkhash].css' : '[name].css');
 
   return {
     context: __dirname,

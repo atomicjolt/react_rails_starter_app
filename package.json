@@ -6,12 +6,12 @@
     "node": "5.2.0"
   },
   "scripts": {
-    "postinstall": "cd ./client && npm install",
-    "build": "cd ./client && npm run build",
-    "release": "cd ./client && npm run build && cd .. && s3_website push",
-    "hot": "cd ./client && npm run hot",
-    "test": "cd ./client && npm run test",
-    "coveralls": "cd ./client && npm run coveralls"
+    "postinstall" : "cd ./client && npm install",
+    "build"       : "cd ./client && npm run build",
+    "release"     : "cd ./client && npm run release",
+    "hot"         : "cd ./client && npm run hot",
+    "test"        : "cd ./client && npm run test",
+    "coveralls"   : "cd ./client && npm run coveralls"
   },
   "repository": {
     "type": "git",
