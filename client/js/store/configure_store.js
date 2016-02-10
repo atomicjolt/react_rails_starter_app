@@ -5,7 +5,7 @@ import DevTools                                  from '../dev/dev_tools.jsx'
 import API                                       from '../middleware/api';
 import CanvasApi                                 from '../libs/canvas/middleware';
 
-let middleware = [ API, CanvasApi ];
+let middleware = [ API ];
 
 let enhancers = [
   applyMiddleware(...middleware)
