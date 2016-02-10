@@ -1,8 +1,8 @@
 "use strict";
 
-import Immutable   from "immutable";
-import ActionTypes from "../constants/action_types";
-import ErrorTypes  from "../constants/error";
+import Immutable                         from "immutable";
+import { Constants as MessageConstants } from "../actions/message";
+import ErrorTypes                        from "../constants/error";
 
 const initialState = Immutable.fromJS([]);
 
@@ -22,15 +22,15 @@ export default (state = initialState, action) => {
       return state.push(`Request error: ${action.payload.message}`);
       break;
 
-    case ActionTypes.ADD_MESSAGE:
+    case MessageConstants.ADD_MESSAGE:
       return state.push(action.payload.message);
       break;
 
-    case ActionTypes.REMOVE_MESSAGE:
+    case MessageConstants.REMOVE_MESSAGE:
       return state.filter(message => message != action.payload.message);
       break;
 
-    case ActionTypes.CLEAR_MESSAGES:
+    case MessageConstants.CLEAR_MESSAGES:
       return initialState;
       break;
 

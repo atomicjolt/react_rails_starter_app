@@ -1,10 +1,10 @@
 "use strict";
 
-import _           from "lodash";
-import Immutable   from "immutable";
-import ActionTypes from "../constants/action_types";
-import ErrorTypes  from "../constants/error";
-import messages    from "./messages";
+import _                                 from "lodash";
+import Immutable                         from "immutable";
+import { Constants as MessageConstants } from "../actions/message";
+import ErrorTypes                        from "../constants/error";
+import messages                          from "./messages";
 
 describe("message reducer", () => {
 
@@ -67,7 +67,7 @@ describe("message reducer", () => {
     it("Adds a message", () => {
       const initialState = Immutable.fromJS([]);
       const action = {
-        type: ActionTypes.ADD_MESSAGE,
+        type: MessageConstants.ADD_MESSAGE,
         payload: {
           message: "Things are great"
         }
@@ -83,13 +83,13 @@ describe("message reducer", () => {
 
     it("Removes message", () => {
       const action = {
-        type: ActionTypes.ADD_MESSAGE,
+        type: MessageConstants.ADD_MESSAGE,
         payload: {
           message: "Things are great"
         }
       };
       const removeAction = {
-        type: ActionTypes.REMOVE_MESSAGE,
+        type: MessageConstants.REMOVE_MESSAGE,
         payload: {
           message: "Things are great"
         }
@@ -107,13 +107,13 @@ describe("message reducer", () => {
 
     it("Removes message", () => {
       const action = {
-        type: ActionTypes.ADD_MESSAGE,
+        type: MessageConstants.ADD_MESSAGE,
         payload: {
           message: "Things are great"
         }
       };
       const removeAction = {
-        type: ActionTypes.CLEAR_MESSAGES
+        type: MessageConstants.CLEAR_MESSAGES
       };
       const initialState = Immutable.fromJS([action.payload.message]);
       const state = messages(initialState, action);

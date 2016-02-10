@@ -40,8 +40,10 @@ const store = configureStore({settings: Immutable.fromJS(window.DEFAULT_SETTINGS
 
 syncReduxAndRouter(history, store);
 
-// Setup JWT refresh
-jwt(store.dispatch, window.DEFAULT_SETTINGS.userId);
+(window.DEFAULT_SETTINGS.jwt){
+  // Setup JWT refresh
+  jwt(store.dispatch, window.DEFAULT_SETTINGS.userId);
+}
 
 ReactDOM.render(
   <Root store={store} />,
