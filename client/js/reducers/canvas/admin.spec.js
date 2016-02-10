@@ -1,10 +1,8 @@
 "use strict";
 
-import _               from "lodash";
-import Immutable       from "immutable";
-import ErrorTypes      from "../../constants/error";
-import CanvasConstants     from "../../constants/canvas";
-import admin           from "./admin";
+import Immutable           from "immutable";
+import { CanvasConstants } from "../../constants/canvas";
+import admin               from "./admin";
 
 describe("canvas admins reducer", () => {
 

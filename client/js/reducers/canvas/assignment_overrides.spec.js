@@ -1,10 +1,10 @@
 "use strict";
 
-import _              from "lodash";
-import Immutable      from "immutable";
-import CanvasConstants    from "../../constants/action_types";
-import ErrorTypes     from "../../constants/error";
-import override       from "./assignment_overrides";
+import _                   from "lodash";
+import Immutable           from "immutable";
+import { CanvasConstants } from "../../constants/canvas";
+import ErrorTypes          from "../../constants/error";
+import override            from "./assignment_overrides";
 
 describe("canvas assignment_overrides reducer", () => {
 

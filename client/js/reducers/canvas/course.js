@@ -1,13 +1,7 @@
-
-
-
-
-
 "use strict";
 
-import Immutable   from "immutable";
-import CanvasConstants  from "../../constants/canvas";
-import _ from "lodash";
+import Immutable           from "immutable";
+import { CanvasConstants } from "../../constants/canvas";
 
 const initialState = Immutable.fromJS({});
 
