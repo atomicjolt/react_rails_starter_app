@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
       return state.set("assignments", Immutable.fromJS(action.payload));
       break;
 
-    case CanvasConstants.LIST_ASSIGNMENT_DONE:
+    case CanvasConstants.LIST_ASSIGNMENTS_DONE:
       return state.set("assignments", Immutable.fromJS(action.payload));
       break;
 

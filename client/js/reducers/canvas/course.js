@@ -19,7 +19,11 @@ export default (state = initialState, action) => {
       return state.set("course", Immutable.fromJS(action.payload));
       break;
 
-      ///continue on the course api layer from here on down
+    case CanvasConstants.USERS_IN_COURSE_DONE:
+      return state.set("course", Immutable.fromJS(action.payload));
+      break;
+
+    // continue on the course api layer from here on down
 
     case CanvasConstants.SINGLE_ASSIGNMENT_DONE:
       return state.set("course", Immutable.fromJS(action.payload));
