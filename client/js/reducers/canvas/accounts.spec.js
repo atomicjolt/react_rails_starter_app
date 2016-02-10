@@ -2,7 +2,7 @@
 
 import _             from "lodash";
 import Immutable     from "immutable";
-import CanvasConstants   from "../../constants/canvas";
+import { CanvasConstants }   from "../../constants/canvas";
 import accounts      from "./accounts";
 
 describe("canvas accounts reducer", () => {

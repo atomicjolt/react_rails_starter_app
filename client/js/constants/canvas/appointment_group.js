@@ -1,8 +1,4 @@
-
-import wrapper from "../../constants_wrapper";
-import _       from "lodash";
-
-const CanvasMethods = {
+export default {
 
   //[List account admins](https://canvas.instructure.com/doc/api/all_resources.html#method.appointment_groups.index)
   //`return canvasRequest(CanvasConstants.LIST_APPOINTMENT_GROUPS, {}, query);`
@@ -36,14 +32,6 @@ const CanvasMethods = {
 
   //[List account admins](https://canvas.instructure.com/doc/api/all_resources.html#method.appointment_groups.groups)
   //`return canvasRequest(CanvasConstants.STUDENT_GROUP_PARTICIPANTS, {accountId}, query);`
-  "STUDENT_GROUP_PARTICIPANTS": Network.GET,
+  "STUDENT_GROUP_PARTICIPANTS": Network.GET
 
 };
-
-const asyncActionTypes = _.map(CanvasMethods, (v, k) => {
-  return k;
-});
-const actionTypes = [];
-
-export { CanvasMethods };
-export default wrapper(actionTypes, asyncActionTypes);

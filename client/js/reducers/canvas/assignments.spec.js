@@ -1,10 +1,10 @@
 "use strict";
 
-import _               from "lodash";
-import Immutable       from "immutable";
-import CanvasConstants     from "../../constants/action_types";
-import ErrorTypes      from "../../constants/error";
-import assignments     from "./assignments";
+import _                   from "lodash";
+import Immutable           from "immutable";
+import { CanvasConstants } from "../../constants/canvas";
+import ErrorTypes          from "../../constants/error";
+import assignments         from "./assignments";
 
 describe("canvas assignments reducer", () => {
 

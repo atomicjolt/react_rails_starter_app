@@ -1,8 +1,4 @@
-
-import wrapper from "../../constants_wrapper";
-import _       from "lodash";
-
-const CanvasMethods = {
+export default {
 
   //[List account admins](https://canvas.instructure.com/doc/api/all_resources.html#method.assignment_groups.indexv)
   //`return canvasRequest(CanvasConstants.LIST_APPOINTMENT_GROUPS, {courseId}, query);`
@@ -21,14 +17,6 @@ const CanvasMethods = {
 
   //[List account admins](https://canvas.instructure.com/doc/api/all_resources.html#method.assignment_groups_api.destroy)
   //`return canvasRequest(CanvasConstants.LIST_APPOINTMENT_GROUPS, {courseId, assignmentGroupId}, query);`
-  "COURSE_ASSIGNMENT_SINGLE_GROUP_DEL": Network.DEL,
+  "COURSE_ASSIGNMENT_SINGLE_GROUP_DEL": Network.DEL
 
 };
-
-const asyncActionTypes = _.map(CanvasMethods, (v, k) => {
-  return k;
-});
-const actionTypes = [];
-
-export { CanvasMethods };
-export default wrapper(actionTypes, asyncActionTypes);

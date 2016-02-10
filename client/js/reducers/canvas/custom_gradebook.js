@@ -1,39 +1,34 @@
+"use strict";
 
-import CanvasConstants  from "../../constants/canvas";
-import Network          from "../../constants/network";
+import Immutable           from "immutable";
+import { CanvasConstants } from "../../constants/canvas";
 
-export default {
+const initialState = Immutable.fromJS({});
 
-custom_gradebook_columns(course_id) {
-    return {
-      type: CanvasConstants.CUSTOM_GRADEBOOK_COLUMNS,
-      method: Network.GET,
-      url: `/api/v1/courses/${course_id}/custom_gradebook_columns`
-    };
-  },
+export default (state = initialState, action) => {
 
-  create_custom_gradebook_columns(course_id) {
-    return {
-      type: CanvasConstants.CREATE_CUSTOM_GRADEBOOK_COLUMNS,
-      method: Network.POST,
-      url: `/api/v1/courses/${course_id}/custom_gradebook_columns`
-    };
-  },
+  switch(action.type){
 
-  update_custom_gradebook_columns(course_id) {
-    return {
-      type: CanvasConstants.UPDATE_CUSTOM_GRADEBOOK_COLUMNS,
-      method: Network.PUT,
-      url: `/api/v1/courses/${course_id}/custom_gradebook_columns`
-    };
-  },
+    case CanvasConstants.CUSTOM_GRADEBOOK_COLUMNS_DONE:
+      return state;
+      break;
 
-  delete_custom_gradebook_columns(course_id) {
-    return {
-      type: CanvasConstants.DELETE_CUSTOM_GRADEBOOK_COLUMNS,
-      method: Network.DEL,
-      url: `/api/v1/courses/${course_id}/custom_gradebook_columns`
-    };
-  },
+    case CanvasConstants.CREATE_CUSTOM_GRADEBOOK_COLUMNS_DONE:
+      return state;
+      break;
 
-};
+    case CanvasConstants.UPDATE_CUSTOM_GRADEBOOK_COLUMNS_DONE:
+      return state;
+      break;
+
+    case CanvasConstants.DELETE_CUSTOM_GRADEBOOK_COLUMNS_DONE:
+      return state;
+      break;
+
+    default:
+      return state;
+
+  }
+}
+
+

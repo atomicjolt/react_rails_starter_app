@@ -1,7 +1,6 @@
 import api               from "../libs/api";
-import actionTypes       from "../constants/action_types";
-import CanvasConstants   from "../../constants/canvas";
 import { CanvasMethods } from "../../constants/canvas";
+import { DONE }          from "../constants/wrapper";
 
 const canvasProxyUrl = "";
 
@@ -21,7 +20,7 @@ const CanvasApi = store => next => action => {
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
-          type:     action.type + actionTypes.DONE,
+          type:     action.type + DONE,
           payload:  response.body,
           original: action,
           response,
