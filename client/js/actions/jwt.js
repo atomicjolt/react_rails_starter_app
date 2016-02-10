@@ -1,11 +1,21 @@
 "use strict";
 
-import ActionTypes from "../constants/action_types";
-import Network     from "../constants/network";
+import wrapper    from "../constants/wrapper";
+import Network    from "../constants/network";
+
+// Local actions
+const actions = [];
+
+// Actions that make an api request
+const requests = [
+  "REFRESH_JWT"
+];
+
+export const Constants = wrapper(actions, requests);
 
 export function refreshJwt(userId){
   return {
-    type:   ActionTypes.REFRESH_JWT,
+    type:   Constants.REFRESH_JWT,
     method: Network.GET,
     url:    `api/sessions/${userId}`
   }

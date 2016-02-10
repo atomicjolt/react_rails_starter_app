@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 
-const done = "_DONE";
+const DONE = "_DONE";
 
 export default function(actionTypes, asyncActionTypes){
 
@@ -13,11 +13,11 @@ export default function(actionTypes, asyncActionTypes){
 
   types = _.reduce(asyncActionTypes, (result, key) => {
     result[key] = key;
-    result[`${key}${done}`] = `${key}${done}`;
+    result[`${key}${DONE}`] = `${key}${DONE}`;
     return result
   }, types);
 
-  types.DONE = done;
+  types.DONE = DONE;
 
   return types;
 }
