@@ -11,7 +11,6 @@ var rename        = require('gulp-rename');
 var settings      = require('./config/settings.js');
 var argv          = require('minimist')(process.argv.slice(2));
 var path          = require('path');
-var glob          = require("glob");
 var _             = require("lodash");
 var fs            = require("fs");
 var mkdirp        = require("mkdirp");
