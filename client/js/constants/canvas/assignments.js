@@ -7,7 +7,7 @@ export default {
 
     //[List account admins](https://canvas.instructure.com/doc/api/all_resources.html#method.assignments_api.index)
   //`return canvasRequest(CanvasConstants.LIST_ASSIGNMENT, {courseId}, query);`
-  "LIST_ASSIGNMENT": Network.GET,
+  "LIST_ASSIGNMENTS": Network.GET,
 
 
     //[List account admins](https://canvas.instructure.com/doc/api/all_resources.html#method.assignments_api.show)

@@ -12,6 +12,7 @@ export default {
 
   //[List account admins](https://canvas.instructure.com/doc/api/all_resources.html#method.courses.students)
   //`return canvasRequest(CanvasConstants.STUDENTS_IN_COURSE, {courseId}, query);`
+  // Deprecated
   "STUDENTS_IN_COURSE": Network.GET,
 
 
