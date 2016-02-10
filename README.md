@@ -15,12 +15,20 @@ then visit http://localhost:8080
 
 #Development:
 -----------------------
-Source code lives in the client directory. Modify html and js files in that directory to build your 
-application.
+Source code lives in the client directory. Modify html and js files in that directory to build your application.
 
+## React.js
+-----------
+React code can be found in client/js. We use Redux and the React-Router.
+
+## Html
+-----------
+All html files live in client/html. The build process will properly process ejs in any html files as well as process markdown for files that end in .md. All front matter in .md files will be available to the ejs templates. See about.md for an example.
 
 #Tests
 -----------
+Karma and Jasmine are used for testing. To run tests run:
+
   `npm run test`
     
 
@@ -86,6 +94,11 @@ Inside the client directory run:
 
 #Deploy:
 -----------------------
+
+  Build a development release without deploying:
+
+  `npm run build_dev`
+
 
   Build a release without deploying:
 
