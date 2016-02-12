@@ -94,25 +94,28 @@ describe Canvas do
   end
 
   describe "check_result" do
+    before do
+      @url = "http://www.example.com"
+    end
     it "should raise an UnauthorizedException if 401 not authorized" do
       result = http_party_get_response(401, 'Unauthorized')
-      expect { @api.check_result(result.response) }.to raise_exception(Canvas::UnauthorizedException)
+      expect { @api.check_result(result, @url) }.to raise_exception(Canvas::UnauthorizedException)
     end    
     it "should raise an NotFoundException if 404 not found" do
       result = http_party_get_response(404, 'Not Found')
-      expect { @api.check_result(result) }.to raise_exception(Canvas::NotFoundException)
+      expect { @api.check_result(result, @url) }.to raise_exception(Canvas::NotFoundException)
     end
     it "should raise an InvalidRequestException if canvas call fails" do
       result = http_party_get_response(500, 'Internal Server Error', "{errors:'Something terrible'}")
-      expect { @api.check_result(result) }.to raise_exception(Canvas::InvalidRequestException)
+      expect { @api.check_result(result, @url) }.to raise_exception(Canvas::InvalidRequestException)
     end
     it "should return the result for a 200" do
       result = http_party_get_response
-      expect(@api.check_result(result)).to eq(result)
+      expect(@api.check_result(result, @url)).to eq(result)
     end
     it "should return the result for a 201" do
       result = http_party_get_response(201)
-      expect(@api.check_result(result)).to eq(result)
+      expect(@api.check_result(result, @url)).to eq(result)
     end
   end
 
@@ -185,6 +188,23 @@ describe Canvas do
     it "should find installed LTI tools for the given course" do
       tool = @api.create_course_lti_tool(@course_id, @tool_config)
       expect(tool['consumer_key']).to eq('fake')
+    end
+  end
+
+  describe "canvas_url" do
+    it "generates a canvas url to get accounts" do
+      url = Canvas.canvas_url("ACCOUNTS")
+      expect(url).to eq("accounts")
+    end
+    it "generates a canvas url to get courses" do
+      params = {account_id: 1}
+      url = Canvas.canvas_url("COURSES", params)
+      expect(url).to eq("accounts/1/courses")
+    end
+    it "generates a canvas url to get courses with extra values in params" do
+      params = {course_id: 1, controller: "foo", account_id: 1}
+      url = Canvas.canvas_url("COURSES", params)
+      expect(url).to eq("accounts/1/courses")
     end
   end
 

@@ -89,7 +89,7 @@ class Canvas
     if result.response.code == '401'
       unless @refreshing_token
         @refreshing_token = false
-        return refresh_token_and_try_again
+        return if refresh_token_and_try_again
       end
       raise Canvas::UnauthorizedException, result['errors']
     elsif result.response.code == '404'
@@ -348,6 +348,107 @@ class Canvas
   end
 
   class NotFoundException < Exception
+  end
+
+  def self.canvas_url(type, params = {})
+    proc = self.canvas_urls[type]
+    args = params.slice(*proc.parameters[0]).symbolize_keys
+    args.blank? ? proc.call : proc.call(**args)
+  end
+
+  def self.canvas_urls
+    {  
+      #ADMINS
+      "ACCOUNT_ADMINS"                         => ->(account_id:) { "accounts/#{account_id}/admins" },
+      "REMOVE_ADMINS"                          => ->(account_id:, user_id:) { "accounts/#{account_id}/admins/#{user_id}" },
+
+      # ACCOUNTS
+      "ACCOUNTS"                               => ->() { "accounts" },
+      "ACCOUNT"                                => ->(account_id:) { "accounts/#{account_id}" },
+      "SUB_ACCOUNTS"                           => ->(account_id:) { "accounts/#{account_id}/sub_accounts" },
+      "COURSES"                                => ->(account_id:) { "accounts/#{account_id}/courses" },
+      "UPDATE_ACCOUNT"                         => ->(account_id:) { "accounts/#{account_id}" },
+      "DELETE_ACCOUNT"                         => ->(account_id:, user_id:) { "accounts/#{account_id}/user/#{user_id}" },
+      "CREATE_SUB_ACCOUNT"                     => ->(account_id:) { "accounts/#{account_id}/sub_accounts" },
+      "COURSE_ACCOUNTS"                        => ->() { "course/accounts" },
+      
+      #ANALYTICS
+      "ACCOUNT_TERM_ANALYTICS"                 => ->(account_id:, term_id:) { "accounts/#{account_id}/analytics/terms/#{term_id}/activity" },
+      "ACCOUNT_CURRENT_ANALYTICS"              => ->(account_id:) { "accounts/#{account_id}/analytics/current/activity" },
+      "ACCOUNT_COMPLETED_ANALYTICS"            => ->(account_id:) { "accounts/#{account_id}/analytics/completed/activity" },
+      
+      #GRADES
+      "ACCOUNT_TERM_ANALYTICS_GRADES"          => ->(account_id:, term_id:) { "accounts/#{account_id}/analytics/terms/#{term_id}/grades" },
+      "ACCOUNT_CURRENT_ANALYTICS_GRADES"       => ->(account_id:) { "accounts/#{account_id}/analytics/current/grades" },
+      "ACCOUNT_COMPLETED_ANALYTICS_GRADES"     => ->(account_id:) { "accounts/#{account_id}/analytics/completed/grades" },
+      
+      #STATISTICS
+      "ACCOUNT_TERM_ANALYTICS_STATISTICS"      => ->(account_id:, term_id:) { "accounts/#{account_id}/analytics/terms/#{term_id}/statistics" },
+      "ACCOUNT_CURRENT_ANALYTICS_STATISTICS"   => ->(account_id:) { "accounts/#{account_id}/analytics/current/statistics" },
+      "ACCOUNT_COMPLETED_ANALYTICS_STATISTICS" => ->(account_id:) { "accounts/#{account_id}/analytics/completed/statistics" },
+      
+      #COURSE-LEVEL
+      "COURSE_ANALYTICS"                       => ->(course_id:) { "courses/#{course_id}/analytics/activity" },
+      "COURSE_ANALYTICS_ASSIGNMENTS"           => ->(course_id:) { "courses/#{course_id}/analytics/assignments" },
+      "COURSE_ANALYTICS_STUDENT_SUMMARIES"     => ->(course_id:) { "courses/#{course_id}/analytics/student_summaries" },
+      "COURSE_ANALYTICS_STUDENT_ID"            => ->(course_id:, student_id:) { "courses/#{course_id}/analytics/users/#{student_id}/activity" },
+      "COURSE_ANALYTICS_STUDENT_ASSIGNMENTS"   => ->(course_id:, student_id:) { "courses/#{course_id}/analytics/users/#{student_id}/assignments" },
+      "COURSE_ANALYTICS_STUDENT_MESSAGE"       => ->(course_id:, student_id:) { "courses/#{course_id}/analytics/users/#{student_id}/communication" },
+      
+      #EXTERNAL FEEDS
+      "COURSE_EXTERNAL_FEEDS"                  => ->(course_id:) { "courses/#{course_id}/external_feeds" },
+      "GROUP_EXTERNAL_FEEDS"                   => ->(groups_id:) { "groups/#{groups_id}/external_feeds" },
+      "COURSE_EXTERNAL_FEED"                   => ->(course_id:, external_feed_id:) { "courses/#{course_id}/external_feeds/#{external_feed_id}" },
+      "GROUP_EXTERNAL_FEED"                    => ->(groups_id:, external_feed_id:) { "groups/#{groups_id}/external_feeds/#{external_feed_id}" },
+      
+      #ASSIGNMENT GROUP
+      "COURSE_ASSIGNMENT_GROUPS"               => ->(course_id:) { "courses/#{course_id}/assignment_groups" },
+      "COURSE_ASSIGNMENT_SINGLE_GROUP"         => ->(course_id:, assignment_group_id:) { "courses/#{course_id}/assignment_groups/#{assignment_group_id}" },
+      "COURSE_ASSIGNMENT_SINGLE_GROUP_EDIT"    => ->(course_id:, assignment_group_id:) { "courses/#{course_id}/assignment_groups/#{assignment_group_id}" },
+      "COURSE_ASSIGNMENT_SINGLE_GROUP_DEL"     => ->(course_id:, assignment_group_id:) { "courses/#{course_id}/assignment_groups/#{assignment_group_id}" },
+       
+      #ASSIGNMENT OVERRIDE
+      "LIST_OVERRIDE_ASSIGNMENT"               => ->(course_id:, assignment_id:) { "courses/#{course_id}/assignments/#{assignment_id}/overrides" },
+      "OVERRIDE_ASSIGNMENT"                    => ->(course_id:, assignment_id:) { "courses/#{course_id}/assignments/#{assignment_id}/overrides/#{id}" },
+      "LIST_OVERRIDE_ASSIGNMENT_GROUP"         => ->(group_id:, assignment_id:) { "courses/#{group_id}/assignments/#{assignment_id}/override" },
+      
+      #ASSIGNMENTS
+      "DELETE_ASSIGNMENT"                      => ->(course_id:, assignment_id:) { "courses/#{course_id}/assignments/#{assignment_id}" },
+      "LIST_ASSIGNMENTS"                       => ->(course_id: ) { "courses/#{course_id}/assignments" },
+      "SINGLE_ASSIGNMENT"                      => ->(course_id:, assignment_id:) { "courses/#{course_id}/assignments/#{assignment_id}" },
+      "EDIT_ASSIGNMENT"                        => ->(course_id:, assignment_id:) { "courses/#{course_id}/assignments/#{assignment_id}" },
+      
+      #Appointment Groups
+      "LIST_APPOINTMENT_GROUPS"                => ->() { "appointment_groups" },
+      "CREATE_APPOINTMENT_ACCOUNT"             => ->() { "appointment_groups" },
+      "SINGLE_APPOINTMENT_GROUP"               => ->(account_id:) { "appointment_groups/#{account_id}" },
+      "UPDATE_APPOINTMENT_GROUPS"              => ->(account_id:) { "appointment_groups/#{account_id}" },
+      "DELETE_APPOINMENT_GROUP"                => ->(account_id:) { "appointment_groups/#{account_id}" },
+      "LIST_USER_PARTICIPANTS"                 => ->(account_id:) { "appointment_groups/#{account_id}/users" },
+      "STUDENT_GROUP_PARTICIPANTS"             => ->(account_id:) {  "appointment_groups/#{account_id}/groups" },
+      
+      #SUBMISSIONS
+      "LIIST_ASSIGNMENT_SUBMISSIONS"           => ->(course_id:, assignment_id:) { "courses/#{course_id}/assignments/#{assignment_id}/submissions" },
+      
+      #COURSES
+      "COURSES_PER_USER"                       => ->() { "courses" },
+      "COURSES_SINGLE_USER"                    => ->(user_id:) { "users/#{user_id}/courses" },
+      "STUDENTS_IN_COURSE"                     => ->(course_id:) { "users/#{course_id}/students" },
+      "USERS_IN_COURSE"                        => ->(course_id:) { "courses/#{course_id}/users" },
+      "SEARCH_USERS_IN_COURSE"                 => ->(course_id:) { "courses/#{course_id}/search_users" },
+      "RECENT_STUDENTS_IN_COURSE"              => ->(course_id:) { "courses/#{course_id}/recent_students" },
+      "GET_SINGLE_USER"                        => ->(course_id:, user_id:) { "courses/#{course_id}/users/#{user_id}" },
+      "COURSE_ACTIVITY_STREAM"                 => ->(course_id:) { "courses/#{course_id}/activity_stream" },
+      "COURSE_ACTIVITY_STREAM_SUMMARY"         => ->(course_id:) { "courses/#{course_id}/activity_stream/summary" },
+      "COURSE_TODO_ITEMS"                      => ->(course_id:) { "courses/#{course_id}/todo" },
+      "CONCLUDE_COURSE"                        => ->(course_id:) { "courses/#{course_id}" },
+      "COURSE_SETTINGS"                        => ->(course_id:) { "courses/#{course_id}/settings" },
+      "UPDATE_COURSE_SETTINGS"                 => ->(course_id:) { "courses/#{course_id}/settings" },
+      "GET_SINGLE_COURSE"                      => ->(course_id:) { "courses/#{course_id}" },
+      "GET_SINGLE_COURSE_FROM_ACCOUNT"         => ->(account_id:, course_id:) { "accounts/#{account_id}/courses/#{course_id}" },
+      "UPDATE_SINGLE_COURSE"                   => ->(course_id:) { "courses/#{course_id}" },
+      "UPDATE_COURSES"                         => ->(account_id:) { "accounts/#{account_id}/courses }" }
+    }
   end
 
 end

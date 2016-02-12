@@ -15,7 +15,8 @@ const CanvasApi = store => next => action => {
       state.settings.get("apiUrl"), 
       state.settings.get("jwt"), 
       state.settings.get("csrfToken"), 
-      action.params, action.body
+      { ...action.params, type: action.type }, 
+      action.body
     );
     if(promise){
       promise.then((response, error) => {
