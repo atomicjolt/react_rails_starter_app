@@ -40,7 +40,7 @@ app.use(webpackMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler));
 
 app.get('*', function response(req, res) {  
-  res.sendFile(path.join(devOutput, 'index.html'));
+  res.sendFile(path.join(settings.devOutput, 'index.html'));
 });
 
 app.listen(settings.hotPort, 'localhost', function(err) {
