@@ -1,5 +1,3 @@
-'use strict';
-
 var webpack             = require('webpack');
 var path                = require('path');
 var ExtractTextPlugin   = require('extract-text-webpack-plugin');
@@ -22,7 +20,7 @@ module.exports = function(release){
     scssLoaders.push('sass-loader?outputStyle=expanded&includePaths[]=' + (path.resolve(__dirname, './node_modules/bootstrap-sass')));
 
   var lessLoaders = cssLoaders.slice(0);
-      lessLoaders.push("less-loader");
+      lessLoaders.push('less-loader');
  
   var originalEntries = settings.entries;
   var entries = {};
@@ -33,13 +31,9 @@ module.exports = function(release){
       entries[name] = ['babel-polyfill', originalEntries[name]];
     }
 
-  } else {
-    jsLoaders.unshift("react-hot-loader");
-
-    // Configure entries with hotloader
-    for(var name in originalEntries){
-      entries[name] = ['webpack-dev-server/client?' + settings.devAssetsUrl, 'webpack/hot/only-dev-server', 'babel-polyfill', originalEntries[name]];
-    }
+  if(!release){
+    entries['eventsource-polyfill']          = 'eventsource-polyfill'; // necessary for hot reloading with IE
+    entries['webpack-hot-middleware/client'] = 'webpack-hot-middleware/client';
   }
 
   var cssEntries = settings.cssEntries;
@@ -55,21 +49,21 @@ module.exports = function(release){
     output: {
       path: release ? settings.prodOutput : settings.devOutput,
       filename: release ? '[name]-[chunkhash]' + settings.buildSuffix : '[name]' + settings.buildSuffix,
-      chunkFilename: release ? '[id]-[chunkhash]' + settings.buildSuffix : "[id].js",
+      chunkFilename: release ? '[id]-[chunkhash]' + settings.buildSuffix : '[id].js',
       publicPath: release ? settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput,
-      sourceMapFilename: "debugging/[file].map",
+      sourceMapFilename: 'debugging/[file].map',
       pathinfo: !release // http://webpack.github.io/docs/configuration.html#output-pathinfo
     },
     resolve: {
       extensions: ['', '.js', '.json', '.jsx'],
-      modulesDirectories: ["node_modules", "vendor"]
+      modulesDirectories: ['node_modules', 'vendor']
     },
     cache: true,
     quiet: false,
     noInfo: false,
     debug: false,
     outputPathinfo: !release,
-    devtool: release ? false : "eval",  // http://webpack.github.io/docs/configuration.html#devtool
+    devtool: release ? false : 'eval',  // http://webpack.github.io/docs/configuration.html#devtool
     stats: {
       colors: true
     },
@@ -98,7 +92,6 @@ module.exports = function(release){
         { test: /\.scss$/i,           loader: extractCSS.extract(scssLoaders) },
         { test: /\.css$/i ,           loader: extractCSS.extract(cssLoaders) },
         { test: /\.less$/i ,          loader: extractCSS.extract(lessLoaders) },
-        //{ test: /\.html$/,            loader: 'webpack-compile-templates' }, // Add if you need to compile underscore.js - https://www.npmjs.com/package/webpack-compile-templates
         { test: /.*\.(gif|png|jpg|jpeg|svg)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]']}, //'image-webpack-loader?optimizationLevel=7&interlaced=false'
         { test: /.*\.(eot|woff2|woff|ttf)$/,   loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=cd [name]-[hash].[ext]']}
       ]
