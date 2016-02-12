@@ -1,14 +1,14 @@
-import Accounts            from "./accounts";
-import Admin               from "./admin";
-import Analytics           from "./analytics";
-import Appointment_group   from "./appointment_group";
-import Assignment_group    from "./assignment_group";
-import Assignment_override from "./assignment_override";
-import Assignments         from "./assignments";
-import Courses             from "./courses";
-import External_feeds      from "./external_feeds";
-import Submissions         from "./submissions";
-import wrapper             from "../constants_wrapper";
+import Accounts            from "./canvas/accounts";
+import Admin               from "./canvas/admin";
+import Analytics           from "./canvas/analytics";
+import Appointment_group   from "./canvas/appointment_group";
+import Assignment_group    from "./canvas/assignment_group";
+import Assignment_override from "./canvas/assignment_override";
+import Assignments         from "./canvas/assignments";
+import Courses             from "./canvas/courses";
+import External_feeds      from "./canvas/external_feeds";
+import Submissions         from "./canvas/submissions";
+import wrapper             from "./wrapper";
 import _                   from "lodash";
 
 const CanvasMethods = {
@@ -30,5 +30,5 @@ const requests = _.map(CanvasMethods, (v, k) => {
 
 const CanvasConstants = wrapper([], requests);
 
-export CanvasMethods;
-export CanvasConstants;
+export { CanvasMethods };
+export { CanvasConstants };
