@@ -350,7 +350,7 @@ class Canvas
   class NotFoundException < Exception
   end
 
-  def self.canvas_url(type, params = {})
+  def self.canvas_url(type, params)
     proc = self.canvas_urls[type]
     args = params.slice(*proc.parameters[0]).symbolize_keys
     args.blank? ? proc.call : proc.call(**args)

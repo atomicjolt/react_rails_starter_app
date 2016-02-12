@@ -377,6 +377,7 @@ DEPENDENCIES
   launchy
   mail_view
   mailcatcher
+  nokogiri
   non-stupid-digest-assets
   oauth (~> 0.4.7)
   omniauth (~> 1.2.2)

@@ -31,6 +31,11 @@ RSpec.describe Api::CanvasProxyController, type: :controller do
         get :proxy, type: type, format: :json
         expect(response).to have_http_status(:success)
       end
+      it "should successfully call the canvas api to generate a url to get courses" do
+        type = "COURSES"
+        get :proxy, type: type, account_id: 1, format: :json
+        expect(response).to have_http_status(:success)
+      end
     end
 
 # VCR gives this error if the following spec are included
