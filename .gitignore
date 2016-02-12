@@ -12,6 +12,7 @@ pickle-email-*.html
 secrets.js
 *_web_pack_bundle.js
 .idea/
+*.iml
 .env
 
 config/secrets.js
