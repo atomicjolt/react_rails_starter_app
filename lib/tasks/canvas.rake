@@ -47,6 +47,8 @@ namespace :canvas do
           .gsub(/[^a-zA-Z]/, "_")
           .gsub("__", "_")
           .gsub("__", "_")
+          .gsub("_index", "S")
+          .gsub("s_s", "s")
           .chomp("_")
           .upcase
 

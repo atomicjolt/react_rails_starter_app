@@ -11,8 +11,8 @@ const CanvasMethods = {
 
   // [Index of active global notification for the user)](https://canvas.instructure.com/doc/api/all_resources.html#method.account_notifications.user_index)
   // Api Url: /api/v1/accounts/:account_id/users/:user_id/account_notifications
-  // return canvasRequest(CanvasConstants.ACCOUNT_NOTIFICATION_USER_INDEX, {account_id:, user_id:}, query);
-  ACCOUNT_NOTIFICATION_USER_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.ACCOUNT_NOTIFICATION_USERS, {account_id:, user_id:}, query);
+  ACCOUNT_NOTIFICATION_USERS: Network.GET,
 
   // [Close notification for user)](https://canvas.instructure.com/doc/api/all_resources.html#method.account_notifications.user_close_notification)
   // Api Url: /api/v1/accounts/:account_id/users/:user_id/account_notifications/:id
@@ -276,13 +276,13 @@ const CanvasMethods = {
 
   // [List assignments)](https://canvas.instructure.com/doc/api/all_resources.html#method.assignments_api.index)
   // Api Url: /api/v1/courses/:course_id/assignments
-  // return canvasRequest(CanvasConstants.ASSIGNMENTS_S, {course_id:}, query);
-  ASSIGNMENTS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.ASSIGNMENTS, {course_id:}, query);
+  ASSIGNMENTS: Network.GET,
 
   // [List assignments for user)](https://canvas.instructure.com/doc/api/all_resources.html#method.assignments_api.user_index)
   // Api Url: /api/v1/users/:user_id/courses/:course_id/assignments
-  // return canvasRequest(CanvasConstants.ASSIGNMENTS_USER_INDEX, {user_id:, course_id:}, query);
-  ASSIGNMENTS_USER_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.ASSIGNMENTS_USERS, {user_id:, course_id:}, query);
+  ASSIGNMENTS_USERS: Network.GET,
 
   // [Get a single assignment)](https://canvas.instructure.com/doc/api/all_resources.html#method.assignments_api.show)
   // Api Url: /api/v1/courses/:course_id/assignments/:id
@@ -451,13 +451,13 @@ const CanvasMethods = {
 
   // [List calendar events)](https://canvas.instructure.com/doc/api/all_resources.html#method.calendar_events_api.index)
   // Api Url: /api/v1/calendar_events
-  // return canvasRequest(CanvasConstants.CALENDAR_EVENTS_S, {}, query);
-  CALENDAR_EVENTS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.CALENDAR_EVENTS, {}, query);
+  CALENDAR_EVENTS: Network.GET,
 
   // [List calendar events for a user)](https://canvas.instructure.com/doc/api/all_resources.html#method.calendar_events_api.user_index)
   // Api Url: /api/v1/users/:user_id/calendar_events
-  // return canvasRequest(CanvasConstants.CALENDAR_EVENTS_USER_INDEX, {user_id:}, query);
-  CALENDAR_EVENTS_USER_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.CALENDAR_EVENTS_USERS, {user_id:}, query);
+  CALENDAR_EVENTS_USERS: Network.GET,
 
   // [Create a calendar event)](https://canvas.instructure.com/doc/api/all_resources.html#method.calendar_events_api.create)
   // Api Url: /api/v1/calendar_events
@@ -496,8 +496,8 @@ const CanvasMethods = {
 
   // [List of CommMessages for a user)](https://canvas.instructure.com/doc/api/all_resources.html#method.comm_messages_api.index)
   // Api Url: /api/v1/comm_messages
-  // return canvasRequest(CanvasConstants.COMM_MESSAGES_S, {}, query);
-  COMM_MESSAGES_S: Network.GET,
+  // return canvasRequest(CanvasConstants.COMM_MESSAGES, {}, query);
+  COMM_MESSAGES: Network.GET,
 
   // [List user communication channels)](https://canvas.instructure.com/doc/api/all_resources.html#method.communication_channels.index)
   // Api Url: /api/v1/users/:user_id/communication_channels
@@ -531,18 +531,18 @@ const CanvasMethods = {
 
   // [List content exports)](https://canvas.instructure.com/doc/api/all_resources.html#method.content_exports_api.index)
   // Api Url: /api/v1/courses/:course_id/content_exports
-  // return canvasRequest(CanvasConstants.CONTENT_EXPORTS_S, {course_id:}, query);
-  CONTENT_EXPORTS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.CONTENT_EXPORTS, {course_id:}, query);
+  CONTENT_EXPORTS: Network.GET,
 
   // [List content exports)](https://canvas.instructure.com/doc/api/all_resources.html#method.content_exports_api.index)
   // Api Url: /api/v1/groups/:group_id/content_exports
-  // return canvasRequest(CanvasConstants.CONTENT_EXPORTS_S_BY_GROUPS_AND_GROUP, {group_id:}, query);
-  CONTENT_EXPORTS_S_BY_GROUPS_AND_GROUP: Network.GET,
+  // return canvasRequest(CanvasConstants.CONTENT_EXPORTS_BY_GROUPS_AND_GROUP, {group_id:}, query);
+  CONTENT_EXPORTS_BY_GROUPS_AND_GROUP: Network.GET,
 
   // [List content exports)](https://canvas.instructure.com/doc/api/all_resources.html#method.content_exports_api.index)
   // Api Url: /api/v1/users/:user_id/content_exports
-  // return canvasRequest(CanvasConstants.CONTENT_EXPORTS_S_BY_USERS_AND_USER, {user_id:}, query);
-  CONTENT_EXPORTS_S_BY_USERS_AND_USER: Network.GET,
+  // return canvasRequest(CanvasConstants.CONTENT_EXPORTS_BY_USERS_AND_USER, {user_id:}, query);
+  CONTENT_EXPORTS_BY_USERS_AND_USER: Network.GET,
 
   // [Show content export)](https://canvas.instructure.com/doc/api/all_resources.html#method.content_exports_api.show)
   // Api Url: /api/v1/courses/:course_id/content_exports/:id
@@ -816,8 +816,8 @@ const CanvasMethods = {
 
   // [List courses for a user)](https://canvas.instructure.com/doc/api/all_resources.html#method.courses.user_index)
   // Api Url: /api/v1/users/:user_id/courses
-  // return canvasRequest(CanvasConstants.COURSE_USER_INDEX, {user_id:}, query);
-  COURSE_USER_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.COURSE_USERS, {user_id:}, query);
+  COURSE_USERS: Network.GET,
 
   // [Create a new course)](https://canvas.instructure.com/doc/api/all_resources.html#method.courses.create)
   // Api Url: /api/v1/accounts/:account_id/courses
@@ -926,8 +926,8 @@ const CanvasMethods = {
 
   // [List custom gradebook columns)](https://canvas.instructure.com/doc/api/all_resources.html#method.custom_gradebook_columns_api.index)
   // Api Url: /api/v1/courses/:course_id/custom_gradebook_columns
-  // return canvasRequest(CanvasConstants.CUSTOM_GRADEBOOK_COLUMNS_S, {course_id:}, query);
-  CUSTOM_GRADEBOOK_COLUMNS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.CUSTOM_GRADEBOOK_COLUMNS, {course_id:}, query);
+  CUSTOM_GRADEBOOK_COLUMNS: Network.GET,
 
   // [Create a custom gradebook column)](https://canvas.instructure.com/doc/api/all_resources.html#method.custom_gradebook_columns_api.create)
   // Api Url: /api/v1/courses/:course_id/custom_gradebook_columns
@@ -1171,13 +1171,13 @@ const CanvasMethods = {
 
   // [Subscribe to a topic)](https://canvas.instructure.com/doc/api/all_resources.html#method.discussion_topics_api.subscribe_topic)
   // Api Url: /api/v1/courses/:course_id/discussion_topics/:topic_id/subscribed
-  // return canvasRequest(CanvasConstants.DISCUSSION_TOPICS_SUBSCRIBE_TOPIC, {course_id:, topic_id:}, query);
-  DISCUSSION_TOPICS_SUBSCRIBE_TOPIC: Network.PUT,
+  // return canvasRequest(CanvasConstants.DISCUSSION_TOPICSUBSCRIBE_TOPIC, {course_id:, topic_id:}, query);
+  DISCUSSION_TOPICSUBSCRIBE_TOPIC: Network.PUT,
 
   // [Subscribe to a topic)](https://canvas.instructure.com/doc/api/all_resources.html#method.discussion_topics_api.subscribe_topic)
   // Api Url: /api/v1/groups/:group_id/discussion_topics/:topic_id/subscribed
-  // return canvasRequest(CanvasConstants.DISCUSSION_TOPICS_SUBSCRIBE_TOPIC_BY_GROUPS_AND_GROUP, {group_id:, topic_id:}, query);
-  DISCUSSION_TOPICS_SUBSCRIBE_TOPIC_BY_GROUPS_AND_GROUP: Network.PUT,
+  // return canvasRequest(CanvasConstants.DISCUSSION_TOPICSUBSCRIBE_TOPIC_BY_GROUPS_AND_GROUP, {group_id:, topic_id:}, query);
+  DISCUSSION_TOPICSUBSCRIBE_TOPIC_BY_GROUPS_AND_GROUP: Network.PUT,
 
   // [Unsubscribe from a topic)](https://canvas.instructure.com/doc/api/all_resources.html#method.discussion_topics_api.unsubscribe_topic)
   // Api Url: /api/v1/courses/:course_id/discussion_topics/:topic_id/subscribed
@@ -1206,23 +1206,23 @@ const CanvasMethods = {
 
   // [List enrollment terms)](https://canvas.instructure.com/doc/api/all_resources.html#method.terms_api.index)
   // Api Url: /api/v1/accounts/:account_id/terms
-  // return canvasRequest(CanvasConstants.TERMS_S, {account_id:}, query);
-  TERMS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.TERMS, {account_id:}, query);
+  TERMS: Network.GET,
 
   // [List enrollments)](https://canvas.instructure.com/doc/api/all_resources.html#method.enrollments_api.index)
   // Api Url: /api/v1/courses/:course_id/enrollments
-  // return canvasRequest(CanvasConstants.ENROLLMENTS_S, {course_id:}, query);
-  ENROLLMENTS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.ENROLLMENTS, {course_id:}, query);
+  ENROLLMENTS: Network.GET,
 
   // [List enrollments)](https://canvas.instructure.com/doc/api/all_resources.html#method.enrollments_api.index)
   // Api Url: /api/v1/sections/:section_id/enrollments
-  // return canvasRequest(CanvasConstants.ENROLLMENTS_S_BY_SECTIONS_AND_SECTION, {section_id:}, query);
-  ENROLLMENTS_S_BY_SECTIONS_AND_SECTION: Network.GET,
+  // return canvasRequest(CanvasConstants.ENROLLMENTS_BY_SECTIONS_AND_SECTION, {section_id:}, query);
+  ENROLLMENTS_BY_SECTIONS_AND_SECTION: Network.GET,
 
   // [List enrollments)](https://canvas.instructure.com/doc/api/all_resources.html#method.enrollments_api.index)
   // Api Url: /api/v1/users/:user_id/enrollments
-  // return canvasRequest(CanvasConstants.ENROLLMENTS_S_BY_USERS_AND_USER, {user_id:}, query);
-  ENROLLMENTS_S_BY_USERS_AND_USER: Network.GET,
+  // return canvasRequest(CanvasConstants.ENROLLMENTS_BY_USERS_AND_USER, {user_id:}, query);
+  ENROLLMENTS_BY_USERS_AND_USER: Network.GET,
 
   // [Enrollment by ID)](https://canvas.instructure.com/doc/api/all_resources.html#method.enrollments_api.show)
   // Api Url: /api/v1/accounts/:account_id/enrollments/:id
@@ -1446,23 +1446,23 @@ const CanvasMethods = {
 
   // [List files)](https://canvas.instructure.com/doc/api/all_resources.html#method.files.api_index)
   // Api Url: /api/v1/courses/:course_id/files
-  // return canvasRequest(CanvasConstants.FILE_INDEX, {course_id:}, query);
-  FILE_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.FILES, {course_id:}, query);
+  FILES: Network.GET,
 
   // [List files)](https://canvas.instructure.com/doc/api/all_resources.html#method.files.api_index)
   // Api Url: /api/v1/users/:user_id/files
-  // return canvasRequest(CanvasConstants.FILE_INDEX_BY_USERS_AND_USER, {user_id:}, query);
-  FILE_INDEX_BY_USERS_AND_USER: Network.GET,
+  // return canvasRequest(CanvasConstants.FILES_BY_USERS_AND_USER, {user_id:}, query);
+  FILES_BY_USERS_AND_USER: Network.GET,
 
   // [List files)](https://canvas.instructure.com/doc/api/all_resources.html#method.files.api_index)
   // Api Url: /api/v1/groups/:group_id/files
-  // return canvasRequest(CanvasConstants.FILE_INDEX_BY_GROUPS_AND_GROUP, {group_id:}, query);
-  FILE_INDEX_BY_GROUPS_AND_GROUP: Network.GET,
+  // return canvasRequest(CanvasConstants.FILES_BY_GROUPS_AND_GROUP, {group_id:}, query);
+  FILES_BY_GROUPS_AND_GROUP: Network.GET,
 
   // [List files)](https://canvas.instructure.com/doc/api/all_resources.html#method.files.api_index)
   // Api Url: /api/v1/folders/:id/files
-  // return canvasRequest(CanvasConstants.FILE_INDEX_BY_FOLDERS_AND_ID, {id:}, query);
-  FILE_INDEX_BY_FOLDERS_AND_ID: Network.GET,
+  // return canvasRequest(CanvasConstants.FILES_BY_FOLDERS_AND_ID, {id:}, query);
+  FILES_BY_FOLDERS_AND_ID: Network.GET,
 
   // [Get quota information)](https://canvas.instructure.com/doc/api/all_resources.html#method.files.public_url)
   // Api Url: /api/v1/files/:id/public_url
@@ -1501,8 +1501,8 @@ const CanvasMethods = {
 
   // [List folders)](https://canvas.instructure.com/doc/api/all_resources.html#method.folders.api_index)
   // Api Url: /api/v1/folders/:id/folders
-  // return canvasRequest(CanvasConstants.FOLDER_INDEX, {id:}, query);
-  FOLDER_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.FOLDERS, {id:}, query);
+  FOLDERS: Network.GET,
 
   // [List all folders)](https://canvas.instructure.com/doc/api/all_resources.html#method.folders.list_all_folders)
   // Api Url: /api/v1/courses/:course_id/folders
@@ -1761,13 +1761,13 @@ const CanvasMethods = {
 
   // [List the grading standards available in a context.)](https://canvas.instructure.com/doc/api/all_resources.html#method.grading_standards_api.context_index)
   // Api Url: /api/v1/courses/:course_id/grading_standards
-  // return canvasRequest(CanvasConstants.GRADING_STANDARDS_CONTEXT_INDEX, {course_id:}, query);
-  GRADING_STANDARDS_CONTEXT_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.GRADING_STANDARDS_CONTEXTS, {course_id:}, query);
+  GRADING_STANDARDS_CONTEXTS: Network.GET,
 
   // [List the grading standards available in a context.)](https://canvas.instructure.com/doc/api/all_resources.html#method.grading_standards_api.context_index)
   // Api Url: /api/v1/accounts/:account_id/grading_standards
-  // return canvasRequest(CanvasConstants.GRADING_STANDARDS_CONTEXT_INDEX_BY_ACCOUNTS_AND_ACCOUNT, {account_id:}, query);
-  GRADING_STANDARDS_CONTEXT_INDEX_BY_ACCOUNTS_AND_ACCOUNT: Network.GET,
+  // return canvasRequest(CanvasConstants.GRADING_STANDARDS_CONTEXTS_BY_ACCOUNTS_AND_ACCOUNT, {account_id:}, query);
+  GRADING_STANDARDS_CONTEXTS_BY_ACCOUNTS_AND_ACCOUNT: Network.GET,
 
   // [List group categories for a context)](https://canvas.instructure.com/doc/api/all_resources.html#method.group_categories.index)
   // Api Url: /api/v1/accounts/:account_id/group_categories
@@ -1826,13 +1826,13 @@ const CanvasMethods = {
 
   // [List the groups available in a context.)](https://canvas.instructure.com/doc/api/all_resources.html#method.groups.context_index)
   // Api Url: /api/v1/accounts/:account_id/groups
-  // return canvasRequest(CanvasConstants.GROUP_CONTEXT_INDEX, {account_id:}, query);
-  GROUP_CONTEXT_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.GROUP_CONTEXTS, {account_id:}, query);
+  GROUP_CONTEXTS: Network.GET,
 
   // [List the groups available in a context.)](https://canvas.instructure.com/doc/api/all_resources.html#method.groups.context_index)
   // Api Url: /api/v1/courses/:course_id/groups
-  // return canvasRequest(CanvasConstants.GROUP_CONTEXT_INDEX_BY_COURSES_AND_COURSE, {course_id:}, query);
-  GROUP_CONTEXT_INDEX_BY_COURSES_AND_COURSE: Network.GET,
+  // return canvasRequest(CanvasConstants.GROUP_CONTEXTS_BY_COURSES_AND_COURSE, {course_id:}, query);
+  GROUP_CONTEXTS_BY_COURSES_AND_COURSE: Network.GET,
 
   // [Get a single group)](https://canvas.instructure.com/doc/api/all_resources.html#method.groups.show)
   // Api Url: /api/v1/groups/:group_id
@@ -2011,8 +2011,8 @@ const CanvasMethods = {
 
   // [List modules)](https://canvas.instructure.com/doc/api/all_resources.html#method.context_modules_api.index)
   // Api Url: /api/v1/courses/:course_id/modules
-  // return canvasRequest(CanvasConstants.CONTEXT_MODULES_S, {course_id:}, query);
-  CONTEXT_MODULES_S: Network.GET,
+  // return canvasRequest(CanvasConstants.CONTEXT_MODULES, {course_id:}, query);
+  CONTEXT_MODULES: Network.GET,
 
   // [Show module)](https://canvas.instructure.com/doc/api/all_resources.html#method.context_modules_api.show)
   // Api Url: /api/v1/courses/:course_id/modules/:id
@@ -2041,8 +2041,8 @@ const CanvasMethods = {
 
   // [List module items)](https://canvas.instructure.com/doc/api/all_resources.html#method.context_module_items_api.index)
   // Api Url: /api/v1/courses/:course_id/modules/:module_id/items
-  // return canvasRequest(CanvasConstants.CONTEXT_MODULE_ITEMS_S, {course_id:, module_id:}, query);
-  CONTEXT_MODULE_ITEMS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.CONTEXT_MODULE_ITEMS, {course_id:, module_id:}, query);
+  CONTEXT_MODULE_ITEMS: Network.GET,
 
   // [Show module item)](https://canvas.instructure.com/doc/api/all_resources.html#method.context_module_items_api.show)
   // Api Url: /api/v1/courses/:course_id/modules/:module_id/items/:id
@@ -2091,8 +2091,8 @@ const CanvasMethods = {
 
   // [List of preference categories)](https://canvas.instructure.com/doc/api/all_resources.html#method.notification_preferences.category_index)
   // Api Url: /api/v1/users/:user_id/communication_channels/:communication_channel_id/notification_preference_categories
-  // return canvasRequest(CanvasConstants.NOTIFICATION_PREFERENCE_CATEGORY_INDEX, {user_id:, communication_channel_id:}, query);
-  NOTIFICATION_PREFERENCE_CATEGORY_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.NOTIFICATION_PREFERENCE_CATEGORYS, {user_id:, communication_channel_id:}, query);
+  NOTIFICATION_PREFERENCE_CATEGORYS: Network.GET,
 
   // [Get a preference)](https://canvas.instructure.com/doc/api/all_resources.html#method.notification_preferences.show)
   // Api Url: /api/v1/users/:user_id/communication_channels/:communication_channel_id/notification_preferences/:notification
@@ -2146,23 +2146,23 @@ const CanvasMethods = {
 
   // [Get all outcome groups for context)](https://canvas.instructure.com/doc/api/all_resources.html#method.outcome_groups_api.index)
   // Api Url: /api/v1/accounts/:account_id/outcome_groups
-  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_S, {account_id:}, query);
-  OUTCOME_GROUPS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS, {account_id:}, query);
+  OUTCOME_GROUPS: Network.GET,
 
   // [Get all outcome groups for context)](https://canvas.instructure.com/doc/api/all_resources.html#method.outcome_groups_api.index)
   // Api Url: /api/v1/courses/:course_id/outcome_groups
-  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_S_BY_COURSES_AND_COURSE, {course_id:}, query);
-  OUTCOME_GROUPS_S_BY_COURSES_AND_COURSE: Network.GET,
+  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_BY_COURSES_AND_COURSE, {course_id:}, query);
+  OUTCOME_GROUPS_BY_COURSES_AND_COURSE: Network.GET,
 
   // [Get all outcome links for context)](https://canvas.instructure.com/doc/api/all_resources.html#method.outcome_groups_api.link_index)
   // Api Url: /api/v1/accounts/:account_id/outcome_group_links
-  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_LINK_INDEX, {account_id:}, query);
-  OUTCOME_GROUPS_LINK_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_LINKS, {account_id:}, query);
+  OUTCOME_GROUPS_LINKS: Network.GET,
 
   // [Get all outcome links for context)](https://canvas.instructure.com/doc/api/all_resources.html#method.outcome_groups_api.link_index)
   // Api Url: /api/v1/courses/:course_id/outcome_group_links
-  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_LINK_INDEX_BY_COURSES_AND_COURSE, {course_id:}, query);
-  OUTCOME_GROUPS_LINK_INDEX_BY_COURSES_AND_COURSE: Network.GET,
+  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_LINKS_BY_COURSES_AND_COURSE, {course_id:}, query);
+  OUTCOME_GROUPS_LINKS_BY_COURSES_AND_COURSE: Network.GET,
 
   // [Show an outcome group)](https://canvas.instructure.com/doc/api/all_resources.html#method.outcome_groups_api.show)
   // Api Url: /api/v1/global/outcome_groups/:id
@@ -2271,18 +2271,18 @@ const CanvasMethods = {
 
   // [List subgroups)](https://canvas.instructure.com/doc/api/all_resources.html#method.outcome_groups_api.subgroups)
   // Api Url: /api/v1/global/outcome_groups/:id/subgroups
-  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_SUBGROUPS, {id:}, query);
-  OUTCOME_GROUPS_SUBGROUPS: Network.GET,
+  // return canvasRequest(CanvasConstants.OUTCOME_GROUPSUBGROUPS, {id:}, query);
+  OUTCOME_GROUPSUBGROUPS: Network.GET,
 
   // [List subgroups)](https://canvas.instructure.com/doc/api/all_resources.html#method.outcome_groups_api.subgroups)
   // Api Url: /api/v1/accounts/:account_id/outcome_groups/:id/subgroups
-  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_SUBGROUPS_BY_ACCOUNTS_AND_ACCOUNT, {account_id:, id:}, query);
-  OUTCOME_GROUPS_SUBGROUPS_BY_ACCOUNTS_AND_ACCOUNT: Network.GET,
+  // return canvasRequest(CanvasConstants.OUTCOME_GROUPSUBGROUPS_BY_ACCOUNTS_AND_ACCOUNT, {account_id:, id:}, query);
+  OUTCOME_GROUPSUBGROUPS_BY_ACCOUNTS_AND_ACCOUNT: Network.GET,
 
   // [List subgroups)](https://canvas.instructure.com/doc/api/all_resources.html#method.outcome_groups_api.subgroups)
   // Api Url: /api/v1/courses/:course_id/outcome_groups/:id/subgroups
-  // return canvasRequest(CanvasConstants.OUTCOME_GROUPS_SUBGROUPS_BY_COURSES_AND_COURSE, {course_id:, id:}, query);
-  OUTCOME_GROUPS_SUBGROUPS_BY_COURSES_AND_COURSE: Network.GET,
+  // return canvasRequest(CanvasConstants.OUTCOME_GROUPSUBGROUPS_BY_COURSES_AND_COURSE, {course_id:, id:}, query);
+  OUTCOME_GROUPSUBGROUPS_BY_COURSES_AND_COURSE: Network.GET,
 
   // [Create a subgroup)](https://canvas.instructure.com/doc/api/all_resources.html#method.outcome_groups_api.create)
   // Api Url: /api/v1/global/outcome_groups/:id/subgroups
@@ -2356,13 +2356,13 @@ const CanvasMethods = {
 
   // [List pages)](https://canvas.instructure.com/doc/api/all_resources.html#method.wiki_pages_api.index)
   // Api Url: /api/v1/courses/:course_id/pages
-  // return canvasRequest(CanvasConstants.WIKI_PAGES_S, {course_id:}, query);
-  WIKI_PAGES_S: Network.GET,
+  // return canvasRequest(CanvasConstants.WIKI_PAGES, {course_id:}, query);
+  WIKI_PAGES: Network.GET,
 
   // [List pages)](https://canvas.instructure.com/doc/api/all_resources.html#method.wiki_pages_api.index)
   // Api Url: /api/v1/groups/:group_id/pages
-  // return canvasRequest(CanvasConstants.WIKI_PAGES_S_BY_GROUPS_AND_GROUP, {group_id:}, query);
-  WIKI_PAGES_S_BY_GROUPS_AND_GROUP: Network.GET,
+  // return canvasRequest(CanvasConstants.WIKI_PAGES_BY_GROUPS_AND_GROUP, {group_id:}, query);
+  WIKI_PAGES_BY_GROUPS_AND_GROUP: Network.GET,
 
   // [Create page)](https://canvas.instructure.com/doc/api/all_resources.html#method.wiki_pages_api.create)
   // Api Url: /api/v1/courses/:course_id/pages
@@ -2446,23 +2446,23 @@ const CanvasMethods = {
 
   // [Get all Peer Reviews)](https://canvas.instructure.com/doc/api/all_resources.html#method.peer_reviews_api.index)
   // Api Url: /api/v1/courses/:course_id/assignments/:assignment_id/peer_reviews
-  // return canvasRequest(CanvasConstants.PEER_REVIEWS_S, {course_id:, assignment_id:}, query);
-  PEER_REVIEWS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.PEER_REVIEWS, {course_id:, assignment_id:}, query);
+  PEER_REVIEWS: Network.GET,
 
   // [Get all Peer Reviews)](https://canvas.instructure.com/doc/api/all_resources.html#method.peer_reviews_api.index)
   // Api Url: /api/v1/sections/:section_id/assignments/:assignment_id/peer_reviews
-  // return canvasRequest(CanvasConstants.PEER_REVIEWS_S_BY_SECTIONS_AND_SECTION, {section_id:, assignment_id:}, query);
-  PEER_REVIEWS_S_BY_SECTIONS_AND_SECTION: Network.GET,
+  // return canvasRequest(CanvasConstants.PEER_REVIEWS_BY_SECTIONS_AND_SECTION, {section_id:, assignment_id:}, query);
+  PEER_REVIEWS_BY_SECTIONS_AND_SECTION: Network.GET,
 
   // [Get all Peer Reviews)](https://canvas.instructure.com/doc/api/all_resources.html#method.peer_reviews_api.index)
   // Api Url: /api/v1/courses/:course_id/assignments/:assignment_id/submissions/:submission_id/peer_reviews
-  // return canvasRequest(CanvasConstants.PEER_REVIEWS_S_BY_SUBMISSIONS_AND_SUBMISSION, {course_id:, assignment_id:, submission_id:}, query);
-  PEER_REVIEWS_S_BY_SUBMISSIONS_AND_SUBMISSION: Network.GET,
+  // return canvasRequest(CanvasConstants.PEER_REVIEWS_BY_SUBMISSIONS_AND_SUBMISSION, {course_id:, assignment_id:, submission_id:}, query);
+  PEER_REVIEWS_BY_SUBMISSIONS_AND_SUBMISSION: Network.GET,
 
   // [Get all Peer Reviews)](https://canvas.instructure.com/doc/api/all_resources.html#method.peer_reviews_api.index)
   // Api Url: /api/v1/sections/:section_id/assignments/:assignment_id/submissions/:submission_id/peer_reviews
-  // return canvasRequest(CanvasConstants.PEER_REVIEWS_S_BY_SECTIONS_AND_SECTION_AND_SUBMISSIONS_AND_SUBMISSION, {section_id:, assignment_id:, submission_id:}, query);
-  PEER_REVIEWS_S_BY_SECTIONS_AND_SECTION_AND_SUBMISSIONS_AND_SUBMISSION: Network.GET,
+  // return canvasRequest(CanvasConstants.PEER_REVIEWS_BY_SECTIONS_AND_SECTION_AND_SUBMISSIONS_AND_SUBMISSION, {section_id:, assignment_id:, submission_id:}, query);
+  PEER_REVIEWS_BY_SECTIONS_AND_SECTION_AND_SUBMISSIONS_AND_SUBMISSION: Network.GET,
 
   // [Create Peer Review)](https://canvas.instructure.com/doc/api/all_resources.html#method.peer_reviews_api.create)
   // Api Url: /api/v1/courses/:course_id/assignments/:assignment_id/submissions/:submission_id/peer_reviews
@@ -2691,8 +2691,8 @@ const CanvasMethods = {
 
   // [Retrieve captured events)](https://canvas.instructure.com/doc/api/all_resources.html#method.quizzes/quiz_submission_events_api.index)
   // Api Url: /api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id/events
-  // return canvasRequest(CanvasConstants.QUIZZES_QUIZ_SUBMISSION_EVENTS_S, {course_id:, quiz_id:, id:}, query);
-  QUIZZES_QUIZ_SUBMISSION_EVENTS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.QUIZZES_QUIZ_SUBMISSION_EVENTS, {course_id:, quiz_id:, id:}, query);
+  QUIZZES_QUIZ_SUBMISSION_EVENTS: Network.GET,
 
   // [Upload a file)](https://canvas.instructure.com/doc/api/all_resources.html#method.quizzes/quiz_submission_files.create)
   // Api Url: /api/v1/courses/:course_id/quizzes/:quiz_id/submissions/self/files
@@ -2726,8 +2726,8 @@ const CanvasMethods = {
 
   // [Get all quiz submissions.)](https://canvas.instructure.com/doc/api/all_resources.html#method.quizzes/quiz_submissions_api.index)
   // Api Url: /api/v1/courses/:course_id/quizzes/:quiz_id/submissions
-  // return canvasRequest(CanvasConstants.QUIZZES_QUIZ_SUBMISSIONS_S, {course_id:, quiz_id:}, query);
-  QUIZZES_QUIZ_SUBMISSIONS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.QUIZZES_QUIZ_SUBMISSIONS, {course_id:, quiz_id:}, query);
+  QUIZZES_QUIZ_SUBMISSIONS: Network.GET,
 
   // [Get a single quiz submission.)](https://canvas.instructure.com/doc/api/all_resources.html#method.quizzes/quiz_submissions_api.show)
   // Api Url: /api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id
@@ -2756,8 +2756,8 @@ const CanvasMethods = {
 
   // [List quizzes in a course)](https://canvas.instructure.com/doc/api/all_resources.html#method.quizzes/quizzes_api.index)
   // Api Url: /api/v1/courses/:course_id/quizzes
-  // return canvasRequest(CanvasConstants.QUIZZES_QUIZZES_S, {course_id:}, query);
-  QUIZZES_QUIZZES_S: Network.GET,
+  // return canvasRequest(CanvasConstants.QUIZZES_QUIZZES, {course_id:}, query);
+  QUIZZES_QUIZZES: Network.GET,
 
   // [Get a single quiz)](https://canvas.instructure.com/doc/api/all_resources.html#method.quizzes/quizzes_api.show)
   // Api Url: /api/v1/courses/:course_id/quizzes/:id
@@ -2791,8 +2791,8 @@ const CanvasMethods = {
 
   // [List roles)](https://canvas.instructure.com/doc/api/all_resources.html#method.role_overrides.api_index)
   // Api Url: /api/v1/accounts/:account_id/roles
-  // return canvasRequest(CanvasConstants.ROLE_OVERRIDE_INDEX, {account_id:}, query);
-  ROLE_OVERRIDE_INDEX: Network.GET,
+  // return canvasRequest(CanvasConstants.ROLE_OVERRIDES, {account_id:}, query);
+  ROLE_OVERRIDES: Network.GET,
 
   // [Get a single role)](https://canvas.instructure.com/doc/api/all_resources.html#method.role_overrides.show)
   // Api Url: /api/v1/accounts/:account_id/roles/:id
@@ -2821,8 +2821,8 @@ const CanvasMethods = {
 
   // [Get SIS import list)](https://canvas.instructure.com/doc/api/all_resources.html#method.sis_imports_api.index)
   // Api Url: /api/v1/accounts/:account_id/sis_imports
-  // return canvasRequest(CanvasConstants.SIS_IMPORTS_S, {account_id:}, query);
-  SIS_IMPORTS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.SIS_IMPORTS, {account_id:}, query);
+  SIS_IMPORTS: Network.GET,
 
   // [Import SIS data)](https://canvas.instructure.com/doc/api/all_resources.html#method.sis_imports_api.create)
   // Api Url: /api/v1/accounts/:account_id/sis_imports
@@ -2836,13 +2836,13 @@ const CanvasMethods = {
 
   // [Retrieve assignments enabled for grade export to SIS)](https://canvas.instructure.com/doc/api/all_resources.html#method.sis_api.sis_assignments)
   // Api Url: /api/sis/accounts/:account_id/assignments
-  // return canvasRequest(CanvasConstants.SIS_SIS_ASSIGNMENTS, {account_id:}, query);
-  SIS_SIS_ASSIGNMENTS: Network.GET,
+  // return canvasRequest(CanvasConstants.SISIS_ASSIGNMENTS, {account_id:}, query);
+  SISIS_ASSIGNMENTS: Network.GET,
 
   // [Retrieve assignments enabled for grade export to SIS)](https://canvas.instructure.com/doc/api/all_resources.html#method.sis_api.sis_assignments)
   // Api Url: /api/sis/courses/:course_id/assignments
-  // return canvasRequest(CanvasConstants.SIS_SIS_ASSIGNMENTS_BY_COURSES_AND_COURSE, {course_id:}, query);
-  SIS_SIS_ASSIGNMENTS_BY_COURSES_AND_COURSE: Network.GET,
+  // return canvasRequest(CanvasConstants.SISIS_ASSIGNMENTS_BY_COURSES_AND_COURSE, {course_id:}, query);
+  SISIS_ASSIGNMENTS_BY_COURSES_AND_COURSE: Network.GET,
 
   // [Find recipients)](https://canvas.instructure.com/doc/api/all_resources.html#method.search.recipients)
   // Api Url: /api/v1/conversations/find_recipients
@@ -2906,8 +2906,8 @@ const CanvasMethods = {
 
   // [Start Kaltura session)](https://canvas.instructure.com/doc/api/all_resources.html#method.services_api.start_kaltura_session)
   // Api Url: /api/v1/services/kaltura_session
-  // return canvasRequest(CanvasConstants.SERVICES_START_KALTURA_SESSION, {}, query);
-  SERVICES_START_KALTURA_SESSION: Network.POST,
+  // return canvasRequest(CanvasConstants.SERVICESTART_KALTURA_SESSION, {}, query);
+  SERVICESTART_KALTURA_SESSION: Network.POST,
 
   // [Upload a file)](https://canvas.instructure.com/doc/api/all_resources.html#method.submission_comments_api.create_file)
   // Api Url: /api/v1/courses/:course_id/assignments/:assignment_id/submissions/:user_id/comments/files
@@ -2926,13 +2926,13 @@ const CanvasMethods = {
 
   // [List assignment submissions)](https://canvas.instructure.com/doc/api/all_resources.html#method.submissions_api.index)
   // Api Url: /api/v1/courses/:course_id/assignments/:assignment_id/submissions
-  // return canvasRequest(CanvasConstants.SUBMISSIONS_S, {course_id:, assignment_id:}, query);
-  SUBMISSIONS_S: Network.GET,
+  // return canvasRequest(CanvasConstants.SUBMISSIONS, {course_id:, assignment_id:}, query);
+  SUBMISSIONS: Network.GET,
 
   // [List assignment submissions)](https://canvas.instructure.com/doc/api/all_resources.html#method.submissions_api.index)
   // Api Url: /api/v1/sections/:section_id/assignments/:assignment_id/submissions
-  // return canvasRequest(CanvasConstants.SUBMISSIONS_S_BY_SECTIONS_AND_SECTION, {section_id:, assignment_id:}, query);
-  SUBMISSIONS_S_BY_SECTIONS_AND_SECTION: Network.GET,
+  // return canvasRequest(CanvasConstants.SUBMISSIONS_BY_SECTIONS_AND_SECTION, {section_id:, assignment_id:}, query);
+  SUBMISSIONS_BY_SECTIONS_AND_SECTION: Network.GET,
 
   // [List submissions for multiple assignments)](https://canvas.instructure.com/doc/api/all_resources.html#method.submissions_api.for_students)
   // Api Url: /api/v1/courses/:course_id/students/submissions
