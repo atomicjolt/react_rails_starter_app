@@ -85,6 +85,7 @@ namespace :canvas do
     end
 
     js_out = %Q{
+import Network             from "./network";
 import wrapper             from "./wrapper";
 import _                   from "lodash";
 
