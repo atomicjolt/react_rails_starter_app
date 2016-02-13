@@ -1,9 +1,8 @@
-export default function(type, args, query, body){
+export default function(type, params, body){
   return {
     canvas: true,
     type,
-    query,
-    body,
-    ...args
+    params,
+    body
   };
 }
