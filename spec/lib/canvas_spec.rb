@@ -193,17 +193,17 @@ describe Canvas do
 
   describe "canvas_url" do
     it "generates a canvas url to get accounts" do
-      url = Canvas.canvas_url("ACCOUNTS")
+      url = Canvas.canvas_url("ACCOUNTS", {})
       expect(url).to eq("accounts")
     end
     it "generates a canvas url to get courses" do
       params = {account_id: 1}
-      url = Canvas.canvas_url("COURSES", params)
+      url = Canvas.canvas_url("ACCOUNT_COURSES", params)
       expect(url).to eq("accounts/1/courses")
     end
     it "generates a canvas url to get courses with extra values in params" do
       params = {course_id: 1, controller: "foo", account_id: 1}
-      url = Canvas.canvas_url("COURSES", params)
+      url = Canvas.canvas_url("ACCOUNT_COURSES", params)
       expect(url).to eq("accounts/1/courses")
     end
   end
