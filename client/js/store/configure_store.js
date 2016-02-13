@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState }                          from 'redux-devtools';
 import { syncHistory }                           from 'redux-simple-router';
 import rootReducer                               from '../reducers';
+import history                                   from '../history';
 import DevTools                                  from '../dev/dev_tools.jsx'
 import API                                       from '../middleware/api';
 import CanvasApi                                 from '../libs/canvas/middleware';
