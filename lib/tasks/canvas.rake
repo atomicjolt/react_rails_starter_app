@@ -87,8 +87,8 @@ namespace :canvas do
     end
 
     js_out = %Q{
-import Network             from "./network";
-import wrapper             from "./wrapper";
+import Network             from "../../constants/network";
+import wrapper             from "../../constants/wrapper";
 import _                   from "lodash";
 
 const CanvasMethods = {
@@ -124,9 +124,9 @@ export default {
 
 
     File.write("#{Rails.root}/lib/canvas_urls.rb", rb_out)
+    # TODO fix canvas_urls.js and output it to the correct dir
     File.write("#{Rails.root}/lib/canvas_urls.js", js_urls_out)
-    File.write("#{Rails.root}/client/js/constants/canvas.js", js_out)
-    File.write("#{Rails.root}/../atomic-client/client/js/constants/canvas.js", js_out)
+    File.write("#{Rails.root}/../atomic-client/client/js/libs/canvas/constants.js", js_out)
   end
 
 end
