@@ -4,14 +4,14 @@ import _ from "lodash";
 
 const DONE = "_DONE";
 
-export default function(actionTypes, asyncActionTypes){
+export default function(actions, requests){
 
-  var types = _.reduce(actionTypes, (result, key) => {
+  var types = _.reduce(actions, (result, key) => {
     result[key] = key;
     return result
   }, {});
 
-  types = _.reduce(asyncActionTypes, (result, key) => {
+  types = _.reduce(requests, (result, key) => {
     result[key] = key;
     result[`${key}${DONE}`] = `${key}${DONE}`;
     return result
