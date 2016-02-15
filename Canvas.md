@@ -1,6 +1,7 @@
 
 Assume:
-import canvasRequest from "libs/canvas";
+import canvasRequest   from "libs/canvas/action";
+import CanvasConstants from "libs/canvas/constants";
 
 #Accounts
 [List accounts](https://canvas.instructure.com/doc/api/all_resources.html#method.accounts.sub_accounts)
