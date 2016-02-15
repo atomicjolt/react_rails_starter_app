@@ -2,7 +2,7 @@
 
 import _                      from "lodash";
 import Immutable              from "immutable";
-import { CanvasConstants }    from "../../constants/canvas";
+import { CanvasConstants }    from "../../libs/canvas/constants";
 import assignment_group       from "./assignment_group";
 import Store                  from "../../store/configure_store";
 // import Mock                   from "../../specs_support/helper";

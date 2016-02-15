@@ -3,7 +3,7 @@
 import _                      from "lodash";
 import Immutable              from "immutable";
 import ErrorTypes             from "../../constants/error";
-import { CanvasConstants }    from "../../constants/canvas";
+import { CanvasConstants }    from "../../libs/canvas/constants";
 import external_feed          from "./external_feeds";
 
 
