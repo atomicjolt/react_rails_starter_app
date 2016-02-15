@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 
-const DONE = "_DONE";
+export const DONE = "_DONE";
 
 export default function(actions, requests){
 
