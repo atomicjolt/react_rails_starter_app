@@ -1,6 +1,6 @@
-import api               from "../libs/api";
-import { CanvasMethods } from "../../constants/canvas";
-import { DONE }          from "../constants/wrapper";
+import api               from "../api";
+import { CanvasMethods } from "./constants";
+import { DONE }          from "../../constants/wrapper";
 
 const canvasProxyUrl = "";
 

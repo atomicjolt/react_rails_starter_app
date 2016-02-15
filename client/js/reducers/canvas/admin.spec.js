@@ -1,7 +1,7 @@
 "use strict";
 
 import Immutable           from "immutable";
-import { CanvasConstants } from "../../constants/canvas";
+import { CanvasConstants } from "../../libs/canvas/constants";
 import admin               from "./admin";
 
 describe("canvas admins reducer", () => {

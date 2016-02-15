@@ -2,7 +2,7 @@
 
 import _                   from "lodash";
 import Immutable           from "immutable";
-import { CanvasConstants } from "../../constants/canvas";
+import { CanvasConstants } from "../../libs/canvas/constants";
 import ErrorTypes          from "../../constants/error";
 import override            from "./assignment_overrides";
 
