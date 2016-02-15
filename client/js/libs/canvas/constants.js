@@ -1,6 +1,6 @@
 
-import Network             from "./network";
-import wrapper             from "./wrapper";
+import Network             from "../../constants/network";
+import wrapper             from "../../constants/wrapper";
 import _                   from "lodash";
 
 const CanvasMethods = {

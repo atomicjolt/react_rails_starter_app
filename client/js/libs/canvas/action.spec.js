@@ -1,4 +1,4 @@
-import canvasRequest                from "./canvas";
+import canvasRequest         from "./action";
 import _                     from "lodash";
 
 describe('canvasRequest', () => {
