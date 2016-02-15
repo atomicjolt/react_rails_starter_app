@@ -2,7 +2,7 @@ import api               from "../api";
 import { CanvasMethods } from "./constants";
 import { DONE }          from "../../constants/wrapper";
 
-const canvasProxyUrl = "";
+const canvasProxyUrl = "api/canvas";
 
 const CanvasApi = store => next => action => {
   
