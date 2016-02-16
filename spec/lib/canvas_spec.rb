@@ -93,6 +93,20 @@ describe Canvas do
     end
   end
 
+  describe "proxy" do
+    it "uses type to call the canvas api to get courses" do
+      result = @api.proxy("COURSES", {})
+      expect(result.count).to eq(8)
+    end
+    it "uses type to call the canvas api to get a course" do
+      result = @api.proxy("COURSE_GET", {id: 244})
+      expect(result["course_code"]).to eq("Biology")
+    end
+    it "raises an exception if required parameters aren't included" do
+      expect { @api.proxy("COURSE_GET") }.to raise_exception(ArgumentError)
+    end
+  end
+
   describe "check_result" do
     before do
       @url = "http://www.example.com"

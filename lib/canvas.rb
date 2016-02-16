@@ -129,8 +129,11 @@ class Canvas
     end
   end
 
-  # Proxy a request through to canvas. Add headers as needed.
-  def proxy(url, method = 'GET', payload = nil, use_api_prefix=true)
+  def proxy(type, params, payload = nil, use_api_prefix=true)
+    
+    method = CanvasUrls.urls[type][:method]
+    url = Canvas.canvas_url(type, params)
+
     case method
     when 'GET'
       api_get_request(url)
@@ -351,7 +354,7 @@ class Canvas
   end
 
   def self.canvas_url(type, params)
-    proc = CanvasUrls.urls[type]
+    proc = CanvasUrls.urls[type][:uri]
     args = params.slice(*proc.parameters[0]).symbolize_keys
     args.blank? ? proc.call : proc.call(**args)
   end

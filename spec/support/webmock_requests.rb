@@ -39,6 +39,7 @@ canvas_courses = "[{\"account_id\":43460000000000017,\"course_code\":\"Biology\"
 canvas_accounts = "[{\"id\":43460000000000001,\"name\":\"Atomic Jolt\",\"parent_account_id\":null,\"root_account_id\":null,\"workflow_state\":\"active\",\"default_storage_quota_mb\":500,\"default_user_storage_quota_mb\":50,\"default_group_storage_quota_mb\":50,\"default_time_zone\":\"America/Denver\"}]"
 canvas_sub_accounts = "[{\"id\":43460000000000002,\"name\":\"Manually-Created Courses\",\"parent_account_id\":43460000000000001,\"root_account_id\":43460000000000001,\"workflow_state\":\"active\",\"default_storage_quota_mb\":500,\"default_user_storage_quota_mb\":50,\"default_group_storage_quota_mb\":50,\"default_time_zone\":\"America/Denver\",\"sis_account_id\":null,\"sis_import_id\":null,\"integration_id\":null},{\"id\":43460000000000017,\"name\":\"Canvas Demo Courses\",\"parent_account_id\":43460000000000001,\"root_account_id\":43460000000000001,\"workflow_state\":\"active\",\"default_storage_quota_mb\":500,\"default_user_storage_quota_mb\":50,\"default_group_storage_quota_mb\":50,\"default_time_zone\":\"America/Denver\",\"sis_account_id\":null,\"sis_import_id\":null,\"integration_id\":null}]"
 canvas_account = "{\"id\":43460000000000017,\"name\":\"Canvas Demo Courses\",\"parent_account_id\":43460000000000001,\"root_account_id\":43460000000000001,\"workflow_state\":\"active\"}"
+canvas_course = "{\"account_id\":43460000000000017,\"course_code\":\"Biology\",\"default_view\":\"wiki\",\"enrollment_term_id\":43460000000000001,\"id\":43460000000000228,\"is_public\":true,\"name\":\"Biology - ball\",\"start_at\":\"2015-03-11T02:11:57Z\",\"end_at\":\"2014-11-12T00:00:00Z\",\"public_syllabus\":false,\"storage_quota_mb\":500,\"is_public_to_auth_users\":false,\"apply_assignment_group_weights\":true,\"calendar\":{\"ics\":\"https://canvas.instructure.com/feeds/calendars/course_tXpIlgwxaowPljOdOY3i4336gZTzYdeqWJDDVyC5.ics\"},\"sis_course_id\":\"sdemo-biology-000_2015-03-10T20:12:09-06:00\",\"integration_id\":null,\"enrollments\":[{\"type\":\"teacher\",\"role\":\"TeacherEnrollment\",\"role_id\":822,\"enrollment_state\":\"active\"}],\"hide_final_grades\":false,\"workflow_state\":\"available\"}"
 
 RSpec.configure do |config|
   config.before(:each) do
@@ -70,6 +71,14 @@ RSpec.configure do |config|
 
 #"link" => ["<https://canvas.instructure.com/api/v1/courses/4346~228/external_tools?page=1&per_page=10>; rel=\"current\",<https://canvas.instructure.com/api/v1/courses/4346~228/external_tools?page=1&per_page=10>; rel=\"first\",<https://canvas.instructure.com/api/v1/courses/4346~228/external_tools?page=1&per_page=10>; rel=\"last\""], 
     
+    stub_request(:get, %r|http[s]*://.+\.example.com/api/v1/courses/.+|).
+      to_return(
+        status: 200,
+        body: canvas_course,
+        headers: canvas_headers
+      )
+
+
     #
     # Accounts
     #

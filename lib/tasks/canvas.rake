@@ -79,7 +79,7 @@ namespace :canvas do
         js << "  #{const_name}: Network.#{parts[0]},\n\n"
         
         puts "Not adding duplicate: #{const_name}" if rb.has_key?(const_name)
-        rb[const_name] = %Q{     "#{const_name}" => ->(#{args.join(', ')}) { "#{ruby_api_url}" },\n}
+        rb[const_name] = %Q{     "#{const_name}" => { uri: ->(#{args.join(', ')}) { "#{ruby_api_url}" }, method: "#{parts[0]}" },\n}
         js_urls[const_name] = %Q{"#{const_name}" => ->(#{args.join(', ')}) { "#{ruby_api_url}" },\n}
       
       end
