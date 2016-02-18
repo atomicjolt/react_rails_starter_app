@@ -9,24 +9,6 @@ var path                 = require('path');
 var app                  = express();
 var compiler             = webpack(webpackConfig);
 
-// new webpackDevServer(webpack(webpackConfig), {
-//   contentBase: settings.devOutput,
-//   publicPath: webpackConfig.output.publicPath,
-//   watch: true,
-//   hot: true,
-//   inline: true,
-//   progress: true,
-//   headers: { "Access-Control-Allow-Origin": "*" },
-//   filename: '[name]' + settings.buildSuffix,
-// }).listen(settings.hotPort, 'localhost', function(err, result){
-//   if(err){
-//     console.log('webpack-dev-server', err);
-//   }
-//   console.log('Webpack hot load server listening on: ' + webpackConfig.output.publicPath);
-//   console.log('Webpack hot load server serving content from: ' + settings.devOutput);
-// });
-
-
 app.use(express.static(settings.devOutput));  
 
 app.use(webpackMiddleware(compiler, {
@@ -51,7 +33,3 @@ app.listen(settings.hotPort, 'localhost', function(err) {
   console.log('Listening on: ' + webpackConfig.output.publicPath);
   console.log('Serving content from: ' + settings.devOutput);
 });
-
-
-
-
