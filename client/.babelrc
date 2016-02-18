@@ -3,13 +3,7 @@
   "plugins": ["transform-runtime", "transform-decorators-legacy"],
   "env": {
     "development": {
-    "plugins": [["react-transform", {
-       "transforms": [{
-         "transform": "react-transform-hmr",
-         "imports": ["react"],
-         "locals": ["module"]
-       }]
-     }]]
+      "presets": ["react-hmre"]
     }
   }
 }
