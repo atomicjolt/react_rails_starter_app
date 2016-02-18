@@ -1,12 +1,11 @@
 import { combineReducers }              from 'redux';
-import { routeReducer as routing }      from 'redux-simple-router';
 import settings                         from './settings'
 import application                      from './application';
 import messages                         from './messages';
-import canvas                           from '../libs/canvas/reducer';
+import { routeReducer }                 from 'react-router-redux';
 
 const rootReducer = combineReducers({
-  routing,
+  routing: routeReducer,
   settings,
   application,
   messages,
