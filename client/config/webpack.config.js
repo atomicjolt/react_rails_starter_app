@@ -31,14 +31,20 @@ module.exports = function(release){
       entries[name] = ['babel-polyfill', originalEntries[name]];
     }
 
-  if(!release){
-    entries['eventsource-polyfill']          = 'eventsource-polyfill'; // necessary for hot reloading with IE
-    entries['webpack-hot-middleware/client'] = 'webpack-hot-middleware/client';
-  }
-
   var cssEntries = settings.cssEntries;
   for(var name in cssEntries){
     entries[name] = cssEntries[name];
+  }
+
+  if(!release){
+    entries = _.reduce(entries, function(result, entry, key){
+      result[key] = [
+        'eventsource-polyfill',
+        'webpack-hot-middleware/client',
+        entry
+      ];
+      return result;
+    }, {});
   }
 
   var extractCSS = new ExtractTextPlugin(release ? '[name]-[chunkhash].css' : '[name].css');
