@@ -1,12 +1,14 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState }                          from 'redux-devtools';
-import { syncHistory }                           from 'redux-simple-router';
 import rootReducer                               from '../reducers';
-import history                                   from '../history';
 import DevTools                                  from '../dev/dev_tools.jsx'
 import API                                       from '../middleware/api';
+import { hashHistory }                           from 'react-router'
+import { syncHistory }                           from 'react-router-redux';
 
-let middleware = [ API , syncHistory(history)];
+const reduxRouterMiddleware = syncHistory(hashHistory);
+
+let middleware = [ API, reduxRouterMiddleware ];
 
 let enhancers = [
   applyMiddleware(...middleware)
@@ -32,6 +34,9 @@ export default function(initialState){
       () => store.replaceReducer(require('../reducers'))
     );
   }
+
+  // Required for replaying actions from devtools to work
+  reduxRouterMiddleware.listenForReplays(store);
 
   return store;
 }

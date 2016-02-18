@@ -8,7 +8,6 @@ import Immutable              from 'immutable';
 import routes                 from './routes';
 import DevTools               from './dev/dev_tools';
 import configureStore         from './store/configure_store';
-import history                from './history';
 import jwt                    from './loaders/jwt';
 
 //Needed for onTouchTap
