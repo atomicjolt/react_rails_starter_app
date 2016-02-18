@@ -1,8 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState }                          from 'redux-devtools';
-import { syncHistory }                           from 'redux-simple-router';
 import rootReducer                               from '../reducers';
-import history                                   from '../history';
 import DevTools                                  from '../dev/dev_tools.jsx'
 import API                                       from '../middleware/api';
 import { hashHistory }                           from 'react-router'
@@ -10,7 +8,7 @@ import { syncHistory }                           from 'react-router-redux';
 
 const reduxRouterMiddleware = syncHistory(hashHistory);
 
-let middleware = [ thunk, API, reduxRouterMiddleware ];
+let middleware = [ API, reduxRouterMiddleware ];
 
 let enhancers = [
   applyMiddleware(...middleware)
