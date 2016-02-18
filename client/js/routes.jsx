@@ -4,10 +4,10 @@ import React                          from 'react'; // if you use jsx, you have 
 import { Router, Route, IndexRoute }  from 'react-router';
 import Index                          from './components/layout/index';
 import Home                           from './components/home';
-import history                        from './history';
+import { hashHistory }                from 'react-router'
 
 export default (
-  <Router history={history}>
+  <Router history={hashHistory}>
     <Route path="/" component={Index}>
       <IndexRoute component={Home} />
     </Route>

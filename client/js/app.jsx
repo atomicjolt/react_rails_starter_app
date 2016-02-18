@@ -4,12 +4,10 @@ import 'babel-core/polyfill';
 import React                  from 'react';
 import ReactDOM               from 'react-dom';
 import { Provider }           from 'react-redux';
-import { syncReduxAndRouter } from 'redux-simple-router';
 import Immutable              from 'immutable';
 import routes                 from './routes';
 import DevTools               from './dev/dev_tools';
 import configureStore         from './store/configure_store';
-import history                from './history';
 import jwt                    from './loaders/jwt';
 
 //Needed for onTouchTap
@@ -37,8 +35,6 @@ class Root extends React.Component {
 }
 
 const store = configureStore({settings: Immutable.fromJS(window.DEFAULT_SETTINGS)});
-
-syncReduxAndRouter(history, store);
 
 if (window.DEFAULT_SETTINGS.jwt){
   // Setup JWT refresh

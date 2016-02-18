@@ -4,8 +4,12 @@ import thunk                                     from 'redux-thunk';
 import rootReducer                               from '../reducers';
 import DevTools                                  from '../dev/dev_tools.jsx'
 import API                                       from '../middleware/api';
+import { hashHistory }                           from 'react-router'
+import { syncHistory }                           from 'react-router-redux';
 
-let middleware = [ thunk, API ];
+const reduxRouterMiddleware = syncHistory(hashHistory);
+
+let middleware = [ thunk, API, reduxRouterMiddleware ];
 
 let enhancers = [
   applyMiddleware(...middleware)
@@ -31,6 +35,9 @@ export default function(initialState){
       () => store.replaceReducer(require('../reducers'))
     );
   }
+
+  // Required for replaying actions from devtools to work
+  reduxRouterMiddleware.listenForReplays(store);
 
   return store;
 }
