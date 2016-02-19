@@ -18,14 +18,14 @@ namespace :canvas do
     js = ''
     methods = parsed.css('.method_details')
     methods.each do |method|
-      
+
       canvas_name = method.css('.api_method_name a')[0].inner_html.strip
 
       endpoints = method.css('.endpoint')
       main_parts = endpoints[0].inner_html.strip.split(' ')[1].split('/')
 
       endpoints.each do |endpoint|
-        
+
         if method.css('.defined-in a')[0].blank?
           const_name = canvas_name
         else
@@ -55,17 +55,28 @@ namespace :canvas do
         parts = endpoint.inner_html.strip.split(' ')
         api_url = parts[1]
 
-        args = []
-        
+        ruby_args = []
+
         ruby_api_url = api_url.split('/').map do |part|
           if part[0] == ":"
             arg = part.gsub(":", "")
-            args << "#{arg}:"
+            ruby_args << "#{arg}:"
             "\#{#{arg}}"
           else
             part
           end
         end.join('/').gsub("/api/v1/", "")
+
+        js_args = []
+        js_url_parts = api_url.split(/(:[a-z_]+)/).map do |part|
+          if part[0] == ":"
+            part.sub!(':', '')
+            js_args << part
+            part
+          else
+            %Q{"#{part}"}
+          end
+        end
 
         name_parts = api_url.split('/') - main_parts
         if name_parts.length > 0
@@ -75,15 +86,15 @@ namespace :canvas do
 
         js << "  // [#{canvas_name})](https://canvas.instructure.com/doc/api/all_resources.html##{method.css('.api_method_name')[0].attributes['name'].value})\n"
         js << "  // Api Url: #{parts[1]}\n"
-        js << "  // return canvasRequest(CanvasConstants.#{const_name}, {#{args.join(', ')}}, query);\n"
+        js << "  // return canvasRequest(CanvasConstants.#{const_name}, {#{ruby_args.join(', ')}}, query);\n"
         js << "  #{const_name}: Network.#{parts[0]},\n\n"
-        
+
         puts "Not adding duplicate: #{const_name}" if rb.has_key?(const_name)
-        rb[const_name] = %Q{     "#{const_name}" => { uri: ->(#{args.join(', ')}) { "#{ruby_api_url}" }, method: "#{parts[0]}" },\n}
-        js_urls[const_name] = %Q{"#{const_name}" => ->(#{args.join(', ')}) { "#{ruby_api_url}" },\n}
-      
+        rb[const_name] = %Q{     "#{const_name}" => { uri: ->(#{ruby_args.join(', ')}) { "#{ruby_api_url}" }, method: "#{parts[0]}" },\n}
+        js_urls[const_name] = %Q{  "#{const_name}": { uri: function(#{js_args.join(', ')}){return #{js_url_parts.join(' + ')}}, method: "#{parts[0]}" },\n}
+
       end
-      
+
     end
 
     js_out = %Q{
