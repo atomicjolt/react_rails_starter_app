@@ -7,7 +7,7 @@ import _                   from "lodash";
 const initialState = Immutable.fromJS({});
 
 export default (state = initialState, action) => {
-debugger
+
   switch(action.type){
 
     case CanvasConstants.COURSE_ASSIGNMENT_SINGLE_GROUP_DONE:

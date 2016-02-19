@@ -60,7 +60,6 @@ describe("canvas assignment_group reducer", () => {
 
     it("Deletes a group", () => {
       const initialState = Immutable.fromJS({});
-      debugger
       const action = {
         type: CanvasConstants.COURSE_ASSIGNMENT_SINGLE_GROUP_DEL_DONE,
         payload: [{
