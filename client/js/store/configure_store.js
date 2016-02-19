@@ -3,12 +3,8 @@ import { persistState }                          from 'redux-devtools';
 import rootReducer                               from '../reducers';
 import DevTools                                  from '../dev/dev_tools.jsx'
 import API                                       from '../middleware/api';
-import { hashHistory }                           from 'react-router'
-import { syncHistory }                           from 'react-router-redux';
 
-const reduxRouterMiddleware = syncHistory(hashHistory);
-
-let middleware = [ API, reduxRouterMiddleware ];
+let middleware = [ API ];
 
 let enhancers = [
   applyMiddleware(...middleware)
@@ -34,9 +30,6 @@ export default function(initialState){
       () => store.replaceReducer(require('../reducers'))
     );
   }
-
-  // Required for replaying actions from devtools to work
-  reduxRouterMiddleware.listenForReplays(store);
 
   return store;
 }
