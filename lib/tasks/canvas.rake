@@ -10,12 +10,15 @@ namespace :canvas do
   desc "Scrape the canvas api"
   task :api => [:environment] do
 
+    common_params = []
+    
     url = "https://canvas.instructure.com/doc/api/all_resources.html"
     response = HTTParty.get(url)
     parsed = Nokogiri::HTML(response.body)
     rb = {}
     js_urls = {}
     js = ''
+    allow_params = parsed.css('.argument .name').map{|a| a.inner_html.strip}
     methods = parsed.css('.method_details')
     methods.each do |method|
 
@@ -61,6 +64,7 @@ namespace :canvas do
           if part[0] == ":"
             arg = part.gsub(":", "")
             ruby_args << "#{arg}:"
+			      common_params << arg
             "\#{#{arg}}"
           else
             part
@@ -84,7 +88,9 @@ namespace :canvas do
           const_name = "#{const_name}_BY_#{name_parts.join('_AND_')}"
         end
 
-        js << "  // [#{canvas_name})](https://canvas.instructure.com/doc/api/all_resources.html##{method.css('.api_method_name')[0].attributes['name'].value})\n"
+        anchor = method.css('.api_method_name')[0].attributes['name'].value
+        
+        js << "  // [#{canvas_name})](https://canvas.instructure.com/doc/api/all_resources.html##{anchor})\n"
         js << "  // Api Url: #{parts[1]}\n"
         js << "  // return canvasRequest(CanvasConstants.#{const_name}, {#{ruby_args.join(', ')}}, query);\n"
         js << "  #{const_name}: Network.#{parts[0]},\n\n"
@@ -138,6 +144,15 @@ export default {
     # TODO fix canvas_urls.js and output it to the correct dir
     File.write("#{Rails.root}/lib/canvas_urls.js", js_urls_out)
     File.write("#{Rails.root}/../atomic-client/client/js/libs/canvas/constants.js", js_out)
+
+    # puts "*******************************************************************************"
+    # puts "Canvas params that should be part of the url:"
+    # puts common_params.uniq.map{|p| ":#{p}"}.join(',')
+
+    # puts "Canvas params that can be part of the url:"
+    # puts allow_params.uniq.map{|p| ":#{p}"}.join(',')
+
+    # puts common_params.uniq - allow_params.uniq
   end
 
 end
