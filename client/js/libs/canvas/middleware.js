@@ -2,19 +2,9 @@ import api               from "../api";
 import { CanvasMethods } from "./constants";
 import Network           from "../../constants/network";
 import { DONE }          from "../../constants/wrapper";
+import getNextUrl        from "../urls";
 
 const canvasProxyUrl = "";
-
-function getNextUrl(link){
-  if(link){
-    const url = _.find(link.split(','), (l) => {
-      return _.trim(l.split(";")[1]) == 'rel="next"';
-    }) 
-    if(url){
-      return url.split(';')[0].replace(/[\<\>\s]/g, "");
-    }
-  }
-}
 
 function proxyCanvas(store, action, params){
   
