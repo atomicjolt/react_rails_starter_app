@@ -1,0 +1,48 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "indent": [
+      2,
+      2,
+      {"SwitchCase": 1}
+    ],
+    "quotes": 0,
+    "linebreak-style": [
+      2,
+      "unix"
+    ],
+    "semi": [
+      2,
+      "always"
+    ],
+    "global-strict": [0, "never"],
+    "strict": [
+      0,
+      "global"
+    ],
+    "no-underscore-dangle": 0,
+    "no-multi-spaces": [
+      2,
+      { "exceptions": {
+          "ImportDeclaration": true,
+          "AssignmentPattern": true,
+          "VariableDeclarator": true,
+          "JSXAttribute": true
+        }
+      }
+    ],
+    "comma-dangle": 0,
+    "camelcase": 0
+  },
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
+  "plugins": [
+    "react"
+  ]
+}
