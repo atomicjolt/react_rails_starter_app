@@ -36,25 +36,28 @@ RSpec.describe Api::CanvasProxyController, type: :controller do
         get :proxy, type: type, account_id: 1, format: :json
         expect(response).to have_http_status(:success)
       end
+      it "should successfully call the canvas api to generate a url to get courses with extra params" do
+        type = "COURSES"
+        get "proxy", type: type, account_id: 1, include: [1, 2], per_page: 100, format: :json
+        expect(response).to have_http_status(:success)
+      end
     end
 
-# VCR gives this error if the following spec are included
-# VCR::Request initialized with an invalid body: 
-    # describe "POST" do
-    #   it "successfully posts to the canvas api" do
-    #     type = "CREATE_SUB_ACCOUNT"
-    #     post :proxy, name: "Canvas Demo Courses", type: type, account_id: 1, format: :json
-    #     expect(JSON.parse(response.body)['name']).to eq("Canvas Demo Courses")
-    #   end
-    # end
+    describe "POST" do
+      it "successfully posts to the canvas api" do
+        type = "SUB_ACCOUNT_CREATE"
+        post :proxy, name: "Canvas Demo Courses", type: type, account_id: 1, format: :json
+        expect(JSON.parse(response.body)['name']).to eq("Canvas Demo Courses")
+      end
+    end
 
-    # describe "PUT" do
-    #   it "successfully puts to the canvas api" do
-    #     type = "UPDATE_ACCOUNT"
-    #     put :proxy, type: type, account_id: 1, name: "Canvas Demo Courses", format: :json
-    #     expect(JSON.parse(response.body)['name']).to eq("Canvas Demo Courses")
-    #   end
-    # end
+    describe "PUT" do
+      it "successfully puts to the canvas api" do
+        type = "ACCOUNT_UPDATE"
+        put :proxy, type: type, id: 1, name: "Canvas Demo Courses", format: :json
+        expect(JSON.parse(response.body)['name']).to eq("Canvas Demo Courses")
+      end
+    end
 
   end
 
