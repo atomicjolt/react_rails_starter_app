@@ -1,5 +1,7 @@
 class Canvas
 
+  IGNORE_PARAMS = :controller, :action, :format, :type
+
   def initialize(canvas_uri, canvas_api_key, refresh_token_options=nil)
     @per_page = 100
     @canvas_uri = UrlHelper.scheme_host(canvas_uri)
@@ -355,8 +357,15 @@ class Canvas
 
   def self.canvas_url(type, params)
     proc = CanvasUrls.urls[type][:uri]
-    args = params.slice(*proc.parameters[0]).symbolize_keys
-    args.blank? ? proc.call : proc.call(**args)
+    proc_parameters = proc.parameters[0]
+    args = params.slice(*proc_parameters).symbolize_keys
+    uri = args.blank? ? proc.call : proc.call(**args)
+    allowed_params = params.except(*proc_parameters, *IGNORE_PARAMS)
+    if allowed_params.present?
+      "#{uri}?#{allowed_params.to_query}" 
+    else
+      uri
+    end
   end
 
 end

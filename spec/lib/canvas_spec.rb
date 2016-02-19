@@ -210,6 +210,16 @@ describe Canvas do
       url = Canvas.canvas_url("ACCOUNTS", {})
       expect(url).to eq("accounts")
     end
+    it "generates a canvas url with params to get accounts" do
+      params = {
+        action: "test",
+        controller: "test",
+        per_page: 100, 
+        "include": ["lti_guid", "registration_settings"]
+      }
+      url = Canvas.canvas_url("ACCOUNTS", params)
+      expect(url).to eq("accounts?include%5B%5D=lti_guid&include%5B%5D=registration_settings&per_page=100")
+    end
     it "generates a canvas url to get courses" do
       params = {account_id: 1}
       url = Canvas.canvas_url("ACCOUNT_COURSES", params)
@@ -218,7 +228,7 @@ describe Canvas do
     it "generates a canvas url to get courses with extra values in params" do
       params = {course_id: 1, controller: "foo", account_id: 1}
       url = Canvas.canvas_url("ACCOUNT_COURSES", params)
-      expect(url).to eq("accounts/1/courses")
+      expect(url).to eq("accounts/1/courses?course_id=1")
     end
   end
 
