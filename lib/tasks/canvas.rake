@@ -89,11 +89,11 @@ namespace :canvas do
         end
 
         anchor = method.css('.api_method_name')[0].attributes['name'].value
-        
+        anchors = anchor.split(".")
         js << "  // [#{canvas_name})](https://canvas.instructure.com/doc/api/all_resources.html##{anchor})\n"
         js << "  // Api Url: #{parts[1]}\n"
         js << "  // return canvasRequest(CanvasConstants.#{const_name}, {#{ruby_args.join(', ')}}, query);\n"
-        js << "  #{const_name}: Network.#{parts[0]},\n\n"
+        js << "  #{const_name}: { method: Network.#{parts[0]}, reducer: '#{anchors[1]}'},\n\n"
 
         puts "Not adding duplicate: #{const_name}" if rb.has_key?(const_name)
         rb[const_name] = %Q{     "#{const_name}" => { uri: ->(#{ruby_args.join(', ')}) { "#{ruby_api_url}" }, method: "#{parts[0]}" },\n}
@@ -139,10 +139,8 @@ export default {
 };
 }
 
-
     File.write("#{Rails.root}/lib/canvas_urls.rb", rb_out)
-    # TODO fix canvas_urls.js and output it to the correct dir
-    File.write("#{Rails.root}/lib/canvas_urls.js", js_urls_out)
+    File.write("#{Rails.root}/../atomic-lti/atomic/lib/canvas_urls.js", js_urls_out)
     File.write("#{Rails.root}/../atomic-client/client/js/libs/canvas/constants.js", js_out)
 
     # puts "*******************************************************************************"
