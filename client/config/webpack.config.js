@@ -5,14 +5,21 @@ var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 var settings            = require('./settings.js');
 var _                   = require('lodash');
 
-module.exports = function(release){
+module.exports = function(stage){
+
+  var release = stage == "production";
 
   var excludeFromStats = [
     /node_modules[\\\/]react(-router)?[\\\/]/
   ];
 
   var autoprefix = '{browsers:["Android 2.3", "Android >= 4", "Chrome >= 20", "Firefox >= 24", "Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
-  var jsLoaders = ["babel?presets[]=es2015&presets[]=react&presets[]=stage-0&plugins[]=transform-runtime"];
+  
+  var babel = 'babel?plugins[]=transform-runtime,plugins[]=transform-decorators-legacy&presets[]=react,presets[]=es2015,presets[]=stage-0';
+  if(stage == "development"){
+    babel = babel + ',presets[]=react-hmre';
+  }
+  var jsLoaders = [babel];
 
   var cssLoaders = ['css-loader', 'autoprefixer-loader?' + autoprefix];
 
@@ -36,7 +43,7 @@ module.exports = function(release){
     entries[name] = cssEntries[name];
   }
 
-  if(!release){
+  if(stage == "development"){
     entries = _.reduce(entries, function(result, entry, key){
       result[key] = [
         'eventsource-polyfill',
