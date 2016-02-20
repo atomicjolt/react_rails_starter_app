@@ -8,7 +8,7 @@ var es            = require('event-stream');
 var runSequence   = require('run-sequence');
 var webpack       = require('webpack');
 var rename        = require('gulp-rename');
-var settings      = require('./config/settings.js');
+var settings      = require('./config/settings');
 var argv          = require('minimist')(process.argv.slice(2));
 var path          = require('path');
 var _             = require("lodash");
@@ -20,8 +20,9 @@ var ejs           = require('ejs');
 
 // Settings
 var release       = argv.release;
+var stage         = release ? "production" : "development";
 var outputPath    = release ? settings.prodOutput : settings.devOutput;
-var webpackConfig = require('./config/webpack.config.js')(release);
+var webpackConfig = require('./config/webpack.config')(stage);
 var webpackStats;
 
 var defaultLayout = 'application.html';
