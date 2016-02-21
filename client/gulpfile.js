@@ -2,7 +2,6 @@
 
 var gulp          = require('gulp');
 var $             = require('gulp-load-plugins')();
-var util          = require('util');
 var through2      = require('through2');
 var es            = require('event-stream');
 var runSequence   = require('run-sequence');
@@ -72,7 +71,7 @@ gulp.task('markdown', function(){
     .pipe(applyLayout(defaultLayout))
     .pipe(marked(options))
     .pipe(applyWebpack()) // Change to webpack hashed file names in release
-    .pipe(!release ? $.util.noop() : $.htmlmin({
+    .pipe(!release ? $.noop() : $.htmlmin({
         removeComments: true,
         collapseWhitespace: true,
         minifyJS: true
@@ -96,7 +95,7 @@ gulp.task('html', function(){
     .pipe(htmlFilter)
     .pipe(applyLayout(defaultLayout))
     .pipe(applyWebpack()) // Change to webpack hashed file names in release
-    .pipe(!release ? $.util.noop() : $.htmlmin({
+    .pipe(!release ? $.noop() : $.htmlmin({
         removeComments: true,
         collapseWhitespace: true,
         minifyJS: true
@@ -114,9 +113,9 @@ gulp.task('javascript', function(cb){
   function bundle(err, stats){
     webpackStats = stats.toJson();
     if (err){
-      throw new $.util.PluginError('webpack', err);
+      throw new $.PluginError('webpack', err);
     }
-    //$.util.log('[webpack]', stats.toString({colors: true}));
+    //$.log('[webpack]', stats.toString({colors: true}));
     cb();
   }
   bundler.run(bundle);
