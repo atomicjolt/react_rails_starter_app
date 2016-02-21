@@ -1,20 +1,24 @@
 'use strict';
 
 var gulp          = require('gulp');
-var $             = require('gulp-load-plugins')();
+var filter        = require('gulp-filter');
+var util          = require('gulp-util');
+var htmlmin       = require('gulp-htmlmin');
+var ignore        = require('gulp-ignore');
+var rename        = require('gulp-rename');
+var marked        = require('gulp-markdown');
+var frontMatter   = require('gulp-front-matter');
+
 var through2      = require('through2');
 var es            = require('event-stream');
 var runSequence   = require('run-sequence');
 var webpack       = require('webpack');
-var rename        = require('gulp-rename');
 var settings      = require('./config/settings');
 var argv          = require('minimist')(process.argv.slice(2));
 var path          = require('path');
 var _             = require("lodash");
 var fs            = require("fs");
 var mkdirp        = require("mkdirp");
-var marked        = require('gulp-markdown');
-var frontMatter   = require('gulp-front-matter');
 var ejs           = require('ejs');
 
 // Settings
@@ -71,10 +75,10 @@ gulp.task('markdown', function(){
     .pipe(applyLayout(defaultLayout))
     .pipe(marked(options))
     .pipe(applyWebpack()) // Change to webpack hashed file names in release
-    .pipe(!release ? $.noop() : $.htmlmin({
-        removeComments: true,
-        collapseWhitespace: true,
-        minifyJS: true
+    .pipe(!release ? util.noop() : htmlmin({
+      removeComments: true,
+      collapseWhitespace: true,
+      minifyJS: true
     }))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest(outputPath));
@@ -84,21 +88,21 @@ gulp.task('markdown', function(){
 // -----------------------------------------------------------------------------
 gulp.task('html', function(){
 
-  var htmlFilter = $.filter('**/*.html', {restore: true});
+  var htmlFilter = filter('**/*.html', {restore: true});
   
   return gulp.src('./html/**/*')
-    .pipe($.ignore.exclude('layouts/**'))
-    .pipe($.ignore.exclude('layouts'))
-    .pipe($.ignore.exclude('partials/**'))
-    .pipe($.ignore.exclude('partials'))
-    .pipe($.ignore.exclude('**/*.md'))
+    .pipe(ignore.exclude('layouts/**'))
+    .pipe(ignore.exclude('layouts'))
+    .pipe(ignore.exclude('partials/**'))
+    .pipe(ignore.exclude('partials'))
+    .pipe(ignore.exclude('**/*.md'))
     .pipe(htmlFilter)
     .pipe(applyLayout(defaultLayout))
     .pipe(applyWebpack()) // Change to webpack hashed file names in release
-    .pipe(!release ? $.noop() : $.htmlmin({
-        removeComments: true,
-        collapseWhitespace: true,
-        minifyJS: true
+    .pipe(!release ? util.noop() : htmlmin({
+      removeComments: true,
+      collapseWhitespace: true,
+      minifyJS: true
     }))
     .pipe(htmlFilter.restore)
     .pipe(gulp.dest(outputPath));
@@ -113,9 +117,9 @@ gulp.task('javascript', function(cb){
   function bundle(err, stats){
     webpackStats = stats.toJson();
     if (err){
-      throw new $.PluginError('webpack', err);
+      throw new util.PluginError('webpack', err);
     }
-    //$.log('[webpack]', stats.toString({colors: true}));
+    //util.log('[webpack]', stats.toString({colors: true}));
     cb();
   }
   bundler.run(bundle);
