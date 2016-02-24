@@ -15,8 +15,11 @@ export default (state = initialState, action) => {
         }, {});
         return state.set(action.reducer, result);
       case 'post':
+        return state;
       case 'put':
-      case 'delete'
+        return state;
+      case 'delete':
+        return state;
     }
     
   }

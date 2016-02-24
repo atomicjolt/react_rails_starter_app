@@ -37,6 +37,7 @@ module.exports = function(stage){
     for(var name in originalEntries){
       entries[name] = ['babel-polyfill', originalEntries[name]];
     }
+  }
 
   var cssEntries = settings.cssEntries;
   for(var name in cssEntries){
