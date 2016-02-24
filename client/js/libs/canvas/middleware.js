@@ -1,5 +1,4 @@
 import api               from "../api";
-import { CanvasMethods } from "./constants";
 import Network           from "../../constants/network";
 import { DONE }          from "../../constants/wrapper";
 import getNextUrl        from "../urls";
@@ -9,9 +8,9 @@ const canvasProxyUrl = "";
 function proxyCanvas(store, action, params){
   
   const state = store.getState();
-  
+
   api.execRequest(
-    CanvasMethods[action.type], 
+    action.method,
     canvasProxyUrl, 
     state.settings.get("apiUrl"), 
     state.settings.get("jwt"), 
@@ -20,7 +19,7 @@ function proxyCanvas(store, action, params){
     action.body
   ).then((response, error) => {
 
-    if(CanvasMethods[action.type] == Network.GET && response.header){
+    if(action.method == "get" && response.header){
       const nextUrl = getNextUrl(response.headers['link']);
       if(nextUrl){
         // TODO parse  params from nextUrl and make a new call to the canvas proxy endpoint
@@ -31,6 +30,8 @@ function proxyCanvas(store, action, params){
 
     store.dispatch({
       type:     action.type + DONE,
+      canvas:   true,
+      reducer:  action.reducer,
       payload:  response.body,
       original: action,
       response,
