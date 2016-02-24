@@ -95,15 +95,15 @@ describe Canvas do
 
   describe "proxy" do
     it "uses type to call the canvas api to get courses" do
-      result = @api.proxy("COURSES", {})
+      result = @api.proxy("LIST_YOUR_COURSES", {})
       expect(result.count).to eq(8)
     end
     it "uses type to call the canvas api to get a course" do
-      result = @api.proxy("COURSE_GET", {id: 244})
+      result = @api.proxy("GET_SINGLE_COURSE_COURSES", {id: 244})
       expect(result["course_code"]).to eq("Biology")
     end
     it "raises an exception if required parameters aren't included" do
-      expect { @api.proxy("COURSE_GET") }.to raise_exception(ArgumentError)
+      expect { @api.proxy("GET_SINGLE_COURSE_COURSES") }.to raise_exception(ArgumentError)
     end
   end
 
@@ -207,7 +207,7 @@ describe Canvas do
 
   describe "canvas_url" do
     it "generates a canvas url to get accounts" do
-      url = Canvas.canvas_url("ACCOUNTS", {})
+      url = Canvas.canvas_url("LIST_ACCOUNTS", {})
       expect(url).to eq("accounts")
     end
     it "generates a canvas url with params to get accounts" do
@@ -217,17 +217,17 @@ describe Canvas do
         per_page: 100, 
         "include": ["lti_guid", "registration_settings"]
       }
-      url = Canvas.canvas_url("ACCOUNTS", params)
+      url = Canvas.canvas_url("LIST_ACCOUNTS", params)
       expect(url).to eq("accounts?include%5B%5D=lti_guid&include%5B%5D=registration_settings&per_page=100")
     end
     it "generates a canvas url to get courses" do
       params = {account_id: 1}
-      url = Canvas.canvas_url("ACCOUNT_COURSES", params)
+      url = Canvas.canvas_url("LIST_ACTIVE_COURSES_IN_ACCOUNT", params)
       expect(url).to eq("accounts/1/courses")
     end
     it "generates a canvas url to get courses with extra values in params" do
       params = {course_id: 1, controller: "foo", account_id: 1}
-      url = Canvas.canvas_url("ACCOUNT_COURSES", params)
+      url = Canvas.canvas_url("LIST_ACTIVE_COURSES_IN_ACCOUNT", params)
       expect(url).to eq("accounts/1/courses?course_id=1")
     end
   end

@@ -27,17 +27,17 @@ RSpec.describe Api::CanvasProxyController, type: :controller do
 
     describe "GET" do
       it "should successfully call the canvas api" do
-        type = "ACCOUNTS"
+        type = "LIST_ACCOUNTS"
         get :proxy, type: type, format: :json
         expect(response).to have_http_status(:success)
       end
       it "should successfully call the canvas api to generate a url to get courses" do
-        type = "COURSES"
+        type = "LIST_YOUR_COURSES"
         get :proxy, type: type, account_id: 1, format: :json
         expect(response).to have_http_status(:success)
       end
       it "should successfully call the canvas api to generate a url to get courses with extra params" do
-        type = "COURSES"
+        type = "LIST_YOUR_COURSES"
         get "proxy", type: type, account_id: 1, include: [1, 2], per_page: 100, format: :json
         expect(response).to have_http_status(:success)
       end
@@ -45,7 +45,7 @@ RSpec.describe Api::CanvasProxyController, type: :controller do
 
     describe "POST" do
       it "successfully posts to the canvas api" do
-        type = "SUB_ACCOUNT_CREATE"
+        type = "CREATE_NEW_SUB_ACCOUNT"
         post :proxy, name: "Canvas Demo Courses", type: type, account_id: 1, format: :json
         expect(JSON.parse(response.body)['name']).to eq("Canvas Demo Courses")
       end
@@ -53,7 +53,7 @@ RSpec.describe Api::CanvasProxyController, type: :controller do
 
     describe "PUT" do
       it "successfully puts to the canvas api" do
-        type = "ACCOUNT_UPDATE"
+        type = "UPDATE_ACCOUNT"
         put :proxy, type: type, id: 1, name: "Canvas Demo Courses", format: :json
         expect(JSON.parse(response.body)['name']).to eq("Canvas Demo Courses")
       end

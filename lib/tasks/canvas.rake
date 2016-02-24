@@ -9,148 +9,131 @@ namespace :canvas do
 
   desc "Scrape the canvas api"
   task :api => [:environment] do
-
-    common_params = []
-    
-    url = "https://canvas.instructure.com/doc/api/all_resources.html"
-    response = HTTParty.get(url)
-    parsed = Nokogiri::HTML(response.body)
-    rb = {}
-    js_urls = {}
+    tracking = []
+    rb_urls = ''
+    js_urls = ''
     js = ''
-    allow_params = parsed.css('.argument .name').map{|a| a.inner_html.strip}
-    methods = parsed.css('.method_details')
-    methods.each do |method|
+    endpoint = "https://canvas.instructure.com/doc/api"
+    api_directory_url = "#{endpoint}/api-docs.json"
+    all_apis = HTTParty.get(api_directory_url)
+    all_apis["apis"].each do |api_doc|
+      
+      puts "Setting up API for #{api_doc["description"]}"
+      rb_urls << "\n     # #{api_doc["description"]}\n"
 
-      canvas_name = method.css('.api_method_name a')[0].inner_html.strip
+      resource = HTTParty.get("#{endpoint}#{api_doc["path"]}")
+      
+      resource["apis"].each_with_index do |api, index|
 
-      endpoints = method.css('.endpoint')
-      main_parts = endpoints[0].inner_html.strip.split(' ')[1].split('/')
-
-      endpoints.each do |endpoint|
-
-        if method.css('.defined-in a')[0].blank?
-          const_name = canvas_name
-        else
-          const_name = method.css('.defined-in a')[0].inner_html
-        end
-
-        const_name = const_name
-          .strip
-          .underscore
-          .downcase
-          .gsub("s_controller", "")
-          .gsub("controller", "")
-          .gsub("api", "")
-          .gsub("#index", "s")
-          .gsub("#show", "_GET")
-          .gsub("#create", "_CREATE")
-          .gsub("#update", "_UPDATE")
-          .gsub("#destroy", "_DELETE")
-          .gsub(/[^a-zA-Z]/, "_")
-          .gsub("__", "_")
-          .gsub("__", "_")
-          .gsub("_index", "S")
-          .gsub("s_s", "s")
-          .chomp("_")
-          .upcase
-
-        parts = endpoint.inner_html.strip.split(' ')
-        api_url = parts[1]
-
-        ruby_args = []
-
-        ruby_api_url = api_url.split('/').map do |part|
-          if part[0] == ":"
-            arg = part.gsub(":", "")
-            ruby_args << "#{arg}:"
-			      common_params << arg
-            "\#{#{arg}}"
+        api_url = api['path'].gsub("/v1/", "")
+        
+        api["operations"].each do |operation|
+          nickname = operation["nickname"]
+          method   = operation["method"]
+          
+          if tracking.include?(nickname)
+            puts "** Not adding duplicate: #{nickname} **"
           else
-            part
+            args = args(api_url)
+            tracking << nickname
+            rb_urls << build_ruby_urls(nickname, api_url, args, method)
+            js_urls << build_js_urls(nickname, api_url, args, method)
+            js << build_js_constants(nickname, api_url, args, method, resource["resourcePath"].gsub("/", ""), operation['notes'].gsub("\n", "\n// "), operation)
           end
-        end.join('/').gsub("/api/v1/", "")
 
-        js_args = []
-        js_url_parts = api_url.split(/(:[a-z_]+)/).map do |part|
-          if part[0] == ":"
-            part.sub!(':', '')
-            js_args << part
-            part
-          else
-            %Q{"#{part}"}
-          end
         end
-
-        name_parts = api_url.split('/') - main_parts
-        if name_parts.length > 0
-          name_parts = name_parts.map{ |n| n.gsub("_id", "").gsub(":", "").upcase }
-          const_name = "#{const_name}_BY_#{name_parts.join('_AND_')}"
-        end
-
-        anchor = method.css('.api_method_name')[0].attributes['name'].value
-        anchors = anchor.split(".")
-        js << "  // [#{canvas_name})](https://canvas.instructure.com/doc/api/all_resources.html##{anchor})\n"
-        js << "  // Api Url: #{parts[1]}\n"
-        js << "  // return canvasRequest(CanvasConstants.#{const_name}, {#{ruby_args.join(', ')}}, query);\n"
-        js << "  #{const_name}: { method: Network.#{parts[0]}, reducer: '#{anchors[1]}'},\n\n"
-
-        puts "Not adding duplicate: #{const_name}" if rb.has_key?(const_name)
-        rb[const_name] = %Q{     "#{const_name}" => { uri: ->(#{ruby_args.join(', ')}) { "#{ruby_api_url}" }, method: "#{parts[0]}" },\n}
-        js_urls[const_name] = %Q{  "#{const_name}": { uri: function(#{js_args.join(', ')}){return #{js_url_parts.join(' + ')}}, method: "#{parts[0]}" },\n}
-
       end
 
+      write_js_constants(api_doc["path"].gsub("/", "").gsub(".json", ""), api_doc["description"], js)
+      
+    end
+    write_rb_canvas_urls(rb_urls)
+    write_js_canvas_urls(js_urls)
+  end
+
+  def args(api_url)
+    api_url.split('/').map do |part|
+      if part[0] == "{"
+        part.gsub(/[\{\}]/, "")
+      end
+    end.compact
+  end
+
+  def build_js_constants(nickname, api_url, args, method, resource, description, operation)
+    parameters = ''
+    if operation["parameters"].present?
+      parameters = operation["parameters"]
+        .reject{|p| p["paramType"] == "path"}
+        .map{|p| p['name']}
+        .compact
+      if parameters.length > 0
+        parameters = "\n// Query Params:\n//   #{parameters.join("\n//   ")}"
+      end
     end
 
-    js_out = %Q{
-import Network             from "../../constants/network";
-import wrapper             from "../../constants/wrapper";
-import _                   from "lodash";
+    %Q{
+// #{operation["summary"]}
+// #{description.gsub("\n\n", "\n")}
+// API Docs: https://canvas.instructure.com/doc/api/#{resource}.html
+// API Url: #{api_url}#{parameters}
+// return canvasRequest(CanvasConstants.#{nickname}, {#{args.join(', ')}}, query);
+export const #{nickname} = { type: "#{nickname.upcase}", method: "#{method.downcase}", reducer: '#{resource}'};
+    }
+  end
 
-const CanvasMethods = {
-#{js}
+  def build_js_urls(nickname, api_url, args, method)
+    js_url_parts = api_url.split(/(\{[a-z_]+\})/).map do |part|
+      part[0] == "{" ? part.gsub(/[\{\}]/, "") : %Q{"#{part}"}
+    end
+    %Q{  "#{nickname.upcase}": { uri: function(#{args.join(', ')}){return #{js_url_parts.join(' + ')}}, method: "#{method}" },\n}
+  end
+
+  def build_ruby_urls(nickname, api_url, args, method)
+    ruby_api_url = api_url.gsub("{", "#\{")
+    %Q{     "#{nickname.upcase}" => { uri: ->(#{args.map{|a| "#{a}:"}.join(', ')}) { "#{ruby_api_url}" }, method: "#{method}" },\n}          
+  end
+
+  ###############################################################################
+  #
+  # Write a file containing urls for calling the Canvas API from javascript
+  #
+  def write_js_canvas_urls(js_urls)
+      out = %Q{
+export default {
+#{js_urls}
 };
-
-const requests = _.map(CanvasMethods, (v, k) => {
-  return k;
-});
-
-const CanvasConstants = wrapper([], requests);
-
-export { CanvasMethods };
-export { CanvasConstants };
 }
+    File.write("#{Rails.root}/../atomic-lti/atomic/lib/canvas_urls.js", out)
+  end
 
-    rb_out = %Q{
+  ###############################################################################
+  #
+  # Write a file containing urls for calling the Canvas API from ruby
+  #
+  def write_rb_canvas_urls(rb_urls)
+    out = %Q{
 class CanvasUrls
 
   def self.urls
     {
-#{rb.map{|k,v| v}.join()}
+#{rb_urls}
     }
   end
 end
 }
+    File.write("#{Rails.root}/lib/canvas_urls.rb", out)
+  end
 
-    js_urls_out = %Q{
-export default {
-  #{js_urls.map{|k,v| v}.join()}
-};
+  ###############################################################################
+  #
+  # Write a file containing constants for calling the Canvas API from the client
+  #
+  def write_js_constants(name, description, js)
+    out = %Q{// #{description}
+#{js}
 }
+    File.write("#{Rails.root}/../atomic-client/client/js/libs/canvas/constants/#{name}.js", out)
 
-    File.write("#{Rails.root}/lib/canvas_urls.rb", rb_out)
-    File.write("#{Rails.root}/../atomic-lti/atomic/lib/canvas_urls.js", js_urls_out)
-    File.write("#{Rails.root}/../atomic-client/client/js/libs/canvas/constants.js", js_out)
-
-    # puts "*******************************************************************************"
-    # puts "Canvas params that should be part of the url:"
-    # puts common_params.uniq.map{|p| ":#{p}"}.join(',')
-
-    # puts "Canvas params that can be part of the url:"
-    # puts allow_params.uniq.map{|p| ":#{p}"}.join(',')
-
-    # puts common_params.uniq - allow_params.uniq
   end
 
 end

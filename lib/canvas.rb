@@ -132,7 +132,6 @@ class Canvas
   end
 
   def proxy(type, params, payload = nil, use_api_prefix=true)
-    
     method = CanvasUrls.urls[type][:method]
     url = Canvas.canvas_url(type, params)
 
@@ -146,6 +145,9 @@ class Canvas
     else
       raise "invalid method type"
     end
+  rescue => ex
+    debugger
+    t = 0
   end
 
   def is_account_admin
