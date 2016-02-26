@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "rules": {
-    "babel/generator-star-spacing": 1,
+  "babel/generator-star-spacing": 1,
     "babel/new-cap": 1,
     "babel/object-shorthand": 1,
     "babel/arrow-parens": 1,
@@ -45,7 +45,7 @@
   "env": {
     "es6": true,
     "browser": true,
-	"node": true
+  "node": true
   },
   "ecmaFeatures": {
     "jsx": true,
