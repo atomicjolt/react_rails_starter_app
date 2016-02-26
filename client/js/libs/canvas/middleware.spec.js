@@ -7,7 +7,6 @@ fdescribe('Canvas Middleware', () => {
 
   Helper.stubAjax();
 
-
   it('implements Redux middleware interface', () => {
     const store = { getState: () => {} };
     const middleware = CanvasApi(store);
