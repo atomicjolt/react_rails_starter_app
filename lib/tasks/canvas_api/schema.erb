@@ -1,0 +1,37 @@
+import {
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLList,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLNonNull
+} from 'graphql';
+
+import {
+  GraphQLLimitedString,
+  GraphQLDateTime
+} from 'graphql-custom-types';
+
+<%=@content[:models].join("\n\n")%>
+
+const Query = new GraphQLObjectType({
+  name: 'Canvas Api Queries',
+  description: "Root of the Canvas Api",
+  fields: () => ({
+    <%=@content[:queries].join("\n\n")%>
+  })
+});
+
+const Mutuation = new GraphQLObjectType({
+  name: 'Canvas Api Mutations',
+  fields: {
+    <%=@content[:mutations].join("\n\n")%>
+  }
+});
+
+const Schema = new GraphQLSchema({
+  query: Query,
+  mutation: Mutuation
+});
+
+export default Schema;

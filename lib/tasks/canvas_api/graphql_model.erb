@@ -1,0 +1,5 @@
+const <%=@model['id']%> = new GraphQLObjectType({
+  name: "<%=@name%>",
+  description: "<%=@description%>",
+  <%=fields(@model)-%>
+});
