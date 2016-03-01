@@ -1,0 +1,31 @@
+import {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLSchema,
+  GraphQLList,
+  GraphQLNonNull
+} from 'graphql';
+
+import {
+  nodeDefinitions,
+  fromGlobalId,
+  globalIdField,
+  connectionArgs,
+  connectionDefinitions,
+  connectionFromPromisedArray
+} from 'graphql-relay';
+
+import {
+  GraphQLLimitedString,
+  GraphQLDateTime
+} from 'graphql-custom-types';
+
+<%=@content.join("\n\n")%>
+
+const Schema = new GraphQLSchema({
+  query: Query,
+  mutation: Mutuation
+});
+
+export default Schema;

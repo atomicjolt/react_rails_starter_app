@@ -2,51 +2,93 @@ namespace :canvas do
   
   module GraphQLHelpers
     
-    def graphQLType(property)
-      type = property['type']
-      case type 
-      when "integer", "string", "boolean", "datetime"
-        graphQLPrimitive(type)
-      when "array"
-        graphQLArrayType(property)
+    def graphQLType(name, property, resource_name)
+      if property["$ref"]
+        "#{property["$ref"]}, resolve: function(model){ return model.#{name}; }"
       else
-        "unknown - #{type}"
+        type = property['type']
+        case type 
+        when "integer", "string", "boolean", "datetime", "number"
+          graphQLPrimitive(type, property['format'])
+        when "array"
+          begin
+            if property["items"]["$ref"]
+              type = property["items"]["$ref"]
+            else
+              type = graphQLPrimitive(property["items"]["type"], property["items"]["format"])
+            end
+          rescue => ex
+            type = "GraphQLString"
+          end
+          "new GraphQLList(#{type})"
+        when "object"
+          # TODO handle objects
+          nil
+        else
+          "unknown - #{property}"
+        end
       end
     end
 
-    def graphQLPrimitive(type)
+    def graphQLResolve(name, property, resource_name)
+      if property["$ref"]
+        "function(model){ return model.#{name}; }"
+      elsif property['type'] == "array" && property["items"] && property["items"]["$ref"]
+        "function(model){ return model.#{name}; }"
+      end
+    end
+
+    def graphQLPrimitive(type, format)
       case type
       when "integer"
         "GraphQLInt"
+      when "number"
+        if format == "float64"
+          "GraphQLFloat"
+        else
+          # TODO many of the Canvas types with 'number' don't indicate a type so we have to guess
+          # Hopefully that changes. For now we go with float
+          "GraphQLFloat"
+        end
       when "string"
         "GraphQLString"
       when "boolean"
         "GraphQLBoolean"
       when "datetime"
         "GraphQLDateTime"
-      else
-        "unknown - #{type}"
       end
     end
 
-    def graphQLArrayType(property)
-      begin
-        type = graphQLPrimitive(property["items"]["type"])
-      rescue => ex
-        type = "GraphQLString"
-      end
-      "new GraphQLList(#{type}), resolve: function(){ return 1; }"
+    def fields(model, resource_name)
+      model['properties'].map do |name, property|
+
+        # HACK. This property doesn't have any metadata. Throw in a couple lines of code specific to this field.
+        if name == "created_source" && property == "manual|sis|api"
+          "#{name}: new GraphQLEnumType({ name: '#{name}', values: { manual: { value: 'manual' }, sis: { value: 'sis' }, api: { value: 'api' } } })"
+        else
+
+          description = ""
+          if property["description"].present? && property["example"].present?
+            description << "#{safeJs(property["description"])}. Example: #{safeJs(property["example"])}".gsub("..", "").gsub("\n", " ")
+          end
+          
+          if type = graphQLType(name, property, resource_name)
+            resolve = graphQLResolve(name, property, resource_name)
+            resolve = "resolve: #{resolve}, " if resolve.present?
+            "#{name}: { type: #{type}, #{resolve}description: \"#{description}\" }"
+          end
+
+        end
+
+      end.compact
     end
 
-    def fields(model)
-      if model['properties']
-        fields = model['properties'].map do |name, property|
-          "#{name}: {type: #{graphQLType(property)}, description: '#{property["description"]} Example: #{property["example"]}' }"
-        end.join(",\n    ")
-        "fields: () => ({ \n    #{fields}\n  })\n"
-      end
+    def safeJs(str)
+      str = str.join(', ') if str.is_a?(Array)
+      str = str.map{|k, v| v}.join(', ') if str.is_a?(Hash)
+      return str unless str.is_a?(String)
+      str.gsub('"', "'")
     end
-
   end
 
   module JsHelpers
@@ -146,7 +188,7 @@ namespace :canvas do
       queries = []
       mutations = []
       directory["apis"].each do |api|
-        puts "Generating api for #{api['description']}"
+        puts "Generating #{api['description']}"
         resource = HTTParty.get("#{endpoint}#{api["path"]}")
         constants = []
         resource['apis'].each do |resource_api|
@@ -162,7 +204,9 @@ namespace :canvas do
           end
         end
         resource['models'].map do |name, model|
-          models << Render.new("./canvas_api/graphql_model.erb", api, resource, nil, nil, nil, model).render
+          if model['properties'] # Don't generate models without properties
+            models << Render.new("./canvas_api/graphql_model.erb", api, resource, nil, nil, nil, model).render
+          end
         end
         # Generate one file of constants for every Canvas Api
         constants_renderer = Render.new("./canvas_api/constants.erb", api, resource, nil, nil, constants, nil)
@@ -171,12 +215,9 @@ namespace :canvas do
       Render.new("./canvas_api/rb_urls.erb", nil, nil, nil, nil, canvas_urls_rb, nil).save("#{Rails.root}/lib/canvas_urls.rb")
       Render.new("./canvas_api/js_urls.erb", nil, nil, nil, nil, canvas_urls_js, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/urls.js")
       
-      schema = {
-        models: models,
-        queries: queries,
-        mutations: mutations
-      }
-      Render.new("./canvas_api/schema.erb", nil, nil, nil, nil, schema, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/schema.js")
+      Render.new("./canvas_api/graphql_types.erb", nil, nil, nil, nil, models.compact, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_types.js")
+      Render.new("./canvas_api/graphql_queries.erb", nil, nil, nil, nil, queries, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_queries.js")
+      Render.new("./canvas_api/graphql_mutations.erb", nil, nil, nil, nil, mutations, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_mutations.js")
     end
 
   end
