@@ -6,7 +6,8 @@ import messages                         from './messages';
 const rootReducer = combineReducers({
   settings,
   application,
-  messages
+  messages,
+  canvas
 });
 
 export default rootReducer;
