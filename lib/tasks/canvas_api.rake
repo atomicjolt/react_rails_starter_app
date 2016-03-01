@@ -149,9 +149,12 @@ namespace :canvas do
         @args         = args(@api_url)
       end
       if operation
+        nickname = operation["nickname"]
+        nickname = "#{@name}_#{nickname}" if ["upload_file", "query_by_course", "preview_processed_html", "create_peer_review_courses", "create_peer_review_sections", "set_extensions_for_student_quiz_submissions"].include?(nickname)
+
         @method    = operation["method"]
         @operation = operation
-        @nickname  = operation["nickname"]
+        @nickname  = nickname
         @notes     = operation['notes'].gsub("\n", "\n// ")
         @summary   = operation["summary"]
       end

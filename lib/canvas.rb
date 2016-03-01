@@ -145,9 +145,7 @@ class Canvas
     else
       raise "invalid method type"
     end
-  rescue => ex
-    debugger
-    t = 0
+
   end
 
   def is_account_admin
