@@ -1,22 +1,35 @@
-var webpack           = require('webpack');
-var webpackDevServer  = require('webpack-dev-server');
-var release           = false;
-var settings          = require('./config/settings.js');
-var webpackConfig     = require('./config/webpack.config.js')(release);
+var release              = false;
+var express              = require('express');
+var webpack              = require('webpack');
+var webpackMiddleware    = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var settings             = require('./config/settings.js');
+var webpackConfig        = require('./config/webpack.config')("development");
+var path                 = require('path');
+var app                  = express();
+var compiler             = webpack(webpackConfig);
 
-new webpackDevServer(webpack(webpackConfig), {
-  contentBase: settings.devOutput,
+app.use(express.static(settings.devOutput));  
+
+app.use(webpackMiddleware(compiler, {
+  noInfo: true,
   publicPath: webpackConfig.output.publicPath,
   watch: true,
-  hot: true,
-  inline: true,
-  progress: true,
-  headers: { "Access-Control-Allow-Origin": "*" },
-  filename: '[name]' + settings.buildSuffix,
-}).listen(settings.hotPort, 'localhost', function(err, result){
-  if(err){
-    console.log('webpack-dev-server', err);
+  noInfo: true,
+  headers: { 'Access-Control-Allow-Origin': '*' }
+}));
+
+app.use(webpackHotMiddleware(compiler));
+
+app.get('*', function response(req, res) {  
+  res.sendFile(path.join(settings.devOutput, 'index.html'));
+});
+
+app.listen(settings.hotPort, 'localhost', function(err) {
+  if (err) {
+    console.log(err);
+    return;
   }
-  console.log('Webpack hot load server listening on: ' + webpackConfig.output.publicPath);
-  console.log('Webpack hot load server serving content from: ' + settings.devOutput);
+  console.log('Listening on: ' + webpackConfig.output.publicPath);
+  console.log('Serving content from: ' + settings.devOutput);
 });
