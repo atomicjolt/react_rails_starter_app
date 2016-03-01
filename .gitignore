@@ -1,3 +1,4 @@
+.DS_Store
 *.rbc
 capybara-*.html
 /log
@@ -12,6 +13,7 @@ pickle-email-*.html
 secrets.js
 *_web_pack_bundle.js
 .idea/
+*.iml
 .env
 .DS_Store
 
@@ -43,3 +45,6 @@ npm-debug.log
 
 public/assets
 build
+
+
+

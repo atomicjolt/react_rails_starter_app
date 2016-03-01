@@ -1,31 +1,36 @@
 'use strict';
 
 var gulp          = require('gulp');
-var $             = require('gulp-load-plugins')();
-var util          = require('util');
+var filter        = require('gulp-filter');
+var util          = require('gulp-util');
+var htmlmin       = require('gulp-htmlmin');
+var ignore        = require('gulp-ignore');
+var rename        = require('gulp-rename');
+var marked        = require('gulp-markdown');
+var frontMatter   = require('gulp-front-matter');
+
 var through2      = require('through2');
 var es            = require('event-stream');
 var runSequence   = require('run-sequence');
 var webpack       = require('webpack');
-var rename        = require('gulp-rename');
-var settings      = require('./config/settings.js');
+var settings      = require('./config/settings');
 var argv          = require('minimist')(process.argv.slice(2));
 var path          = require('path');
 var _             = require("lodash");
 var fs            = require("fs");
 var mkdirp        = require("mkdirp");
-var marked        = require('gulp-markdown');
-var frontMatter   = require('gulp-front-matter');
 var ejs           = require('ejs');
 
 // Settings
 var release       = argv.release;
+var stage         = release ? "production" : "development";
 var outputPath    = release ? settings.prodOutput : settings.devOutput;
-var webpackConfig = require('./config/webpack.config.js')(release);
+var webpackConfig = require('./config/webpack.config')(stage);
 var webpackStats;
 
 var defaultLayout = 'application.html';
 
+// -----------------------------------------------------------------------------
 // Clean up
 // -----------------------------------------------------------------------------
 gulp.task('clean', function(cb){
@@ -34,6 +39,7 @@ gulp.task('clean', function(cb){
 });
 
 
+// -----------------------------------------------------------------------------
 // Copy vendor files
 // -----------------------------------------------------------------------------
 // Use this task to copy assets (ie fonts) from node modules
@@ -47,6 +53,7 @@ gulp.task('vendor', function(){
 });
 
 
+// -----------------------------------------------------------------------------
 // Build markdown files
 // -----------------------------------------------------------------------------
 gulp.task('markdown', function(){
@@ -71,40 +78,43 @@ gulp.task('markdown', function(){
     .pipe(applyLayout(defaultLayout))
     .pipe(marked(options))
     .pipe(applyWebpack()) // Change to webpack hashed file names in release
-    .pipe(!release ? $.util.noop() : $.htmlmin({
-        removeComments: true,
-        collapseWhitespace: true,
-        minifyJS: true
+    .pipe(!release ? util.noop() : htmlmin({
+      removeComments: true,
+      collapseWhitespace: true,
+      minifyJS: true
     }))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest(outputPath));
 });
 
+
+// -----------------------------------------------------------------------------
 // Process files in the html diretory
 // -----------------------------------------------------------------------------
 gulp.task('html', function(){
 
-  var htmlFilter = $.filter('**/*.html', {restore: true});
+  var htmlFilter = filter('**/*.html', {restore: true});
   
   return gulp.src('./html/**/*')
-    .pipe($.ignore.exclude('layouts/**'))
-    .pipe($.ignore.exclude('layouts'))
-    .pipe($.ignore.exclude('partials/**'))
-    .pipe($.ignore.exclude('partials'))
-    .pipe($.ignore.exclude('**/*.md'))
+    .pipe(ignore.exclude('layouts/**'))
+    .pipe(ignore.exclude('layouts'))
+    .pipe(ignore.exclude('partials/**'))
+    .pipe(ignore.exclude('partials'))
+    .pipe(ignore.exclude('**/*.md'))
     .pipe(htmlFilter)
     .pipe(applyLayout(defaultLayout))
     .pipe(applyWebpack()) // Change to webpack hashed file names in release
-    .pipe(!release ? $.util.noop() : $.htmlmin({
-        removeComments: true,
-        collapseWhitespace: true,
-        minifyJS: true
+    .pipe(!release ? util.noop() : htmlmin({
+      removeComments: true,
+      collapseWhitespace: true,
+      minifyJS: true
     }))
     .pipe(htmlFilter.restore)
     .pipe(gulp.dest(outputPath));
 });
 
 
+// -----------------------------------------------------------------------------
 // Create JavaScript bundle
 // -----------------------------------------------------------------------------
 gulp.task('javascript', function(cb){
@@ -113,15 +123,16 @@ gulp.task('javascript', function(cb){
   function bundle(err, stats){
     webpackStats = stats.toJson();
     if (err){
-      throw new $.util.PluginError('webpack', err);
+      throw new util.PluginError('webpack', err);
     }
-    //$.util.log('[webpack]', stats.toString({colors: true}));
+    //util.log('[webpack]', stats.toString({colors: true}));
     cb();
   }
   bundler.run(bundle);
 });
 
 
+// -----------------------------------------------------------------------------
 // Build the app from source code
 // -----------------------------------------------------------------------------
 gulp.task('build', ['clean'], function(cb){
@@ -129,6 +140,7 @@ gulp.task('build', ['clean'], function(cb){
 });
 
 
+// -----------------------------------------------------------------------------
 // Watch for changes to html files and rebuild as needed. Webpack watches everything else 
 // and serves js, css, etc from memory. Html files are served from the build directory.
 // -----------------------------------------------------------------------------
@@ -136,12 +148,17 @@ gulp.task('watch', ['html', 'markdown'], function() {
   gulp.watch(['html/**/*'], ['html', 'markdown']);
 });
 
+
+// -----------------------------------------------------------------------------
 // The default task
+// -----------------------------------------------------------------------------
 gulp.task('default', ['watch']);
 
 
+// *****************************************************************************
 // A bit hackish. This function can't be called until after the javascript task has been run
 // because webpackStats is undefined until webpack has run.
+// *****************************************************************************
 function getHashed(entryPoint, ext){
   return _.find(webpackStats.assetsByChunkName[entryPoint], function(hashEntry){
     return path.extname(hashEntry).toLowerCase() === '.' + ext;
@@ -149,7 +166,9 @@ function getHashed(entryPoint, ext){
 }
 
 
+// *****************************************************************************
 // Changes webpack paths as needed.
+// *****************************************************************************
 function applyWebpack(){
   return through2.obj(function (html, enc, cb) { // replace entry points with names generated by webpack
     if(release){
@@ -169,7 +188,9 @@ function applyWebpack(){
 }
 
 
+// *****************************************************************************
 // Apply templates to content
+// *****************************************************************************
 function applyLayout(defaultLayout){
   return through2.obj(function (file, enc, cb) {            
     
