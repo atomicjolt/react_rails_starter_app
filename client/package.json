@@ -1,19 +1,19 @@
 {
   "name": "react_client_starter_app",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Client only React Starter App.",
   "repository": {
     "type": "git",
     "url": "https://github.com/atomicjolt/react_client_starter_app"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start",
-    "coveralls": "cat coverage/lcov.info | coveralls",
-    "hot": "gulp watch & node webpack.hot.js",
-    "build_dev": "gulp build",
-    "build": "gulp build --release",
-    "release": "gulp build --release && cd .. && s3_website push",
-    "lint": "eslint js"
+    "test"      : "./node_modules/karma/bin/karma start",
+    "coveralls" : "cat coverage/lcov.info | coveralls",
+    "hot"       : "gulp watch & node webpack.hot.js",
+    "build_dev" : "gulp build",
+    "build"     : "gulp build --release",
+    "release"   : "gulp build --release && cd .. && s3_website push",
+    "lint"      : "eslint js"
   },
   "author": "atomicjolt, jbasdf",
   "license": "MIT",
