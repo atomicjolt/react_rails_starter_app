@@ -6,12 +6,12 @@
     "node": "5.7.0"
   },
   "scripts": {
-    "postinstall" : "cd ./client && npm install",
-    "build"       : "cd ./client && npm run build",
-    "release"     : "cd ./client && npm run release",
-    "hot"         : "cd ./client && npm run hot",
-    "test"        : "cd ./client && npm run test",
-    "coveralls"   : "cd ./client && npm run coveralls"
+    "postinstall": "cd ./client && npm install",
+    "build": "cd ./client && npm run build",
+    "release": "cd ./client && npm run release",
+    "hot": "cd ./client && npm run hot",
+    "test": "cd ./client && npm run test",
+    "coveralls": "cd ./client && npm run coveralls"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,9 @@
   ],
   "author": "atomicjolt",
   "license": "MIT",
-  "homepage": "https://github.com/atomicjolt/lti_starter_app",
-  "dependencies": {
+  "homepage": "https://github.com/atomicjolt/react_client_starter_app",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.6.0"
   }
 }
