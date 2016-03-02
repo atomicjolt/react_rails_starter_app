@@ -26,8 +26,8 @@ export const query_by_assignment = { type: "QUERY_BY_ASSIGNMENT", method: "get",
 //   start_time
 //   end_time
 // }
-// return canvasRequest(query_by_course, {course_id}, query);
-export const query_by_course = { type: "QUERY_BY_COURSE", method: "get", reducer: 'grade_change_log'};
+// return canvasRequest(grade_change_log_query_by_course, {course_id}, query);
+export const grade_change_log_query_by_course = { type: "GRADE_CHANGE_LOG_QUERY_BY_COURSE", method: "get", reducer: 'grade_change_log'};
 
 // Query by student.
 // List grade change events for a given student.

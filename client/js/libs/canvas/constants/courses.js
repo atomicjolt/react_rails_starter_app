@@ -84,8 +84,8 @@ export const create_new_course = { type: "CREATE_NEW_COURSE", method: "post", re
 // API Url: courses/{course_id}/files
 //
 // Example:
-// return canvasRequest(upload_file, {course_id});
-export const upload_file = { type: "UPLOAD_FILE", method: "post", reducer: 'courses'};
+// return canvasRequest(courses_upload_file, {course_id});
+export const courses_upload_file = { type: "COURSES_UPLOAD_FILE", method: "post", reducer: 'courses'};
 
 // List students
 // Returns the list of students enrolled in this course.
@@ -176,8 +176,8 @@ export const get_single_user = { type: "GET_SINGLE_USER", method: "get", reducer
 // const query = {
 //   html
 // }
-// return canvasRequest(preview_processed_html, {course_id}, query);
-export const preview_processed_html = { type: "PREVIEW_PROCESSED_HTML", method: "post", reducer: 'courses'};
+// return canvasRequest(courses_preview_processed_html, {course_id}, query);
+export const courses_preview_processed_html = { type: "COURSES_PREVIEW_PROCESSED_HTML", method: "post", reducer: 'courses'};
 
 // Course activity stream
 // Returns the current user's course-specific activity stream, paginated.

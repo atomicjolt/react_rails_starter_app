@@ -166,8 +166,8 @@ export const list_group_s_users = { type: "LIST_GROUP_S_USERS", method: "get", r
 // API Url: groups/{group_id}/files
 //
 // Example:
-// return canvasRequest(upload_file, {group_id});
-export const upload_file = { type: "UPLOAD_FILE", method: "post", reducer: 'groups'};
+// return canvasRequest(groups_upload_file, {group_id});
+export const groups_upload_file = { type: "GROUPS_UPLOAD_FILE", method: "post", reducer: 'groups'};
 
 // Preview processed html
 // Preview html content processed for this group
@@ -179,8 +179,8 @@ export const upload_file = { type: "UPLOAD_FILE", method: "post", reducer: 'grou
 // const query = {
 //   html
 // }
-// return canvasRequest(preview_processed_html, {group_id}, query);
-export const preview_processed_html = { type: "PREVIEW_PROCESSED_HTML", method: "post", reducer: 'groups'};
+// return canvasRequest(groups_preview_processed_html, {group_id}, query);
+export const groups_preview_processed_html = { type: "GROUPS_PREVIEW_PROCESSED_HTML", method: "post", reducer: 'groups'};
 
 // Group activity stream
 // Returns the current user's group-specific activity stream, paginated.

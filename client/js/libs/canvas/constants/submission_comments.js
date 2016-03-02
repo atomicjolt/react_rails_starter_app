@@ -14,5 +14,5 @@
 // API Url: courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}/comments/files
 //
 // Example:
-// return canvasRequest(upload_file, {course_id, assignment_id, user_id});
-export const upload_file = { type: "UPLOAD_FILE", method: "post", reducer: 'submission_comments'};
+// return canvasRequest(submission_comments_upload_file, {course_id, assignment_id, user_id});
+export const submission_comments_upload_file = { type: "SUBMISSION_COMMENTS_UPLOAD_FILE", method: "post", reducer: 'submission_comments'};

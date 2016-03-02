@@ -63,8 +63,8 @@ export const get_all_peer_reviews_sections_submissions = { type: "GET_ALL_PEER_R
 // const query = {
 //   user_id (required)
 // }
-// return canvasRequest(create_peer_review_courses, {course_id, assignment_id, submission_id}, query);
-export const create_peer_review_courses = { type: "CREATE_PEER_REVIEW_COURSES", method: "post", reducer: 'peer_reviews'};
+// return canvasRequest(peer_reviews_create_peer_review_courses, {course_id, assignment_id, submission_id}, query);
+export const peer_reviews_create_peer_review_courses = { type: "PEER_REVIEWS_CREATE_PEER_REVIEW_COURSES", method: "post", reducer: 'peer_reviews'};
 
 // Create Peer Review
 // Create a peer review for the assignment
@@ -76,8 +76,8 @@ export const create_peer_review_courses = { type: "CREATE_PEER_REVIEW_COURSES", 
 // const query = {
 //   user_id (required)
 // }
-// return canvasRequest(create_peer_review_sections, {section_id, assignment_id, submission_id}, query);
-export const create_peer_review_sections = { type: "CREATE_PEER_REVIEW_SECTIONS", method: "post", reducer: 'peer_reviews'};
+// return canvasRequest(peer_reviews_create_peer_review_sections, {section_id, assignment_id, submission_id}, query);
+export const peer_reviews_create_peer_review_sections = { type: "PEER_REVIEWS_CREATE_PEER_REVIEW_SECTIONS", method: "post", reducer: 'peer_reviews'};
 
 // Create Peer Review
 // Delete a peer review for the assignment
@@ -89,8 +89,8 @@ export const create_peer_review_sections = { type: "CREATE_PEER_REVIEW_SECTIONS"
 // const query = {
 //   user_id (required)
 // }
-// return canvasRequest(create_peer_review_courses, {course_id, assignment_id, submission_id}, query);
-export const create_peer_review_courses = { type: "CREATE_PEER_REVIEW_COURSES", method: "delete", reducer: 'peer_reviews'};
+// return canvasRequest(peer_reviews_create_peer_review_courses, {course_id, assignment_id, submission_id}, query);
+export const peer_reviews_create_peer_review_courses = { type: "PEER_REVIEWS_CREATE_PEER_REVIEW_COURSES", method: "delete", reducer: 'peer_reviews'};
 
 // Create Peer Review
 // Delete a peer review for the assignment
@@ -102,5 +102,5 @@ export const create_peer_review_courses = { type: "CREATE_PEER_REVIEW_COURSES", 
 // const query = {
 //   user_id (required)
 // }
-// return canvasRequest(create_peer_review_sections, {section_id, assignment_id, submission_id}, query);
-export const create_peer_review_sections = { type: "CREATE_PEER_REVIEW_SECTIONS", method: "delete", reducer: 'peer_reviews'};
+// return canvasRequest(peer_reviews_create_peer_review_sections, {section_id, assignment_id, submission_id}, query);
+export const peer_reviews_create_peer_review_sections = { type: "PEER_REVIEWS_CREATE_PEER_REVIEW_SECTIONS", method: "delete", reducer: 'peer_reviews'};

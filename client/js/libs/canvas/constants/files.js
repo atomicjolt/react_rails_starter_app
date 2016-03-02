@@ -509,8 +509,8 @@ export const delete_folder = { type: "DELETE_FOLDER", method: "delete", reducer:
 // API Url: folders/{folder_id}/files
 //
 // Example:
-// return canvasRequest(upload_file, {folder_id});
-export const upload_file = { type: "UPLOAD_FILE", method: "post", reducer: 'files'};
+// return canvasRequest(files_upload_file, {folder_id});
+export const files_upload_file = { type: "FILES_UPLOAD_FILE", method: "post", reducer: 'files'};
 
 // Copy a file
 // Copy a file from elsewhere in Canvas into a folder.

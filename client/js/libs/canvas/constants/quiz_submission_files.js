@@ -17,5 +17,5 @@
 //   name
 //   on_duplicate
 // }
-// return canvasRequest(upload_file, {course_id, quiz_id}, query);
-export const upload_file = { type: "UPLOAD_FILE", method: "post", reducer: 'quiz_submission_files'};
+// return canvasRequest(quiz_submission_files_upload_file, {course_id, quiz_id}, query);
+export const quiz_submission_files_upload_file = { type: "QUIZ_SUBMISSION_FILES_UPLOAD_FILE", method: "post", reducer: 'quiz_submission_files'};
