@@ -1,7 +1,6 @@
 export default function(endpoint, params, body){
   return {
-    canvas: true,
-    ...endpoint,
+    canvas,
     params,
     body
   };

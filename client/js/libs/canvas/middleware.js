@@ -10,16 +10,16 @@ function proxyCanvas(store, action, params){
   const state = store.getState();
 
   api.execRequest(
-    action.method,
+    action.canvas.method,
     canvasProxyUrl, 
     state.settings.get("apiUrl"), 
     state.settings.get("jwt"), 
     state.settings.get("csrfToken"), 
-    { ...action.params, ...params, type: action.type },
+    { ...action.params, ...params, type: action.canvas.type },
     action.body
   ).then((response, error) => {
 
-    if(action.method == "get" && response.header){
+    if(action.canvas.method == "get" && response.header){
       const nextUrl = getNextUrl(response.headers['link']);
       if(nextUrl){
         // TODO parse  params from nextUrl and make a new call to the canvas proxy endpoint
@@ -29,9 +29,7 @@ function proxyCanvas(store, action, params){
     }
 
     store.dispatch({
-      type:     action.type + DONE,
-      canvas:   true,
-      reducer:  action.reducer,
+      type:     action.canvas.type + DONE,
       payload:  response.body,
       original: action,
       response,
