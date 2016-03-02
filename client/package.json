@@ -9,10 +9,7 @@
   "scripts": {
     "test"      : "./node_modules/karma/bin/karma start",
     "coveralls" : "cat coverage/lcov.info | coveralls",
-    "hot"       : "gulp watch & node webpack.hot.js",
-    "build_dev" : "gulp build",
-    "build"     : "gulp build --release",
-    "release"   : "gulp build --release && cd .. && s3_website push",
+    "hot"       : "node webpack.hot.js",
     "lint"      : "eslint js"
   },
   "author": "atomicjolt, jbasdf",
