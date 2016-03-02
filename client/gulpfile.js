@@ -75,8 +75,8 @@ gulp.task('markdown', function(){
 
   return gulp.src('./html/**/*.md')
     .pipe(frontMatter({property: 'metadata', remove: true}))
-    .pipe(applyLayout(defaultLayout))
     .pipe(marked(options))
+    .pipe(applyLayout(defaultLayout))
     .pipe(applyWebpack()) // Change to webpack hashed file names in release
     .pipe(!release ? util.noop() : htmlmin({
       removeComments: true,
