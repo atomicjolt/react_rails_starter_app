@@ -15,7 +15,7 @@ module.exports = function(stage){
 
   var autoprefix = '{browsers:["Android 2.3", "Android >= 4", "Chrome >= 20", "Firefox >= 24", "Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
   
-  var babel = 'babel?plugins[]=transform-runtime,plugins[]=transform-decorators-legacy&presets[]=react,presets[]=es2015,presets[]=stage-0';
+  var babel = 'babel?plugins[]=transform-runtime,plugins[]=transform-decorators-legacy&plugins[]=transform-class-properties&presets[]=react,presets[]=es2015,presets[]=stage-0';
   if(stage == "development"){
     babel = babel + ',presets[]=react-hmre';
   }
