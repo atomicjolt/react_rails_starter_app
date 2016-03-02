@@ -23,8 +23,5 @@
   "author": "atomicjolt",
   "license": "MIT",
   "homepage": "https://github.com/atomicjolt/react_client_starter_app",
-  "dependencies": {},
-  "devDependencies": {
-    "babel-plugin-transform-class-properties": "^6.6.0"
-  }
+  "dependencies": {}
 }
