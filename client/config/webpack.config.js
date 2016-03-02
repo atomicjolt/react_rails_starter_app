@@ -29,15 +29,7 @@ module.exports = function(stage){
   var lessLoaders = cssLoaders.slice(0);
       lessLoaders.push('less-loader');
  
-  var originalEntries = settings.entries;
-  var entries = {};
-    
-  if(release){
-    // Configure entries with hotloader
-    for(var name in originalEntries){
-      entries[name] = ['babel-polyfill', originalEntries[name]];
-    }
-  }
+  var entries = _.cloneDeep(settings.entries);
 
   var cssEntries = settings.cssEntries;
   for(var name in cssEntries){
