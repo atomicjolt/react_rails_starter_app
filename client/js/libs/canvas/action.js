@@ -1,5 +1,6 @@
-export default function(endpoint, params, body){
+export default function(canvas, params, body){
   return {
+    type: canvas.type,
     canvas,
     params,
     body
