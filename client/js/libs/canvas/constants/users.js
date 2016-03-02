@@ -321,8 +321,8 @@ export const hide_all_stream_items = { type: "HIDE_ALL_STREAM_ITEMS", method: "d
 // API Url: users/{user_id}/files
 //
 // Example:
-// return canvasRequest(upload_file, {user_id});
-export const upload_file = { type: "UPLOAD_FILE", method: "post", reducer: 'users'};
+// return canvasRequest(users_upload_file, {user_id});
+export const users_upload_file = { type: "USERS_UPLOAD_FILE", method: "post", reducer: 'users'};
 
 // Show user details
 // Shows details for user.
