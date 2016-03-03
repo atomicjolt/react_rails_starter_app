@@ -3,7 +3,7 @@ import _                     from "lodash";
 import CanvasApi             from "./middleware";
 import Helper                from "../../../specs_support/helper";
 
-fdescribe('Canvas Middleware', () => {
+describe('Canvas Middleware', () => {
 
   Helper.stubAjax();
 
@@ -36,7 +36,7 @@ fdescribe('Canvas Middleware', () => {
   it('calls the api library', () => {
     const action = {
       type: "ASSIGNMENTS",
-      canvas: true,
+      canvas: { type: "LIST_ACCOUNTS", method: "get", reducer: 'accounts'},
       url: "http://www.example.com/api/stuff.json"
     };
     const store = Helper.makeStore();

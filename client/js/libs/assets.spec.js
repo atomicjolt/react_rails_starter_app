@@ -23,7 +23,7 @@ describe('assets', () => {
   describe('context', ()=> {
     
     it('gets the context object', ()=> {
-      expect(_.include(assets.keys(), './images/atomicjolt.jpg')).toBe(true);
+      expect(_.includes(assets.keys(), './images/atomicjolt.jpg')).toBe(true);
     });
 
   });

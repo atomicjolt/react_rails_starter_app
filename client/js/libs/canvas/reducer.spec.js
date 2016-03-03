@@ -2,7 +2,6 @@
 
 import _             from "lodash";
 import Immutable     from "immutable";
-import { CanvasConstants }   from "../../libs/canvas/constants";
 import reducer      from "./reducer";
 
 describe("canvas reducer", () => {

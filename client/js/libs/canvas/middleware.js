@@ -1,9 +1,9 @@
-import api               from "../api";
-import Network           from "../../constants/network";
-import { DONE }          from "../../constants/wrapper";
-import getNextUrl        from "../urls";
+import api                         from "../api";
+import Network                     from "../../constants/network";
+import { DONE }                    from "../../constants/wrapper";
+import { getNextUrl, parseParams } from "../urls";
 
-const canvasProxyUrl = "";
+const canvasProxyUrl = "api/canvas";
 
 function proxyCanvas(store, action, params){
   
@@ -22,9 +22,10 @@ function proxyCanvas(store, action, params){
     if(action.canvas.method == "get" && response.header){
       const nextUrl = getNextUrl(response.headers['link']);
       if(nextUrl){
-        // TODO parse  params from nextUrl and make a new call to the canvas proxy endpoint
-        params = nextUrl;
-        proxyCanvas(store, action, params);
+        const params = parseParams(nextUrl);
+        if(params){
+          proxyCanvas(store, action, params);
+        }
       }
     }
 
