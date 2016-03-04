@@ -36,12 +36,14 @@ module.exports = function(stage){
     entries[name] = cssEntries[name];
   }
 
+  var publicPath = release ? settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput;
+
   if(stage == "development"){
     entries = _.reduce(entries, function(result, entry, key){
       result[key] = [
         'eventsource-polyfill',
-        'webpack-hot-middleware/client',
-        entry
+        entry,
+        'webpack-hot-middleware/client?path=' + publicPath + '__webpack_hmr&timeout=20000&reload=true'
       ];
       return result;
     }, {});
@@ -56,7 +58,7 @@ module.exports = function(stage){
       path: release ? settings.prodOutput : settings.devOutput,
       filename: release ? '[name]-[chunkhash]' + settings.buildSuffix : '[name]' + settings.buildSuffix,
       chunkFilename: release ? '[id]-[chunkhash]' + settings.buildSuffix : '[id].js',
-      publicPath: release ? settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput,
+      publicPath: publicPath,
       sourceMapFilename: 'debugging/[file].map',
       pathinfo: !release // http://webpack.github.io/docs/configuration.html#output-pathinfo
     },
