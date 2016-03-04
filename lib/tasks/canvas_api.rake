@@ -216,11 +216,11 @@ namespace :canvas do
         constants_renderer.save("#{Rails.root}/../atomic-client/client/js/libs/canvas/constants/#{constants_renderer.name}.js")
       end
       Render.new("./canvas_api/rb_urls.erb", nil, nil, nil, nil, canvas_urls_rb, nil).save("#{Rails.root}/lib/canvas_urls.rb")
-      Render.new("./canvas_api/js_urls.erb", nil, nil, nil, nil, canvas_urls_js, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/urls.js")
+      Render.new("./canvas_api/js_urls.erb", nil, nil, nil, nil, canvas_urls_js, nil).save("#{Rails.root}/../atomic-lti/canvas/lib/urls.js")
       
-      Render.new("./canvas_api/graphql_types.erb", nil, nil, nil, nil, models.compact, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_types.js")
-      Render.new("./canvas_api/graphql_queries.erb", nil, nil, nil, nil, queries, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_queries.js")
-      Render.new("./canvas_api/graphql_mutations.erb", nil, nil, nil, nil, mutations, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_mutations.js")
+      Render.new("./canvas_api/graphql_types.erb", nil, nil, nil, nil, models.compact, nil).save("#{Rails.root}/../atomic-lti/canvas/lib/graphql_types.js")
+      Render.new("./canvas_api/graphql_queries.erb", nil, nil, nil, nil, queries, nil).save("#{Rails.root}/../atomic-lti/canvas/lib/graphql_queries.js")
+      Render.new("./canvas_api/graphql_mutations.erb", nil, nil, nil, nil, mutations, nil).save("#{Rails.root}/../atomic-lti/canvas/lib/graphql_mutations.js")
     end
 
   end
