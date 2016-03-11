@@ -246,6 +246,7 @@ function writeCanvasManifest(){
     cb();
   },
   function(cb) {
+    canvasApiCalls = _.uniq(canvasApiCalls);
     var contents = '["' + canvasApiCalls.join('",\n "') + '"];';
     fs.writeFile(path.join("./", "canvas.manifest"), contents, cb);
   });
