@@ -214,7 +214,7 @@ function writeCanvasManifest(){
       // Find individual imports
       // import { list_users_in_course_users } from "../../libs/canvas/constants/courses";
       // import { list_users_in_course_users, other_thing } from "../../libs/canvas/constants/courses";
-      var singleImportRegex = /.*import\s+\{\s*([\w_,]+)\s*\}.+\/libs\/canvas\/constants\/(.+)"/g;
+      var singleImportRegex = /.*import\s+\{\s*([\w_,\s]+)\s*\}.+\/libs\/canvas\/constants\/(.+)"/g;
       
       // Find bulk imports
       // import * as AssignmentConstants from "../../libs/canvas/constants/assignments";
@@ -225,7 +225,7 @@ function writeCanvasManifest(){
       var constantsRegEx = /export const (.+) =/g;
 
       while(match = findMatch(singleImportRegex, contents)){
-        var parts = match[1].split(",");
+        var parts = match[1].replace(/\s/g, "").split(",");
         _.each(parts, function(part){
           canvasApiCalls.push(_.trim(part));
         });
