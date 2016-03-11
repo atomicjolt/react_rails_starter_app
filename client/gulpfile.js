@@ -207,20 +207,54 @@ function writeCanvasManifest(){
   var canvasApiCalls = [];
   return through2.obj(function(file, enc, cb){
     if(file.contents){
+      
       var contents = file.contents.toString();
-      var re = new RegExp("^.+/libs/canvas/constants.+$");
-      var match = re.exec(contents);
-      if(match){
-        canvasApiCalls.push(match);  
+      var match;
+  
+      // Find individual imports
+      // import { list_users_in_course_users } from "../../libs/canvas/constants/courses";
+      var singleImportRegex = /.*import\s+\{\s*([\w_]+)\s*\}.+\/libs\/canvas\/constants\/(.+)"/g;
+      
+      // Find bulk imports
+      // import * as AssignmentConstants from "../../libs/canvas/constants/assignments";
+      var bulkImportRegEx = /.*import\s+\*.+\/libs\/canvas\/constants\/(.+)"/g;
+
+      // Find contants in canvas contants files
+      //export const delete_assignment = { type: "DELETE_ASSIGNMENT", method: "delete", reducer: 'assignments'};
+      var constantsRegEx = /export const (.+) =/g;
+
+      while(match = findMatch(singleImportRegex, contents)){
+        canvasApiCalls.push(match[1]);  
       }
+      
+      while(match = findMatch(bulkImportRegEx, contents)){
+        var file = path.join(__dirname + "/js/libs/canvas/constants/", match[1] + ".js");
+        console.log("Matching all constants in: " + file);
+        var constants = fs.readFileSync(file);
+  
+        while(match = findMatch(constantsRegEx, constants)){
+          canvasApiCalls.push(match[1]);
+        }
+      }
+
     }
     this.push(file);
     cb();
   },
   function(cb) {
-    var contents = '["' + canvasApiCalls.join('", ') + '"];';
+    var contents = '["' + canvasApiCalls.join('",\n "') + '"];';
     fs.writeFile(path.join("./", "canvas.manifest"), contents, cb);
   });
+}
+
+function findMatch(regEx, content){
+  var match;
+  if((match = regEx.exec(content)) !== null){
+    if(match.index === regEx.lastIndex){
+      regEx.lastIndex++;
+    }
+  }
+  return match;
 }
 
 
