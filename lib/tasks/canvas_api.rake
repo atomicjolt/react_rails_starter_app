@@ -94,7 +94,20 @@ namespace :canvas do
   module JsHelpers
     def js_url_parts(api_url)
       api_url.split(/(\{[a-z_]+\})/).map do |part|
-        part[0] == "{" ? part.gsub(/[\{\}]/, "") : %Q{"#{part}"}
+        if part[0] == "{"
+          arg = part.gsub(/[\{\}]/, "")
+          "args['#{arg}']"
+        else
+          %Q{"#{part}"}
+        end
+      end
+    end
+
+    def js_args(args)
+      if args.present?
+        "[\"#{args.join('","')}\"]"
+      else
+        "[]"
       end
     end
 
