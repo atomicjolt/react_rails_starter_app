@@ -1,3 +1,6 @@
+// Debug tasks with:
+// iron-node $(which gulp) build
+
 'use strict';
 
 var gulp          = require('gulp');
@@ -133,10 +136,19 @@ gulp.task('javascript', function(cb){
 
 
 // -----------------------------------------------------------------------------
+// Create Canvas API Manifest
+// -----------------------------------------------------------------------------
+gulp.task('canvas_manifest', function(){
+  return gulp.src('./js/**/*')
+    .pipe(writeCanvasManifest());
+});
+
+
+// -----------------------------------------------------------------------------
 // Build the app from source code
 // -----------------------------------------------------------------------------
 gulp.task('build', ['clean'], function(cb){
-  runSequence('javascript', ['html', 'markdown'], cb);
+  runSequence('canvas_manifest', 'javascript', ['html', 'markdown'], cb);
 });
 
 
@@ -184,6 +196,30 @@ function applyWebpack(){
     }
     this.push(html);
     cb();
+  });
+}
+
+
+// *****************************************************************************
+// Find calls to the Canvas API in the code and generate a manifest file
+// *****************************************************************************
+function writeCanvasManifest(){
+  var canvasApiCalls = [];
+  return through2.obj(function(file, enc, cb){
+    if(file.contents){
+      var contents = file.contents.toString();
+      var re = new RegExp("^.+/libs/canvas/constants.+$");
+      var match = re.exec(contents);
+      if(match){
+        canvasApiCalls.push(match);  
+      }
+    }
+    this.push(file);
+    cb();
+  },
+  function(cb) {
+    var contents = '["' + canvasApiCalls.join('", ') + '"];';
+    fs.writeFile(path.join("./", "canvas.manifest"), contents, cb);
   });
 }
 
