@@ -12,7 +12,7 @@ class Canvas
   def headers
     {
       "Authorization" => "Bearer #{@canvas_api_key}",
-      "content_type" => "json",
+      "Content-Type" => "application/json",
       'User-Agent' => "CanvasAPI Ruby"
     }
   end
