@@ -9,12 +9,11 @@ class Canvas
     @refresh_token_options = refresh_token_options
   end
 
-  def headers
+  def headers(additional_headers = {})
     {
       "Authorization" => "Bearer #{@canvas_api_key}",
-      "Content-Type" => "application/json",
-      'User-Agent' => "CanvasAPI Ruby"
-    }
+      "User-Agent" => "CanvasAPI Ruby"
+    }.merge(additional_headers)
   end
 
   def full_url(api_url, use_api_prefix=true)
@@ -29,75 +28,81 @@ class Canvas
     end
   end
 
-  def api_put_request(api_url, payload)
+  def api_put_request(api_url, payload, additional_headers = {})
     @method = 'PUT'
     @api_url = api_url
     @payload = payload
     url = full_url(api_url)
-    check_result(HTTParty.put(url, :headers => headers, :body => payload), url)
+    check_result(HTTParty.put(url, headers: headers(additional_headers), body: payload), url)
   end
 
-  def api_post_request(api_url, payload, use_api_prefix=true)
-	unless @refreshing_token
+  def api_post_request(api_url, payload, additional_headers = {})
+    unless @refreshing_token
       @method = 'POST'
       @api_url = api_url
       @payload = payload
     end
-    url = full_url(api_url, use_api_prefix)
-    result = HTTParty.post(url, :headers => headers, :body => payload)
+    url = full_url(api_url)
+    result = HTTParty.post(url, headers: headers(additional_headers), body: payload)
     check_result(result, url)
   end
 
-  def api_get_request(api_url)
+  def api_get_request(api_url, additional_headers = {})
     @method = 'GET'
     @api_url = api_url
     url = full_url(api_url)
-    check_result(HTTParty.get(url, :headers => headers), url)
+    check_result(HTTParty.get(url, headers: headers(additional_headers)), url)
   end
 
   def refresh_token
-    result = api_post_request("login/oauth2/token", {
+    @refreshing_token = true
+    payload = {
       grant_type: 'refresh_token',
       client_id: @refresh_token_options[:client_id],
       client_secret: @refresh_token_options[:client_secret],
-      refresh_token: @refresh_token_options[:refresh_token]
-    }, false)
+      refresh_token: @refresh_token_options[:refresh_token],
+      redirect_uri: @refresh_token_options[:redirect_uri]
+    }
+    url = full_url("login/oauth2/token", false)
+    result = HTTParty.post(url, headers: headers, body: payload)
+    check_result(result, url)
+    @refreshing_token = false
+    result
+  end
+
+  def retry_request
+    @retrying = true
+    case @method
+      when 'GET'
+        result = api_get_request(@api_url)
+      when 'POST'
+        result = api_post_request(@api_url, @payload)
+      when 'PUT'
+        result = api_put_request(@api_url, @payload)
+      else
+        result = nil
+    end
+    @retrying = false
+    result
+  end
+
+  def refresh_token_and_retry
+    result = refresh_token
     if result
       @canvas_api_key = result['access_token']
       @refresh_token_options[:auth].update_attribute(:token, @canvas_api_key)
-      repeat_request_once
+      retry_request
     end
   end
 
-  def repeat_request_once
-    case @method
-      when 'GET'
-        api_get_request(@api_url)
-      when 'POST'
-        api_post_request(@api_url, @payload)
-      when 'PUT'
-        api_put_request(@api_url, @payload)
-    end
-  end
-
-  def refresh_token_and_try_again
-    if @refresh_token_options
-      @refreshing_token = true
-      refresh_token
-    end
-  end
-
-  def check_result(result, url)
+  def check_result(result, url=nil)
     if result.response.code == '401'
-      unless @refreshing_token
-        @refreshing_token = false
-        return if refresh_token_and_try_again
-      end
-      raise Canvas::UnauthorizedException, result['errors']
+      return refresh_token_and_retry unless !@refresh_token_options || @refreshing_token || @retrying
+      raise Canvas::UnauthorizedException, "#{result['errors']} Url: #{url}, API Key: #{@canvas_api_key}"
     elsif result.response.code == '404'
-      raise Canvas::NotFoundException, result['errors']
+      raise Canvas::NotFoundException, "#{result['errors']} Url: #{url}, API Key: #{@canvas_api_key}"
     elsif !['200', '201'].include?(result.response.code)
-      raise Canvas::InvalidRequestException, "Status: #{result.response.code} Error: #{result['errors']} Url: #{url}"
+      raise Canvas::InvalidRequestException, "Status: #{result.response.code} Error: #{result['errors']} Url: #{url}, API Key: #{@canvas_api_key}"
     end
     result
   end
@@ -131,17 +136,22 @@ class Canvas
     end
   end
 
-  def proxy(type, params, payload = nil, use_api_prefix=true)
+  def proxy(type, params, payload = nil)
+   
+    additional_headers = {
+      "Content-Type" => "application/json"
+    }  
+
     method = CanvasUrls.urls[type][:method]
     url = Canvas.canvas_url(type, params)
 
     case method
     when 'GET'
-      api_get_request(url)
+      api_get_request(url, additional_headers)
     when 'POST'
-      api_post_request(url, payload, use_api_prefix)
+      api_post_request(url, payload, additional_headers)
     when 'PUT'
-      api_put_request(url, payload)
+      api_put_request(url, payload, additional_headers)
     else
       raise "invalid method type"
     end
@@ -215,7 +225,7 @@ class Canvas
   def recent_logins(course_id)
     api_get_request("courses/#{course_id}/recent_students")
   end
-  
+
   def students(course_id, *include_options)
     include_param = include_options.map{|option| "&include[]=#{option}"}.join
     make_paged_api_request("courses/#{course_id}/users?enrollment_type=student#{include_param}")
@@ -358,7 +368,7 @@ class Canvas
   def self.canvas_url(type, params)
     endpoint = CanvasUrls.urls[type]
     parameters = endpoint[:parameters]
-    
+
     # Make sure all required parameters are present
     missing = []
     parameters.find_all{|p| p["required"]}.map{|p| p["name"]}.each do |p|
@@ -372,7 +382,7 @@ class Canvas
       end
     end
 
-    if missing.length > 0 
+    if missing.length > 0
       raise "Missing required parameter(s): #{missing.join(', ')}"
     end
 
@@ -384,10 +394,14 @@ class Canvas
 
     # Generate the query string
     query_parameters = parameters.find_all{|p| p["paramType"] == "query"}.map{|p| p["name"].to_sym}
-    query_parameters << :per_page # Per page is allowed on many calls
+    
+    # always allow paging parameters
+    query_parameters << :per_page
+    query_parameters << :page
+
     allowed_params = params.slice(*query_parameters)
     if allowed_params.present?
-      "#{uri}?#{allowed_params.to_query}" 
+      "#{uri}?#{allowed_params.to_query}"
     else
       uri
     end
