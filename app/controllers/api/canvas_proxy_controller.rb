@@ -8,7 +8,9 @@ class Api::CanvasProxyController < ApplicationController
   end
 
   def proxy
-    api = current_account.canvas_api
+    api = current_user.canvas_api
+    #api = current_account.canvas_api
+
     result = api.proxy(params[:type], params, request.body.read)
     response.status = result.code
     
