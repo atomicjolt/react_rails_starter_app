@@ -356,16 +356,42 @@ class Canvas
   end
 
   def self.canvas_url(type, params)
-    proc = CanvasUrls.urls[type][:uri]
-    proc_parameters = proc.parameters[0]
-    args = params.slice(*proc_parameters).symbolize_keys
-    uri = args.blank? ? proc.call : proc.call(**args)
-    allowed_params = params.except(*proc_parameters, *IGNORE_PARAMS)
+    endpoint = CanvasUrls.urls[type]
+    parameters = endpoint[:parameters]
+    
+    # Make sure all required parameters are present
+    missing = []
+    parameters.find_all{|p| p["required"]}.map{|p| p["name"]}.each do |p|
+      if p.include?("[") && p.include?("]")
+        parts = p.split('[')
+        parent = parts[0].to_sym
+        child = parts[1].gsub("]", "").to_sym
+        missing << p unless params[parent].present? && params[parent][child].present?
+      else
+        missing << p unless params[p.to_sym].present?
+      end
+    end
+
+    if missing.length > 0 
+      raise "Missing required parameter(s): #{missing.join(', ')}"
+    end
+
+    # Generate the uri. Only allow path parameters
+    uri_proc = endpoint[:uri]
+    path_parameters = parameters.find_all{|p| p["paramType"] == "path"}.map{|p| p["name"].to_sym}
+    args = params.slice(*path_parameters).symbolize_keys
+    uri = args.blank? ? uri_proc.call : uri_proc.call(**args)
+
+    # Generate the query string
+    query_parameters = parameters.find_all{|p| p["paramType"] == "query"}.map{|p| p["name"].to_sym}
+    query_parameters << :per_page # Per page is allowed on many calls
+    allowed_params = params.slice(*query_parameters)
     if allowed_params.present?
       "#{uri}?#{allowed_params.to_query}" 
     else
       uri
     end
+
   end
 
 end

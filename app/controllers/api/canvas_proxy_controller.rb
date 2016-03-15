@@ -9,7 +9,7 @@ class Api::CanvasProxyController < ApplicationController
 
   def proxy
     api = current_account.canvas_api
-    result = api.proxy(params[:type], params, request.body)
+    result = api.proxy(params[:type], params, request.body.read)
     response.status = result.code
     
     allowed_headers = [ "content-type", "link", "p3p", "x-canvas-meta", "x-canvas-user-id", 

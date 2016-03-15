@@ -145,7 +145,7 @@ namespace :canvas do
                   :args, :method, :api, :name, :resource_name, :resource_api,
                   :nickname, :notes, :content, :summary, :model, :model_name
 
-    def initialize(template, api, resource, resource_api, operation, content, model)
+    def initialize(template, api, resource, resource_api, operation, parameters, content, model)
       @template = File.read(File.expand_path(template, __dir__))
       if api
         @api         = api
@@ -170,6 +170,9 @@ namespace :canvas do
         @nickname  = nickname
         @notes     = operation['notes'].gsub("\n", "\n// ")
         @summary   = operation["summary"]
+      end
+      if parameters
+        @parameters = parameters.map{|p| p.delete("description"); p}
       end
       @content = content
       @model = model
@@ -209,31 +212,33 @@ namespace :canvas do
         constants = []
         resource['apis'].each do |resource_api|
           resource_api["operations"].each do |operation|
-            constants << Render.new("./canvas_api/constant.erb", api, resource, resource_api, operation, nil, nil).render
-            canvas_urls_rb << Render.new("./canvas_api/rb_url.erb", api, resource, resource_api, operation, nil, nil).render
-            canvas_urls_js << Render.new("./canvas_api/js_url.erb", api, resource, resource_api, operation, nil, nil).render
+            parameters = operation["parameters"]
+            constants << Render.new("./canvas_api/constant.erb", api, resource, resource_api, operation, parameters, nil, nil).render
+            canvas_urls_rb << Render.new("./canvas_api/rb_url.erb", api, resource, resource_api, operation, parameters, nil, nil).render
+            canvas_urls_js << Render.new("./canvas_api/js_url.erb", api, resource, resource_api, operation, parameters, nil, nil).render
             if "GET" == operation["method"].upcase
-              queries << Render.new("./canvas_api/graphql_query.erb", api, resource, resource_api, operation, nil, nil).render
+              queries << Render.new("./canvas_api/graphql_query.erb", api, resource, resource_api, operation, parameters, nil, nil).render
             else
-              mutations << Render.new("./canvas_api/graphql_mutation.erb", api, resource, resource_api, operation, nil, nil).render
+              mutations << Render.new("./canvas_api/graphql_mutation.erb", api, resource, resource_api, operation, parameters, nil, nil).render
             end
           end
         end
         resource['models'].map do |name, model|
           if model['properties'] # Don't generate models without properties
-            models << Render.new("./canvas_api/graphql_model.erb", api, resource, nil, nil, nil, model).render
+            models << Render.new("./canvas_api/graphql_model.erb", api, resource, nil, nil, nil, nil, model).render
           end
         end
         # Generate one file of constants for every Canvas Api
-        constants_renderer = Render.new("./canvas_api/constants.erb", api, resource, nil, nil, constants, nil)
+        constants_renderer = Render.new("./canvas_api/constants.erb", api, resource, nil, nil, nil, constants, nil)
         constants_renderer.save("#{Rails.root}/../atomic-client/client/js/libs/canvas/constants/#{constants_renderer.name}.js")
       end
-      Render.new("./canvas_api/rb_urls.erb", nil, nil, nil, nil, canvas_urls_rb, nil).save("#{Rails.root}/lib/canvas_urls.rb")
-      Render.new("./canvas_api/js_urls.erb", nil, nil, nil, nil, canvas_urls_js, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/urls.js")
       
-      Render.new("./canvas_api/graphql_types.erb", nil, nil, nil, nil, models.compact, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_types.js")
-      Render.new("./canvas_api/graphql_queries.erb", nil, nil, nil, nil, queries, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_queries.js")
-      Render.new("./canvas_api/graphql_mutations.erb", nil, nil, nil, nil, mutations, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_mutations.js")
+      Render.new("./canvas_api/rb_urls.erb", nil, nil, nil, nil, nil, canvas_urls_rb, nil).save("#{Rails.root}/lib/canvas_urls.rb")
+      Render.new("./canvas_api/js_urls.erb", nil, nil, nil, nil, nil, canvas_urls_js, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/urls.js")
+      
+      Render.new("./canvas_api/graphql_types.erb", nil, nil, nil, nil, nil, models.compact, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_types.js")
+      Render.new("./canvas_api/graphql_queries.erb", nil, nil, nil, nil, nil, queries, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_queries.js")
+      Render.new("./canvas_api/graphql_mutations.erb", nil, nil, nil, nil, nil, mutations, nil).save("#{Rails.root}/../atomic-lti/atomic/lib/canvas/graphql_mutations.js")
     end
 
   end

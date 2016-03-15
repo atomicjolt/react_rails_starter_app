@@ -46,7 +46,7 @@ RSpec.describe Api::CanvasProxyController, type: :controller do
     describe "POST" do
       it "successfully posts to the canvas api" do
         type = "CREATE_NEW_SUB_ACCOUNT"
-        post :proxy, name: "Canvas Demo Courses", type: type, account_id: 1, format: :json
+        post :proxy, { account: { name: "Canvas Demo Courses" }, type: type, account_id: 1 }, format: :json
         expect(JSON.parse(response.body)['name']).to eq("Canvas Demo Courses")
       end
     end

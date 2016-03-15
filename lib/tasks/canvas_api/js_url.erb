@@ -1,1 +1,1 @@
-  <%=@nickname.upcase%>: { uri: function(args){return <%=js_url_parts(@api_url).join(' + ')%>}, method: "<%=@method%>", args: <%=js_args(@args)%> }
+  <%=@nickname.upcase%>: { uri: function(args){return <%=js_url_parts(@api_url).join(' + ')%>}, method: "<%=@method%>", parameters: <%=@parameters.to_json%> }

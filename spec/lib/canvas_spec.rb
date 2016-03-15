@@ -226,10 +226,26 @@ describe Canvas do
       expect(url).to eq("accounts/1/courses")
     end
     it "generates a canvas url to get courses with extra values in params" do
-      params = {course_id: 1, controller: "foo", account_id: 1}
+      params = {with_enrollments: true, controller: "foo", account_id: 1}
       url = Canvas.canvas_url("LIST_ACTIVE_COURSES_IN_ACCOUNT", params)
-      expect(url).to eq("accounts/1/courses?course_id=1")
+      expect(url).to eq("accounts/1/courses?with_enrollments=true")
     end
+    
+    it "only allows query params in the query" do
+      id = 5
+      course_id = 6
+      params = {id: id, course_id: course_id, controller: "foo", account_id: 1, all_dates: true, other_param: "foobar"}
+      url = Canvas.canvas_url("GET_SINGLE_ASSIGNMENT", params)
+      expect(url).to eq("courses/#{course_id}/assignments/#{id}?all_dates=true")
+    end
+
+    it "Doesn't include post parameters in the query" do
+      course_id = 6
+      params = {course_id: course_id, assignment: { name: "The name", position: 2, submission_types: "online_quiz"}}
+      url = Canvas.canvas_url("CREATE_ASSIGNMENT", params)
+      expect(url).to eq("courses/#{course_id}/assignments")
+    end
+
   end
 
 end
