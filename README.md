@@ -234,3 +234,15 @@ To run tests:
 ```
 $ rake spec
 ```
+
+## TODO
+
+If an admin changes the developer key and secret then existing authentications are invalid.
+This will result in a 500 error. You will see the following in the log:
+Canvas::InvalidRequestException (Status: 400 Error:  ....
+
+To fix this remove all entries in the Authentications table. In the future we should detect an
+invalid api token and then remove the db record forcing a new OAuth dance.
+
+
+
