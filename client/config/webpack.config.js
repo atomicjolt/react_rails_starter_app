@@ -63,6 +63,36 @@ module.exports = function(stage){
 
   var extractCSS = new ExtractTextPlugin(release ? '[name]-[chunkhash].css' : '[name].css');
 
+  var plugins = [];
+
+  if(stage == "production"){
+    plugins = [
+      new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"', '__DEV__': false}),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin(),
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.AggressiveMergingPlugin(),
+      new ChunkManifestPlugin({
+        filename: 'webpack-common-manifest.json',
+        manfiestVariable: 'webpackBundleManifest'
+      }),
+      extractCSS
+      //new webpack.optimize.CommonsChunkPlugin('init.js') // Use to extract common code from multiple entry points into a single init.js
+    ];
+  } else if (stage == "development"){
+    plugins = [
+      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', '__DEV__': true }),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin(),
+      extractCSS
+    ];
+  } else if (stage == "test"){
+    plugins = [
+      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', '__DEV__': true }),
+      extractCSS
+    ];
+  }
+
   return {
     context: __dirname,
     entry: entries,
@@ -87,24 +117,7 @@ module.exports = function(stage){
     stats: {
       colors: true
     },
-    plugins: release ? [
-      new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"', '__DEV__': false}),
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin(),
-      new webpack.optimize.OccurenceOrderPlugin(),
-      new webpack.optimize.AggressiveMergingPlugin(),
-      new ChunkManifestPlugin({
-        filename: 'webpack-common-manifest.json',
-        manfiestVariable: 'webpackBundleManifest'
-      }),
-      extractCSS
-      //new webpack.optimize.CommonsChunkPlugin('init.js') // Use to extract common code from multiple entry points into a single init.js
-    ] : [
-      extractCSS,
-      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', '__DEV__': true }),
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin()
-    ],
+    plugins: plugins,
     module: {
       loaders: [
         { test: /\.js$/,              loaders: jsLoaders, exclude: /node_modules/ },
