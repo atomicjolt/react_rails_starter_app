@@ -9,12 +9,12 @@ import messages                          from "./messages";
 describe("message reducer", () => {
 
   describe("initial state", () => {
-    
+
     it("has no messages", () => {
       const state = messages(undefined, {});
       expect(state.toJS()).toEqual([]);
     });
-    
+
   });
 
   describe("TIMEOUT", () => {
@@ -27,7 +27,7 @@ describe("message reducer", () => {
           message: "No response"
         }
       });
-      expect(_.contains(state.get(0),"Request timed out")).toBe(true);
+      expect(_.includes(state.get(0),"Request timed out")).toBe(true);
     });
 
   });
@@ -42,7 +42,7 @@ describe("message reducer", () => {
           message: "Not authorized"
         }
       });
-      expect(_.contains(state.get(0),"Request not authorized")).toBe(true);
+      expect(_.includes(state.get(0),"Request not authorized")).toBe(true);
     });
 
   });
@@ -57,7 +57,7 @@ describe("message reducer", () => {
           message: "Error"
         }
       });
-      expect(_.contains(state.get(0),"Request error")).toBe(true);
+      expect(_.includes(state.get(0),"Request error")).toBe(true);
     });
 
   });
@@ -73,12 +73,12 @@ describe("message reducer", () => {
         }
       }
       const state = messages(initialState, action);
-      expect(_.contains(state.get(0),action.payload.message)).toBe(true);
+      expect(_.includes(state.get(0),action.payload.message)).toBe(true);
     });
 
   });
 
-  
+
   describe("REMOVE_MESSAGE", () => {
 
     it("Removes message", () => {
@@ -96,7 +96,7 @@ describe("message reducer", () => {
       };
       const initialState = Immutable.fromJS([action.payload.message]);
       const state = messages(initialState, action);
-      expect(_.contains(state.get(0),action.payload.message)).toBe(true);
+      expect(_.includes(state.get(0),action.payload.message)).toBe(true);
       const newState = messages(state, removeAction);
       expect(newState.toJS()).toEqual([]);
     });
@@ -117,7 +117,7 @@ describe("message reducer", () => {
       };
       const initialState = Immutable.fromJS([action.payload.message]);
       const state = messages(initialState, action);
-      expect(_.contains(state.get(0),action.payload.message)).toBe(true);
+      expect(_.includes(state.get(0),action.payload.message)).toBe(true);
       const newState = messages(state, removeAction);
       expect(newState.toJS()).toEqual([]);
     });
