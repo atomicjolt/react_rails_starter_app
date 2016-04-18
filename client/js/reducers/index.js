@@ -1,5 +1,5 @@
 import { combineReducers }              from 'redux';
-import settings                         from './settings'
+import settings                         from './settings';
 import application                      from './application';
 import messages                         from './messages';
 
