@@ -98,20 +98,12 @@ module.exports = function(stage){
   var loaders = [
     { test: /\.js$/,              loaders: jsLoaders, exclude: /node_modules/ },
     { test: /\.jsx?$/,            loaders: jsLoaders, exclude: /node_modules/ },
+    { test: /\.scss$/i,           loader: extractCSS.extract(scssLoaders) },
+    { test: /\.css$/i ,           loader: extractCSS.extract(cssLoaders) },
+    { test: /\.less$/i ,          loader: extractCSS.extract(lessLoaders) },
     { test: /.*\.(gif|png|jpg|jpeg|svg)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]']}, //'image-webpack-loader?optimizationLevel=7&interlaced=false'
     { test: /.*\.(eot|woff2|woff|ttf)$/,   loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=cd [name]-[hash].[ext]']}
   ];
-
-  // Don't process css in test environment
-  if(test){
-    loaders.push({ test: /\.scss$/i,   loaders: scssLoaders });
-    loaders.push({ test: /\.css$/i ,   loaders: cssLoaders });
-    loaders.push({ test: /\.less$/i ,  loaders: lessLoaders });
-  } else {
-    loaders.push({ test: /\.scss$/i,   loader: extractCSS.extract(scssLoaders) });
-    loaders.push({ test: /\.css$/i ,   loader: extractCSS.extract(cssLoaders) });
-    loaders.push({ test: /\.less$/i ,  loader: extractCSS.extract(lessLoaders) });
-  }
 
   return {
     context: __dirname,
