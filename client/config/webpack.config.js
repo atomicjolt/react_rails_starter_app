@@ -30,7 +30,7 @@ module.exports = function(stage){
   } else if (production) {
     plugins = plugins + ',plugins[]=transform-react-constant-elements'; // Hoists static React components to reduce calls to createElement
     plugins = plugins + ',plugins[]=transform-react-inline-elements';   // Replaces the React.createElement function with a more optimized one for production
-    plugins = plugins + ',transform-react-remove-prop-types';           // Removes prop types from code
+    plugins = plugins + ',plugins[]=transform-react-remove-prop-types'; // Removes prop types from code
   }
 
   var babel   = 'babel?' + plugins + '&' + presets;

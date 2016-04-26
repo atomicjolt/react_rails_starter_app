@@ -125,7 +125,7 @@ gulp.task('javascript', function(cb){
     if (err){
       throw new util.PluginError('webpack', err);
     }
-    //util.log('[webpack]', stats.toString({colors: true}));
+    util.log('[webpack]', stats.toString({colors: true}));
     cb();
   }
   bundler.run(bundle);
