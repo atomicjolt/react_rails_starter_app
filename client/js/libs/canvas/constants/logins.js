@@ -33,6 +33,7 @@ export const list_user_logins_users = { type: "LIST_USER_LOGINS_USERS", method: 
 //   login[unique_id] (required)
 //   login[password]
 //   login[sis_user_id]
+//   login[integration_id]
 //   login[authentication_provider_id]
 // }
 // return canvasRequest(create_user_login, {account_id}, query);
@@ -49,6 +50,7 @@ export const create_user_login = { type: "CREATE_USER_LOGIN", method: "post", re
 //   login[unique_id]
 //   login[password]
 //   login[sis_user_id]
+//   login[integration_id]
 // }
 // return canvasRequest(edit_user_login, {account_id, id}, query);
 export const edit_user_login = { type: "EDIT_USER_LOGIN", method: "put", reducer: 'logins'};
