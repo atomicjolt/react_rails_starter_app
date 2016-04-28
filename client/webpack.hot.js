@@ -9,7 +9,7 @@ var path                 = require('path');
 var app                  = express();
 var compiler             = webpack(webpackConfig);
 
-app.use(express.static(settings.devOutput));  
+app.use(express.static(settings.devOutput));
 
 app.use(webpackMiddleware(compiler, {
   noInfo: true,
@@ -21,7 +21,7 @@ app.use(webpackMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler));
 
-app.get('*', function response(req, res) {  
+app.get('*', function response(req, res) {
   res.sendFile(path.join(settings.devOutput, req.url));
 });
 
