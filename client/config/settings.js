@@ -32,7 +32,7 @@ module.exports = {
   devAssetsUrl: process.env.ASSETS_URL || 'http://localhost:' + hotPort,
 
   hotPort: hotPort,
-  
+
   buildSuffix: '_bundle.js',
 
   entries: {
