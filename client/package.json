@@ -10,8 +10,8 @@
     "test": "./node_modules/karma/bin/karma start",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "hot": "gulp watch & node webpack.hot.js",
-    "build_dev": "gulp build",
-    "build": "gulp build --release",
+    "build_dev": "node ./tools/build.js",
+    "build": "node ./tools/build.js --release",
     "release": "gulp build --release && cd .. && s3_website push",
     "lint": "eslint js"
   },
@@ -73,6 +73,7 @@
     "gulp-rename": "1.2.2",
     "gulp-util": "3.0.7",
     "html-minifier": "1.5.0",
+    "html-truncate": "^1.2.1",
     "imports-loader": "0.6.5",
     "istanbul": "0.4.3",
     "istanbul-instrumenter-loader": "0.2.0",
