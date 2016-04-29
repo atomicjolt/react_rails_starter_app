@@ -64,7 +64,7 @@ function buildContents(inputPath, outputPath, webpackConfig, webpackStats, stage
                   !_.includes(ignoreFiles, fileName);
     if(doOutput){
       if(fs.statSync(fullInputPath).isDirectory()){
-        results = _.concat(results, buildContents(inputPath, fullInputPath, webpackConfig, webpackStats, options));
+        results = _.concat(results, buildContents(inputPath, fullInputPath, webpackConfig, webpackStats, stage, options));
       } else {
         var page = buildContent(fullInputPath, webpackConfig, webpackStats, stage, options);
         page.outputFilePath = write(inputPath, outputPath, fileName, page.html, options);
