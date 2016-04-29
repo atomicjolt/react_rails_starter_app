@@ -20,7 +20,7 @@ var outputPath           = stage == "production" ? settings.prodOutput : setting
 var ignoreFiles          = [".DS_Store"];
 
 var options              = {
-  inputPath:       inputPath,            // Original input path
+  rootInputPath:   inputPath,            // Original input path
   entries:         settings.entries,     // Webpack entry points
   cssEntries:      settings.cssEntries,  // Webpack css entry points
   buildSuffix:     settings.buildSuffix, // Webpack build suffix. ie _bundle.js
@@ -64,10 +64,10 @@ function buildContents(inputPath, outputPath, webpackConfig, webpackStats, stage
                   !_.includes(ignoreFiles, fileName);
     if(doOutput){
       if(fs.statSync(fullInputPath).isDirectory()){
-        results = _.concat(results, buildContents(inputPath, fullInputPath, webpackConfig, webpackStats, stage, options));
+        results = _.concat(results, buildContents(fullInputPath, outputPath, webpackConfig, webpackStats, stage, options));
       } else {
         var page = buildContent(fullInputPath, webpackConfig, webpackStats, stage, options);
-        page.outputFilePath = write(inputPath, outputPath, fileName, page.html, options);
+        page.outputFilePath = write(options.rootInputPath, outputPath, fileName, page.html, options);
         results.push(page);
       }
     }
@@ -79,7 +79,7 @@ function buildContents(inputPath, outputPath, webpackConfig, webpackStats, stage
 // write file
 // -----------------------------------------------------------------------------
 function write(inputPath, outputPath, fileName, content, options){
-  var relPath = inputPath.replace(options.inputPath, ""); // build relative path for output file
+  var relPath = inputPath.replace(options.rootInputPath, ""); // build relative path for output file
   var out = path.join(outputPath, relPath, fileName);
   fs.writeFile(out, content, function(err){
     if(err){ return console.log(err); }
