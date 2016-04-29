@@ -35,11 +35,15 @@ module.exports = function(fullPath, webpackConfig, webpackStats, stage, options)
     });
   }
 
+  var result = utils.filename2date(fullPath);
+
   return {
+    title:       metadata.title || result.title,
+    date:        result.date,
     metadata:    metadata,
     summary:     summary,
     source:      fullPath,
-    destination: metadata.permalink || utils.filename2date(fullPath),
+    destination: metadata.permalink || result.url,
     html:        html
   };
 
