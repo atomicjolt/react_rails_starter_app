@@ -13,11 +13,6 @@ function apply(content, fullPath, metadata, templateMap, templateData, templateD
   var layoutFile = metadata.layout || templateMap[fullPath] || "application.html";
 
   var result = loadTemplate(layoutFile, templateDirs);
-  var template = ejs.compile(result.value, {
-    cache: false,
-    filename: result.item
-  });
-
   var data = buildData(metadata, templateData, { content: content});
 
   return template(data);
@@ -55,7 +50,10 @@ function loadTemplate(file, templateDirs){
     throw "No template found matching " + file;
   }
 
-  return result;
+  return ejs.compile(result.value, {
+    cache: false,
+    filename: result.item
+  });
 }
 
 function buildData(){
