@@ -41,4 +41,4 @@ function launch(){
   });
 }
 
-build.watch(launch);
+build.watch().then(launch);

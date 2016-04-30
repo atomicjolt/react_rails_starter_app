@@ -7,16 +7,6 @@ var ejs           = require("ejs");
 // Apply layouts to content
 // -----------------------------------------------------------------------------
 function apply(content, fullPath, metadata, templateMap, templateData, templateDirs){
-  var data = _.merge({
-    metadata: metadata || {},
-    "_": _
-  }, templateData);
-
-  // Allow ejs code in content
-  content = ejs.compile(content, {
-    cache: false,
-    filename: fullPath
-  })(data);
 
   // If the user has specified a layout in the front matter use that.
   // Then try the layout map and finally default to application.html
@@ -28,7 +18,7 @@ function apply(content, fullPath, metadata, templateMap, templateData, templateD
     filename: result.item
   });
 
-  data.content = content;
+  var data = buildData(metadata, templateData, { content: content});
 
   return template(data);
 }
@@ -68,7 +58,12 @@ function loadTemplate(file, templateDirs){
   return result;
 }
 
+function buildData(){
+  return _.merge({ "_": _ }, ...arguments);
+}
+
 module.exports = {
-  apply: apply
+  apply: apply,
+  buildData: buildData
 };
 
