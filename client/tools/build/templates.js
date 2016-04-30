@@ -12,7 +12,7 @@ function apply(content, fullPath, metadata, templateMap, templateData, templateD
   // Then try the layout map and finally default to application.html
   var layoutFile = metadata.layout || templateMap[fullPath] || "application.html";
 
-  var result = loadTemplate(layoutFile, templateDirs);
+  var template = loadTemplate(layoutFile, templateDirs);
   var data = buildData(metadata, templateData, { content: content});
 
   return template(data);
