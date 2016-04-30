@@ -30,7 +30,8 @@ var options              = {
   buildSuffix       : settings.buildSuffix, // Webpack build suffix. ie _bundle.js
   templateData      : {},                   // Object that will be passed to every page as it is rendered
   templateMap       : {},                   // Used to specify specific templates on a per file basis
-  templateDirs      : templateDirs          // Directories to look in for template
+  templateDirs      : templateDirs,         // Directories to look in for template
+  summaryMarker     : "<!--more-->"         // Used to mark summary point when generating html summaries
 };
 
 // -----------------------------------------------------------------------------
