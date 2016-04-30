@@ -62,6 +62,7 @@ function buildData(){
 
 module.exports = {
   apply: apply,
+  loadTemplate: loadTemplate,
   buildData: buildData
 };
 
