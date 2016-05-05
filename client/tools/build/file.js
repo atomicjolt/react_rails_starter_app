@@ -28,8 +28,8 @@ function copy(inputPath, outputPath, fileName, options){
 // -----------------------------------------------------------------------------
 function makeOutputFilePath(inputPath, outputPath, fileName, options, cb){
   var relPath = inputPath.replace(options.rootInputPath, ""); // build relative path for output file
-  var dir = path.join(outputPath, relPath);
-  var out = path.join(dir, fileName);
+  var out = path.join(outputPath, relPath, fileName);
+  var dir = path.dirname(out);
   fs.mkdirs(dir, {}, function(){
     cb(out);
   });

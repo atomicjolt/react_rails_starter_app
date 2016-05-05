@@ -77,7 +77,17 @@ function buildContents(inputPath, outputPath, webpackConfig, webpackStats, stage
         var ext = path.extname(fullInputPath);
         if(_.includes(options.buildExtensions, ext)){
           var page = buildContent(fullInputPath, webpackConfig, webpackStats, stage, options);
-          page.outputFilePath = file.write(inputPath, outputPath, fileName, page.html, options);
+          var outFile = fileName;
+          var outPath = outputPath;
+          if(page.destination && page.destination.length > 0){
+            if(_.endsWith(page.destination, "/")){
+              outPath = path.join(outPath, page.destination);
+              outFile = "index.html";
+            } else {
+              outFile = page.destination;
+            }
+          }
+          page.outputFilePath = file.write(inputPath, outPath, outFile, page.html, options);
           results.push(page);
         } else {
           file.copy(inputPath, outputPath, fileName, options);

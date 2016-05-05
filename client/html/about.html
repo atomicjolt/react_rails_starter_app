@@ -2,7 +2,7 @@
 title: About
 author: Atomic Jolt
 layout: application
-permalink: /about-us
+permalink: /about-us/
 categories:
   - About Us
 tags:
