@@ -44,7 +44,7 @@ npm-debug.log
 /app/assets/javascripts/styles.css
 
 public/assets
-build
+/build
 
 canvas.manifest
 
