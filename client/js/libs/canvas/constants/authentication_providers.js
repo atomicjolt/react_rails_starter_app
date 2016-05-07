@@ -211,6 +211,11 @@ export const list_authentication_providers_account_authorization_configs = { typ
 // 
 //   Space separated additional scopes to request for the token.
 // 
+// - end_session_endpoint [Optional]
+// 
+//   URL to send the end user to after logging out of Canvas. See
+//   https://openid.net/specs/openid-connect-session-1_0.html#RPLogout
+// 
 // - login_attribute [Optional]
 // 
 //   The attribute of the ID token to look up the user's login in Canvas.
@@ -477,6 +482,11 @@ export const add_authentication_provider_authentication_providers = { type: "ADD
 // - scope [Optional]
 // 
 //   Space separated additional scopes to request for the token.
+// 
+// - end_session_endpoint [Optional]
+// 
+//   URL to send the end user to after logging out of Canvas. See
+//   https://openid.net/specs/openid-connect-session-1_0.html#RPLogout
 // 
 // - login_attribute [Optional]
 // 

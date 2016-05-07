@@ -61,7 +61,7 @@ module.exports = function(stage){
     entries = _.reduce(entries, function(result, entry, key){
       result[key] = [
         'eventsource-polyfill',
-        'webpack-hot-middleware/client?path=' + publicPath + '__webpack_hmr',
+        'webpack-hot-middleware/client?path=' + publicPath + '__webpack_hmr&timeout=20000&reload=true',
         entry
       ];
       return result;

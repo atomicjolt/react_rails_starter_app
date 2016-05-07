@@ -116,7 +116,6 @@ export const get_feature_flag_users = { type: "GET_FEATURE_FLAG_USERS", method: 
 // Example:
 // const query = {
 //   state
-//   locking_account_id
 // }
 // return canvasRequest(set_feature_flag_courses, {course_id, feature}, query);
 export const set_feature_flag_courses = { type: "SET_FEATURE_FLAG_COURSES", method: "put", reducer: 'feature_flags'};
@@ -131,7 +130,6 @@ export const set_feature_flag_courses = { type: "SET_FEATURE_FLAG_COURSES", meth
 // Example:
 // const query = {
 //   state
-//   locking_account_id
 // }
 // return canvasRequest(set_feature_flag_accounts, {account_id, feature}, query);
 export const set_feature_flag_accounts = { type: "SET_FEATURE_FLAG_ACCOUNTS", method: "put", reducer: 'feature_flags'};
@@ -146,7 +144,6 @@ export const set_feature_flag_accounts = { type: "SET_FEATURE_FLAG_ACCOUNTS", me
 // Example:
 // const query = {
 //   state
-//   locking_account_id
 // }
 // return canvasRequest(set_feature_flag_users, {user_id, feature}, query);
 export const set_feature_flag_users = { type: "SET_FEATURE_FLAG_USERS", method: "put", reducer: 'feature_flags'};

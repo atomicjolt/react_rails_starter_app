@@ -366,6 +366,7 @@ export const show_user_details = { type: "SHOW_USER_DETAILS", method: "get", red
 //   pseudonym[unique_id] (required)
 //   pseudonym[password]
 //   pseudonym[sis_user_id]
+//   pseudonym[integration_id]
 //   pseudonym[send_confirmation]
 //   pseudonym[force_self_registration]
 //   pseudonym[authentication_provider_id]

@@ -21,6 +21,7 @@
 //   type
 //   role
 //   state
+//   include
 //   user_id
 //   grading_period_id
 // }
@@ -47,6 +48,7 @@ export const list_enrollments_courses = { type: "LIST_ENROLLMENTS_COURSES", meth
 //   type
 //   role
 //   state
+//   include
 //   user_id
 //   grading_period_id
 // }
@@ -73,6 +75,7 @@ export const list_enrollments_sections = { type: "LIST_ENROLLMENTS_SECTIONS", me
 //   type
 //   role
 //   state
+//   include
 //   grading_period_id
 // }
 // return canvasRequest(list_enrollments_users, {user_id}, query);
@@ -132,8 +135,8 @@ export const enroll_user_courses = { type: "ENROLL_USER_COURSES", method: "post"
 // return canvasRequest(enroll_user_sections, {section_id}, query);
 export const enroll_user_sections = { type: "ENROLL_USER_SECTIONS", method: "post", reducer: 'enrollments'};
 
-// Conclude or inactivate an enrollment
-// Delete, conclude or inactivate an enrollment.
+// Conclude or deactivate an enrollment
+// Delete, conclude or deactivate an enrollment.
 //
 // API Docs: https://canvas.instructure.com/doc/api/enrollments.html
 // API Url: courses/{course_id}/enrollments/{id}
@@ -142,8 +145,8 @@ export const enroll_user_sections = { type: "ENROLL_USER_SECTIONS", method: "pos
 // const query = {
 //   task
 // }
-// return canvasRequest(conclude_or_inactivate_enrollment, {course_id, id}, query);
-export const conclude_or_inactivate_enrollment = { type: "CONCLUDE_OR_INACTIVATE_ENROLLMENT", method: "delete", reducer: 'enrollments'};
+// return canvasRequest(conclude_or_deactivate_enrollment, {course_id, id}, query);
+export const conclude_or_deactivate_enrollment = { type: "CONCLUDE_OR_DEACTIVATE_ENROLLMENT", method: "delete", reducer: 'enrollments'};
 
 // Re-activate an enrollment
 // Activates an inactive enrollment

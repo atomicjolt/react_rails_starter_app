@@ -43,6 +43,8 @@ export const get_single_role = { type: "GET_SINGLE_ROLE", method: "get", reducer
 //   permissions[<X>][explicit]
 //   permissions[<X>][enabled]
 //   permissions[<X>][locked]
+//   permissions[<X>][applies_to_self]
+//   permissions[<X>][applies_to_descendants]
 // }
 // return canvasRequest(create_new_role, {account_id}, query);
 export const create_new_role = { type: "CREATE_NEW_ROLE", method: "post", reducer: 'roles'};
@@ -98,6 +100,8 @@ export const activate_role = { type: "ACTIVATE_ROLE", method: "post", reducer: '
 //   label
 //   permissions[<X>][explicit]
 //   permissions[<X>][enabled]
+//   permissions[<X>][applies_to_self]
+//   permissions[<X>][applies_to_descendants]
 // }
 // return canvasRequest(update_role, {account_id, id}, query);
 export const update_role = { type: "UPDATE_ROLE", method: "put", reducer: 'roles'};
