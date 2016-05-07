@@ -114,23 +114,27 @@ export default class Api{
   }
 
   static queryStringFrom(params){
-    if(params){
-      var query = _.chain(params)
-        .map((val, key) => {
-          if(val){
-            return `${key}=${val}`;
+    var query = _.chain(params)
+      .map((val, key) => {
+        if(val){
+          if (_.isArray(val)) {
+            return _.map(val, (subVal) => { return `${key}[]=${subVal}`; }).join(`&`);
           } else {
-            return "";
+            return `${key}=${val}`;
           }
-        })
-        .compact()
-        .value();
+        } else {
+          return "";
+        }
+      })
+      .compact()
+      .value();
 
-      if(query.length > 0){
-        return `?${query.join("&")}`;
-      }  
+    if(query.length > 0){
+      return `?${query.join("&")}`;
+    } else {
+      return "";
     }
-    return "";
+
   }
 
 }

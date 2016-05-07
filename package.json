@@ -3,11 +3,12 @@
   "version": "0.0.3",
   "description": "Client only React Starter App.",
   "engines": {
-    "node": "5.7.0"
+    "node": "5.10.1"
   },
   "scripts": {
     "postinstall": "cd ./client && npm install",
     "build": "cd ./client && npm run build",
+    "build_dev": "cd ./client && npm run build_dev",
     "release": "cd ./client && npm run release",
     "hot": "cd ./client && npm run hot",
     "test": "cd ./client && npm run test",
@@ -23,5 +24,8 @@
   "author": "atomicjolt",
   "license": "MIT",
   "homepage": "https://github.com/atomicjolt/react_client_starter_app",
-  "dependencies": {}
+  "dependencies": {
+    "del": "^2.2.0"
+  },
+  "devDependencies": {}
 }
