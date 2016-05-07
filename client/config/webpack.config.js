@@ -11,6 +11,11 @@ module.exports = function(stage){
   var development = stage == "development";
   var test        = stage == "test";
 
+  // Public path indicates where the assets will be served from. In dev this will likely be localhost or a local domain.
+  // In production this could be a CDN. In developerment this will point to whatever public url is serving
+  // dev assets.
+  var publicPath = production ? settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput;
+
   var excludeFromStats = [
     /node_modules[\\\/]react(-router)?[\\\/]/
   ];
@@ -56,7 +61,7 @@ module.exports = function(stage){
     entries = _.reduce(entries, function(result, entry, key){
       result[key] = [
         'eventsource-polyfill',
-        'webpack-hot-middleware/client',
+        'webpack-hot-middleware/client?path=' + publicPath + '__webpack_hmr&timeout=20000&reload=true',
         entry
       ];
       return result;
@@ -72,7 +77,7 @@ module.exports = function(stage){
       new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"', '__DEV__': false}),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin(),
-      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.AggressiveMergingPlugin(),
       new ChunkManifestPlugin({
         filename: 'webpack-common-manifest.json',
@@ -112,7 +117,7 @@ module.exports = function(stage){
       path: production ? settings.prodOutput : settings.devOutput,                                                // Location where generated files will be output
       filename: production ? '[name]-[chunkhash]' + settings.buildSuffix : '[name]' + settings.buildSuffix,
       chunkFilename: production ? '[id]-[chunkhash]' + settings.buildSuffix : '[id].js',
-      publicPath: production ? settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput,  // Public path indicates where the assets will be served from. In dev this will likely be localhost or a local domain. In production this could be a CDN.
+      publicPath: publicPath,
       sourceMapFilename: 'debugging/[file].map',
       pathinfo: !production // http://webpack.github.io/docs/configuration.html#output-pathinfo
     },
