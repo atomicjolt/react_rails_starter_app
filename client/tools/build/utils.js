@@ -18,14 +18,15 @@ var dateRegEx = /(\d{4})-(\d{1,2})-(\d{1,2})-(.*)/;
 // -----------------------------------------------------------------------------
 function filename2date(filePath){
   var result = {};
-  var basename = path.basename(filePath, '.md');
+  var ext = path.extname(filePath);
+  var basename = path.basename(filePath, ext);
   var match = dateRegEx.exec(basename);
   if(match) {
     var year = match[1];
     var month = match[2];
     var day = match[3];
     var basename = match[4];
-    result.date = moment(month + '-' + day + '-' + year, "MM-DD-YYYY");
+    result.date = month + '-' + day + '-' + year, "MM-DD-YYYY";
     result.url = '/' + year + '/' + month + '/' + day + '/' + basename + '.html';
     if(!result.title){
       result.title = basename.replace(/_/g, ' ');

@@ -5,8 +5,11 @@ var webpack       = require("webpack");
 var nodeWatch     = require("node-watch");
 var del           = require("del");
 
-var file          = require("./file");
-var buildContent  = require("./content");
+var file            = require("./file");
+var buildContent    = require("./content");
+var templates       = require("./templates");
+var utils           = require("./utils");
+var applyProduction = require("./production");
 
 // Settings
 var webpackConfigBuilder = require("../../config/webpack.config");
@@ -30,8 +33,7 @@ var options              = {
   buildSuffix       : settings.buildSuffix, // Webpack build suffix. ie _bundle.js
   templateData      : {},                   // Object that will be passed to every page as it is rendered
   templateMap       : {},                   // Used to specify specific templates on a per file basis
-  templateDirs      : templateDirs,         // Directories to look in for template
-  summaryMarker     : "<!--more-->"         // Used to mark summary point when generating html summaries
+  templateDirs      : templateDirs          // Directories to look in for template
 };
 
 // -----------------------------------------------------------------------------
@@ -79,6 +81,7 @@ function buildContents(inputPath, outputPath, webpackConfig, webpackStats, stage
           var page = buildContent(fullInputPath, webpackConfig, webpackStats, stage, options);
           var outFile = fileName;
           var outPath = outputPath;
+          var inPath = inputPath;
           if(page.destination && page.destination.length > 0){
             if(_.endsWith(page.destination, "/")){
               outPath = path.join(outPath, page.destination);
@@ -86,13 +89,9 @@ function buildContents(inputPath, outputPath, webpackConfig, webpackStats, stage
             } else {
               outFile = page.destination;
             }
+            inPath = "";
           }
-          // Use .html for file extension
-          var ext = path.extname(outFile);
-          if(ext != ".html"){
-            outFile = outFile.replace(ext, ".html");
-          }
-          page.outputFilePath = file.write(inputPath, outPath, outFile, page.html, options);
+          page.outputFilePath = file.write(inPath, outPath, outFile, page.html, options);
           results.push(page);
         } else {
           file.copy(inputPath, outputPath, fileName, options);
@@ -112,6 +111,7 @@ function build(isHot){
     del(outputPath, {force: true}).then(function(){ // Delete everything in the output path
       buildWebpackEntries(isHot).then(function(packResults){
         var pages = buildContents(inputPath, outputPath, packResults.webpackConfig, packResults.webpackStats, stage, options);
+
         resolve({
           pages         : pages,
           inputPath     : inputPath,
@@ -132,7 +132,10 @@ function build(isHot){
 function watch(){
   return new Promise(function(resolve, reject){
     build(true).then(function(buildResults){
+
+      // Watch content
       nodeWatch(buildResults.inputPath, function(filePath){
+        // Build the page
         var page = buildContent(filePath, buildResults.webpackConfig, buildResults.webpackStats, buildResults.stage, buildResults.options);
         page.outputFilePath = file.write(buildResults.inputPath, buildResults.outputPath, path.basename(filePath), page.html, buildResults.options);
       });
