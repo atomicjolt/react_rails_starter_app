@@ -2,61 +2,60 @@ var path          = require("path");
 var _             = require("lodash");
 var fs            = require("fs");
 var frontMatter   = require("front-matter");
-var minify        = require('html-minifier').minify;
 var truncate      = require("html-truncate");
 var ejs           = require("ejs");
 
-var webpackUtils  = require("./webpack_utils");
-var utils         = require("./utils");
-var marked        = require("./markdown");
-var templates     = require("./templates");
-
+var utils           = require("./utils");
+var marked          = require("./markdown");
+var templates       = require("./templates");
+var applyProduction = require("./production");
 
 // -----------------------------------------------------------------------------
 // build a single file
 // -----------------------------------------------------------------------------
 module.exports = function(fullPath, webpackConfig, webpackStats, stage, options){
-  var content  = fs.readFileSync(fullPath, "utf8");
-  var parsed   = frontMatter(content);
-  var metadata = parsed.attributes;
-  var data     = templates.buildData(metadata, options.templateData);
+  var content     = fs.readFileSync(fullPath, "utf8");
+  var parsed      = frontMatter(content);
+  var metadata    = parsed.attributes;
+  var title       = metadata.title;
+  var destination = metadata.permalink;
+  var data        = _.merge({
+    "_"      : _,
+    title    : title,
+    metadata : metadata,
+    url      : destination
+  }, options.templateData);
 
-  // Allow ejs code in content
-  var html = ejs.compile(parsed.body, {
-    cache: false,
-    filename: fullPath
-  })(data);
+  var html = parsed.body;
 
   // Parse any markdown in the resulting html
-  var html = marked(html);
+  html = marked(html);
 
-  // Generate summary of content
-  var summary  = _.includes(html, options.summaryMarker) ?
-    html.split(options.summaryMarker)[0] :
-    truncate(html, options.truncateSummaryAt, { keepImageTag: true });
-
-  // Apply template
-  html = templates.apply(html, fullPath, metadata, options.templateMap, options.templateData, options.templateDirs);
-
-  if(stage == "production"){
-    html = webpackUtils.apply(html, webpackStats, webpackConfig, options.entries, options.cssEntries, options.buildSuffix);
-    html = minify(html, {
-      removeComments: true,
-      collapseWhitespace: true,
-      minifyJS: true
-    });
+  try{
+    // Allow ejs code in content
+    html = ejs.compile(html, {
+      cache: false,
+      filename: fullPath
+    })(data);
+  } catch(err){
+    console.log("Unable to compile html from " + fullPath);
+    console.log(err);
+    console.log("Call stack");
+    console.log(err.stack);
   }
 
-  var result = utils.filename2date(fullPath);
+  // Apply template
+  data.content = html; // Pass in generated html
+  html = templates.apply(data, fullPath, options.templateMap, options.templateDirs);
+  html = applyProduction(html, stage, webpackConfig, webpackStats, options);
 
   return {
-    title       : metadata.title || result.title,
-    date        : result.date,
+    title       : title,
     metadata    : metadata,
-    summary     : summary,
     source      : fullPath,
-    destination : metadata.permalink || result.url,
-    html        : html
+    destination : destination,
+    html        : html,
+    url         : destination
   };
 
 };

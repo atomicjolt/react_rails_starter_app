@@ -10,6 +10,7 @@
     "test": "./node_modules/karma/bin/karma start",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "hot": "node webpack.hot.js",
+    "live": "node server.js",
     "build_dev": "node ./build.js",
     "build": "node ./build.js --release",
     "release": "node ./build.js --release && cd .. && s3_website push",
