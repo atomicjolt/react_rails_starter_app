@@ -11,6 +11,7 @@
     "build_dev": "cd ./client && npm run build_dev",
     "release": "cd ./client && npm run release",
     "hot": "cd ./client && npm run hot",
+    "live": "cd ./client && node server.js",
     "test": "cd ./client && npm run test",
     "coveralls": "cd ./client && npm run coveralls"
   },
