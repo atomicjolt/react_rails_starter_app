@@ -12,7 +12,7 @@ app.get("*", function response(req, res) {
   res.sendFile(path.join(settings.prodOutput, req.url));
 });
 
-app.listen(settings.hotPort, "localhost", function(err) {
+app.listen(settings.hotPort, "0.0.0.0", function(err) {
   if (err) {
     console.log(err);
     return;
