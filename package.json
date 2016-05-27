@@ -25,6 +25,8 @@
   "author": "atomicjolt",
   "license": "MIT",
   "homepage": "https://github.com/atomicjolt/react_client_starter_app",
-  "dependencies": {},
+  "dependencies": {
+    "del": "^2.2.0"
+  },
   "devDependencies": {}
 }
