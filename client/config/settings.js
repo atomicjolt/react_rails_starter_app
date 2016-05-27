@@ -29,7 +29,7 @@ module.exports = {
   prodOutput: prodOutput,
 
   // Dev urls
-  devAssetsUrl: process.env.ASSETS_URL || 'http://localhost:' + hotPort,
+  devAssetsUrl: process.env.ASSETS_URL || '',
 
   hotPort: hotPort,
 
