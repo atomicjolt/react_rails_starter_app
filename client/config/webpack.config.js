@@ -114,9 +114,9 @@ module.exports = function(stage){
     context: __dirname,
     entry: entries,
     output: {
-      path: production ? settings.prodOutput : settings.devOutput,                                                // Location where generated files will be output
+      path: production ? settings.prodOutput : settings.devOutput, // Location where generated files will be output
       filename: production ? '[name]-[chunkhash]' + settings.buildSuffix : '[name]' + settings.buildSuffix,
-      chunkFilename: production ? '[id]-[chunkhash]' + settings.buildSuffix : '[id].js',
+      chunkFilename: production ? '[id]-[chunkhash]' + settings.buildSuffix : '[id]' + settings.buildSuffix,
       publicPath: publicPath,
       sourceMapFilename: 'debugging/[file].map',
       pathinfo: !production // http://webpack.github.io/docs/configuration.html#output-pathinfo
