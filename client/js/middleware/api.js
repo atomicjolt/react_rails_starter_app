@@ -5,7 +5,7 @@ const API = store => next => action => {
 
   function request(method, url, params, body){
     const state = store.getState();
-    const promise = api.execRequest(method, url, state.settings.get("apiUrl"), state.settings.get("jwt"), state.settings.get("csrfToken"), params, body);
+    const promise = api.execRequest(method, url, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
