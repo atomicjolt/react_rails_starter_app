@@ -3,7 +3,7 @@
 import Request          from "superagent";
 import NetworkConstants from "../constants/network";
 import _                from "lodash";
- 
+
 var _pendingRequests = {};
 var _cache = {};
 
@@ -31,19 +31,19 @@ export default class Api{
 
       switch (method){
         case NetworkConstants.GET:
-          request = Request.get(url);
+          request = Request.get(fullUrl);
           break;
         case NetworkConstants.POST:
-          request = Request.post(url).send(body);
+          request = Request.post(fullUrl).send(body);
           break;
         case NetworkConstants.PUT:
-          request = Request.put(url).send(body);
+          request = Request.put(fullUrl).send(body);
           break;
         case NetworkConstants.DEL:
-          request = Request.del(url);
+          request = Request.del(fullUrl);
           break;
       }
-      
+
       request.set('Accept', 'application/json')
             .timeout(NetworkConstants.TIMEOUT)
             .set('Authorization', 'Bearer ' + jwt)
@@ -80,7 +80,7 @@ export default class Api{
     wrapper.promise.then((result) => {
       Api._disposeRequest(url);
     });
-    
+
     return wrapper.promise;
   }
 
