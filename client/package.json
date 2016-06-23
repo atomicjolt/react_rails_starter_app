@@ -25,7 +25,6 @@
     "babel-runtime": "^6.6.1",
     "es6-promise": "^3.2.1",
     "front-matter": "^2.0.7",
-    "immutable": "3.8.1",
     "lodash": "4.13.1",
     "react": "15.1.0",
     "react-dom": "15.1.0",
