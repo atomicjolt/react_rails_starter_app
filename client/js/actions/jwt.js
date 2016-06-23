@@ -18,5 +18,5 @@ export function refreshJwt(userId){
     type:   Constants.REFRESH_JWT,
     method: Network.GET,
     url:    `api/sessions/${userId}`
-  }
+  };
 }

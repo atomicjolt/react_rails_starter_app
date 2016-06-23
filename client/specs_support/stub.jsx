@@ -1,10 +1,10 @@
 "use strict";
 
-import React                    from 'react';
+import React from 'react';
 
 export default class Stub extends React.Component{
 
   render(){
-    return <div>{this.props.children}</div>
+    return <div>{this.props.children}</div>;
   }
 }
