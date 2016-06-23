@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe User do
+describe User, type: :model do
 
   before do
     @user = FactoryGirl.create(:user)
@@ -15,7 +15,6 @@ describe User do
   end
 
   it { should belong_to(:account) }
-
   it { should have_many(:accounts) }
   it { should have_many(:external_identifiers) }
   it { should have_one(:profile) }

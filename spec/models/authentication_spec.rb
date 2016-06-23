@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Authentication do
+describe Authentication, type: :model do
   it { should belong_to :user }
   it "Requires the provider" do
     authentication = FactoryGirl.build(:authentication, provider: nil)

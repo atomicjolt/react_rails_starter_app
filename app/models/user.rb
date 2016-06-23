@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
 
   after_create {|user| user.create_profile unless user.profile }
 
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+
   def display_name
     self.name || self.email
   end
