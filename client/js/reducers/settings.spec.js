@@ -1,32 +1,26 @@
-import Immutable                     from 'immutable';
-import { Constants as JwtConstants } from "../actions/jwt";
-import settings                      from "./settings";
+import settings                from "./settings";
+import { getInitialSettings }  from "./settings";
 
 describe('settings reducer', () => {
 
   describe("initial state", () => {
-    
+
     it("returns empty state", () => {
-      const initialState = Immutable.fromJS({});
+      const initialState = {};
       const state = settings(initialState, {});
-      expect(state.toJS()).toEqual({});
+      expect(state).toEqual({});
     });
 
-    it("has a jwt token", () => {
-      const initial = {jwt: 'asdf'};
-      const initialState = Immutable.fromJS(initial);
-      const state = settings(initialState, {});
-      expect(state.toJS()).toEqual(initial);
+  });
 
-      const newJwt = '1234';
-      const newState = settings(state, {
-        type: JwtConstants.REFRESH_JWT,
-        payload: newJwt
-      });
+  describe("getInitialSettings", () => {
 
-      expect(newState.toJS().jwt).toEqual(newJwt);
+    it("Returns the state provided by the server", () => {
+      const serverSettings = { foo: 1 };
+      const settings = getInitialSettings(serverSettings);
+      expect(settings).toEqual(serverSettings);
     });
-    
+
   });
 
 });
