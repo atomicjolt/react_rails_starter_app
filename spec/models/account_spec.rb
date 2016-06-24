@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Account, :type => :model do
+RSpec.describe Account, type: :model do
 
   before do
     @account = FactoryGirl.create(:account)
