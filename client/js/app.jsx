@@ -9,6 +9,7 @@ import routes                 from './routes';
 import DevTools               from './dev/dev_tools';
 import configureStore         from './store/configure_store';
 import jwt                    from './loaders/jwt';
+import initialSettingsState   from './reducers/settings';
 
 // Polyfill es6 promises for IE
 es6Promise.polyfill();
@@ -36,10 +37,10 @@ class Root extends React.Component {
   }
 }
 
-const store = configureStore({settings: window.DEFAULT_SETTINGS, jwt: window.DEFAULT_JWT});
-if (window.DEFAULT_JWT){
-  // Setup JWT refresh
-  jwt(store.dispatch, window.DEFAULT_SETTINGS.user_id);
+const settings = getInitialSettings(window.DEFAULT_SETTINGS);
+const store = configureStore({settings, jwt: window.DEFAULT_JWT});
+if (window.DEFAULT_JWT){ // Setup JWT refresh
+  jwt(store.dispatch, settings.user_id);
 }
 
 ReactDOM.render(
