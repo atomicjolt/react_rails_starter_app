@@ -26,7 +26,7 @@ export default function(initialState){
 
   if (__DEV__ && module.hot) {
     module.hot.accept(
-      '../reducers', 
+      '../reducers',
       () => store.replaceReducer(require('../reducers'))
     );
   }
