@@ -9,7 +9,7 @@ import routes                   from './routes';
 import DevTools                 from './dev/dev_tools';
 import configureStore           from './store/configure_store';
 import jwt                      from './loaders/jwt';
-import { initialSettingsState } from './reducers/settings';
+import { getInitialSettings }   from './reducers/settings';
 
 // Polyfill es6 promises for IE
 es6Promise.polyfill();
