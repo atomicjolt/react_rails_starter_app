@@ -21,6 +21,14 @@ describe('settings reducer', () => {
       expect(settings).toEqual(serverSettings);
     });
 
+    it("Returns combined state", () => {
+      const serverSettings1 = { foo: 1 };
+      const serverSettings2 = { bar: 2 };
+      const settings = getInitialSettings(serverSettings1, serverSettings2);
+      expect(settings.foo).toEqual(1);
+      expect(settings.bar).toEqual(2);
+    });
+
   });
 
 });
