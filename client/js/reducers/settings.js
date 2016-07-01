@@ -4,6 +4,6 @@ export default (state = {}, action) => {
   return state; // Just return state. Don't let settings from the server mutate.
 };
 
-export const getInitialSettings = (serverSettings) => {
-  return _.merge({}, serverSettings); // Add default settings that can be overriden by values in serverSettings
+export function getInitialSettings(){
+  return _.merge({}, ...arguments); // Add default settings that can be overriden by values in serverSettings
 };
