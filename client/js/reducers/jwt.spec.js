@@ -9,7 +9,7 @@ describe('jwt reducer', () => {
       const initial = { jwtValue: 'asdf' };
       const initialState = initial;
       const state = jwt(initialState, {});
-      expect(state).toEqual(initial);
+      expect(state.toEqual(initial);
 
       const newJwt = { jwtValue: '1234' };
       const newState = jwt(state, {
