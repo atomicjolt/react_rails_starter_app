@@ -2,6 +2,7 @@
 
 import _                                 from "lodash";
 import Immutable                         from "immutable";
+
 import { Constants as MessageConstants } from "../actions/message";
 import ErrorTypes                        from "../constants/error";
 import messages                          from "./messages";
@@ -71,7 +72,7 @@ describe("message reducer", () => {
         payload: {
           message: "Things are great"
         }
-      }
+      };
       const state = messages(initialState, action);
       expect(_.includes(state.get(0),action.payload.message)).toBe(true);
     });

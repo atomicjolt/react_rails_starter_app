@@ -1,6 +1,7 @@
 "use strict";
 
 import Immutable                         from "immutable";
+
 import { Constants as MessageConstants } from "../actions/message";
 import ErrorTypes                        from "../constants/error";
 
@@ -27,7 +28,7 @@ export default (state = initialState, action) => {
       break;
 
     case MessageConstants.REMOVE_MESSAGE:
-      return state.filter(message => message != action.payload.message);
+      return state.filter((message) => message != action.payload.message);
       break;
 
     case MessageConstants.CLEAR_MESSAGES:
@@ -38,4 +39,4 @@ export default (state = initialState, action) => {
       return state;
 
   } 
-}  
+};

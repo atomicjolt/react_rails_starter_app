@@ -1,5 +1,6 @@
-import configureStore     from "./configure_store";
 import Immutable          from 'immutable';
+
+import configureStore     from "./configure_store";
 
 describe('configure store', function() {
 
@@ -10,7 +11,7 @@ describe('configure store', function() {
     };
     const initialState = {
       jwt      : "jwt_token",
-      settings : settings
+      settings
     };
     const store = configureStore(initialState);
     expect(store.getState().settings).toBe(settings);
