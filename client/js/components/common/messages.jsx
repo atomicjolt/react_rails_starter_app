@@ -2,8 +2,9 @@
 
 import React         from "react";
 import { connect }   from 'react-redux';
-import Message       from "./message";
 import Immutable     from 'immutable';
+
+import Message       from "./message";
 
 const select = (state) => {
   return { 
