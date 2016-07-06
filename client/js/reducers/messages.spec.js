@@ -2,6 +2,7 @@
 
 import _                                 from "lodash";
 import Immutable                         from "immutable";
+
 import { Constants as MessageConstants } from "../actions/message";
 import ErrorTypes                        from "../constants/error";
 import messages                          from "./messages";

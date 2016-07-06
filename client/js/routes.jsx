@@ -2,17 +2,11 @@
 
 import React                          from 'react'; // if you use jsx, you have to have React imported
 import { Router, Route, IndexRoute }  from 'react-router';
+
+import appHistory                     from './history';
 import Index                          from './components/layout/index';
 import Home                           from './components/home';
-import appHistory                     from './history';
-
-// @todo: replace this with a `real` component or template
-const NotFound = () => (
-  <div>
-    <h1>Page Not Found</h1>
-    <p>Sorry, but the page you were trying to view does not exist.</p>
-  </div>
-);
+import NotFound                       from './components/common/not_found';
 
 export default (
   <Router history={appHistory}>
