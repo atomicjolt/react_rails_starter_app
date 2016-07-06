@@ -1,6 +1,6 @@
 import { hashHistory }  from 'react-router';
 
-// Uncomment these lines if you would like to remove  
+// Uncomment these lines if you would like to remove
 // the query key from your uri's when using hash history.
 
 // import { Router, useRouterHistory } from 'react-router';
