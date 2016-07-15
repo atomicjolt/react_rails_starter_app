@@ -112,9 +112,13 @@ function build(isHot){
     del(outputPath, {force: true}).then(function(){
 
       // Copy static files to build directory
-      if(settings.staticDir){
+      try {
+        var stats = fs.statSync(settings.staticDir);
         console.log("Copying static files in " + settings.staticDir);
         fs.copySync(settings.staticDir, outputPath);
+      }
+      catch(err) {
+        // No static dir. Do nothing
       }
 
       // Build files
