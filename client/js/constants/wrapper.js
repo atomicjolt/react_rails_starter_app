@@ -8,13 +8,13 @@ export default function(actionTypes, asyncActionTypes){
 
   var types = _.reduce(actionTypes, (result, key) => {
     result[key] = key;
-    return result
+    return result;
   }, {});
 
   types = _.reduce(asyncActionTypes, (result, key) => {
     result[key] = key;
     result[`${key}${DONE}`] = `${key}${DONE}`;
-    return result
+    return result;
   }, types);
 
   types.DONE = DONE;

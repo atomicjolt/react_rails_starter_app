@@ -1,14 +1,12 @@
 "use strict";
 
-import Immutable  from 'immutable';
-
-const initialState = Immutable.fromJS([]);
+const initialState =  {};
 
 export default (state = initialState, action) => {
-  
+
   switch(action.type){
 
     default:
       return state;
-  } 
-}
+  }
+};
