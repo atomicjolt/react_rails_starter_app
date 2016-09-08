@@ -126,10 +126,10 @@ class ApplicationController < ActionController::Base
 
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
           domain = params["custom_canvas_api_domain"] || Rails.application.secrets.application_url
-          email = params[:lis_person_contact_email_primary] 
+          email = params[:lis_person_contact_email_primary]
           email = "user-#{params[:user_id]}@#{domain}" if email.blank? && params[:user_id].present?
           email = generate_email(domain) if email.blank? # If there isn't an email then we have to make one up. We use the user_id and instance guid
-          
+
           @user = User.new(email: email, name: name)
           @user.password              = ::SecureRandom::hex(15)
           @user.password_confirmation = @user.password
@@ -188,6 +188,6 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    
+
 
 end

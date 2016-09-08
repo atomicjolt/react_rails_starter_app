@@ -11,17 +11,17 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def canvas
     canvas_url = session[:canvas_url].strip
     auth = @user.authentications.find_by(provider_url: canvas_url, provider: 'canvas')
-    
+
     # Option 1
     # Assume that accounts will be created through seeds or an admin ui.
     # We get the 'code' using the subdomain of the request which will be something like
     # ltistarterapp.ngrok.io
-    
-    code = request.subdomains.first 
+
+    code = request.subdomains.first
 
     # Option 2
     # Build new accounts based on the canvas_url subdomain.
-    # This will build new accounts using the canvas url. 
+    # This will build new accounts using the canvas url.
     # i.e. Doing the OAuth dance with http://atomicjolt.instructure.com will result
     # in a new account with code 'atomicjolt'
 
@@ -63,7 +63,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => 'Canvas'
 
-    # 
+    #
     redirect_to relaunch_lti_tool_path
   end
 
