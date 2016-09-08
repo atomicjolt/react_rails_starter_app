@@ -480,7 +480,9 @@ export const edit_user = { type: "EDIT_USER", method: "put", reducer: 'users'};
 
 // Merge user into another user
 // Merge a user into another user.
-// To merge users, the caller must have permissions to manage both users.
+// To merge users, the caller must have permissions to manage both users. This
+// should be considered irreversible. This will delete the user and move all
+// the data into the destination user.
 // 
 // When finding users by SIS ids in different accounts the
 // destination_account_id is required.
@@ -496,7 +498,9 @@ export const merge_user_into_another_user_destination_user_id = { type: "MERGE_U
 
 // Merge user into another user
 // Merge a user into another user.
-// To merge users, the caller must have permissions to manage both users.
+// To merge users, the caller must have permissions to manage both users. This
+// should be considered irreversible. This will delete the user and move all
+// the data into the destination user.
 // 
 // When finding users by SIS ids in different accounts the
 // destination_account_id is required.
@@ -509,6 +513,27 @@ export const merge_user_into_another_user_destination_user_id = { type: "MERGE_U
 // Example:
 // return canvasRequest(merge_user_into_another_user_accounts, {id, destination_account_id, destination_user_id});
 export const merge_user_into_another_user_accounts = { type: "MERGE_USER_INTO_ANOTHER_USER_ACCOUNTS", method: "put", reducer: 'users'};
+
+// Split merged users into separate users
+// Merged users cannot be fully restored to their previous state, but this will
+// attempt to split as much as possible to the previous state.
+// To split a merged user, the caller must have permissions to manage all of
+// the users logins. If there are multiple users that have been merged into one
+// user it will split each merge into a separate user.
+// A split can only happen within 90 days of a user merge. A user merge deletes
+// the previous user and may be permanently deleted. In this scenario we create
+// a new user object and proceed to move as much as possible to the new user.
+// The user object will not have preserved the name or settings from the
+// previous user. Some items may have been deleted during a user_merge that
+// cannot be restored, and/or the data has become stale because of other
+// changes to the objects since the time of the user_merge.
+//
+// API Docs: https://canvas.instructure.com/doc/api/users.html
+// API Url: users/{id}/split
+//
+// Example:
+// return canvasRequest(split_merged_users_into_separate_users, {id});
+export const split_merged_users_into_separate_users = { type: "SPLIT_MERGED_USERS_INTO_SEPARATE_USERS", method: "post", reducer: 'users'};
 
 // Get user profile
 // Returns user profile data, including user id, name, and profile pic.

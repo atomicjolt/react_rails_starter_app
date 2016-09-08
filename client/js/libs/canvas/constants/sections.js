@@ -54,13 +54,20 @@ export const cross_list_section = { type: "CROSS_LIST_SECTION", method: "post", 
 export const de_cross_list_section = { type: "DE_CROSS_LIST_SECTION", method: "delete", reducer: 'sections'};
 
 // Edit a section
-// Modify an existing section.  See the documentation for {api:SectionsController#create create API action}.
+// Modify an existing section.
 //
 // API Docs: https://canvas.instructure.com/doc/api/sections.html
 // API Url: sections/{id}
 //
 // Example:
-// return canvasRequest(edit_section, {id});
+// const query = {
+//   course_section[name]
+//   course_section[sis_section_id]
+//   course_section[start_at]
+//   course_section[end_at]
+//   course_section[restrict_enrollments_to_section_dates]
+// }
+// return canvasRequest(edit_section, {id}, query);
 export const edit_section = { type: "EDIT_SECTION", method: "put", reducer: 'sections'};
 
 // Get section information

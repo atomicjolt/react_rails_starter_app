@@ -1,7 +1,7 @@
-import canvasRequest         from "./action";
 import _                     from "lodash";
-import CanvasMiddlware       from "./middleware";
+
 import canvasRequest         from "./action";
+import CanvasMiddlware       from "./middleware";
 import Helper                from "../../../specs_support/helper";
 
 describe('Canvas Middleware', () => {

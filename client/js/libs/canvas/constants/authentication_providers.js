@@ -23,14 +23,14 @@ export const list_authentication_providers_account_authorization_configs = { typ
 
 // Add authentication provider
 // Add external authentication provider(s) for the account.
-// Services may be CAS, Facebook, GitHub, Google, LDAP, OpenID Connect,
-// LinkedIn, SAML, or Twitter.
+// Services may be CAS, Facebook, GitHub, Google, LDAP, LinkedIn,
+// Microsoft, OpenID Connect, SAML, or Twitter.
 // 
 // Each authentication provider is specified as a set of parameters as
 // described below. A provider specification must include an 'auth_type'
-// parameter with a value of 'canvas', 'cas', 'facebook', 'github', 'google',
-// 'ldap', 'linkedin', 'openid_connect', 'saml', or 'twitter'. The other recognized
-// parameters depend on this auth_type; unrecognized parameters are discarded.
+// parameter with a value of 'canvas', 'cas', 'clever', 'facebook', 'github', 'google',
+// 'ldap', 'linkedin', 'microsoft', 'openid_connect', 'saml', or 'twitter'. The other
+// recognized parameters depend on this auth_type; unrecognized parameters are discarded.
 // Provider specifications not specifying a valid auth_type are ignored.
 // 
 // _Deprecated_[2015-05-08] Any provider specification may include an
@@ -67,6 +67,31 @@ export const list_authentication_providers_account_authorization_configs = { typ
 // 
 //   A url to redirect to when a user is authorized through CAS but is not
 //   found in Canvas.
+// 
+// For Clever, the additional recognized parameters are:
+// 
+// - client_id [Required]
+// 
+//   The Clever application's Client ID. Not available if configured globally
+//   for Canvas.
+// 
+// - client_secret [Required]
+// 
+//   The Clever application's Client Secret. Not available if configured
+//   globally for Canvas.
+// 
+// - district_id [Optional]
+// 
+//   A district's Clever ID. Leave this blank to let Clever handle the details
+//   with its District Picker. This is required for Clever Instant Login to
+//   work in a multi-tenant environment.
+// 
+// - login_attribute [Optional]
+// 
+//   The attribute to use to look up the user's login in Canvas. Either
+//   'id' (the default), 'sis_id', 'email', 'student_number', or
+//   'teacher_number'. Note that some fields may not be populated for
+//   all users at Clever.
 // 
 // For Facebook, the additional recognized parameters are:
 // 
@@ -188,6 +213,30 @@ export const list_authentication_providers_account_authorization_configs = { typ
 //   The attribute to use to look up the user's login in Canvas. Either
 //   'id' (the default), or 'emailAddress'
 // 
+// For Microsoft, the additional recognized parameters are:
+// 
+// - application_id [Required]
+// 
+//   The application's ID.
+// 
+// - application_secret [Required]
+// 
+//   The application's Client Secret (Password)
+// 
+// - tenant [Optional]
+// 
+//   See https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-protocols/
+//   Valid values are 'common', 'organizations', 'consumers', or an Azure Active Directory Tenant
+//   (as either a UUID or domain, such as contoso.onmicrosoft.com). Defaults to 'common'
+// 
+// - login_attribute [Optional]
+// 
+//   See https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-tokens/#idtokens
+//   Valid values are 'sub', 'email', 'oid', or 'preferred_username'. Note
+//   that email may not always be populated in the user's profile at
+//   Microsoft. Oid will not be populated for personal Microsoft accounts.
+//   Defaults to 'sub'
+// 
 // For OpenID Connect, the additional recognized parameters are:
 // 
 // - client_id [Required]
@@ -223,6 +272,22 @@ export const list_authentication_providers_account_authorization_configs = { typ
 // 
 // For SAML, the additional recognized parameters are:
 // 
+// - metadata [Optional]
+// 
+//   An XML document to parse as SAML metadata, and automatically populate idp_entity_id,
+//   log_in_url, log_out_url, certificate_fingerprint, and identifier_format
+// 
+// - metadata_uri [Optional]
+// 
+//   A URI to download the SAML metadata from, and automatically populate idp_entity_id,
+//   log_in_url, log_out_url, certificate_fingerprint, and identifier_format. This URI
+//   will also be saved, and the metadata periodically refreshed, automatically. If
+//   the metadata contains multiple entities, also supply idp_entity_id to distinguish
+//   which one you want (otherwise the only entity in the metadata will be inferred).
+//   If you provide the URI 'urn:mace:incommon', the InCommon metadata aggregate will
+//   be used instead, and additional validation checks will happen (including
+//   validating that the metadata has been properly signed with the InCommon key).
+// 
 // - idp_entity_id
 // 
 //   The SAML IdP's entity ID
@@ -231,7 +296,7 @@ export const list_authentication_providers_account_authorization_configs = { typ
 // 
 //   The SAML service's SSO target URL
 // 
-// - log_out_url
+// - log_out_url [Optional]
 // 
 //   The SAML service's SLO target URL
 // 
@@ -261,9 +326,13 @@ export const list_authentication_providers_account_authorization_configs = { typ
 //   - urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName
 //   - urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName
 // 
-// - requested_authn_context
+// - requested_authn_context [Optional]
 // 
 //   The SAML AuthnContext
+// 
+// - federated_attributes [Optional]
+// 
+//   See FederatedAttributesConfig. Any value is allowed for the provider attribute names.
 // 
 // For Twitter, the additional recognized parameters are:
 // 
@@ -295,14 +364,14 @@ export const add_authentication_provider_authentication_providers = { type: "ADD
 
 // Add authentication provider
 // Add external authentication provider(s) for the account.
-// Services may be CAS, Facebook, GitHub, Google, LDAP, OpenID Connect,
-// LinkedIn, SAML, or Twitter.
+// Services may be CAS, Facebook, GitHub, Google, LDAP, LinkedIn,
+// Microsoft, OpenID Connect, SAML, or Twitter.
 // 
 // Each authentication provider is specified as a set of parameters as
 // described below. A provider specification must include an 'auth_type'
-// parameter with a value of 'canvas', 'cas', 'facebook', 'github', 'google',
-// 'ldap', 'linkedin', 'openid_connect', 'saml', or 'twitter'. The other recognized
-// parameters depend on this auth_type; unrecognized parameters are discarded.
+// parameter with a value of 'canvas', 'cas', 'clever', 'facebook', 'github', 'google',
+// 'ldap', 'linkedin', 'microsoft', 'openid_connect', 'saml', or 'twitter'. The other
+// recognized parameters depend on this auth_type; unrecognized parameters are discarded.
 // Provider specifications not specifying a valid auth_type are ignored.
 // 
 // _Deprecated_[2015-05-08] Any provider specification may include an
@@ -339,6 +408,31 @@ export const add_authentication_provider_authentication_providers = { type: "ADD
 // 
 //   A url to redirect to when a user is authorized through CAS but is not
 //   found in Canvas.
+// 
+// For Clever, the additional recognized parameters are:
+// 
+// - client_id [Required]
+// 
+//   The Clever application's Client ID. Not available if configured globally
+//   for Canvas.
+// 
+// - client_secret [Required]
+// 
+//   The Clever application's Client Secret. Not available if configured
+//   globally for Canvas.
+// 
+// - district_id [Optional]
+// 
+//   A district's Clever ID. Leave this blank to let Clever handle the details
+//   with its District Picker. This is required for Clever Instant Login to
+//   work in a multi-tenant environment.
+// 
+// - login_attribute [Optional]
+// 
+//   The attribute to use to look up the user's login in Canvas. Either
+//   'id' (the default), 'sis_id', 'email', 'student_number', or
+//   'teacher_number'. Note that some fields may not be populated for
+//   all users at Clever.
 // 
 // For Facebook, the additional recognized parameters are:
 // 
@@ -460,6 +554,30 @@ export const add_authentication_provider_authentication_providers = { type: "ADD
 //   The attribute to use to look up the user's login in Canvas. Either
 //   'id' (the default), or 'emailAddress'
 // 
+// For Microsoft, the additional recognized parameters are:
+// 
+// - application_id [Required]
+// 
+//   The application's ID.
+// 
+// - application_secret [Required]
+// 
+//   The application's Client Secret (Password)
+// 
+// - tenant [Optional]
+// 
+//   See https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-protocols/
+//   Valid values are 'common', 'organizations', 'consumers', or an Azure Active Directory Tenant
+//   (as either a UUID or domain, such as contoso.onmicrosoft.com). Defaults to 'common'
+// 
+// - login_attribute [Optional]
+// 
+//   See https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-tokens/#idtokens
+//   Valid values are 'sub', 'email', 'oid', or 'preferred_username'. Note
+//   that email may not always be populated in the user's profile at
+//   Microsoft. Oid will not be populated for personal Microsoft accounts.
+//   Defaults to 'sub'
+// 
 // For OpenID Connect, the additional recognized parameters are:
 // 
 // - client_id [Required]
@@ -495,6 +613,22 @@ export const add_authentication_provider_authentication_providers = { type: "ADD
 // 
 // For SAML, the additional recognized parameters are:
 // 
+// - metadata [Optional]
+// 
+//   An XML document to parse as SAML metadata, and automatically populate idp_entity_id,
+//   log_in_url, log_out_url, certificate_fingerprint, and identifier_format
+// 
+// - metadata_uri [Optional]
+// 
+//   A URI to download the SAML metadata from, and automatically populate idp_entity_id,
+//   log_in_url, log_out_url, certificate_fingerprint, and identifier_format. This URI
+//   will also be saved, and the metadata periodically refreshed, automatically. If
+//   the metadata contains multiple entities, also supply idp_entity_id to distinguish
+//   which one you want (otherwise the only entity in the metadata will be inferred).
+//   If you provide the URI 'urn:mace:incommon', the InCommon metadata aggregate will
+//   be used instead, and additional validation checks will happen (including
+//   validating that the metadata has been properly signed with the InCommon key).
+// 
 // - idp_entity_id
 // 
 //   The SAML IdP's entity ID
@@ -503,7 +637,7 @@ export const add_authentication_provider_authentication_providers = { type: "ADD
 // 
 //   The SAML service's SSO target URL
 // 
-// - log_out_url
+// - log_out_url [Optional]
 // 
 //   The SAML service's SLO target URL
 // 
@@ -533,9 +667,13 @@ export const add_authentication_provider_authentication_providers = { type: "ADD
 //   - urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName
 //   - urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName
 // 
-// - requested_authn_context
+// - requested_authn_context [Optional]
 // 
 //   The SAML AuthnContext
+// 
+// - federated_attributes [Optional]
+// 
+//   See FederatedAttributesConfig. Any value is allowed for the provider attribute names.
 // 
 // For Twitter, the additional recognized parameters are:
 // 

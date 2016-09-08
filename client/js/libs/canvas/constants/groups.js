@@ -10,6 +10,7 @@
 // Example:
 // const query = {
 //   context_type
+//   include
 // }
 // return canvasRequest(list_your_groups, {}, query);
 export const list_your_groups = { type: "LIST_YOUR_GROUPS", method: "get", reducer: 'groups'};
@@ -23,6 +24,7 @@ export const list_your_groups = { type: "LIST_YOUR_GROUPS", method: "get", reduc
 // Example:
 // const query = {
 //   only_own_groups
+//   include
 // }
 // return canvasRequest(list_groups_available_in_context_accounts, {account_id}, query);
 export const list_groups_available_in_context_accounts = { type: "LIST_GROUPS_AVAILABLE_IN_CONTEXT_ACCOUNTS", method: "get", reducer: 'groups'};
@@ -36,6 +38,7 @@ export const list_groups_available_in_context_accounts = { type: "LIST_GROUPS_AV
 // Example:
 // const query = {
 //   only_own_groups
+//   include
 // }
 // return canvasRequest(list_groups_available_in_context_courses, {course_id}, query);
 export const list_groups_available_in_context_courses = { type: "LIST_GROUPS_AVAILABLE_IN_CONTEXT_COURSES", method: "get", reducer: 'groups'};

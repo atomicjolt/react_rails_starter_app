@@ -109,6 +109,7 @@ export const enrollment_by_id = { type: "ENROLLMENT_BY_ID", method: "get", reduc
 //   enrollment[notify]
 //   enrollment[self_enrollment_code]
 //   enrollment[self_enrolled]
+//   enrollment[associated_user_id]
 // }
 // return canvasRequest(enroll_user_courses, {course_id}, query);
 export const enroll_user_courses = { type: "ENROLL_USER_COURSES", method: "post", reducer: 'enrollments'};
@@ -131,12 +132,14 @@ export const enroll_user_courses = { type: "ENROLL_USER_COURSES", method: "post"
 //   enrollment[notify]
 //   enrollment[self_enrollment_code]
 //   enrollment[self_enrolled]
+//   enrollment[associated_user_id]
 // }
 // return canvasRequest(enroll_user_sections, {section_id}, query);
 export const enroll_user_sections = { type: "ENROLL_USER_SECTIONS", method: "post", reducer: 'enrollments'};
 
-// Conclude or deactivate an enrollment
-// Delete, conclude or deactivate an enrollment.
+// Conclude, deactivate, or delete an enrollment
+// Conclude, deactivate, or delete an enrollment. If the +task+ argument isn't given, the enrollment
+// will be concluded.
 //
 // API Docs: https://canvas.instructure.com/doc/api/enrollments.html
 // API Url: courses/{course_id}/enrollments/{id}
@@ -145,8 +148,8 @@ export const enroll_user_sections = { type: "ENROLL_USER_SECTIONS", method: "pos
 // const query = {
 //   task
 // }
-// return canvasRequest(conclude_or_deactivate_enrollment, {course_id, id}, query);
-export const conclude_or_deactivate_enrollment = { type: "CONCLUDE_OR_DEACTIVATE_ENROLLMENT", method: "delete", reducer: 'enrollments'};
+// return canvasRequest(conclude_deactivate_or_delete_enrollment, {course_id, id}, query);
+export const conclude_deactivate_or_delete_enrollment = { type: "CONCLUDE_DEACTIVATE_OR_DELETE_ENROLLMENT", method: "delete", reducer: 'enrollments'};
 
 // Re-activate an enrollment
 // Activates an inactive enrollment

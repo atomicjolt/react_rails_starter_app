@@ -91,6 +91,7 @@ export const get_single_assignment = { type: "GET_SINGLE_ASSIGNMENT", method: "g
 //   assignment[only_visible_to_overrides]
 //   assignment[published]
 //   assignment[grading_standard_id]
+//   assignment[omit_from_final_grade]
 // }
 // return canvasRequest(create_assignment, {course_id}, query);
 export const create_assignment = { type: "CREATE_ASSIGNMENT", method: "post", reducer: 'assignments'};
@@ -136,6 +137,7 @@ export const create_assignment = { type: "CREATE_ASSIGNMENT", method: "post", re
 //   assignment[only_visible_to_overrides]
 //   assignment[published]
 //   assignment[grading_standard_id]
+//   assignment[omit_from_final_grade]
 // }
 // return canvasRequest(edit_assignment, {course_id, id}, query);
 export const edit_assignment = { type: "EDIT_ASSIGNMENT", method: "put", reducer: 'assignments'};

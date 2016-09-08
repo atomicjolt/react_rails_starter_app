@@ -60,6 +60,7 @@ export const list_courses_for_user = { type: "LIST_COURSES_FOR_USER", method: "g
 //   course[integration_id]
 //   course[hide_final_grades]
 //   course[apply_assignment_group_weights]
+//   course[time_zone]
 //   offer
 //   enroll_me
 //   course[syllabus_body]
@@ -311,6 +312,7 @@ export const get_single_course_accounts = { type: "GET_SINGLE_COURSE_ACCOUNTS", 
 //   course[end_at]
 //   course[license]
 //   course[is_public]
+//   course[is_public_to_auth_users]
 //   course[public_syllabus]
 //   course[public_description]
 //   course[allow_student_wiki_edits]
@@ -323,11 +325,17 @@ export const get_single_course_accounts = { type: "GET_SINGLE_COURSE_ACCOUNTS", 
 //   course[sis_course_id]
 //   course[integration_id]
 //   course[hide_final_grades]
+//   course[time_zone]
 //   course[apply_assignment_group_weights]
+//   course[storage_quota_mb]
 //   offer
+//   event
 //   course[syllabus_body]
 //   course[grading_standard_id]
 //   course[course_format]
+//   course[image_id]
+//   course[image_url]
+//   course[remove_image]
 // }
 // return canvasRequest(update_course, {id}, query);
 export const update_course = { type: "UPDATE_COURSE", method: "put", reducer: 'courses'};

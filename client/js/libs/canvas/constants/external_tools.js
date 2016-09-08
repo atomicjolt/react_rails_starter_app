@@ -31,6 +31,21 @@ export const list_external_tools_courses = { type: "LIST_EXTERNAL_TOOLS_COURSES"
 // return canvasRequest(list_external_tools_accounts, {account_id}, query);
 export const list_external_tools_accounts = { type: "LIST_EXTERNAL_TOOLS_ACCOUNTS", method: "get", reducer: 'external_tools'};
 
+// List external tools
+// Returns the paginated list of external tools for the current context.
+// See the get request docs for a single tool for a list of properties on an external tool.
+//
+// API Docs: https://canvas.instructure.com/doc/api/external_tools.html
+// API Url: groups/{group_id}/external_tools
+//
+// Example:
+// const query = {
+//   search_term
+//   selectable
+// }
+// return canvasRequest(list_external_tools_groups, {group_id}, query);
+export const list_external_tools_groups = { type: "LIST_EXTERNAL_TOOLS_GROUPS", method: "get", reducer: 'external_tools'};
+
 // Get a sessionless launch url for an external tool.
 // Returns a sessionless launch url for an external tool.
 // 

@@ -230,7 +230,10 @@ export const delete_outcome_group_courses = { type: "DELETE_OUTCOME_GROUP_COURSE
 // API Url: global/outcome_groups/{id}/outcomes
 //
 // Example:
-// return canvasRequest(list_linked_outcomes_global, {id});
+// const query = {
+//   outcome_style
+// }
+// return canvasRequest(list_linked_outcomes_global, {id}, query);
 export const list_linked_outcomes_global = { type: "LIST_LINKED_OUTCOMES_GLOBAL", method: "get", reducer: 'outcome_groups'};
 
 // List linked outcomes
@@ -240,7 +243,10 @@ export const list_linked_outcomes_global = { type: "LIST_LINKED_OUTCOMES_GLOBAL"
 // API Url: accounts/{account_id}/outcome_groups/{id}/outcomes
 //
 // Example:
-// return canvasRequest(list_linked_outcomes_accounts, {account_id, id});
+// const query = {
+//   outcome_style
+// }
+// return canvasRequest(list_linked_outcomes_accounts, {account_id, id}, query);
 export const list_linked_outcomes_accounts = { type: "LIST_LINKED_OUTCOMES_ACCOUNTS", method: "get", reducer: 'outcome_groups'};
 
 // List linked outcomes
@@ -250,7 +256,10 @@ export const list_linked_outcomes_accounts = { type: "LIST_LINKED_OUTCOMES_ACCOU
 // API Url: courses/{course_id}/outcome_groups/{id}/outcomes
 //
 // Example:
-// return canvasRequest(list_linked_outcomes_courses, {course_id, id});
+// const query = {
+//   outcome_style
+// }
+// return canvasRequest(list_linked_outcomes_courses, {course_id, id}, query);
 export const list_linked_outcomes_courses = { type: "LIST_LINKED_OUTCOMES_COURSES", method: "get", reducer: 'outcome_groups'};
 
 // Create/link an outcome
