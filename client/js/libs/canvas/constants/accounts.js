@@ -88,8 +88,12 @@ export const list_active_courses_in_account = { type: "LIST_ACTIVE_COURSES_IN_AC
 //   account[default_storage_quota_mb]
 //   account[default_user_storage_quota_mb]
 //   account[default_group_storage_quota_mb]
-//   account[settings][restrict_student_past_view]
-//   account[settings][restrict_student_future_view]
+//   account[settings][restrict_student_past_view][value]
+//   account[settings][restrict_student_past_view][locked]
+//   account[settings][restrict_student_future_view][value]
+//   account[settings][restrict_student_future_view][locked]
+//   account[settings][restrict_student_future_listing][value]
+//   account[settings][restrict_student_future_listing][locked]
 // }
 // return canvasRequest(update_account, {id}, query);
 export const update_account = { type: "UPDATE_ACCOUNT", method: "put", reducer: 'accounts'};
@@ -159,6 +163,34 @@ export const create_new_root_account = { type: "CREATE_NEW_ROOT_ACCOUNT", method
 // }
 // return canvasRequest(create_new_root_account_account_id, {account_id}, query);
 export const create_new_root_account_account_id = { type: "CREATE_NEW_ROOT_ACCOUNT_ACCOUNT_ID", method: "post", reducer: 'accounts'};
+
+// Search all users in consortium
+// Returns the list of users with the provided search term.
+//
+// API Docs: https://canvas.instructure.com/doc/api/accounts.html
+// API Url: accounts/{account_id}/consortium_users
+//
+// Example:
+// const query = {
+//   search_term (required)
+//   include
+// }
+// return canvasRequest(search_all_users_in_consortium_accounts, {account_id}, query);
+export const search_all_users_in_consortium_accounts = { type: "SEARCH_ALL_USERS_IN_CONSORTIUM_ACCOUNTS", method: "get", reducer: 'accounts'};
+
+// Search all users in consortium
+// Returns the list of users with the provided search term.
+//
+// API Docs: https://canvas.instructure.com/doc/api/accounts.html
+// API Url: site_admin/users
+//
+// Example:
+// const query = {
+//   search_term (required)
+//   include
+// }
+// return canvasRequest(search_all_users_in_consortium_site_admin, {}, query);
+export const search_all_users_in_consortium_site_admin = { type: "SEARCH_ALL_USERS_IN_CONSORTIUM_SITE_ADMIN", method: "get", reducer: 'accounts'};
 
 // Create a new sub-account
 // Add a new sub-account to a given account.

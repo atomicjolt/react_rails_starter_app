@@ -11,6 +11,7 @@
 // Example:
 // const query = {
 //   include
+//   exclude_assignment_submission_types
 //   override_assignment_dates
 //   grading_period_id
 //   scope_assignments_to_student

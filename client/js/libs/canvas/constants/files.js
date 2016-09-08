@@ -103,15 +103,18 @@ export const list_files_groups = { type: "LIST_FILES_GROUPS", method: "get", red
 // return canvasRequest(list_files_folders, {id}, query);
 export const list_files_folders = { type: "LIST_FILES_FOLDERS", method: "get", reducer: 'files'};
 
-// Get quota information
+// Get public inline preview url
 // Determine the URL that should be used for inline preview of the file.
 //
 // API Docs: https://canvas.instructure.com/doc/api/files.html
 // API Url: files/{id}/public_url
 //
 // Example:
-// return canvasRequest(get_quota_information, {id});
-export const get_quota_information = { type: "GET_QUOTA_INFORMATION", method: "get", reducer: 'files'};
+// const query = {
+//   submission_id
+// }
+// return canvasRequest(get_public_inline_preview_url, {id}, query);
+export const get_public_inline_preview_url = { type: "GET_PUBLIC_INLINE_PREVIEW_URL", method: "get", reducer: 'files'};
 
 // Get file
 // Returns the standard attachment json object
