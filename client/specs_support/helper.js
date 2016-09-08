@@ -2,6 +2,7 @@
 
 import _                  from "lodash";
 import Immutable          from 'immutable';
+
 import configureStore     from "../js/store/configure_store";
 
 export default class Helper{

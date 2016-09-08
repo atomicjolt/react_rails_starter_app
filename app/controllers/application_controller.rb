@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
         decoded_token = AuthToken.valid?(token)
 
         raise InvalidTokenError if Rails.application.secrets.auth0_client_id != decoded_token[0]["aud"]
-        
+
         @user = User.find(decoded_token[0]['user_id'])
         sign_in(@user, :event => :authentication)
       rescue JWT::DecodeError, InvalidTokenError
@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
       if !current_user.admin
         respond_to do |format|
           format.json {
-            render json: { error: "Unauthorized: User not allowed to access requested resource." }, status: :unauthorized  
+            render json: { error: "Unauthorized: User not allowed to access requested resource." }, status: :unauthorized
           }
         end
       end

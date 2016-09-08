@@ -8,13 +8,13 @@ export default function(actions, requests){
 
   var types = _.reduce(actions, (result, key) => {
     result[key] = key;
-    return result
+    return result;
   }, {});
 
   types = _.reduce(requests, (result, key) => {
     result[key] = key;
     result[`${key}${DONE}`] = `${key}${DONE}`;
-    return result
+    return result;
   }, types);
 
   types.DONE = DONE;

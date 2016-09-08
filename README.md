@@ -1,6 +1,8 @@
 # LTI Starter App
+-----------------------
+This project provides a starting point for building a LTI tools using React with Ruby on Rails as a backend.
+There are many starter kits that will help you get started with React and Redux. This is the one created by, maintained by and used by [Atomic Jolt](http://www.atomicjolt.com). 
 
-This project provides a starting point for building an LTI or OAuth application.
 
 ## Build a new application using the LTI Starter App Rails application template:
 Since the project is not public you will need to have a local copy of the lti_starter_app project.
@@ -46,6 +48,36 @@ Note: the App and Assets subdomains must be different.
 1. Open application.rb and change `ltistarterapp` to the name you choose.
 2. Do a global search and replace for `lti_starter_app` and change it to the name you choose.
 3. Do a global search and replace for `ltistarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
+## Assets
+-----------
+Any files added to the assets directory can be used by in code and assigned to a variable. This
+allows for referring to assets using dynamically generated strings. The assets will be built according to
+the rules specified in your webpack configuration. Typically, this means that in production the names will
+be changed to include a SHA.
+
+First importing the assets:
+  `import assets from '../libs/assets';`
+
+Then assign the assest to a variable:
+  `const img = assets("./images/atomicjolt.jpg");`
+
+The value can then be used when rendering:
+  `render(){
+    const img = assets("./images/atomicjolt.jpg");
+    return<div>
+    <img src={img} />
+    </div>;
+  }`
+
+
+## Static
+-----------
+Files added to the static directory will be copied directly into the build. These files will not be renamed.
+
+
+#Tests
+-----------
+Karma and Jasmine are used for testing. To run tests run:
 
 #### Secrets file
 Rename `config/secrets.example.yml` to `config/secrets.yml`. Open the file and change each entry to values that are relevant for your application.

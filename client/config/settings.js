@@ -35,6 +35,8 @@ module.exports = {
 
   buildSuffix: '_bundle.js',
 
+  staticDir: clientAppPath + 'static',
+
   entries: {
     app: clientAppPath + 'js/app.jsx'
   },
