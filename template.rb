@@ -14,20 +14,20 @@ repo = "git@bitbucket.com:atomicjolt/lti_starter_app.git"
 @working_dir = destination_root
 
 ###########################################################
-# 
+#
 # Overrides
 #
 def source_paths
-  paths = Array(super) + 
+  paths = Array(super) +
     [File.expand_path(File.dirname(__FILE__))]
   paths << @working_dir
   paths
 end
 
 ###########################################################
-# 
+#
 # Helper methods
-# 
+#
 def git_repo_url
   @git_repo_url ||= ask_with_default("What is the Github or bitbucket remote URL for this project?", :blue, "skip")
 end
@@ -53,7 +53,7 @@ def app_dir
 end
 
 ###########################################################
-# 
+#
 # Gather information
 #
 app_name = app_dir
@@ -64,9 +64,9 @@ assets_port = ask_with_default("Port for assets server?", :blue, 8000)
 
 
 ###########################################################
-# 
+#
 # Clone and add remote
-# 
+#
 FileUtils.rm_rf("#{@working_dir}/.")               # Get rid of the rails generated code.
 run "cd .. && git clone #{repo} #{@working_dir}"   # Replace it with our repo.
 git remote: "set-url origin #{git_repo_url}" if git_repo_specified?
@@ -74,7 +74,7 @@ git remote: "add upstream #{repo}"
 
 
 ###########################################################
-# 
+#
 # Database.yml
 #
 inside 'config' do
@@ -83,9 +83,9 @@ end
 
 
 ###########################################################
-# 
+#
 # secrets.yml
-# 
+#
 inside 'config' do
   copy_file "secrets.example.yml", "secrets.yml"
 
@@ -96,17 +96,18 @@ end
 
 
 ###########################################################
-# 
+#
 # .env
-# 
+#
 create_file '.env' do <<-EOF
 APP_SUBDOMAIN=#{url_safe_name}
-APP_URL=ngrok.io
+APP_URL=atomicjolt.xyz
 APP_PORT=#{rails_port}
 ASSETS_SUBDOMAIN=#{url_safe_name}assets
 ASSETS_PORT=#{assets_port}
-ASSETS_URL=https://#{url_safe_name}assets.ngrok.io
+ASSETS_URL=https://#{url_safe_name}assets.atomicjolt.xyz
 APP_DEFAULT_CANVAS_URL=https://atomicjolt.instructure.com
+
 # Get developer id and key from canvas
 DEVELOPER_ID=1234
 DEVELOPER_KEY=1234
@@ -115,7 +116,7 @@ end
 
 
 ###########################################################
-# 
+#
 # Modify application name
 #
 allowed = [".rb", ".js", ".yml", ".erb", ".json", ".md", ".jsx", ".example"]
@@ -125,7 +126,7 @@ modify_files << "Gemfile"
 modify_files << ".ruby-gemset"
 
 modify_files.each do |f|
-  
+
   gsub_file(f, "lti_starter_app") do |match|
     app_name.underscore
   end
@@ -146,9 +147,9 @@ end
 
 
 ###########################################################
-# 
+#
 # Install Gems
-# 
+#
 
 begin
   require "rvm"
@@ -172,34 +173,34 @@ end
 
 
 ###########################################################
-# 
+#
 # npm install
-# 
+#
 run "cd client && npm install"
 
 
 ###########################################################
-# 
+#
 # Initialize the database
-# 
+#
 rake("db:create")
 rake("db:schema:load")
 rake("db:seed")
 
 
 ###########################################################
-# 
+#
 # Commit changes to git
-# 
+#
 git add: '.'
 git commit: "-a -m 'Initial Project Commit'"
 git push: "origin master" if git_repo_specified?
 
 
 ###########################################################
-# 
+#
 # Notes
-# 
+#
 puts "***********************************************"
 puts "*"
 puts "*               Notes                          "
