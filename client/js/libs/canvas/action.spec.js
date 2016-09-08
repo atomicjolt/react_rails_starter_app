@@ -9,7 +9,6 @@ describe('canvasRequest', () => {
     expect(action.params.course_id).toBe(1);
     expect(action.canvas.method).toBe("get");
     expect(action.canvas.type).toBe("LIST_ACCOUNTS");
-  
   });
 
 });
