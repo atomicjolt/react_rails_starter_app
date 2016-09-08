@@ -24,13 +24,13 @@ Rails.application.routes.draw do
       get :xml
     end
   end
-  
+
   devise_for :users, controllers: {
     sessions: "sessions",
     registrations: "registrations",
     omniauth_callbacks: "omniauth_callbacks"
   }
-  
+
   as :user do
     get     '/auth/failure'         => 'sessions#new'
     get     'auth/:provider'        => 'omniauth_callbacks#passthru'
@@ -42,7 +42,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :canvas_authentications
-  
+
   resources :admin, only: [:index]
 
   namespace :api do
