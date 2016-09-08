@@ -4,7 +4,6 @@ This project provides a starting point for building a React or OAuth application
 There are many starter kits that will help you get started with React and Redux. This is the one created by, maintained by and used by [Atomic Jolt](http://www.atomicjolt.com). 
 
 
-
 ## Build a new application using the React Starter App Rails application template:
 rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_starter_app/master/template.rb
 
