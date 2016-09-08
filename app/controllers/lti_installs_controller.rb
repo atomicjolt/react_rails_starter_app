@@ -19,7 +19,7 @@ class LtiInstallsController < ApplicationController
     @errors = account_errors.concat(course_errors)
   end
 
-  private 
+  private
 
     def main_account
       current_user.account
@@ -40,14 +40,14 @@ class LtiInstallsController < ApplicationController
       errors = []
       installs = []
       collections.each do |auth, collection|
-        # Install the LTI tool by calling setup on the lti_interface 
+        # Install the LTI tool by calling setup on the lti_interface
         collection.find_all{|a| params[:lti_install][field].include?(a['id'].to_s) }.each do |obj|
           result = lti_interface.method("setup").call(
-            obj, 
-            account.lti_key, 
+            obj,
+            account.lti_key,
             account.lti_secret,
             auth.provider_url,
-            auth.token, 
+            auth.token,
             lti_options
           )
           # Check the result to make sure there wasn't an error
