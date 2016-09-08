@@ -31,8 +31,6 @@ If you need to run services individually or just don't like Foreman you can run 
 ```
 $ rails server
 $ cd client && nodemon webpack.hot.js
-$ ngrok --subdomain master_assets --log stdout 8080
-$ ngrok --subdomain ltistarterapp --log stdout 3000
 ```
 
 ## Setting up LTI Starter App
@@ -99,7 +97,7 @@ This application requires:
 
 Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
 
-#### NGROK
+#### NGROK (optional)
 To test your application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to use ngrok which can be downloaded from [ngrok](https://ngrok.com/).
 
 Running 'ngrok --subdomain ltistarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
