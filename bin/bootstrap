@@ -1,45 +1,22 @@
 #!/usr/bin/env bash
 
-DROPBOX_FOLDER=lti_starter_app
+# Meant to be run from root directory of project
+# ./bin/bootstrap
+DROPBOX_FOLDER=aj-dev/lti_starter_app
 
-# database.yml
-if [ -e config/database.yml ]
-then
-  rm config/database.yml
-fi
+# All config files for project
+files=("config/secrets.yml" "config/database.yml")
 
-ln -s "$HOME/Dropbox/$DROPBOX_FOLDER/configs/database.postgres.yml" config/database.yml
+for file in "${files[@]}"
+do
+  if [ -e $file ]
+  then
+    rm $file
+  fi
+  mkdir -p $(dirname "${file}")
+  ln -s "$HOME/Dropbox/$DROPBOX_FOLDER/$file" $file
+done
 
-
-# database.yml
-if [ -e config/database_stats.yml ]
-then
-  rm config/database_stats.yml
-fi
-
-ln -s "$HOME/Dropbox/$DROPBOX_FOLDER/configs/database_stats.yml" config/database_stats.yml
-
-
-# ec2.yml
-if [ -e config/ec2.yml ]
-then
-  rm config/ec2.yml
-fi
-
-ln -s "$HOME/Dropbox/$DROPBOX_FOLDER/configs/ec2.yml" config/ec2.yml
-
-# secrets.yml
-if [ -e config/secrets.yml ]
-then
-  rm config/secrets.yml
-fi
-
-ln -s "$HOME/Dropbox/$DROPBOX_FOLDER/configs/secrets.yml" config/secrets.yml
-
-# sidekiq.yml
-if [ -e config/sidekiq.yml ]
-then
-  rm config/sidekiq.yml
-fi
-
-ln -s "$HOME/Dropbox/$DROPBOX_FOLDER/configs/sidekiq.yml" config/sidekiq.yml
+# project specific code or symlinks
+# cd config
+# ln -s database.development.yml database.yml
