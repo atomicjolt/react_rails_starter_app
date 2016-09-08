@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
     }
   } else if(action.canvas && _.endsWith(action.type, "_DONE")){
     state = state.get(action.canvas.reducer);
-    
+
     switch(action.canvas.method){
       case 'get':
         const mapped = _.reduce(action.payload, (result, as) => { result[as.id] = as; return result; }, {});
