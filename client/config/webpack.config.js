@@ -30,11 +30,10 @@ module.exports = function(stage){
                 ',presets[]=es2015' + // Include all plugins needed to handle es2015 syntax
                 ',presets[]=stage-0'; // Enables experimental ES features.
 
-  if(stage == "development"){
+  if(development){
     presets = presets + ',presets[]=react-hmre'; // Adds react hot module reload
   } else if (production) {
     plugins = plugins + ',plugins[]=transform-react-constant-elements'; // Hoists static React components to reduce calls to createElement
-    plugins = plugins + ',plugins[]=transform-react-inline-elements';   // Replaces the React.createElement function with a more optimized one for production
     plugins = plugins + ',plugins[]=transform-react-remove-prop-types'; // Removes prop types from code
   }
 
