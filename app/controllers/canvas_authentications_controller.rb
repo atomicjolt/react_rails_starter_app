@@ -21,7 +21,7 @@ class CanvasAuthenticationsController < ApplicationController
       session[:canvas_url] = canvas_url.to_s
       canvas_url.path  = ''
       canvas_url.query = nil
-      redirect_to user_omniauth_authorize_path(:canvas, :canvas_url => canvas_url.to_s)
+      redirect_to user_canvas_omniauth_callback_path(:canvas_url => canvas_url.to_s)
     rescue => ex
       flash[:error] = "We couldn't use the url you provided. Please check the url and try again. Error: #{ex}"
       render :new
