@@ -1,11 +1,11 @@
 class CanvasAuthenticationsController < ApplicationController
   respond_to :html
-  
+
   def new
   end
 
   def create
-    
+
     canvas_url = params[:canvas_url]
 
     if canvas_url.blank?
@@ -13,7 +13,7 @@ class CanvasAuthenticationsController < ApplicationController
       render :new
       return
     end
-    
+
     begin
       canvas_url = URI.parse(canvas_url)
       canvas_url = URI.parse("https://#{canvas_url}") if(!canvas_url.scheme)
@@ -23,7 +23,7 @@ class CanvasAuthenticationsController < ApplicationController
       canvas_url.query = nil
       redirect_to user_omniauth_authorize_path(:canvas, :canvas_url => canvas_url.to_s)
     rescue => ex
-      flash[:error] = "We couldn't use the url you provided. Please check the url and try again."
+      flash[:error] = "We couldn't use the url you provided. Please check the url and try again. Error: #{ex}"
       render :new
     end
 
