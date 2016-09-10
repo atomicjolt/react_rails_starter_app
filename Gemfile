@@ -6,7 +6,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.7'
 
 # Database
 gem "pg"
@@ -23,10 +23,10 @@ gem "bower-rails"
 
 # authentication, authorization, integrations
 gem 'devise'
-gem 'omniauth', '~> 1.2.2'
-gem 'omniauth-canvas', '~> 0.1.0' #, :path => '~/projects/omniauth-canvas'
+gem 'omniauth', '~> 1.3.1'
+gem 'omniauth-canvas', '~> 0.1.2' #, :path => '~/projects/omniauth-canvas'
 gem 'oauth', '~> 0.4.7'
-gem 'ims-lti', '~> 1.1.8' # IMS LTI tool consumers and providers
+gem 'ims-lti', '~> 1.1.12' # IMS LTI tool consumers and providers
 gem 'cancancan'
 gem 'rolify'
 gem 'attr_encrypted'
