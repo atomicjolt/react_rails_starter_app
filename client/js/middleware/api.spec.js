@@ -5,7 +5,7 @@ import Helper             from '../../specs_support/helper';
 describe('api middleware', function() {
 
   Helper.stubAjax();
-  
+
   it('implements Redux middleware interface', () => {
     const store = { getState: () => {} };
     const middleware = api(store);
