@@ -31,17 +31,19 @@ class ApplicationController < ActionController::Base
     def validate_token
       begin
         authorization = request.headers['Authorization']
-        raise InvalidTokenError if authorization.nil?
+        raise InvalidTokenError.new("Empty authorization header.") if authorization.nil?
 
         token = request.headers['Authorization'].split(' ').last
         decoded_token = AuthToken.valid?(token)
 
-        raise InvalidTokenError if Rails.application.secrets.auth0_client_id != decoded_token[0]["aud"]
+        raise InvalidTokenError.new("Invalid client id") if Rails.application.secrets.auth0_client_id != decoded_token[0]["aud"]
 
         @user = User.find(decoded_token[0]['user_id'])
         sign_in(@user, :event => :authentication)
-      rescue JWT::DecodeError, InvalidTokenError
-        render :json => { :error => "Unauthorized: Invalid token." }, status: :unauthorized
+      rescue InvalidTokenError => ex
+        render :json => { :error => "Unauthorized: #{ex}" }, status: :unauthorized
+      rescue JWT::DecodeError => ex
+        render :json => { :error => "Unauthorized: Invalid token. #{ex}" }, status: :unauthorized
       end
     end
 
