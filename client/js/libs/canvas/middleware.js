@@ -12,9 +12,9 @@ function proxyCanvas(store, action, params){
   api.execRequest(
     action.canvas.method,
     canvasProxyUrl,
-    state.settings.get("apiUrl"),
-    state.settings.get("jwt"),
-    state.settings.get("csrfToken"),
+    state.settings.apiUrl,
+    state.settings.jwt,
+    state.settings.csrfToken,
     { ...action.params, ...params, type: action.canvas.type },
     action.body
   ).then((response, error) => {

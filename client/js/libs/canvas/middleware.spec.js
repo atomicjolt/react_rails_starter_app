@@ -1,6 +1,7 @@
 import _                     from "lodash";
 
 import canvasRequest         from "./action";
+import { list_accounts }     from "./constants/accounts";
 import CanvasMiddlware       from "./middleware";
 import Helper                from "../../../specs_support/helper";
 
@@ -35,8 +36,7 @@ describe('Canvas Middleware', () => {
   });
 
   it('calls the api library', (done) => {
-    const listAccounts = { type: "LIST_ACCOUNTS", method: "get", reducer: 'accounts'};
-    const action = canvasRequest(listAccounts);
+    const action = canvasRequest(list_accounts);
     const store = Helper.makeStore();
     spyOn(store, 'dispatch');
     const middleware = CanvasMiddlware(store);
