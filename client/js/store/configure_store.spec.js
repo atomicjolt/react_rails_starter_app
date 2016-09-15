@@ -1,5 +1,3 @@
-import Immutable          from 'immutable';
-
 import configureStore     from "./configure_store";
 
 describe('configure store', function() {
