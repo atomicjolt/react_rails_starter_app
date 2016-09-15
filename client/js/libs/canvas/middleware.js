@@ -6,15 +6,15 @@ import { getNextUrl, parseParams } from "../urls";
 const canvasProxyUrl = "api/canvas";
 
 function proxyCanvas(store, action, params){
-  
+
   const state = store.getState();
 
   api.execRequest(
     action.canvas.method,
-    canvasProxyUrl, 
-    state.settings.get("apiUrl"), 
-    state.settings.get("jwt"), 
-    state.settings.get("csrfToken"), 
+    canvasProxyUrl,
+    state.settings.apiUrl,
+    state.settings.jwt,
+    state.settings.csrfToken,
     { ...action.params, ...params, type: action.canvas.type },
     action.body
   ).then((response, error) => {
@@ -37,7 +37,7 @@ function proxyCanvas(store, action, params){
       error
     }); // Dispatch the new data
   });
-  
+
 }
 
 const CanvasApi = store => next => action => {
