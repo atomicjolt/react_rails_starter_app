@@ -34,15 +34,23 @@ describe('Canvas Middleware', () => {
     actionHandler(action);
   });
 
-  it('calls the api library', () => {
-    const action = canvasRequest(list_accounts);
+  it('calls the api library', (done) => {
+    const listAccounts = { type: "LIST_ACCOUNTS", method: "get", reducer: 'accounts'};
+    const action = canvasRequest(listAccounts);
     const store = Helper.makeStore();
     spyOn(store, 'dispatch');
     const middleware = CanvasMiddlware(store);
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
     actionHandler(action);
-    expect(store.dispatch).toHaveBeenCalled();
+    // store.dispatch is called async after the request from
+    // the server returns. We mock the server call but the request
+    // still appears to be async which means we have to check the result
+    // in the next loop. We use setTimeout with 0 to do this.
+    setTimeout(function(){
+      expect(store.dispatch).toHaveBeenCalled();
+      done();
+    }, 0);
   });
 
 });
