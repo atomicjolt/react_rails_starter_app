@@ -18,7 +18,7 @@
 //   excludes
 // }
 // return canvasRequest(list_calendar_events, {}, query);
-export const list_calendar_events = { type: "LIST_CALENDAR_EVENTS", method: "get", reducer: 'calendar_events'};
+export const list_calendar_events = { type: "LIST_CALENDAR_EVENTS", method: "get", key: 'list_calendar_events'};
 
 // List calendar events for a user
 // Retrieve the list of calendar events or assignments for the specified user.
@@ -39,7 +39,7 @@ export const list_calendar_events = { type: "LIST_CALENDAR_EVENTS", method: "get
 //   excludes
 // }
 // return canvasRequest(list_calendar_events_for_user, {user_id}, query);
-export const list_calendar_events_for_user = { type: "LIST_CALENDAR_EVENTS_FOR_USER", method: "get", reducer: 'calendar_events'};
+export const list_calendar_events_for_user = { type: "LIST_CALENDAR_EVENTS_FOR_USER", method: "get", key: 'list_calendar_events_for_user'};
 
 // Create a calendar event
 // Create and return a new calendar event
@@ -66,7 +66,7 @@ export const list_calendar_events_for_user = { type: "LIST_CALENDAR_EVENTS_FOR_U
 //   calendar_event[duplicate][append_iterator]
 // }
 // return canvasRequest(create_calendar_event, {}, query);
-export const create_calendar_event = { type: "CREATE_CALENDAR_EVENT", method: "post", reducer: 'calendar_events'};
+export const create_calendar_event = { type: "CREATE_CALENDAR_EVENT", method: "post", key: 'create_calendar_event'};
 
 // Get a single calendar event or assignment
 // 
@@ -76,7 +76,7 @@ export const create_calendar_event = { type: "CREATE_CALENDAR_EVENT", method: "p
 //
 // Example:
 // return canvasRequest(get_single_calendar_event_or_assignment, {id});
-export const get_single_calendar_event_or_assignment = { type: "GET_SINGLE_CALENDAR_EVENT_OR_ASSIGNMENT", method: "get", reducer: 'calendar_events'};
+export const get_single_calendar_event_or_assignment = { type: "GET_SINGLE_CALENDAR_EVENT_OR_ASSIGNMENT", method: "get", key: 'get_single_calendar_event_or_assignment'};
 
 // Reserve a time slot
 // Reserves a particular time slot and return the new reservation
@@ -91,7 +91,7 @@ export const get_single_calendar_event_or_assignment = { type: "GET_SINGLE_CALEN
 //   cancel_existing
 // }
 // return canvasRequest(reserve_time_slot, {id}, query);
-export const reserve_time_slot = { type: "RESERVE_TIME_SLOT", method: "post", reducer: 'calendar_events'};
+export const reserve_time_slot = { type: "RESERVE_TIME_SLOT", method: "post", key: 'reserve_time_slot'};
 
 // Reserve a time slot
 // Reserves a particular time slot and return the new reservation
@@ -105,7 +105,7 @@ export const reserve_time_slot = { type: "RESERVE_TIME_SLOT", method: "post", re
 //   cancel_existing
 // }
 // return canvasRequest(reserve_time_slot_participant_id, {id, participant_id}, query);
-export const reserve_time_slot_participant_id = { type: "RESERVE_TIME_SLOT_PARTICIPANT_ID", method: "post", reducer: 'calendar_events'};
+export const reserve_time_slot_participant_id = { type: "RESERVE_TIME_SLOT_PARTICIPANT_ID", method: "post", key: 'reserve_time_slot_participant_id'};
 
 // Update a calendar event
 // Update and return a calendar event
@@ -128,7 +128,7 @@ export const reserve_time_slot_participant_id = { type: "RESERVE_TIME_SLOT_PARTI
 //   calendar_event[child_event_data][X][context_code]
 // }
 // return canvasRequest(update_calendar_event, {id}, query);
-export const update_calendar_event = { type: "UPDATE_CALENDAR_EVENT", method: "put", reducer: 'calendar_events'};
+export const update_calendar_event = { type: "UPDATE_CALENDAR_EVENT", method: "put", key: 'update_calendar_event'};
 
 // Delete a calendar event
 // Delete an event from the calendar and return the deleted event
@@ -141,7 +141,7 @@ export const update_calendar_event = { type: "UPDATE_CALENDAR_EVENT", method: "p
 //   cancel_reason
 // }
 // return canvasRequest(delete_calendar_event, {id}, query);
-export const delete_calendar_event = { type: "DELETE_CALENDAR_EVENT", method: "delete", reducer: 'calendar_events'};
+export const delete_calendar_event = { type: "DELETE_CALENDAR_EVENT", method: "delete", key: 'delete_calendar_event'};
 
 // Set a course timetable
 // Creates and updates "timetable" events for a course.
@@ -164,7 +164,7 @@ export const delete_calendar_event = { type: "DELETE_CALENDAR_EVENT", method: "d
 //   timetables[course_section_id][location_name]
 // }
 // return canvasRequest(set_course_timetable, {course_id}, query);
-export const set_course_timetable = { type: "SET_COURSE_TIMETABLE", method: "post", reducer: 'calendar_events'};
+export const set_course_timetable = { type: "SET_COURSE_TIMETABLE", method: "post", key: 'set_course_timetable'};
 
 // Get course timetable
 // Returns the last timetable set by the
@@ -175,7 +175,7 @@ export const set_course_timetable = { type: "SET_COURSE_TIMETABLE", method: "pos
 //
 // Example:
 // return canvasRequest(get_course_timetable, {course_id});
-export const get_course_timetable = { type: "GET_COURSE_TIMETABLE", method: "get", reducer: 'calendar_events'};
+export const get_course_timetable = { type: "GET_COURSE_TIMETABLE", method: "get", key: 'get_course_timetable'};
 
 // Create or update events directly for a course timetable
 // Creates and updates "timetable" events for a course or course section.
@@ -196,4 +196,4 @@ export const get_course_timetable = { type: "GET_COURSE_TIMETABLE", method: "get
 //   events[code]
 // }
 // return canvasRequest(create_or_update_events_directly_for_course_timetable, {course_id}, query);
-export const create_or_update_events_directly_for_course_timetable = { type: "CREATE_OR_UPDATE_EVENTS_DIRECTLY_FOR_COURSE_TIMETABLE", method: "post", reducer: 'calendar_events'};
+export const create_or_update_events_directly_for_course_timetable = { type: "CREATE_OR_UPDATE_EVENTS_DIRECTLY_FOR_COURSE_TIMETABLE", method: "post", key: 'create_or_update_events_directly_for_course_timetable'};

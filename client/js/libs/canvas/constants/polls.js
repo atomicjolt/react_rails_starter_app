@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_polls, {});
-export const list_polls = { type: "LIST_POLLS", method: "get", reducer: 'polls'};
+export const list_polls = { type: "LIST_POLLS", method: "get", key: 'list_polls'};
 
 // Get a single poll
 // Returns the poll with the given id
@@ -19,7 +19,7 @@ export const list_polls = { type: "LIST_POLLS", method: "get", reducer: 'polls'}
 //
 // Example:
 // return canvasRequest(get_single_poll, {id});
-export const get_single_poll = { type: "GET_SINGLE_POLL", method: "get", reducer: 'polls'};
+export const get_single_poll = { type: "GET_SINGLE_POLL", method: "get", key: 'get_single_poll'};
 
 // Create a single poll
 // Create a new poll for the current user
@@ -33,7 +33,7 @@ export const get_single_poll = { type: "GET_SINGLE_POLL", method: "get", reducer
 //   polls[description]
 // }
 // return canvasRequest(create_single_poll, {}, query);
-export const create_single_poll = { type: "CREATE_SINGLE_POLL", method: "post", reducer: 'polls'};
+export const create_single_poll = { type: "CREATE_SINGLE_POLL", method: "post", key: 'create_single_poll'};
 
 // Update a single poll
 // Update an existing poll belonging to the current user
@@ -47,7 +47,7 @@ export const create_single_poll = { type: "CREATE_SINGLE_POLL", method: "post", 
 //   polls[description]
 // }
 // return canvasRequest(update_single_poll, {id}, query);
-export const update_single_poll = { type: "UPDATE_SINGLE_POLL", method: "put", reducer: 'polls'};
+export const update_single_poll = { type: "UPDATE_SINGLE_POLL", method: "put", key: 'update_single_poll'};
 
 // Delete a poll
 // <b>204 No Content</b> response code is returned if the deletion was successful.
@@ -57,4 +57,4 @@ export const update_single_poll = { type: "UPDATE_SINGLE_POLL", method: "put", r
 //
 // Example:
 // return canvasRequest(delete_poll, {id});
-export const delete_poll = { type: "DELETE_POLL", method: "delete", reducer: 'polls'};
+export const delete_poll = { type: "DELETE_POLL", method: "delete", key: 'delete_poll'};

@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(get_quota_information_courses, {course_id});
-export const get_quota_information_courses = { type: "GET_QUOTA_INFORMATION_COURSES", method: "get", reducer: 'files'};
+export const get_quota_information_courses = { type: "GET_QUOTA_INFORMATION_COURSES", method: "get", key: 'get_quota_information_courses'};
 
 // Get quota information
 // Returns the total and used storage quota for the course, group, or user.
@@ -19,7 +19,7 @@ export const get_quota_information_courses = { type: "GET_QUOTA_INFORMATION_COUR
 //
 // Example:
 // return canvasRequest(get_quota_information_groups, {group_id});
-export const get_quota_information_groups = { type: "GET_QUOTA_INFORMATION_GROUPS", method: "get", reducer: 'files'};
+export const get_quota_information_groups = { type: "GET_QUOTA_INFORMATION_GROUPS", method: "get", key: 'get_quota_information_groups'};
 
 // Get quota information
 // Returns the total and used storage quota for the course, group, or user.
@@ -29,7 +29,7 @@ export const get_quota_information_groups = { type: "GET_QUOTA_INFORMATION_GROUP
 //
 // Example:
 // return canvasRequest(get_quota_information_users, {user_id});
-export const get_quota_information_users = { type: "GET_QUOTA_INFORMATION_USERS", method: "get", reducer: 'files'};
+export const get_quota_information_users = { type: "GET_QUOTA_INFORMATION_USERS", method: "get", key: 'get_quota_information_users'};
 
 // List files
 // Returns the paginated list of files for the folder or course.
@@ -47,7 +47,7 @@ export const get_quota_information_users = { type: "GET_QUOTA_INFORMATION_USERS"
 //   order
 // }
 // return canvasRequest(list_files_courses, {course_id}, query);
-export const list_files_courses = { type: "LIST_FILES_COURSES", method: "get", reducer: 'files'};
+export const list_files_courses = { type: "LIST_FILES_COURSES", method: "get", key: 'list_files_courses'};
 
 // List files
 // Returns the paginated list of files for the folder or course.
@@ -65,7 +65,7 @@ export const list_files_courses = { type: "LIST_FILES_COURSES", method: "get", r
 //   order
 // }
 // return canvasRequest(list_files_users, {user_id}, query);
-export const list_files_users = { type: "LIST_FILES_USERS", method: "get", reducer: 'files'};
+export const list_files_users = { type: "LIST_FILES_USERS", method: "get", key: 'list_files_users'};
 
 // List files
 // Returns the paginated list of files for the folder or course.
@@ -83,7 +83,7 @@ export const list_files_users = { type: "LIST_FILES_USERS", method: "get", reduc
 //   order
 // }
 // return canvasRequest(list_files_groups, {group_id}, query);
-export const list_files_groups = { type: "LIST_FILES_GROUPS", method: "get", reducer: 'files'};
+export const list_files_groups = { type: "LIST_FILES_GROUPS", method: "get", key: 'list_files_groups'};
 
 // List files
 // Returns the paginated list of files for the folder or course.
@@ -101,7 +101,7 @@ export const list_files_groups = { type: "LIST_FILES_GROUPS", method: "get", red
 //   order
 // }
 // return canvasRequest(list_files_folders, {id}, query);
-export const list_files_folders = { type: "LIST_FILES_FOLDERS", method: "get", reducer: 'files'};
+export const list_files_folders = { type: "LIST_FILES_FOLDERS", method: "get", key: 'list_files_folders'};
 
 // Get public inline preview url
 // Determine the URL that should be used for inline preview of the file.
@@ -114,7 +114,7 @@ export const list_files_folders = { type: "LIST_FILES_FOLDERS", method: "get", r
 //   submission_id
 // }
 // return canvasRequest(get_public_inline_preview_url, {id}, query);
-export const get_public_inline_preview_url = { type: "GET_PUBLIC_INLINE_PREVIEW_URL", method: "get", reducer: 'files'};
+export const get_public_inline_preview_url = { type: "GET_PUBLIC_INLINE_PREVIEW_URL", method: "get", key: 'get_public_inline_preview_url'};
 
 // Get file
 // Returns the standard attachment json object
@@ -127,7 +127,7 @@ export const get_public_inline_preview_url = { type: "GET_PUBLIC_INLINE_PREVIEW_
 //   include
 // }
 // return canvasRequest(get_file_files, {id}, query);
-export const get_file_files = { type: "GET_FILE_FILES", method: "get", reducer: 'files'};
+export const get_file_files = { type: "GET_FILE_FILES", method: "get", key: 'get_file_files'};
 
 // Get file
 // Returns the standard attachment json object
@@ -140,7 +140,7 @@ export const get_file_files = { type: "GET_FILE_FILES", method: "get", reducer: 
 //   include
 // }
 // return canvasRequest(get_file_courses, {course_id, id}, query);
-export const get_file_courses = { type: "GET_FILE_COURSES", method: "get", reducer: 'files'};
+export const get_file_courses = { type: "GET_FILE_COURSES", method: "get", key: 'get_file_courses'};
 
 // Get file
 // Returns the standard attachment json object
@@ -153,7 +153,7 @@ export const get_file_courses = { type: "GET_FILE_COURSES", method: "get", reduc
 //   include
 // }
 // return canvasRequest(get_file_groups, {group_id, id}, query);
-export const get_file_groups = { type: "GET_FILE_GROUPS", method: "get", reducer: 'files'};
+export const get_file_groups = { type: "GET_FILE_GROUPS", method: "get", key: 'get_file_groups'};
 
 // Get file
 // Returns the standard attachment json object
@@ -166,7 +166,7 @@ export const get_file_groups = { type: "GET_FILE_GROUPS", method: "get", reducer
 //   include
 // }
 // return canvasRequest(get_file_users, {user_id, id}, query);
-export const get_file_users = { type: "GET_FILE_USERS", method: "get", reducer: 'files'};
+export const get_file_users = { type: "GET_FILE_USERS", method: "get", key: 'get_file_users'};
 
 // Update file
 // Update some settings on the specified file
@@ -185,7 +185,7 @@ export const get_file_users = { type: "GET_FILE_USERS", method: "get", reducer: 
 //   hidden
 // }
 // return canvasRequest(update_file, {id}, query);
-export const update_file = { type: "UPDATE_FILE", method: "put", reducer: 'files'};
+export const update_file = { type: "UPDATE_FILE", method: "put", key: 'update_file'};
 
 // Delete file
 // Remove the specified file
@@ -198,7 +198,7 @@ export const update_file = { type: "UPDATE_FILE", method: "put", reducer: 'files
 //
 // Example:
 // return canvasRequest(delete_file, {id});
-export const delete_file = { type: "DELETE_FILE", method: "delete", reducer: 'files'};
+export const delete_file = { type: "DELETE_FILE", method: "delete", key: 'delete_file'};
 
 // List folders
 // Returns the paginated list of folders in the folder.
@@ -208,7 +208,7 @@ export const delete_file = { type: "DELETE_FILE", method: "delete", reducer: 'fi
 //
 // Example:
 // return canvasRequest(list_folders, {id});
-export const list_folders = { type: "LIST_FOLDERS", method: "get", reducer: 'files'};
+export const list_folders = { type: "LIST_FOLDERS", method: "get", key: 'list_folders'};
 
 // List all folders
 // Returns the paginated list of all folders for the given context. This will
@@ -219,7 +219,7 @@ export const list_folders = { type: "LIST_FOLDERS", method: "get", reducer: 'fil
 //
 // Example:
 // return canvasRequest(list_all_folders_courses, {course_id});
-export const list_all_folders_courses = { type: "LIST_ALL_FOLDERS_COURSES", method: "get", reducer: 'files'};
+export const list_all_folders_courses = { type: "LIST_ALL_FOLDERS_COURSES", method: "get", key: 'list_all_folders_courses'};
 
 // List all folders
 // Returns the paginated list of all folders for the given context. This will
@@ -230,7 +230,7 @@ export const list_all_folders_courses = { type: "LIST_ALL_FOLDERS_COURSES", meth
 //
 // Example:
 // return canvasRequest(list_all_folders_users, {user_id});
-export const list_all_folders_users = { type: "LIST_ALL_FOLDERS_USERS", method: "get", reducer: 'files'};
+export const list_all_folders_users = { type: "LIST_ALL_FOLDERS_USERS", method: "get", key: 'list_all_folders_users'};
 
 // List all folders
 // Returns the paginated list of all folders for the given context. This will
@@ -241,7 +241,7 @@ export const list_all_folders_users = { type: "LIST_ALL_FOLDERS_USERS", method: 
 //
 // Example:
 // return canvasRequest(list_all_folders_groups, {group_id});
-export const list_all_folders_groups = { type: "LIST_ALL_FOLDERS_GROUPS", method: "get", reducer: 'files'};
+export const list_all_folders_groups = { type: "LIST_ALL_FOLDERS_GROUPS", method: "get", key: 'list_all_folders_groups'};
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -256,7 +256,7 @@ export const list_all_folders_groups = { type: "LIST_ALL_FOLDERS_GROUPS", method
 //
 // Example:
 // return canvasRequest(resolve_path_courses_full_path, {course_id});
-export const resolve_path_courses_full_path = { type: "RESOLVE_PATH_COURSES_FULL_PATH", method: "get", reducer: 'files'};
+export const resolve_path_courses_full_path = { type: "RESOLVE_PATH_COURSES_FULL_PATH", method: "get", key: 'resolve_path_courses_full_path'};
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -271,7 +271,7 @@ export const resolve_path_courses_full_path = { type: "RESOLVE_PATH_COURSES_FULL
 //
 // Example:
 // return canvasRequest(resolve_path_courses, {course_id});
-export const resolve_path_courses = { type: "RESOLVE_PATH_COURSES", method: "get", reducer: 'files'};
+export const resolve_path_courses = { type: "RESOLVE_PATH_COURSES", method: "get", key: 'resolve_path_courses'};
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -286,7 +286,7 @@ export const resolve_path_courses = { type: "RESOLVE_PATH_COURSES", method: "get
 //
 // Example:
 // return canvasRequest(resolve_path_users_full_path, {user_id});
-export const resolve_path_users_full_path = { type: "RESOLVE_PATH_USERS_FULL_PATH", method: "get", reducer: 'files'};
+export const resolve_path_users_full_path = { type: "RESOLVE_PATH_USERS_FULL_PATH", method: "get", key: 'resolve_path_users_full_path'};
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -301,7 +301,7 @@ export const resolve_path_users_full_path = { type: "RESOLVE_PATH_USERS_FULL_PAT
 //
 // Example:
 // return canvasRequest(resolve_path_users, {user_id});
-export const resolve_path_users = { type: "RESOLVE_PATH_USERS", method: "get", reducer: 'files'};
+export const resolve_path_users = { type: "RESOLVE_PATH_USERS", method: "get", key: 'resolve_path_users'};
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -316,7 +316,7 @@ export const resolve_path_users = { type: "RESOLVE_PATH_USERS", method: "get", r
 //
 // Example:
 // return canvasRequest(resolve_path_groups_full_path, {group_id});
-export const resolve_path_groups_full_path = { type: "RESOLVE_PATH_GROUPS_FULL_PATH", method: "get", reducer: 'files'};
+export const resolve_path_groups_full_path = { type: "RESOLVE_PATH_GROUPS_FULL_PATH", method: "get", key: 'resolve_path_groups_full_path'};
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -331,7 +331,7 @@ export const resolve_path_groups_full_path = { type: "RESOLVE_PATH_GROUPS_FULL_P
 //
 // Example:
 // return canvasRequest(resolve_path_groups, {group_id});
-export const resolve_path_groups = { type: "RESOLVE_PATH_GROUPS", method: "get", reducer: 'files'};
+export const resolve_path_groups = { type: "RESOLVE_PATH_GROUPS", method: "get", key: 'resolve_path_groups'};
 
 // Get folder
 // Returns the details for a folder
@@ -344,7 +344,7 @@ export const resolve_path_groups = { type: "RESOLVE_PATH_GROUPS", method: "get",
 //
 // Example:
 // return canvasRequest(get_folder_courses, {course_id, id});
-export const get_folder_courses = { type: "GET_FOLDER_COURSES", method: "get", reducer: 'files'};
+export const get_folder_courses = { type: "GET_FOLDER_COURSES", method: "get", key: 'get_folder_courses'};
 
 // Get folder
 // Returns the details for a folder
@@ -357,7 +357,7 @@ export const get_folder_courses = { type: "GET_FOLDER_COURSES", method: "get", r
 //
 // Example:
 // return canvasRequest(get_folder_users, {user_id, id});
-export const get_folder_users = { type: "GET_FOLDER_USERS", method: "get", reducer: 'files'};
+export const get_folder_users = { type: "GET_FOLDER_USERS", method: "get", key: 'get_folder_users'};
 
 // Get folder
 // Returns the details for a folder
@@ -370,7 +370,7 @@ export const get_folder_users = { type: "GET_FOLDER_USERS", method: "get", reduc
 //
 // Example:
 // return canvasRequest(get_folder_groups, {group_id, id});
-export const get_folder_groups = { type: "GET_FOLDER_GROUPS", method: "get", reducer: 'files'};
+export const get_folder_groups = { type: "GET_FOLDER_GROUPS", method: "get", key: 'get_folder_groups'};
 
 // Get folder
 // Returns the details for a folder
@@ -383,7 +383,7 @@ export const get_folder_groups = { type: "GET_FOLDER_GROUPS", method: "get", red
 //
 // Example:
 // return canvasRequest(get_folder_folders, {id});
-export const get_folder_folders = { type: "GET_FOLDER_FOLDERS", method: "get", reducer: 'files'};
+export const get_folder_folders = { type: "GET_FOLDER_FOLDERS", method: "get", key: 'get_folder_folders'};
 
 // Update folder
 // Updates a folder
@@ -402,7 +402,7 @@ export const get_folder_folders = { type: "GET_FOLDER_FOLDERS", method: "get", r
 //   position
 // }
 // return canvasRequest(update_folder, {id}, query);
-export const update_folder = { type: "UPDATE_FOLDER", method: "put", reducer: 'files'};
+export const update_folder = { type: "UPDATE_FOLDER", method: "put", key: 'update_folder'};
 
 // Create folder
 // Creates a folder in the specified context
@@ -422,7 +422,7 @@ export const update_folder = { type: "UPDATE_FOLDER", method: "put", reducer: 'f
 //   position
 // }
 // return canvasRequest(create_folder_courses, {course_id}, query);
-export const create_folder_courses = { type: "CREATE_FOLDER_COURSES", method: "post", reducer: 'files'};
+export const create_folder_courses = { type: "CREATE_FOLDER_COURSES", method: "post", key: 'create_folder_courses'};
 
 // Create folder
 // Creates a folder in the specified context
@@ -442,7 +442,7 @@ export const create_folder_courses = { type: "CREATE_FOLDER_COURSES", method: "p
 //   position
 // }
 // return canvasRequest(create_folder_users, {user_id}, query);
-export const create_folder_users = { type: "CREATE_FOLDER_USERS", method: "post", reducer: 'files'};
+export const create_folder_users = { type: "CREATE_FOLDER_USERS", method: "post", key: 'create_folder_users'};
 
 // Create folder
 // Creates a folder in the specified context
@@ -462,7 +462,7 @@ export const create_folder_users = { type: "CREATE_FOLDER_USERS", method: "post"
 //   position
 // }
 // return canvasRequest(create_folder_groups, {group_id}, query);
-export const create_folder_groups = { type: "CREATE_FOLDER_GROUPS", method: "post", reducer: 'files'};
+export const create_folder_groups = { type: "CREATE_FOLDER_GROUPS", method: "post", key: 'create_folder_groups'};
 
 // Create folder
 // Creates a folder in the specified context
@@ -482,7 +482,7 @@ export const create_folder_groups = { type: "CREATE_FOLDER_GROUPS", method: "pos
 //   position
 // }
 // return canvasRequest(create_folder_folders, {folder_id}, query);
-export const create_folder_folders = { type: "CREATE_FOLDER_FOLDERS", method: "post", reducer: 'files'};
+export const create_folder_folders = { type: "CREATE_FOLDER_FOLDERS", method: "post", key: 'create_folder_folders'};
 
 // Delete folder
 // Remove the specified folder. You can only delete empty folders unless you
@@ -496,7 +496,7 @@ export const create_folder_folders = { type: "CREATE_FOLDER_FOLDERS", method: "p
 //   force
 // }
 // return canvasRequest(delete_folder, {id}, query);
-export const delete_folder = { type: "DELETE_FOLDER", method: "delete", reducer: 'files'};
+export const delete_folder = { type: "DELETE_FOLDER", method: "delete", key: 'delete_folder'};
 
 // Upload a file
 // Upload a file to a folder.
@@ -513,7 +513,7 @@ export const delete_folder = { type: "DELETE_FOLDER", method: "delete", reducer:
 //
 // Example:
 // return canvasRequest(files_upload_file, {folder_id});
-export const files_upload_file = { type: "FILES_UPLOAD_FILE", method: "post", reducer: 'files'};
+export const files_upload_file = { type: "FILES_UPLOAD_FILE", method: "post", key: 'files_upload_file'};
 
 // Copy a file
 // Copy a file from elsewhere in Canvas into a folder.
@@ -530,7 +530,7 @@ export const files_upload_file = { type: "FILES_UPLOAD_FILE", method: "post", re
 //   on_duplicate
 // }
 // return canvasRequest(copy_file, {dest_folder_id}, query);
-export const copy_file = { type: "COPY_FILE", method: "post", reducer: 'files'};
+export const copy_file = { type: "COPY_FILE", method: "post", key: 'copy_file'};
 
 // Copy a folder
 // Copy a folder (and its contents) from elsewhere in Canvas into a folder.
@@ -550,7 +550,7 @@ export const copy_file = { type: "COPY_FILE", method: "post", reducer: 'files'};
 //   source_folder_id (required)
 // }
 // return canvasRequest(copy_folder, {dest_folder_id}, query);
-export const copy_folder = { type: "COPY_FOLDER", method: "post", reducer: 'files'};
+export const copy_folder = { type: "COPY_FOLDER", method: "post", key: 'copy_folder'};
 
 // Set usage rights
 // Sets copyright and license information for one or more files
@@ -568,7 +568,7 @@ export const copy_folder = { type: "COPY_FOLDER", method: "post", reducer: 'file
 //   usage_rights[license]
 // }
 // return canvasRequest(set_usage_rights_courses, {course_id}, query);
-export const set_usage_rights_courses = { type: "SET_USAGE_RIGHTS_COURSES", method: "put", reducer: 'files'};
+export const set_usage_rights_courses = { type: "SET_USAGE_RIGHTS_COURSES", method: "put", key: 'set_usage_rights_courses'};
 
 // Set usage rights
 // Sets copyright and license information for one or more files
@@ -586,7 +586,7 @@ export const set_usage_rights_courses = { type: "SET_USAGE_RIGHTS_COURSES", meth
 //   usage_rights[license]
 // }
 // return canvasRequest(set_usage_rights_groups, {group_id}, query);
-export const set_usage_rights_groups = { type: "SET_USAGE_RIGHTS_GROUPS", method: "put", reducer: 'files'};
+export const set_usage_rights_groups = { type: "SET_USAGE_RIGHTS_GROUPS", method: "put", key: 'set_usage_rights_groups'};
 
 // Set usage rights
 // Sets copyright and license information for one or more files
@@ -604,7 +604,7 @@ export const set_usage_rights_groups = { type: "SET_USAGE_RIGHTS_GROUPS", method
 //   usage_rights[license]
 // }
 // return canvasRequest(set_usage_rights_users, {user_id}, query);
-export const set_usage_rights_users = { type: "SET_USAGE_RIGHTS_USERS", method: "put", reducer: 'files'};
+export const set_usage_rights_users = { type: "SET_USAGE_RIGHTS_USERS", method: "put", key: 'set_usage_rights_users'};
 
 // Remove usage rights
 // Removes copyright and license information associated with one or more files
@@ -618,7 +618,7 @@ export const set_usage_rights_users = { type: "SET_USAGE_RIGHTS_USERS", method: 
 //   folder_ids
 // }
 // return canvasRequest(remove_usage_rights_courses, {course_id}, query);
-export const remove_usage_rights_courses = { type: "REMOVE_USAGE_RIGHTS_COURSES", method: "delete", reducer: 'files'};
+export const remove_usage_rights_courses = { type: "REMOVE_USAGE_RIGHTS_COURSES", method: "delete", key: 'remove_usage_rights_courses'};
 
 // Remove usage rights
 // Removes copyright and license information associated with one or more files
@@ -632,7 +632,7 @@ export const remove_usage_rights_courses = { type: "REMOVE_USAGE_RIGHTS_COURSES"
 //   folder_ids
 // }
 // return canvasRequest(remove_usage_rights_groups, {group_id}, query);
-export const remove_usage_rights_groups = { type: "REMOVE_USAGE_RIGHTS_GROUPS", method: "delete", reducer: 'files'};
+export const remove_usage_rights_groups = { type: "REMOVE_USAGE_RIGHTS_GROUPS", method: "delete", key: 'remove_usage_rights_groups'};
 
 // Remove usage rights
 // Removes copyright and license information associated with one or more files
@@ -646,7 +646,7 @@ export const remove_usage_rights_groups = { type: "REMOVE_USAGE_RIGHTS_GROUPS", 
 //   folder_ids
 // }
 // return canvasRequest(remove_usage_rights_users, {user_id}, query);
-export const remove_usage_rights_users = { type: "REMOVE_USAGE_RIGHTS_USERS", method: "delete", reducer: 'files'};
+export const remove_usage_rights_users = { type: "REMOVE_USAGE_RIGHTS_USERS", method: "delete", key: 'remove_usage_rights_users'};
 
 // List licenses
 // Lists licenses that can be applied
@@ -656,7 +656,7 @@ export const remove_usage_rights_users = { type: "REMOVE_USAGE_RIGHTS_USERS", me
 //
 // Example:
 // return canvasRequest(list_licenses_courses, {course_id});
-export const list_licenses_courses = { type: "LIST_LICENSES_COURSES", method: "get", reducer: 'files'};
+export const list_licenses_courses = { type: "LIST_LICENSES_COURSES", method: "get", key: 'list_licenses_courses'};
 
 // List licenses
 // Lists licenses that can be applied
@@ -666,7 +666,7 @@ export const list_licenses_courses = { type: "LIST_LICENSES_COURSES", method: "g
 //
 // Example:
 // return canvasRequest(list_licenses_groups, {group_id});
-export const list_licenses_groups = { type: "LIST_LICENSES_GROUPS", method: "get", reducer: 'files'};
+export const list_licenses_groups = { type: "LIST_LICENSES_GROUPS", method: "get", key: 'list_licenses_groups'};
 
 // List licenses
 // Lists licenses that can be applied
@@ -676,4 +676,4 @@ export const list_licenses_groups = { type: "LIST_LICENSES_GROUPS", method: "get
 //
 // Example:
 // return canvasRequest(list_licenses_users, {user_id});
-export const list_licenses_users = { type: "LIST_LICENSES_USERS", method: "get", reducer: 'files'};
+export const list_licenses_users = { type: "LIST_LICENSES_USERS", method: "get", key: 'list_licenses_users'};

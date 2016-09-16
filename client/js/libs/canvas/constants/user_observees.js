@@ -15,7 +15,7 @@
 //   include
 // }
 // return canvasRequest(list_observees, {user_id}, query);
-export const list_observees = { type: "LIST_OBSERVEES", method: "get", reducer: 'user_observees'};
+export const list_observees = { type: "LIST_OBSERVEES", method: "get", key: 'list_observees'};
 
 // Add an observee with credentials
 // Register the given user to observe another user, given the observee's credentials.
@@ -34,7 +34,7 @@ export const list_observees = { type: "LIST_OBSERVEES", method: "get", reducer: 
 //   access_token
 // }
 // return canvasRequest(add_observee_with_credentials, {user_id}, query);
-export const add_observee_with_credentials = { type: "ADD_OBSERVEE_WITH_CREDENTIALS", method: "post", reducer: 'user_observees'};
+export const add_observee_with_credentials = { type: "ADD_OBSERVEE_WITH_CREDENTIALS", method: "post", key: 'add_observee_with_credentials'};
 
 // Show an observee
 // Gets information about an observed user.
@@ -46,7 +46,7 @@ export const add_observee_with_credentials = { type: "ADD_OBSERVEE_WITH_CREDENTI
 //
 // Example:
 // return canvasRequest(show_observee, {user_id, observee_id});
-export const show_observee = { type: "SHOW_OBSERVEE", method: "get", reducer: 'user_observees'};
+export const show_observee = { type: "SHOW_OBSERVEE", method: "get", key: 'show_observee'};
 
 // Add an observee
 // Registers a user as being observed by the given user.
@@ -56,7 +56,7 @@ export const show_observee = { type: "SHOW_OBSERVEE", method: "get", reducer: 'u
 //
 // Example:
 // return canvasRequest(add_observee, {user_id, observee_id});
-export const add_observee = { type: "ADD_OBSERVEE", method: "put", reducer: 'user_observees'};
+export const add_observee = { type: "ADD_OBSERVEE", method: "put", key: 'add_observee'};
 
 // Remove an observee
 // Unregisters a user as being observed by the given user.
@@ -66,4 +66,4 @@ export const add_observee = { type: "ADD_OBSERVEE", method: "put", reducer: 'use
 //
 // Example:
 // return canvasRequest(remove_observee, {user_id, observee_id});
-export const remove_observee = { type: "REMOVE_OBSERVEE", method: "delete", reducer: 'user_observees'};
+export const remove_observee = { type: "REMOVE_OBSERVEE", method: "delete", key: 'remove_observee'};

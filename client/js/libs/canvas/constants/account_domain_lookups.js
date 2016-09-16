@@ -17,4 +17,4 @@
 //   longitude
 // }
 // return canvasRequest(search_account_domains, {}, query);
-export const search_account_domains = { type: "SEARCH_ACCOUNT_DOMAINS", method: "get", reducer: 'account_domain_lookups'};
+export const search_account_domains = { type: "SEARCH_ACCOUNT_DOMAINS", method: "get", key: 'search_account_domains'};

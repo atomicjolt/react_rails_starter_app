@@ -16,4 +16,4 @@
 //   end_date
 // }
 // return canvasRequest(list_announcements, {}, query);
-export const list_announcements = { type: "LIST_ANNOUNCEMENTS", method: "get", reducer: 'announcements'};
+export const list_announcements = { type: "LIST_ANNOUNCEMENTS", method: "get", key: 'list_announcements'};

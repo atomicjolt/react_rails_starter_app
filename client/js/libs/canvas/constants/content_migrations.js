@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_migration_issues_accounts, {account_id, content_migration_id});
-export const list_migration_issues_accounts = { type: "LIST_MIGRATION_ISSUES_ACCOUNTS", method: "get", reducer: 'content_migrations'};
+export const list_migration_issues_accounts = { type: "LIST_MIGRATION_ISSUES_ACCOUNTS", method: "get", key: 'list_migration_issues_accounts'};
 
 // List migration issues
 // Returns paginated migration issues
@@ -19,7 +19,7 @@ export const list_migration_issues_accounts = { type: "LIST_MIGRATION_ISSUES_ACC
 //
 // Example:
 // return canvasRequest(list_migration_issues_courses, {course_id, content_migration_id});
-export const list_migration_issues_courses = { type: "LIST_MIGRATION_ISSUES_COURSES", method: "get", reducer: 'content_migrations'};
+export const list_migration_issues_courses = { type: "LIST_MIGRATION_ISSUES_COURSES", method: "get", key: 'list_migration_issues_courses'};
 
 // List migration issues
 // Returns paginated migration issues
@@ -29,7 +29,7 @@ export const list_migration_issues_courses = { type: "LIST_MIGRATION_ISSUES_COUR
 //
 // Example:
 // return canvasRequest(list_migration_issues_groups, {group_id, content_migration_id});
-export const list_migration_issues_groups = { type: "LIST_MIGRATION_ISSUES_GROUPS", method: "get", reducer: 'content_migrations'};
+export const list_migration_issues_groups = { type: "LIST_MIGRATION_ISSUES_GROUPS", method: "get", key: 'list_migration_issues_groups'};
 
 // List migration issues
 // Returns paginated migration issues
@@ -39,7 +39,7 @@ export const list_migration_issues_groups = { type: "LIST_MIGRATION_ISSUES_GROUP
 //
 // Example:
 // return canvasRequest(list_migration_issues_users, {user_id, content_migration_id});
-export const list_migration_issues_users = { type: "LIST_MIGRATION_ISSUES_USERS", method: "get", reducer: 'content_migrations'};
+export const list_migration_issues_users = { type: "LIST_MIGRATION_ISSUES_USERS", method: "get", key: 'list_migration_issues_users'};
 
 // Get a migration issue
 // Returns data on an individual migration issue
@@ -49,7 +49,7 @@ export const list_migration_issues_users = { type: "LIST_MIGRATION_ISSUES_USERS"
 //
 // Example:
 // return canvasRequest(get_migration_issue_accounts, {account_id, content_migration_id, id});
-export const get_migration_issue_accounts = { type: "GET_MIGRATION_ISSUE_ACCOUNTS", method: "get", reducer: 'content_migrations'};
+export const get_migration_issue_accounts = { type: "GET_MIGRATION_ISSUE_ACCOUNTS", method: "get", key: 'get_migration_issue_accounts'};
 
 // Get a migration issue
 // Returns data on an individual migration issue
@@ -59,7 +59,7 @@ export const get_migration_issue_accounts = { type: "GET_MIGRATION_ISSUE_ACCOUNT
 //
 // Example:
 // return canvasRequest(get_migration_issue_courses, {course_id, content_migration_id, id});
-export const get_migration_issue_courses = { type: "GET_MIGRATION_ISSUE_COURSES", method: "get", reducer: 'content_migrations'};
+export const get_migration_issue_courses = { type: "GET_MIGRATION_ISSUE_COURSES", method: "get", key: 'get_migration_issue_courses'};
 
 // Get a migration issue
 // Returns data on an individual migration issue
@@ -69,7 +69,7 @@ export const get_migration_issue_courses = { type: "GET_MIGRATION_ISSUE_COURSES"
 //
 // Example:
 // return canvasRequest(get_migration_issue_groups, {group_id, content_migration_id, id});
-export const get_migration_issue_groups = { type: "GET_MIGRATION_ISSUE_GROUPS", method: "get", reducer: 'content_migrations'};
+export const get_migration_issue_groups = { type: "GET_MIGRATION_ISSUE_GROUPS", method: "get", key: 'get_migration_issue_groups'};
 
 // Get a migration issue
 // Returns data on an individual migration issue
@@ -79,7 +79,7 @@ export const get_migration_issue_groups = { type: "GET_MIGRATION_ISSUE_GROUPS", 
 //
 // Example:
 // return canvasRequest(get_migration_issue_users, {user_id, content_migration_id, id});
-export const get_migration_issue_users = { type: "GET_MIGRATION_ISSUE_USERS", method: "get", reducer: 'content_migrations'};
+export const get_migration_issue_users = { type: "GET_MIGRATION_ISSUE_USERS", method: "get", key: 'get_migration_issue_users'};
 
 // Update a migration issue
 // Update the workflow_state of a migration issue
@@ -92,7 +92,7 @@ export const get_migration_issue_users = { type: "GET_MIGRATION_ISSUE_USERS", me
 //   workflow_state (required)
 // }
 // return canvasRequest(update_migration_issue_accounts, {account_id, content_migration_id, id}, query);
-export const update_migration_issue_accounts = { type: "UPDATE_MIGRATION_ISSUE_ACCOUNTS", method: "put", reducer: 'content_migrations'};
+export const update_migration_issue_accounts = { type: "UPDATE_MIGRATION_ISSUE_ACCOUNTS", method: "put", key: 'update_migration_issue_accounts'};
 
 // Update a migration issue
 // Update the workflow_state of a migration issue
@@ -105,7 +105,7 @@ export const update_migration_issue_accounts = { type: "UPDATE_MIGRATION_ISSUE_A
 //   workflow_state (required)
 // }
 // return canvasRequest(update_migration_issue_courses, {course_id, content_migration_id, id}, query);
-export const update_migration_issue_courses = { type: "UPDATE_MIGRATION_ISSUE_COURSES", method: "put", reducer: 'content_migrations'};
+export const update_migration_issue_courses = { type: "UPDATE_MIGRATION_ISSUE_COURSES", method: "put", key: 'update_migration_issue_courses'};
 
 // Update a migration issue
 // Update the workflow_state of a migration issue
@@ -118,7 +118,7 @@ export const update_migration_issue_courses = { type: "UPDATE_MIGRATION_ISSUE_CO
 //   workflow_state (required)
 // }
 // return canvasRequest(update_migration_issue_groups, {group_id, content_migration_id, id}, query);
-export const update_migration_issue_groups = { type: "UPDATE_MIGRATION_ISSUE_GROUPS", method: "put", reducer: 'content_migrations'};
+export const update_migration_issue_groups = { type: "UPDATE_MIGRATION_ISSUE_GROUPS", method: "put", key: 'update_migration_issue_groups'};
 
 // Update a migration issue
 // Update the workflow_state of a migration issue
@@ -131,7 +131,7 @@ export const update_migration_issue_groups = { type: "UPDATE_MIGRATION_ISSUE_GRO
 //   workflow_state (required)
 // }
 // return canvasRequest(update_migration_issue_users, {user_id, content_migration_id, id}, query);
-export const update_migration_issue_users = { type: "UPDATE_MIGRATION_ISSUE_USERS", method: "put", reducer: 'content_migrations'};
+export const update_migration_issue_users = { type: "UPDATE_MIGRATION_ISSUE_USERS", method: "put", key: 'update_migration_issue_users'};
 
 // List content migrations
 // Returns paginated content migrations
@@ -141,7 +141,7 @@ export const update_migration_issue_users = { type: "UPDATE_MIGRATION_ISSUE_USER
 //
 // Example:
 // return canvasRequest(list_content_migrations_accounts, {account_id});
-export const list_content_migrations_accounts = { type: "LIST_CONTENT_MIGRATIONS_ACCOUNTS", method: "get", reducer: 'content_migrations'};
+export const list_content_migrations_accounts = { type: "LIST_CONTENT_MIGRATIONS_ACCOUNTS", method: "get", key: 'list_content_migrations_accounts'};
 
 // List content migrations
 // Returns paginated content migrations
@@ -151,7 +151,7 @@ export const list_content_migrations_accounts = { type: "LIST_CONTENT_MIGRATIONS
 //
 // Example:
 // return canvasRequest(list_content_migrations_courses, {course_id});
-export const list_content_migrations_courses = { type: "LIST_CONTENT_MIGRATIONS_COURSES", method: "get", reducer: 'content_migrations'};
+export const list_content_migrations_courses = { type: "LIST_CONTENT_MIGRATIONS_COURSES", method: "get", key: 'list_content_migrations_courses'};
 
 // List content migrations
 // Returns paginated content migrations
@@ -161,7 +161,7 @@ export const list_content_migrations_courses = { type: "LIST_CONTENT_MIGRATIONS_
 //
 // Example:
 // return canvasRequest(list_content_migrations_groups, {group_id});
-export const list_content_migrations_groups = { type: "LIST_CONTENT_MIGRATIONS_GROUPS", method: "get", reducer: 'content_migrations'};
+export const list_content_migrations_groups = { type: "LIST_CONTENT_MIGRATIONS_GROUPS", method: "get", key: 'list_content_migrations_groups'};
 
 // List content migrations
 // Returns paginated content migrations
@@ -171,7 +171,7 @@ export const list_content_migrations_groups = { type: "LIST_CONTENT_MIGRATIONS_G
 //
 // Example:
 // return canvasRequest(list_content_migrations_users, {user_id});
-export const list_content_migrations_users = { type: "LIST_CONTENT_MIGRATIONS_USERS", method: "get", reducer: 'content_migrations'};
+export const list_content_migrations_users = { type: "LIST_CONTENT_MIGRATIONS_USERS", method: "get", key: 'list_content_migrations_users'};
 
 // Get a content migration
 // Returns data on an individual content migration
@@ -181,7 +181,7 @@ export const list_content_migrations_users = { type: "LIST_CONTENT_MIGRATIONS_US
 //
 // Example:
 // return canvasRequest(get_content_migration_accounts, {account_id, id});
-export const get_content_migration_accounts = { type: "GET_CONTENT_MIGRATION_ACCOUNTS", method: "get", reducer: 'content_migrations'};
+export const get_content_migration_accounts = { type: "GET_CONTENT_MIGRATION_ACCOUNTS", method: "get", key: 'get_content_migration_accounts'};
 
 // Get a content migration
 // Returns data on an individual content migration
@@ -191,7 +191,7 @@ export const get_content_migration_accounts = { type: "GET_CONTENT_MIGRATION_ACC
 //
 // Example:
 // return canvasRequest(get_content_migration_courses, {course_id, id});
-export const get_content_migration_courses = { type: "GET_CONTENT_MIGRATION_COURSES", method: "get", reducer: 'content_migrations'};
+export const get_content_migration_courses = { type: "GET_CONTENT_MIGRATION_COURSES", method: "get", key: 'get_content_migration_courses'};
 
 // Get a content migration
 // Returns data on an individual content migration
@@ -201,7 +201,7 @@ export const get_content_migration_courses = { type: "GET_CONTENT_MIGRATION_COUR
 //
 // Example:
 // return canvasRequest(get_content_migration_groups, {group_id, id});
-export const get_content_migration_groups = { type: "GET_CONTENT_MIGRATION_GROUPS", method: "get", reducer: 'content_migrations'};
+export const get_content_migration_groups = { type: "GET_CONTENT_MIGRATION_GROUPS", method: "get", key: 'get_content_migration_groups'};
 
 // Get a content migration
 // Returns data on an individual content migration
@@ -211,7 +211,7 @@ export const get_content_migration_groups = { type: "GET_CONTENT_MIGRATION_GROUP
 //
 // Example:
 // return canvasRequest(get_content_migration_users, {user_id, id});
-export const get_content_migration_users = { type: "GET_CONTENT_MIGRATION_USERS", method: "get", reducer: 'content_migrations'};
+export const get_content_migration_users = { type: "GET_CONTENT_MIGRATION_USERS", method: "get", key: 'get_content_migration_users'};
 
 // Create a content migration
 // Create a content migration. If the migration requires a file to be uploaded
@@ -265,7 +265,7 @@ export const get_content_migration_users = { type: "GET_CONTENT_MIGRATION_USERS"
 //   date_shift_options[remove_dates]
 // }
 // return canvasRequest(create_content_migration_accounts, {account_id}, query);
-export const create_content_migration_accounts = { type: "CREATE_CONTENT_MIGRATION_ACCOUNTS", method: "post", reducer: 'content_migrations'};
+export const create_content_migration_accounts = { type: "CREATE_CONTENT_MIGRATION_ACCOUNTS", method: "post", key: 'create_content_migration_accounts'};
 
 // Create a content migration
 // Create a content migration. If the migration requires a file to be uploaded
@@ -319,7 +319,7 @@ export const create_content_migration_accounts = { type: "CREATE_CONTENT_MIGRATI
 //   date_shift_options[remove_dates]
 // }
 // return canvasRequest(create_content_migration_courses, {course_id}, query);
-export const create_content_migration_courses = { type: "CREATE_CONTENT_MIGRATION_COURSES", method: "post", reducer: 'content_migrations'};
+export const create_content_migration_courses = { type: "CREATE_CONTENT_MIGRATION_COURSES", method: "post", key: 'create_content_migration_courses'};
 
 // Create a content migration
 // Create a content migration. If the migration requires a file to be uploaded
@@ -373,7 +373,7 @@ export const create_content_migration_courses = { type: "CREATE_CONTENT_MIGRATIO
 //   date_shift_options[remove_dates]
 // }
 // return canvasRequest(create_content_migration_groups, {group_id}, query);
-export const create_content_migration_groups = { type: "CREATE_CONTENT_MIGRATION_GROUPS", method: "post", reducer: 'content_migrations'};
+export const create_content_migration_groups = { type: "CREATE_CONTENT_MIGRATION_GROUPS", method: "post", key: 'create_content_migration_groups'};
 
 // Create a content migration
 // Create a content migration. If the migration requires a file to be uploaded
@@ -427,7 +427,7 @@ export const create_content_migration_groups = { type: "CREATE_CONTENT_MIGRATION
 //   date_shift_options[remove_dates]
 // }
 // return canvasRequest(create_content_migration_users, {user_id}, query);
-export const create_content_migration_users = { type: "CREATE_CONTENT_MIGRATION_USERS", method: "post", reducer: 'content_migrations'};
+export const create_content_migration_users = { type: "CREATE_CONTENT_MIGRATION_USERS", method: "post", key: 'create_content_migration_users'};
 
 // Update a content migration
 // Update a content migration. Takes same arguments as create except that you
@@ -442,7 +442,7 @@ export const create_content_migration_users = { type: "CREATE_CONTENT_MIGRATION_
 //
 // Example:
 // return canvasRequest(update_content_migration_accounts, {account_id, id});
-export const update_content_migration_accounts = { type: "UPDATE_CONTENT_MIGRATION_ACCOUNTS", method: "put", reducer: 'content_migrations'};
+export const update_content_migration_accounts = { type: "UPDATE_CONTENT_MIGRATION_ACCOUNTS", method: "put", key: 'update_content_migration_accounts'};
 
 // Update a content migration
 // Update a content migration. Takes same arguments as create except that you
@@ -457,7 +457,7 @@ export const update_content_migration_accounts = { type: "UPDATE_CONTENT_MIGRATI
 //
 // Example:
 // return canvasRequest(update_content_migration_courses, {course_id, id});
-export const update_content_migration_courses = { type: "UPDATE_CONTENT_MIGRATION_COURSES", method: "put", reducer: 'content_migrations'};
+export const update_content_migration_courses = { type: "UPDATE_CONTENT_MIGRATION_COURSES", method: "put", key: 'update_content_migration_courses'};
 
 // Update a content migration
 // Update a content migration. Takes same arguments as create except that you
@@ -472,7 +472,7 @@ export const update_content_migration_courses = { type: "UPDATE_CONTENT_MIGRATIO
 //
 // Example:
 // return canvasRequest(update_content_migration_groups, {group_id, id});
-export const update_content_migration_groups = { type: "UPDATE_CONTENT_MIGRATION_GROUPS", method: "put", reducer: 'content_migrations'};
+export const update_content_migration_groups = { type: "UPDATE_CONTENT_MIGRATION_GROUPS", method: "put", key: 'update_content_migration_groups'};
 
 // Update a content migration
 // Update a content migration. Takes same arguments as create except that you
@@ -487,7 +487,7 @@ export const update_content_migration_groups = { type: "UPDATE_CONTENT_MIGRATION
 //
 // Example:
 // return canvasRequest(update_content_migration_users, {user_id, id});
-export const update_content_migration_users = { type: "UPDATE_CONTENT_MIGRATION_USERS", method: "put", reducer: 'content_migrations'};
+export const update_content_migration_users = { type: "UPDATE_CONTENT_MIGRATION_USERS", method: "put", key: 'update_content_migration_users'};
 
 // List Migration Systems
 // Lists the currently available migration types. These values may change.
@@ -497,7 +497,7 @@ export const update_content_migration_users = { type: "UPDATE_CONTENT_MIGRATION_
 //
 // Example:
 // return canvasRequest(list_migration_systems_accounts, {account_id});
-export const list_migration_systems_accounts = { type: "LIST_MIGRATION_SYSTEMS_ACCOUNTS", method: "get", reducer: 'content_migrations'};
+export const list_migration_systems_accounts = { type: "LIST_MIGRATION_SYSTEMS_ACCOUNTS", method: "get", key: 'list_migration_systems_accounts'};
 
 // List Migration Systems
 // Lists the currently available migration types. These values may change.
@@ -507,7 +507,7 @@ export const list_migration_systems_accounts = { type: "LIST_MIGRATION_SYSTEMS_A
 //
 // Example:
 // return canvasRequest(list_migration_systems_courses, {course_id});
-export const list_migration_systems_courses = { type: "LIST_MIGRATION_SYSTEMS_COURSES", method: "get", reducer: 'content_migrations'};
+export const list_migration_systems_courses = { type: "LIST_MIGRATION_SYSTEMS_COURSES", method: "get", key: 'list_migration_systems_courses'};
 
 // List Migration Systems
 // Lists the currently available migration types. These values may change.
@@ -517,7 +517,7 @@ export const list_migration_systems_courses = { type: "LIST_MIGRATION_SYSTEMS_CO
 //
 // Example:
 // return canvasRequest(list_migration_systems_groups, {group_id});
-export const list_migration_systems_groups = { type: "LIST_MIGRATION_SYSTEMS_GROUPS", method: "get", reducer: 'content_migrations'};
+export const list_migration_systems_groups = { type: "LIST_MIGRATION_SYSTEMS_GROUPS", method: "get", key: 'list_migration_systems_groups'};
 
 // List Migration Systems
 // Lists the currently available migration types. These values may change.
@@ -527,4 +527,4 @@ export const list_migration_systems_groups = { type: "LIST_MIGRATION_SYSTEMS_GRO
 //
 // Example:
 // return canvasRequest(list_migration_systems_users, {user_id});
-export const list_migration_systems_users = { type: "LIST_MIGRATION_SYSTEMS_USERS", method: "get", reducer: 'content_migrations'};
+export const list_migration_systems_users = { type: "LIST_MIGRATION_SYSTEMS_USERS", method: "get", key: 'list_migration_systems_users'};
