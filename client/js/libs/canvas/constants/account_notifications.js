@@ -10,7 +10,7 @@
 //
 // Example:
 // return canvasRequest(index_of_active_global_notification_for_user, {account_id, user_id});
-export const index_of_active_global_notification_for_user = { type: "INDEX_OF_ACTIVE_GLOBAL_NOTIFICATION_FOR_USER", method: "get", reducer: 'account_notifications'};
+export const index_of_active_global_notification_for_user = { type: "INDEX_OF_ACTIVE_GLOBAL_NOTIFICATION_FOR_USER", method: "get", key: 'index_of_active_global_notification_for_user'};
 
 // Show a global notification
 // Returns a global notification
@@ -21,7 +21,7 @@ export const index_of_active_global_notification_for_user = { type: "INDEX_OF_AC
 //
 // Example:
 // return canvasRequest(show_global_notification, {account_id, user_id, id});
-export const show_global_notification = { type: "SHOW_GLOBAL_NOTIFICATION", method: "get", reducer: 'account_notifications'};
+export const show_global_notification = { type: "SHOW_GLOBAL_NOTIFICATION", method: "get", key: 'show_global_notification'};
 
 // Close notification for user
 // If the user no long wants to see this notification it can be excused with this call
@@ -31,7 +31,7 @@ export const show_global_notification = { type: "SHOW_GLOBAL_NOTIFICATION", meth
 //
 // Example:
 // return canvasRequest(close_notification_for_user, {account_id, user_id, id});
-export const close_notification_for_user = { type: "CLOSE_NOTIFICATION_FOR_USER", method: "delete", reducer: 'account_notifications'};
+export const close_notification_for_user = { type: "CLOSE_NOTIFICATION_FOR_USER", method: "delete", key: 'close_notification_for_user'};
 
 // Create a global notification
 // Create and return a new global notification for an account.
@@ -49,7 +49,7 @@ export const close_notification_for_user = { type: "CLOSE_NOTIFICATION_FOR_USER"
 //   account_notification_roles
 // }
 // return canvasRequest(create_global_notification, {account_id}, query);
-export const create_global_notification = { type: "CREATE_GLOBAL_NOTIFICATION", method: "post", reducer: 'account_notifications'};
+export const create_global_notification = { type: "CREATE_GLOBAL_NOTIFICATION", method: "post", key: 'create_global_notification'};
 
 // Update a global notification
 // Update global notification for an account.
@@ -67,4 +67,4 @@ export const create_global_notification = { type: "CREATE_GLOBAL_NOTIFICATION", 
 //   account_notification_roles
 // }
 // return canvasRequest(update_global_notification, {account_id, id}, query);
-export const update_global_notification = { type: "UPDATE_GLOBAL_NOTIFICATION", method: "put", reducer: 'account_notifications'};
+export const update_global_notification = { type: "UPDATE_GLOBAL_NOTIFICATION", method: "put", key: 'update_global_notification'};

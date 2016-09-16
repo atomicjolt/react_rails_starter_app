@@ -13,4 +13,4 @@
 //   end_time
 // }
 // return canvasRequest(course_audit_log_query_by_course, {course_id}, query);
-export const course_audit_log_query_by_course = { type: "COURSE_AUDIT_LOG_QUERY_BY_COURSE", method: "get", reducer: 'course_audit_log'};
+export const course_audit_log_query_by_course = { type: "COURSE_AUDIT_LOG_QUERY_BY_COURSE", method: "get", key: 'course_audit_log_query_by_course'};

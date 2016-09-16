@@ -20,4 +20,4 @@
 //   extend_from_end_at
 // }
 // return canvasRequest(course_quiz_extensions_set_extensions_for_student_quiz_submissions, {course_id}, query);
-export const course_quiz_extensions_set_extensions_for_student_quiz_submissions = { type: "COURSE_QUIZ_EXTENSIONS_SET_EXTENSIONS_FOR_STUDENT_QUIZ_SUBMISSIONS", method: "post", reducer: 'course_quiz_extensions'};
+export const course_quiz_extensions_set_extensions_for_student_quiz_submissions = { type: "COURSE_QUIZ_EXTENSIONS_SET_EXTENSIONS_FOR_STUDENT_QUIZ_SUBMISSIONS", method: "post", key: 'course_quiz_extensions_set_extensions_for_student_quiz_submissions'};

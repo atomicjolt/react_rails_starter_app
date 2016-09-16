@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_poll_choices_in_poll, {poll_id});
-export const list_poll_choices_in_poll = { type: "LIST_POLL_CHOICES_IN_POLL", method: "get", reducer: 'poll_choices'};
+export const list_poll_choices_in_poll = { type: "LIST_POLL_CHOICES_IN_POLL", method: "get", key: 'list_poll_choices_in_poll'};
 
 // Get a single poll choice
 // Returns the poll choice with the given id
@@ -19,7 +19,7 @@ export const list_poll_choices_in_poll = { type: "LIST_POLL_CHOICES_IN_POLL", me
 //
 // Example:
 // return canvasRequest(get_single_poll_choice, {poll_id, id});
-export const get_single_poll_choice = { type: "GET_SINGLE_POLL_CHOICE", method: "get", reducer: 'poll_choices'};
+export const get_single_poll_choice = { type: "GET_SINGLE_POLL_CHOICE", method: "get", key: 'get_single_poll_choice'};
 
 // Create a single poll choice
 // Create a new poll choice for this poll
@@ -34,7 +34,7 @@ export const get_single_poll_choice = { type: "GET_SINGLE_POLL_CHOICE", method: 
 //   poll_choices[position]
 // }
 // return canvasRequest(create_single_poll_choice, {poll_id}, query);
-export const create_single_poll_choice = { type: "CREATE_SINGLE_POLL_CHOICE", method: "post", reducer: 'poll_choices'};
+export const create_single_poll_choice = { type: "CREATE_SINGLE_POLL_CHOICE", method: "post", key: 'create_single_poll_choice'};
 
 // Update a single poll choice
 // Update an existing poll choice for this poll
@@ -49,7 +49,7 @@ export const create_single_poll_choice = { type: "CREATE_SINGLE_POLL_CHOICE", me
 //   poll_choices[position]
 // }
 // return canvasRequest(update_single_poll_choice, {poll_id, id}, query);
-export const update_single_poll_choice = { type: "UPDATE_SINGLE_POLL_CHOICE", method: "put", reducer: 'poll_choices'};
+export const update_single_poll_choice = { type: "UPDATE_SINGLE_POLL_CHOICE", method: "put", key: 'update_single_poll_choice'};
 
 // Delete a poll choice
 // <b>204 No Content</b> response code is returned if the deletion was successful.
@@ -59,4 +59,4 @@ export const update_single_poll_choice = { type: "UPDATE_SINGLE_POLL_CHOICE", me
 //
 // Example:
 // return canvasRequest(delete_poll_choice, {poll_id, id});
-export const delete_poll_choice = { type: "DELETE_POLL_CHOICE", method: "delete", reducer: 'poll_choices'};
+export const delete_poll_choice = { type: "DELETE_POLL_CHOICE", method: "delete", key: 'delete_poll_choice'};

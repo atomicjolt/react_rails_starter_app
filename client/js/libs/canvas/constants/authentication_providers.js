@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_authentication_providers_authentication_providers, {account_id});
-export const list_authentication_providers_authentication_providers = { type: "LIST_AUTHENTICATION_PROVIDERS_AUTHENTICATION_PROVIDERS", method: "get", reducer: 'authentication_providers'};
+export const list_authentication_providers_authentication_providers = { type: "LIST_AUTHENTICATION_PROVIDERS_AUTHENTICATION_PROVIDERS", method: "get", key: 'list_authentication_providers_authentication_providers'};
 
 // List authentication providers
 // Returns the list of authentication providers
@@ -19,7 +19,7 @@ export const list_authentication_providers_authentication_providers = { type: "L
 //
 // Example:
 // return canvasRequest(list_authentication_providers_account_authorization_configs, {account_id});
-export const list_authentication_providers_account_authorization_configs = { type: "LIST_AUTHENTICATION_PROVIDERS_ACCOUNT_AUTHORIZATION_CONFIGS", method: "get", reducer: 'authentication_providers'};
+export const list_authentication_providers_account_authorization_configs = { type: "LIST_AUTHENTICATION_PROVIDERS_ACCOUNT_AUTHORIZATION_CONFIGS", method: "get", key: 'list_authentication_providers_account_authorization_configs'};
 
 // Add authentication provider
 // Add external authentication provider(s) for the account.
@@ -360,7 +360,7 @@ export const list_authentication_providers_account_authorization_configs = { typ
 //
 // Example:
 // return canvasRequest(add_authentication_provider_authentication_providers, {account_id});
-export const add_authentication_provider_authentication_providers = { type: "ADD_AUTHENTICATION_PROVIDER_AUTHENTICATION_PROVIDERS", method: "post", reducer: 'authentication_providers'};
+export const add_authentication_provider_authentication_providers = { type: "ADD_AUTHENTICATION_PROVIDER_AUTHENTICATION_PROVIDERS", method: "post", key: 'add_authentication_provider_authentication_providers'};
 
 // Add authentication provider
 // Add external authentication provider(s) for the account.
@@ -701,7 +701,7 @@ export const add_authentication_provider_authentication_providers = { type: "ADD
 //
 // Example:
 // return canvasRequest(add_authentication_provider_account_authorization_configs, {account_id});
-export const add_authentication_provider_account_authorization_configs = { type: "ADD_AUTHENTICATION_PROVIDER_ACCOUNT_AUTHORIZATION_CONFIGS", method: "post", reducer: 'authentication_providers'};
+export const add_authentication_provider_account_authorization_configs = { type: "ADD_AUTHENTICATION_PROVIDER_ACCOUNT_AUTHORIZATION_CONFIGS", method: "post", key: 'add_authentication_provider_account_authorization_configs'};
 
 // Update authentication provider
 // Update an authentication provider using the same options as the create endpoint.
@@ -712,7 +712,7 @@ export const add_authentication_provider_account_authorization_configs = { type:
 //
 // Example:
 // return canvasRequest(update_authentication_provider_authentication_providers, {account_id, id});
-export const update_authentication_provider_authentication_providers = { type: "UPDATE_AUTHENTICATION_PROVIDER_AUTHENTICATION_PROVIDERS", method: "put", reducer: 'authentication_providers'};
+export const update_authentication_provider_authentication_providers = { type: "UPDATE_AUTHENTICATION_PROVIDER_AUTHENTICATION_PROVIDERS", method: "put", key: 'update_authentication_provider_authentication_providers'};
 
 // Update authentication provider
 // Update an authentication provider using the same options as the create endpoint.
@@ -723,7 +723,7 @@ export const update_authentication_provider_authentication_providers = { type: "
 //
 // Example:
 // return canvasRequest(update_authentication_provider_account_authorization_configs, {account_id, id});
-export const update_authentication_provider_account_authorization_configs = { type: "UPDATE_AUTHENTICATION_PROVIDER_ACCOUNT_AUTHORIZATION_CONFIGS", method: "put", reducer: 'authentication_providers'};
+export const update_authentication_provider_account_authorization_configs = { type: "UPDATE_AUTHENTICATION_PROVIDER_ACCOUNT_AUTHORIZATION_CONFIGS", method: "put", key: 'update_authentication_provider_account_authorization_configs'};
 
 // Get authentication provider
 // Get the specified authentication provider
@@ -733,7 +733,7 @@ export const update_authentication_provider_account_authorization_configs = { ty
 //
 // Example:
 // return canvasRequest(get_authentication_provider_authentication_providers, {account_id, id});
-export const get_authentication_provider_authentication_providers = { type: "GET_AUTHENTICATION_PROVIDER_AUTHENTICATION_PROVIDERS", method: "get", reducer: 'authentication_providers'};
+export const get_authentication_provider_authentication_providers = { type: "GET_AUTHENTICATION_PROVIDER_AUTHENTICATION_PROVIDERS", method: "get", key: 'get_authentication_provider_authentication_providers'};
 
 // Get authentication provider
 // Get the specified authentication provider
@@ -743,7 +743,7 @@ export const get_authentication_provider_authentication_providers = { type: "GET
 //
 // Example:
 // return canvasRequest(get_authentication_provider_account_authorization_configs, {account_id, id});
-export const get_authentication_provider_account_authorization_configs = { type: "GET_AUTHENTICATION_PROVIDER_ACCOUNT_AUTHORIZATION_CONFIGS", method: "get", reducer: 'authentication_providers'};
+export const get_authentication_provider_account_authorization_configs = { type: "GET_AUTHENTICATION_PROVIDER_ACCOUNT_AUTHORIZATION_CONFIGS", method: "get", key: 'get_authentication_provider_account_authorization_configs'};
 
 // Delete authentication provider
 // Delete the config
@@ -753,7 +753,7 @@ export const get_authentication_provider_account_authorization_configs = { type:
 //
 // Example:
 // return canvasRequest(delete_authentication_provider_authentication_providers, {account_id, id});
-export const delete_authentication_provider_authentication_providers = { type: "DELETE_AUTHENTICATION_PROVIDER_AUTHENTICATION_PROVIDERS", method: "delete", reducer: 'authentication_providers'};
+export const delete_authentication_provider_authentication_providers = { type: "DELETE_AUTHENTICATION_PROVIDER_AUTHENTICATION_PROVIDERS", method: "delete", key: 'delete_authentication_provider_authentication_providers'};
 
 // Delete authentication provider
 // Delete the config
@@ -763,7 +763,7 @@ export const delete_authentication_provider_authentication_providers = { type: "
 //
 // Example:
 // return canvasRequest(delete_authentication_provider_account_authorization_configs, {account_id, id});
-export const delete_authentication_provider_account_authorization_configs = { type: "DELETE_AUTHENTICATION_PROVIDER_ACCOUNT_AUTHORIZATION_CONFIGS", method: "delete", reducer: 'authentication_providers'};
+export const delete_authentication_provider_account_authorization_configs = { type: "DELETE_AUTHENTICATION_PROVIDER_ACCOUNT_AUTHORIZATION_CONFIGS", method: "delete", key: 'delete_authentication_provider_account_authorization_configs'};
 
 // GET discovery url _Deprecated_[2015-05-08]
 // Get the discovery url _Deprecated_[2015-05-08]
@@ -775,7 +775,7 @@ export const delete_authentication_provider_account_authorization_configs = { ty
 //
 // Example:
 // return canvasRequest(get_discovery_url_deprecated, {account_id});
-export const get_discovery_url_deprecated = { type: "GET_DISCOVERY_URL_DEPRECATED", method: "get", reducer: 'authentication_providers'};
+export const get_discovery_url_deprecated = { type: "GET_DISCOVERY_URL_DEPRECATED", method: "get", key: 'get_discovery_url_deprecated'};
 
 // Set discovery url _Deprecated_[2015-05-08]
 // [Use update_sso_settings instead]
@@ -793,7 +793,7 @@ export const get_discovery_url_deprecated = { type: "GET_DISCOVERY_URL_DEPRECATE
 //
 // Example:
 // return canvasRequest(set_discovery_url_deprecated, {account_id});
-export const set_discovery_url_deprecated = { type: "SET_DISCOVERY_URL_DEPRECATED", method: "put", reducer: 'authentication_providers'};
+export const set_discovery_url_deprecated = { type: "SET_DISCOVERY_URL_DEPRECATED", method: "put", key: 'set_discovery_url_deprecated'};
 
 // Delete discovery url _Deprecated_[2015-05-08]
 // Clear discovery url _Deprecated_[2015-05-08]
@@ -805,7 +805,7 @@ export const set_discovery_url_deprecated = { type: "SET_DISCOVERY_URL_DEPRECATE
 //
 // Example:
 // return canvasRequest(delete_discovery_url_deprecated, {account_id});
-export const delete_discovery_url_deprecated = { type: "DELETE_DISCOVERY_URL_DEPRECATED", method: "delete", reducer: 'authentication_providers'};
+export const delete_discovery_url_deprecated = { type: "DELETE_DISCOVERY_URL_DEPRECATED", method: "delete", key: 'delete_discovery_url_deprecated'};
 
 // show account auth settings
 // The way to get the current state of each account level setting
@@ -818,7 +818,7 @@ export const delete_discovery_url_deprecated = { type: "DELETE_DISCOVERY_URL_DEP
 //
 // Example:
 // return canvasRequest(show_account_auth_settings, {account_id});
-export const show_account_auth_settings = { type: "SHOW_ACCOUNT_AUTH_SETTINGS", method: "get", reducer: 'authentication_providers'};
+export const show_account_auth_settings = { type: "SHOW_ACCOUNT_AUTH_SETTINGS", method: "get", key: 'show_account_auth_settings'};
 
 // update account auth settings
 // For various cases of mixed SSO configurations, you may need to set some
@@ -837,4 +837,4 @@ export const show_account_auth_settings = { type: "SHOW_ACCOUNT_AUTH_SETTINGS", 
 //
 // Example:
 // return canvasRequest(update_account_auth_settings, {account_id});
-export const update_account_auth_settings = { type: "UPDATE_ACCOUNT_AUTH_SETTINGS", method: "put", reducer: 'authentication_providers'};
+export const update_account_auth_settings = { type: "UPDATE_ACCOUNT_AUTH_SETTINGS", method: "put", key: 'update_account_auth_settings'};

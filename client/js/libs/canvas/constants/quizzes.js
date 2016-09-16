@@ -12,7 +12,7 @@
 //   search_term
 // }
 // return canvasRequest(list_quizzes_in_course, {course_id}, query);
-export const list_quizzes_in_course = { type: "LIST_QUIZZES_IN_COURSE", method: "get", reducer: 'quizzes'};
+export const list_quizzes_in_course = { type: "LIST_QUIZZES_IN_COURSE", method: "get", key: 'list_quizzes_in_course'};
 
 // Get a single quiz
 // Returns the quiz with the given id.
@@ -22,7 +22,7 @@ export const list_quizzes_in_course = { type: "LIST_QUIZZES_IN_COURSE", method: 
 //
 // Example:
 // return canvasRequest(get_single_quiz, {course_id, id});
-export const get_single_quiz = { type: "GET_SINGLE_QUIZ", method: "get", reducer: 'quizzes'};
+export const get_single_quiz = { type: "GET_SINGLE_QUIZ", method: "get", key: 'get_single_quiz'};
 
 // Create a quiz
 // Create a new quiz for this course.
@@ -56,7 +56,7 @@ export const get_single_quiz = { type: "GET_SINGLE_QUIZ", method: "get", reducer
 //   quiz[one_time_results]
 // }
 // return canvasRequest(create_quiz, {course_id}, query);
-export const create_quiz = { type: "CREATE_QUIZ", method: "post", reducer: 'quizzes'};
+export const create_quiz = { type: "CREATE_QUIZ", method: "post", key: 'create_quiz'};
 
 // Edit a quiz
 // Modify an existing quiz. See the documentation for quiz creation.
@@ -71,7 +71,7 @@ export const create_quiz = { type: "CREATE_QUIZ", method: "post", reducer: 'quiz
 //   quiz[notify_of_update]
 // }
 // return canvasRequest(edit_quiz, {course_id, id}, query);
-export const edit_quiz = { type: "EDIT_QUIZ", method: "put", reducer: 'quizzes'};
+export const edit_quiz = { type: "EDIT_QUIZ", method: "put", key: 'edit_quiz'};
 
 // Delete a quiz
 // 
@@ -81,7 +81,7 @@ export const edit_quiz = { type: "EDIT_QUIZ", method: "put", reducer: 'quizzes'}
 //
 // Example:
 // return canvasRequest(delete_quiz, {course_id, id});
-export const delete_quiz = { type: "DELETE_QUIZ", method: "delete", reducer: 'quizzes'};
+export const delete_quiz = { type: "DELETE_QUIZ", method: "delete", key: 'delete_quiz'};
 
 // Reorder quiz items
 // Change order of the quiz questions or groups within the quiz
@@ -97,7 +97,7 @@ export const delete_quiz = { type: "DELETE_QUIZ", method: "delete", reducer: 'qu
 //   order[type]
 // }
 // return canvasRequest(reorder_quiz_items, {course_id, id}, query);
-export const reorder_quiz_items = { type: "REORDER_QUIZ_ITEMS", method: "post", reducer: 'quizzes'};
+export const reorder_quiz_items = { type: "REORDER_QUIZ_ITEMS", method: "post", key: 'reorder_quiz_items'};
 
 // Validate quiz access code
 // Accepts an access code and returns a boolean indicating whether that access code is correct
@@ -110,4 +110,4 @@ export const reorder_quiz_items = { type: "REORDER_QUIZ_ITEMS", method: "post", 
 //   access_code (required)
 // }
 // return canvasRequest(validate_quiz_access_code, {course_id, id}, query);
-export const validate_quiz_access_code = { type: "VALIDATE_QUIZ_ACCESS_CODE", method: "post", reducer: 'quizzes'};
+export const validate_quiz_access_code = { type: "VALIDATE_QUIZ_ACCESS_CODE", method: "post", key: 'validate_quiz_access_code'};

@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(get_single_quiz_group, {course_id, quiz_id, id});
-export const get_single_quiz_group = { type: "GET_SINGLE_QUIZ_GROUP", method: "get", reducer: 'quiz_question_groups'};
+export const get_single_quiz_group = { type: "GET_SINGLE_QUIZ_GROUP", method: "get", key: 'get_single_quiz_group'};
 
 // Create a question group
 // Create a new question group for this quiz
@@ -27,7 +27,7 @@ export const get_single_quiz_group = { type: "GET_SINGLE_QUIZ_GROUP", method: "g
 //   quiz_groups[assessment_question_bank_id]
 // }
 // return canvasRequest(create_question_group, {course_id, quiz_id}, query);
-export const create_question_group = { type: "CREATE_QUESTION_GROUP", method: "post", reducer: 'quiz_question_groups'};
+export const create_question_group = { type: "CREATE_QUESTION_GROUP", method: "post", key: 'create_question_group'};
 
 // Update a question group
 // Update a question group
@@ -42,7 +42,7 @@ export const create_question_group = { type: "CREATE_QUESTION_GROUP", method: "p
 //   quiz_groups[question_points]
 // }
 // return canvasRequest(update_question_group, {course_id, quiz_id, id}, query);
-export const update_question_group = { type: "UPDATE_QUESTION_GROUP", method: "put", reducer: 'quiz_question_groups'};
+export const update_question_group = { type: "UPDATE_QUESTION_GROUP", method: "put", key: 'update_question_group'};
 
 // Delete a question group
 // Delete a question group
@@ -54,7 +54,7 @@ export const update_question_group = { type: "UPDATE_QUESTION_GROUP", method: "p
 //
 // Example:
 // return canvasRequest(delete_question_group, {course_id, quiz_id, id});
-export const delete_question_group = { type: "DELETE_QUESTION_GROUP", method: "delete", reducer: 'quiz_question_groups'};
+export const delete_question_group = { type: "DELETE_QUESTION_GROUP", method: "delete", key: 'delete_question_group'};
 
 // Reorder question groups
 // Change the order of the quiz questions within the group
@@ -70,4 +70,4 @@ export const delete_question_group = { type: "DELETE_QUESTION_GROUP", method: "d
 //   order[type]
 // }
 // return canvasRequest(reorder_question_groups, {course_id, quiz_id, id}, query);
-export const reorder_question_groups = { type: "REORDER_QUESTION_GROUPS", method: "post", reducer: 'quiz_question_groups'};
+export const reorder_question_groups = { type: "REORDER_QUESTION_GROUPS", method: "post", key: 'reorder_question_groups'};

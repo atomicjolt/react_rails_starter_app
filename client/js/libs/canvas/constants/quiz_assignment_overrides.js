@@ -13,4 +13,4 @@
 //   quiz_assignment_overrides[0][quiz_ids]
 // }
 // return canvasRequest(retrieve_assignment_overridden_dates_for_quizzes, {course_id}, query);
-export const retrieve_assignment_overridden_dates_for_quizzes = { type: "RETRIEVE_ASSIGNMENT_OVERRIDDEN_DATES_FOR_QUIZZES", method: "get", reducer: 'quiz_assignment_overrides'};
+export const retrieve_assignment_overridden_dates_for_quizzes = { type: "RETRIEVE_ASSIGNMENT_OVERRIDDEN_DATES_FOR_QUIZZES", method: "get", key: 'retrieve_assignment_overridden_dates_for_quizzes'};

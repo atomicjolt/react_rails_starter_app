@@ -13,7 +13,7 @@
 //   include
 // }
 // return canvasRequest(list_your_groups, {}, query);
-export const list_your_groups = { type: "LIST_YOUR_GROUPS", method: "get", reducer: 'groups'};
+export const list_your_groups = { type: "LIST_YOUR_GROUPS", method: "get", key: 'list_your_groups'};
 
 // List the groups available in a context.
 // Returns the list of active groups in the given context that are visible to user.
@@ -27,7 +27,7 @@ export const list_your_groups = { type: "LIST_YOUR_GROUPS", method: "get", reduc
 //   include
 // }
 // return canvasRequest(list_groups_available_in_context_accounts, {account_id}, query);
-export const list_groups_available_in_context_accounts = { type: "LIST_GROUPS_AVAILABLE_IN_CONTEXT_ACCOUNTS", method: "get", reducer: 'groups'};
+export const list_groups_available_in_context_accounts = { type: "LIST_GROUPS_AVAILABLE_IN_CONTEXT_ACCOUNTS", method: "get", key: 'list_groups_available_in_context_accounts'};
 
 // List the groups available in a context.
 // Returns the list of active groups in the given context that are visible to user.
@@ -41,7 +41,7 @@ export const list_groups_available_in_context_accounts = { type: "LIST_GROUPS_AV
 //   include
 // }
 // return canvasRequest(list_groups_available_in_context_courses, {course_id}, query);
-export const list_groups_available_in_context_courses = { type: "LIST_GROUPS_AVAILABLE_IN_CONTEXT_COURSES", method: "get", reducer: 'groups'};
+export const list_groups_available_in_context_courses = { type: "LIST_GROUPS_AVAILABLE_IN_CONTEXT_COURSES", method: "get", key: 'list_groups_available_in_context_courses'};
 
 // Get a single group
 // Returns the data for a single group, or a 401 if the caller doesn't have
@@ -55,7 +55,7 @@ export const list_groups_available_in_context_courses = { type: "LIST_GROUPS_AVA
 //   include
 // }
 // return canvasRequest(get_single_group, {group_id}, query);
-export const get_single_group = { type: "GET_SINGLE_GROUP", method: "get", reducer: 'groups'};
+export const get_single_group = { type: "GET_SINGLE_GROUP", method: "get", key: 'get_single_group'};
 
 // Create a group
 // Creates a new group. Groups created using the "/api/v1/groups/"
@@ -73,7 +73,7 @@ export const get_single_group = { type: "GET_SINGLE_GROUP", method: "get", reduc
 //   storage_quota_mb
 // }
 // return canvasRequest(create_group_groups, {}, query);
-export const create_group_groups = { type: "CREATE_GROUP_GROUPS", method: "post", reducer: 'groups'};
+export const create_group_groups = { type: "CREATE_GROUP_GROUPS", method: "post", key: 'create_group_groups'};
 
 // Create a group
 // Creates a new group. Groups created using the "/api/v1/groups/"
@@ -91,7 +91,7 @@ export const create_group_groups = { type: "CREATE_GROUP_GROUPS", method: "post"
 //   storage_quota_mb
 // }
 // return canvasRequest(create_group_group_categories, {group_category_id}, query);
-export const create_group_group_categories = { type: "CREATE_GROUP_GROUP_CATEGORIES", method: "post", reducer: 'groups'};
+export const create_group_group_categories = { type: "CREATE_GROUP_GROUP_CATEGORIES", method: "post", key: 'create_group_group_categories'};
 
 // Edit a group
 // Modifies an existing group.  Note that to set an avatar image for the
@@ -114,7 +114,7 @@ export const create_group_group_categories = { type: "CREATE_GROUP_GROUP_CATEGOR
 //   members
 // }
 // return canvasRequest(edit_group, {group_id}, query);
-export const edit_group = { type: "EDIT_GROUP", method: "put", reducer: 'groups'};
+export const edit_group = { type: "EDIT_GROUP", method: "put", key: 'edit_group'};
 
 // Delete a group
 // Deletes a group and removes all members.
@@ -124,7 +124,7 @@ export const edit_group = { type: "EDIT_GROUP", method: "put", reducer: 'groups'
 //
 // Example:
 // return canvasRequest(delete_group, {group_id});
-export const delete_group = { type: "DELETE_GROUP", method: "delete", reducer: 'groups'};
+export const delete_group = { type: "DELETE_GROUP", method: "delete", key: 'delete_group'};
 
 // Invite others to a group
 // Sends an invitation to all supplied email addresses which will allow the
@@ -138,7 +138,7 @@ export const delete_group = { type: "DELETE_GROUP", method: "delete", reducer: '
 //   invitees (required)
 // }
 // return canvasRequest(invite_others_to_group, {group_id}, query);
-export const invite_others_to_group = { type: "INVITE_OTHERS_TO_GROUP", method: "post", reducer: 'groups'};
+export const invite_others_to_group = { type: "INVITE_OTHERS_TO_GROUP", method: "post", key: 'invite_others_to_group'};
 
 // List group's users
 // Returns a list of users in the group.
@@ -152,7 +152,7 @@ export const invite_others_to_group = { type: "INVITE_OTHERS_TO_GROUP", method: 
 //   include
 // }
 // return canvasRequest(list_group_s_users, {group_id}, query);
-export const list_group_s_users = { type: "LIST_GROUP_S_USERS", method: "get", reducer: 'groups'};
+export const list_group_s_users = { type: "LIST_GROUP_S_USERS", method: "get", key: 'list_group_s_users'};
 
 // Upload a file
 // Upload a file to the group.
@@ -170,7 +170,7 @@ export const list_group_s_users = { type: "LIST_GROUP_S_USERS", method: "get", r
 //
 // Example:
 // return canvasRequest(groups_upload_file, {group_id});
-export const groups_upload_file = { type: "GROUPS_UPLOAD_FILE", method: "post", reducer: 'groups'};
+export const groups_upload_file = { type: "GROUPS_UPLOAD_FILE", method: "post", key: 'groups_upload_file'};
 
 // Preview processed html
 // Preview html content processed for this group
@@ -183,7 +183,7 @@ export const groups_upload_file = { type: "GROUPS_UPLOAD_FILE", method: "post", 
 //   html
 // }
 // return canvasRequest(groups_preview_processed_html, {group_id}, query);
-export const groups_preview_processed_html = { type: "GROUPS_PREVIEW_PROCESSED_HTML", method: "post", reducer: 'groups'};
+export const groups_preview_processed_html = { type: "GROUPS_PREVIEW_PROCESSED_HTML", method: "post", key: 'groups_preview_processed_html'};
 
 // Group activity stream
 // Returns the current user's group-specific activity stream, paginated.
@@ -196,7 +196,7 @@ export const groups_preview_processed_html = { type: "GROUPS_PREVIEW_PROCESSED_H
 //
 // Example:
 // return canvasRequest(group_activity_stream, {group_id});
-export const group_activity_stream = { type: "GROUP_ACTIVITY_STREAM", method: "get", reducer: 'groups'};
+export const group_activity_stream = { type: "GROUP_ACTIVITY_STREAM", method: "get", key: 'group_activity_stream'};
 
 // Group activity stream summary
 // Returns a summary of the current user's group-specific activity stream.
@@ -209,7 +209,7 @@ export const group_activity_stream = { type: "GROUP_ACTIVITY_STREAM", method: "g
 //
 // Example:
 // return canvasRequest(group_activity_stream_summary, {group_id});
-export const group_activity_stream_summary = { type: "GROUP_ACTIVITY_STREAM_SUMMARY", method: "get", reducer: 'groups'};
+export const group_activity_stream_summary = { type: "GROUP_ACTIVITY_STREAM_SUMMARY", method: "get", key: 'group_activity_stream_summary'};
 
 // List group memberships
 // List the members of a group.
@@ -222,7 +222,7 @@ export const group_activity_stream_summary = { type: "GROUP_ACTIVITY_STREAM_SUMM
 //   filter_states
 // }
 // return canvasRequest(list_group_memberships, {group_id}, query);
-export const list_group_memberships = { type: "LIST_GROUP_MEMBERSHIPS", method: "get", reducer: 'groups'};
+export const list_group_memberships = { type: "LIST_GROUP_MEMBERSHIPS", method: "get", key: 'list_group_memberships'};
 
 // Get a single group membership
 // Returns the group membership with the given membership id or user id.
@@ -232,7 +232,7 @@ export const list_group_memberships = { type: "LIST_GROUP_MEMBERSHIPS", method: 
 //
 // Example:
 // return canvasRequest(get_single_group_membership_memberships, {group_id, membership_id});
-export const get_single_group_membership_memberships = { type: "GET_SINGLE_GROUP_MEMBERSHIP_MEMBERSHIPS", method: "get", reducer: 'groups'};
+export const get_single_group_membership_memberships = { type: "GET_SINGLE_GROUP_MEMBERSHIP_MEMBERSHIPS", method: "get", key: 'get_single_group_membership_memberships'};
 
 // Get a single group membership
 // Returns the group membership with the given membership id or user id.
@@ -242,7 +242,7 @@ export const get_single_group_membership_memberships = { type: "GET_SINGLE_GROUP
 //
 // Example:
 // return canvasRequest(get_single_group_membership_users, {group_id, user_id});
-export const get_single_group_membership_users = { type: "GET_SINGLE_GROUP_MEMBERSHIP_USERS", method: "get", reducer: 'groups'};
+export const get_single_group_membership_users = { type: "GET_SINGLE_GROUP_MEMBERSHIP_USERS", method: "get", key: 'get_single_group_membership_users'};
 
 // Create a membership
 // Join, or request to join, a group, depending on the join_level of the
@@ -257,7 +257,7 @@ export const get_single_group_membership_users = { type: "GET_SINGLE_GROUP_MEMBE
 //   user_id
 // }
 // return canvasRequest(create_membership, {group_id}, query);
-export const create_membership = { type: "CREATE_MEMBERSHIP", method: "post", reducer: 'groups'};
+export const create_membership = { type: "CREATE_MEMBERSHIP", method: "post", key: 'create_membership'};
 
 // Update a membership
 // Accept a membership request, or add/remove moderator rights.
@@ -271,7 +271,7 @@ export const create_membership = { type: "CREATE_MEMBERSHIP", method: "post", re
 //   moderator
 // }
 // return canvasRequest(update_membership_memberships, {group_id, membership_id}, query);
-export const update_membership_memberships = { type: "UPDATE_MEMBERSHIP_MEMBERSHIPS", method: "put", reducer: 'groups'};
+export const update_membership_memberships = { type: "UPDATE_MEMBERSHIP_MEMBERSHIPS", method: "put", key: 'update_membership_memberships'};
 
 // Update a membership
 // Accept a membership request, or add/remove moderator rights.
@@ -285,7 +285,7 @@ export const update_membership_memberships = { type: "UPDATE_MEMBERSHIP_MEMBERSH
 //   moderator
 // }
 // return canvasRequest(update_membership_users, {group_id, user_id}, query);
-export const update_membership_users = { type: "UPDATE_MEMBERSHIP_USERS", method: "put", reducer: 'groups'};
+export const update_membership_users = { type: "UPDATE_MEMBERSHIP_USERS", method: "put", key: 'update_membership_users'};
 
 // Leave a group
 // Leave a group if you are allowed to leave (some groups, such as sets of
@@ -297,7 +297,7 @@ export const update_membership_users = { type: "UPDATE_MEMBERSHIP_USERS", method
 //
 // Example:
 // return canvasRequest(leave_group_memberships, {group_id, membership_id});
-export const leave_group_memberships = { type: "LEAVE_GROUP_MEMBERSHIPS", method: "delete", reducer: 'groups'};
+export const leave_group_memberships = { type: "LEAVE_GROUP_MEMBERSHIPS", method: "delete", key: 'leave_group_memberships'};
 
 // Leave a group
 // Leave a group if you are allowed to leave (some groups, such as sets of
@@ -309,4 +309,4 @@ export const leave_group_memberships = { type: "LEAVE_GROUP_MEMBERSHIPS", method
 //
 // Example:
 // return canvasRequest(leave_group_users, {group_id, user_id});
-export const leave_group_users = { type: "LEAVE_GROUP_USERS", method: "delete", reducer: 'groups'};
+export const leave_group_users = { type: "LEAVE_GROUP_USERS", method: "delete", key: 'leave_group_users'};

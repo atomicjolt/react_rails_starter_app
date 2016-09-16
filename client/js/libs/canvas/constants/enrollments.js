@@ -26,7 +26,7 @@
 //   grading_period_id
 // }
 // return canvasRequest(list_enrollments_courses, {course_id}, query);
-export const list_enrollments_courses = { type: "LIST_ENROLLMENTS_COURSES", method: "get", reducer: 'enrollments'};
+export const list_enrollments_courses = { type: "LIST_ENROLLMENTS_COURSES", method: "get", key: 'list_enrollments_courses'};
 
 // List enrollments
 // Depending on the URL given, return either (1) all of the enrollments in
@@ -53,7 +53,7 @@ export const list_enrollments_courses = { type: "LIST_ENROLLMENTS_COURSES", meth
 //   grading_period_id
 // }
 // return canvasRequest(list_enrollments_sections, {section_id}, query);
-export const list_enrollments_sections = { type: "LIST_ENROLLMENTS_SECTIONS", method: "get", reducer: 'enrollments'};
+export const list_enrollments_sections = { type: "LIST_ENROLLMENTS_SECTIONS", method: "get", key: 'list_enrollments_sections'};
 
 // List enrollments
 // Depending on the URL given, return either (1) all of the enrollments in
@@ -79,7 +79,7 @@ export const list_enrollments_sections = { type: "LIST_ENROLLMENTS_SECTIONS", me
 //   grading_period_id
 // }
 // return canvasRequest(list_enrollments_users, {user_id}, query);
-export const list_enrollments_users = { type: "LIST_ENROLLMENTS_USERS", method: "get", reducer: 'enrollments'};
+export const list_enrollments_users = { type: "LIST_ENROLLMENTS_USERS", method: "get", key: 'list_enrollments_users'};
 
 // Enrollment by ID
 // Get an Enrollment object by Enrollment ID
@@ -89,7 +89,7 @@ export const list_enrollments_users = { type: "LIST_ENROLLMENTS_USERS", method: 
 //
 // Example:
 // return canvasRequest(enrollment_by_id, {account_id, id});
-export const enrollment_by_id = { type: "ENROLLMENT_BY_ID", method: "get", reducer: 'enrollments'};
+export const enrollment_by_id = { type: "ENROLLMENT_BY_ID", method: "get", key: 'enrollment_by_id'};
 
 // Enroll a user
 // Create a new user enrollment for a course or section.
@@ -112,7 +112,7 @@ export const enrollment_by_id = { type: "ENROLLMENT_BY_ID", method: "get", reduc
 //   enrollment[associated_user_id]
 // }
 // return canvasRequest(enroll_user_courses, {course_id}, query);
-export const enroll_user_courses = { type: "ENROLL_USER_COURSES", method: "post", reducer: 'enrollments'};
+export const enroll_user_courses = { type: "ENROLL_USER_COURSES", method: "post", key: 'enroll_user_courses'};
 
 // Enroll a user
 // Create a new user enrollment for a course or section.
@@ -135,7 +135,7 @@ export const enroll_user_courses = { type: "ENROLL_USER_COURSES", method: "post"
 //   enrollment[associated_user_id]
 // }
 // return canvasRequest(enroll_user_sections, {section_id}, query);
-export const enroll_user_sections = { type: "ENROLL_USER_SECTIONS", method: "post", reducer: 'enrollments'};
+export const enroll_user_sections = { type: "ENROLL_USER_SECTIONS", method: "post", key: 'enroll_user_sections'};
 
 // Conclude, deactivate, or delete an enrollment
 // Conclude, deactivate, or delete an enrollment. If the +task+ argument isn't given, the enrollment
@@ -149,7 +149,7 @@ export const enroll_user_sections = { type: "ENROLL_USER_SECTIONS", method: "pos
 //   task
 // }
 // return canvasRequest(conclude_deactivate_or_delete_enrollment, {course_id, id}, query);
-export const conclude_deactivate_or_delete_enrollment = { type: "CONCLUDE_DEACTIVATE_OR_DELETE_ENROLLMENT", method: "delete", reducer: 'enrollments'};
+export const conclude_deactivate_or_delete_enrollment = { type: "CONCLUDE_DEACTIVATE_OR_DELETE_ENROLLMENT", method: "delete", key: 'conclude_deactivate_or_delete_enrollment'};
 
 // Re-activate an enrollment
 // Activates an inactive enrollment
@@ -159,4 +159,4 @@ export const conclude_deactivate_or_delete_enrollment = { type: "CONCLUDE_DEACTI
 //
 // Example:
 // return canvasRequest(re_activate_enrollment, {course_id, id});
-export const re_activate_enrollment = { type: "RE_ACTIVATE_ENROLLMENT", method: "put", reducer: 'enrollments'};
+export const re_activate_enrollment = { type: "RE_ACTIVATE_ENROLLMENT", method: "put", key: 're_activate_enrollment'};

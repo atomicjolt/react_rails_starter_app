@@ -14,7 +14,7 @@
 //   quiz_submission_events (required)
 // }
 // return canvasRequest(submit_captured_events, {course_id, quiz_id, id}, query);
-export const submit_captured_events = { type: "SUBMIT_CAPTURED_EVENTS", method: "post", reducer: 'quiz_submission_events'};
+export const submit_captured_events = { type: "SUBMIT_CAPTURED_EVENTS", method: "post", key: 'submit_captured_events'};
 
 // Retrieve captured events
 // Retrieve the set of events captured during a specific submission attempt.
@@ -27,4 +27,4 @@ export const submit_captured_events = { type: "SUBMIT_CAPTURED_EVENTS", method: 
 //   attempt
 // }
 // return canvasRequest(retrieve_captured_events, {course_id, quiz_id, id}, query);
-export const retrieve_captured_events = { type: "RETRIEVE_CAPTURED_EVENTS", method: "get", reducer: 'quiz_submission_events'};
+export const retrieve_captured_events = { type: "RETRIEVE_CAPTURED_EVENTS", method: "get", key: 'retrieve_captured_events'};

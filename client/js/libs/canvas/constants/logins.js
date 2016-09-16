@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_user_logins_accounts, {account_id});
-export const list_user_logins_accounts = { type: "LIST_USER_LOGINS_ACCOUNTS", method: "get", reducer: 'logins'};
+export const list_user_logins_accounts = { type: "LIST_USER_LOGINS_ACCOUNTS", method: "get", key: 'list_user_logins_accounts'};
 
 // List user logins
 // Given a user ID, return that user's logins for the given account.
@@ -19,7 +19,7 @@ export const list_user_logins_accounts = { type: "LIST_USER_LOGINS_ACCOUNTS", me
 //
 // Example:
 // return canvasRequest(list_user_logins_users, {user_id});
-export const list_user_logins_users = { type: "LIST_USER_LOGINS_USERS", method: "get", reducer: 'logins'};
+export const list_user_logins_users = { type: "LIST_USER_LOGINS_USERS", method: "get", key: 'list_user_logins_users'};
 
 // Create a user login
 // Create a new login for an existing user in the given account.
@@ -37,7 +37,7 @@ export const list_user_logins_users = { type: "LIST_USER_LOGINS_USERS", method: 
 //   login[authentication_provider_id]
 // }
 // return canvasRequest(create_user_login, {account_id}, query);
-export const create_user_login = { type: "CREATE_USER_LOGIN", method: "post", reducer: 'logins'};
+export const create_user_login = { type: "CREATE_USER_LOGIN", method: "post", key: 'create_user_login'};
 
 // Edit a user login
 // Update an existing login for a user in the given account.
@@ -53,7 +53,7 @@ export const create_user_login = { type: "CREATE_USER_LOGIN", method: "post", re
 //   login[integration_id]
 // }
 // return canvasRequest(edit_user_login, {account_id, id}, query);
-export const edit_user_login = { type: "EDIT_USER_LOGIN", method: "put", reducer: 'logins'};
+export const edit_user_login = { type: "EDIT_USER_LOGIN", method: "put", key: 'edit_user_login'};
 
 // Delete a user login
 // Delete an existing login.
@@ -63,4 +63,4 @@ export const edit_user_login = { type: "EDIT_USER_LOGIN", method: "put", reducer
 //
 // Example:
 // return canvasRequest(delete_user_login, {user_id, id});
-export const delete_user_login = { type: "DELETE_USER_LOGIN", method: "delete", reducer: 'logins'};
+export const delete_user_login = { type: "DELETE_USER_LOGIN", method: "delete", key: 'delete_user_login'};

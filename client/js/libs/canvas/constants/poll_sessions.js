@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_poll_sessions_for_poll, {poll_id});
-export const list_poll_sessions_for_poll = { type: "LIST_POLL_SESSIONS_FOR_POLL", method: "get", reducer: 'poll_sessions'};
+export const list_poll_sessions_for_poll = { type: "LIST_POLL_SESSIONS_FOR_POLL", method: "get", key: 'list_poll_sessions_for_poll'};
 
 // Get the results for a single poll session
 // Returns the poll session with the given id
@@ -19,7 +19,7 @@ export const list_poll_sessions_for_poll = { type: "LIST_POLL_SESSIONS_FOR_POLL"
 //
 // Example:
 // return canvasRequest(get_results_for_single_poll_session, {poll_id, id});
-export const get_results_for_single_poll_session = { type: "GET_RESULTS_FOR_SINGLE_POLL_SESSION", method: "get", reducer: 'poll_sessions'};
+export const get_results_for_single_poll_session = { type: "GET_RESULTS_FOR_SINGLE_POLL_SESSION", method: "get", key: 'get_results_for_single_poll_session'};
 
 // Create a single poll session
 // Create a new poll session for this poll
@@ -34,7 +34,7 @@ export const get_results_for_single_poll_session = { type: "GET_RESULTS_FOR_SING
 //   poll_sessions[has_public_results]
 // }
 // return canvasRequest(create_single_poll_session, {poll_id}, query);
-export const create_single_poll_session = { type: "CREATE_SINGLE_POLL_SESSION", method: "post", reducer: 'poll_sessions'};
+export const create_single_poll_session = { type: "CREATE_SINGLE_POLL_SESSION", method: "post", key: 'create_single_poll_session'};
 
 // Update a single poll session
 // Update an existing poll session for this poll
@@ -49,7 +49,7 @@ export const create_single_poll_session = { type: "CREATE_SINGLE_POLL_SESSION", 
 //   poll_sessions[has_public_results]
 // }
 // return canvasRequest(update_single_poll_session, {poll_id, id}, query);
-export const update_single_poll_session = { type: "UPDATE_SINGLE_POLL_SESSION", method: "put", reducer: 'poll_sessions'};
+export const update_single_poll_session = { type: "UPDATE_SINGLE_POLL_SESSION", method: "put", key: 'update_single_poll_session'};
 
 // Delete a poll session
 // <b>204 No Content</b> response code is returned if the deletion was successful.
@@ -59,7 +59,7 @@ export const update_single_poll_session = { type: "UPDATE_SINGLE_POLL_SESSION", 
 //
 // Example:
 // return canvasRequest(delete_poll_session, {poll_id, id});
-export const delete_poll_session = { type: "DELETE_POLL_SESSION", method: "delete", reducer: 'poll_sessions'};
+export const delete_poll_session = { type: "DELETE_POLL_SESSION", method: "delete", key: 'delete_poll_session'};
 
 // Open a poll session
 // 
@@ -69,7 +69,7 @@ export const delete_poll_session = { type: "DELETE_POLL_SESSION", method: "delet
 //
 // Example:
 // return canvasRequest(open_poll_session, {poll_id, id});
-export const open_poll_session = { type: "OPEN_POLL_SESSION", method: "get", reducer: 'poll_sessions'};
+export const open_poll_session = { type: "OPEN_POLL_SESSION", method: "get", key: 'open_poll_session'};
 
 // Close an opened poll session
 // 
@@ -79,7 +79,7 @@ export const open_poll_session = { type: "OPEN_POLL_SESSION", method: "get", red
 //
 // Example:
 // return canvasRequest(close_opened_poll_session, {poll_id, id});
-export const close_opened_poll_session = { type: "CLOSE_OPENED_POLL_SESSION", method: "get", reducer: 'poll_sessions'};
+export const close_opened_poll_session = { type: "CLOSE_OPENED_POLL_SESSION", method: "get", key: 'close_opened_poll_session'};
 
 // List opened poll sessions
 // Lists all opened poll sessions available to the current user.
@@ -89,7 +89,7 @@ export const close_opened_poll_session = { type: "CLOSE_OPENED_POLL_SESSION", me
 //
 // Example:
 // return canvasRequest(list_opened_poll_sessions, {});
-export const list_opened_poll_sessions = { type: "LIST_OPENED_POLL_SESSIONS", method: "get", reducer: 'poll_sessions'};
+export const list_opened_poll_sessions = { type: "LIST_OPENED_POLL_SESSIONS", method: "get", key: 'list_opened_poll_sessions'};
 
 // List closed poll sessions
 // Lists all closed poll sessions available to the current user.
@@ -99,4 +99,4 @@ export const list_opened_poll_sessions = { type: "LIST_OPENED_POLL_SESSIONS", me
 //
 // Example:
 // return canvasRequest(list_closed_poll_sessions, {});
-export const list_closed_poll_sessions = { type: "LIST_CLOSED_POLL_SESSIONS", method: "get", reducer: 'poll_sessions'};
+export const list_closed_poll_sessions = { type: "LIST_CLOSED_POLL_SESSIONS", method: "get", key: 'list_closed_poll_sessions'};

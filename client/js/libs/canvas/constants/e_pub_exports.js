@@ -9,4 +9,4 @@
 //
 // Example:
 // return canvasRequest(show_epub_export, {course_id, id});
-export const show_epub_export = { type: "SHOW_EPUB_EXPORT", method: "get", reducer: 'e_pub_exports'};
+export const show_epub_export = { type: "SHOW_EPUB_EXPORT", method: "get", key: 'show_epub_export'};

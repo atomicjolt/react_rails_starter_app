@@ -16,4 +16,4 @@
 //   all_versions
 // }
 // return canvasRequest(fetching_latest_quiz_statistics, {course_id, quiz_id}, query);
-export const fetching_latest_quiz_statistics = { type: "FETCHING_LATEST_QUIZ_STATISTICS", method: "get", reducer: 'quiz_statistics'};
+export const fetching_latest_quiz_statistics = { type: "FETCHING_LATEST_QUIZ_STATISTICS", method: "get", key: 'fetching_latest_quiz_statistics'};
