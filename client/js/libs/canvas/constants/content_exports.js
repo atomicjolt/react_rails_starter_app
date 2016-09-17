@@ -10,7 +10,7 @@
 //
 // Example:
 // return canvasRequest(list_content_exports_courses, {course_id});
-export const list_content_exports_courses = { type: "LIST_CONTENT_EXPORTS_COURSES", method: "get", key: 'list_content_exports_courses'};
+export const list_content_exports_courses = { type: "LIST_CONTENT_EXPORTS_COURSES", method: "get"};
 
 // List content exports
 // List the past and pending content export jobs for a course, group, or user.
@@ -21,7 +21,7 @@ export const list_content_exports_courses = { type: "LIST_CONTENT_EXPORTS_COURSE
 //
 // Example:
 // return canvasRequest(list_content_exports_groups, {group_id});
-export const list_content_exports_groups = { type: "LIST_CONTENT_EXPORTS_GROUPS", method: "get", key: 'list_content_exports_groups'};
+export const list_content_exports_groups = { type: "LIST_CONTENT_EXPORTS_GROUPS", method: "get"};
 
 // List content exports
 // List the past and pending content export jobs for a course, group, or user.
@@ -32,7 +32,7 @@ export const list_content_exports_groups = { type: "LIST_CONTENT_EXPORTS_GROUPS"
 //
 // Example:
 // return canvasRequest(list_content_exports_users, {user_id});
-export const list_content_exports_users = { type: "LIST_CONTENT_EXPORTS_USERS", method: "get", key: 'list_content_exports_users'};
+export const list_content_exports_users = { type: "LIST_CONTENT_EXPORTS_USERS", method: "get"};
 
 // Show content export
 // Get information about a single content export.
@@ -42,7 +42,7 @@ export const list_content_exports_users = { type: "LIST_CONTENT_EXPORTS_USERS", 
 //
 // Example:
 // return canvasRequest(show_content_export_courses, {course_id, id});
-export const show_content_export_courses = { type: "SHOW_CONTENT_EXPORT_COURSES", method: "get", key: 'show_content_export_courses'};
+export const show_content_export_courses = { type: "SHOW_CONTENT_EXPORT_COURSES", method: "get"};
 
 // Show content export
 // Get information about a single content export.
@@ -52,7 +52,7 @@ export const show_content_export_courses = { type: "SHOW_CONTENT_EXPORT_COURSES"
 //
 // Example:
 // return canvasRequest(show_content_export_groups, {group_id, id});
-export const show_content_export_groups = { type: "SHOW_CONTENT_EXPORT_GROUPS", method: "get", key: 'show_content_export_groups'};
+export const show_content_export_groups = { type: "SHOW_CONTENT_EXPORT_GROUPS", method: "get"};
 
 // Show content export
 // Get information about a single content export.
@@ -62,7 +62,7 @@ export const show_content_export_groups = { type: "SHOW_CONTENT_EXPORT_GROUPS", 
 //
 // Example:
 // return canvasRequest(show_content_export_users, {user_id, id});
-export const show_content_export_users = { type: "SHOW_CONTENT_EXPORT_USERS", method: "get", key: 'show_content_export_users'};
+export const show_content_export_users = { type: "SHOW_CONTENT_EXPORT_USERS", method: "get"};
 
 // Export content
 // Begin a content export job for a course, group, or user.
@@ -83,7 +83,7 @@ export const show_content_export_users = { type: "SHOW_CONTENT_EXPORT_USERS", me
 //   skip_notifications
 // }
 // return canvasRequest(export_content_courses, {course_id}, query);
-export const export_content_courses = { type: "EXPORT_CONTENT_COURSES", method: "post", key: 'export_content_courses'};
+export const export_content_courses = { type: "EXPORT_CONTENT_COURSES", method: "post"};
 
 // Export content
 // Begin a content export job for a course, group, or user.
@@ -104,7 +104,7 @@ export const export_content_courses = { type: "EXPORT_CONTENT_COURSES", method: 
 //   skip_notifications
 // }
 // return canvasRequest(export_content_groups, {group_id}, query);
-export const export_content_groups = { type: "EXPORT_CONTENT_GROUPS", method: "post", key: 'export_content_groups'};
+export const export_content_groups = { type: "EXPORT_CONTENT_GROUPS", method: "post"};
 
 // Export content
 // Begin a content export job for a course, group, or user.
@@ -125,4 +125,4 @@ export const export_content_groups = { type: "EXPORT_CONTENT_GROUPS", method: "p
 //   skip_notifications
 // }
 // return canvasRequest(export_content_users, {user_id}, query);
-export const export_content_users = { type: "EXPORT_CONTENT_USERS", method: "post", key: 'export_content_users'};
+export const export_content_users = { type: "EXPORT_CONTENT_USERS", method: "post"};

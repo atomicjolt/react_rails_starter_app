@@ -13,7 +13,7 @@
 //   end_time
 // }
 // return canvasRequest(query_by_login, {login_id}, query);
-export const query_by_login = { type: "QUERY_BY_LOGIN", method: "get", key: 'query_by_login'};
+export const query_by_login = { type: "QUERY_BY_LOGIN", method: "get"};
 
 // Query by account.
 // List authentication events for a given account.
@@ -27,7 +27,7 @@ export const query_by_login = { type: "QUERY_BY_LOGIN", method: "get", key: 'que
 //   end_time
 // }
 // return canvasRequest(query_by_account, {account_id}, query);
-export const query_by_account = { type: "QUERY_BY_ACCOUNT", method: "get", key: 'query_by_account'};
+export const query_by_account = { type: "QUERY_BY_ACCOUNT", method: "get"};
 
 // Query by user.
 // List authentication events for a given user.
@@ -41,4 +41,4 @@ export const query_by_account = { type: "QUERY_BY_ACCOUNT", method: "get", key: 
 //   end_time
 // }
 // return canvasRequest(query_by_user, {user_id}, query);
-export const query_by_user = { type: "QUERY_BY_USER", method: "get", key: 'query_by_user'};
+export const query_by_user = { type: "QUERY_BY_USER", method: "get"};

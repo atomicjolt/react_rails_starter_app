@@ -24,7 +24,7 @@
 //   ends_after
 // }
 // return canvasRequest(retrieve_assignments_enabled_for_grade_export_to_sis_accounts, {account_id}, query);
-export const retrieve_assignments_enabled_for_grade_export_to_sis_accounts = { type: "RETRIEVE_ASSIGNMENTS_ENABLED_FOR_GRADE_EXPORT_TO_SIS_ACCOUNTS", method: "get", key: 'retrieve_assignments_enabled_for_grade_export_to_sis_accounts'};
+export const retrieve_assignments_enabled_for_grade_export_to_sis_accounts = { type: "RETRIEVE_ASSIGNMENTS_ENABLED_FOR_GRADE_EXPORT_TO_SIS_ACCOUNTS", method: "get"};
 
 // Retrieve assignments enabled for grade export to SIS
 // Retrieve a list of published assignments flagged as "post_to_sis". Assignment group and section information are
@@ -49,4 +49,4 @@ export const retrieve_assignments_enabled_for_grade_export_to_sis_accounts = { t
 //   ends_after
 // }
 // return canvasRequest(retrieve_assignments_enabled_for_grade_export_to_sis_courses, {course_id}, query);
-export const retrieve_assignments_enabled_for_grade_export_to_sis_courses = { type: "RETRIEVE_ASSIGNMENTS_ENABLED_FOR_GRADE_EXPORT_TO_SIS_COURSES", method: "get", key: 'retrieve_assignments_enabled_for_grade_export_to_sis_courses'};
+export const retrieve_assignments_enabled_for_grade_export_to_sis_courses = { type: "RETRIEVE_ASSIGNMENTS_ENABLED_FOR_GRADE_EXPORT_TO_SIS_COURSES", method: "get"};

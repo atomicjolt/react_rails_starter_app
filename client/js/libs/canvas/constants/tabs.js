@@ -12,7 +12,7 @@
 //   include
 // }
 // return canvasRequest(list_available_tabs_for_course_or_group_courses, {course_id}, query);
-export const list_available_tabs_for_course_or_group_courses = { type: "LIST_AVAILABLE_TABS_FOR_COURSE_OR_GROUP_COURSES", method: "get", key: 'list_available_tabs_for_course_or_group_courses'};
+export const list_available_tabs_for_course_or_group_courses = { type: "LIST_AVAILABLE_TABS_FOR_COURSE_OR_GROUP_COURSES", method: "get"};
 
 // List available tabs for a course or group
 // Returns a list of navigation tabs available in the current context.
@@ -25,7 +25,7 @@ export const list_available_tabs_for_course_or_group_courses = { type: "LIST_AVA
 //   include
 // }
 // return canvasRequest(list_available_tabs_for_course_or_group_groups, {group_id}, query);
-export const list_available_tabs_for_course_or_group_groups = { type: "LIST_AVAILABLE_TABS_FOR_COURSE_OR_GROUP_GROUPS", method: "get", key: 'list_available_tabs_for_course_or_group_groups'};
+export const list_available_tabs_for_course_or_group_groups = { type: "LIST_AVAILABLE_TABS_FOR_COURSE_OR_GROUP_GROUPS", method: "get"};
 
 // Update a tab for a course
 // Home and Settings tabs are not manageable, and can't be hidden or moved
@@ -41,4 +41,4 @@ export const list_available_tabs_for_course_or_group_groups = { type: "LIST_AVAI
 //   hidden
 // }
 // return canvasRequest(update_tab_for_course, {course_id, tab_id}, query);
-export const update_tab_for_course = { type: "UPDATE_TAB_FOR_COURSE", method: "put", key: 'update_tab_for_course'};
+export const update_tab_for_course = { type: "UPDATE_TAB_FOR_COURSE", method: "put"};

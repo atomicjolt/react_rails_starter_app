@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(show_front_page_courses, {course_id});
-export const show_front_page_courses = { type: "SHOW_FRONT_PAGE_COURSES", method: "get", key: 'show_front_page_courses'};
+export const show_front_page_courses = { type: "SHOW_FRONT_PAGE_COURSES", method: "get"};
 
 // Show front page
 // Retrieve the content of the front page
@@ -19,7 +19,7 @@ export const show_front_page_courses = { type: "SHOW_FRONT_PAGE_COURSES", method
 //
 // Example:
 // return canvasRequest(show_front_page_groups, {group_id});
-export const show_front_page_groups = { type: "SHOW_FRONT_PAGE_GROUPS", method: "get", key: 'show_front_page_groups'};
+export const show_front_page_groups = { type: "SHOW_FRONT_PAGE_GROUPS", method: "get"};
 
 // Update/create front page
 // Update the title or contents of the front page
@@ -36,7 +36,7 @@ export const show_front_page_groups = { type: "SHOW_FRONT_PAGE_GROUPS", method: 
 //   wiki_page[published]
 // }
 // return canvasRequest(update_create_front_page_courses, {course_id}, query);
-export const update_create_front_page_courses = { type: "UPDATE_CREATE_FRONT_PAGE_COURSES", method: "put", key: 'update_create_front_page_courses'};
+export const update_create_front_page_courses = { type: "UPDATE_CREATE_FRONT_PAGE_COURSES", method: "put"};
 
 // Update/create front page
 // Update the title or contents of the front page
@@ -53,7 +53,7 @@ export const update_create_front_page_courses = { type: "UPDATE_CREATE_FRONT_PAG
 //   wiki_page[published]
 // }
 // return canvasRequest(update_create_front_page_groups, {group_id}, query);
-export const update_create_front_page_groups = { type: "UPDATE_CREATE_FRONT_PAGE_GROUPS", method: "put", key: 'update_create_front_page_groups'};
+export const update_create_front_page_groups = { type: "UPDATE_CREATE_FRONT_PAGE_GROUPS", method: "put"};
 
 // List pages
 // List the wiki pages associated with a course or group
@@ -69,7 +69,7 @@ export const update_create_front_page_groups = { type: "UPDATE_CREATE_FRONT_PAGE
 //   published
 // }
 // return canvasRequest(list_pages_courses, {course_id}, query);
-export const list_pages_courses = { type: "LIST_PAGES_COURSES", method: "get", key: 'list_pages_courses'};
+export const list_pages_courses = { type: "LIST_PAGES_COURSES", method: "get"};
 
 // List pages
 // List the wiki pages associated with a course or group
@@ -85,7 +85,7 @@ export const list_pages_courses = { type: "LIST_PAGES_COURSES", method: "get", k
 //   published
 // }
 // return canvasRequest(list_pages_groups, {group_id}, query);
-export const list_pages_groups = { type: "LIST_PAGES_GROUPS", method: "get", key: 'list_pages_groups'};
+export const list_pages_groups = { type: "LIST_PAGES_GROUPS", method: "get"};
 
 // Create page
 // Create a new wiki page
@@ -103,7 +103,7 @@ export const list_pages_groups = { type: "LIST_PAGES_GROUPS", method: "get", key
 //   wiki_page[front_page]
 // }
 // return canvasRequest(create_page_courses, {course_id}, query);
-export const create_page_courses = { type: "CREATE_PAGE_COURSES", method: "post", key: 'create_page_courses'};
+export const create_page_courses = { type: "CREATE_PAGE_COURSES", method: "post"};
 
 // Create page
 // Create a new wiki page
@@ -121,7 +121,7 @@ export const create_page_courses = { type: "CREATE_PAGE_COURSES", method: "post"
 //   wiki_page[front_page]
 // }
 // return canvasRequest(create_page_groups, {group_id}, query);
-export const create_page_groups = { type: "CREATE_PAGE_GROUPS", method: "post", key: 'create_page_groups'};
+export const create_page_groups = { type: "CREATE_PAGE_GROUPS", method: "post"};
 
 // Show page
 // Retrieve the content of a wiki page
@@ -131,7 +131,7 @@ export const create_page_groups = { type: "CREATE_PAGE_GROUPS", method: "post", 
 //
 // Example:
 // return canvasRequest(show_page_courses, {course_id, url});
-export const show_page_courses = { type: "SHOW_PAGE_COURSES", method: "get", key: 'show_page_courses'};
+export const show_page_courses = { type: "SHOW_PAGE_COURSES", method: "get"};
 
 // Show page
 // Retrieve the content of a wiki page
@@ -141,7 +141,7 @@ export const show_page_courses = { type: "SHOW_PAGE_COURSES", method: "get", key
 //
 // Example:
 // return canvasRequest(show_page_groups, {group_id, url});
-export const show_page_groups = { type: "SHOW_PAGE_GROUPS", method: "get", key: 'show_page_groups'};
+export const show_page_groups = { type: "SHOW_PAGE_GROUPS", method: "get"};
 
 // Update/create page
 // Update the title or contents of a wiki page
@@ -159,7 +159,7 @@ export const show_page_groups = { type: "SHOW_PAGE_GROUPS", method: "get", key: 
 //   wiki_page[front_page]
 // }
 // return canvasRequest(update_create_page_courses, {course_id, url}, query);
-export const update_create_page_courses = { type: "UPDATE_CREATE_PAGE_COURSES", method: "put", key: 'update_create_page_courses'};
+export const update_create_page_courses = { type: "UPDATE_CREATE_PAGE_COURSES", method: "put"};
 
 // Update/create page
 // Update the title or contents of a wiki page
@@ -177,7 +177,7 @@ export const update_create_page_courses = { type: "UPDATE_CREATE_PAGE_COURSES", 
 //   wiki_page[front_page]
 // }
 // return canvasRequest(update_create_page_groups, {group_id, url}, query);
-export const update_create_page_groups = { type: "UPDATE_CREATE_PAGE_GROUPS", method: "put", key: 'update_create_page_groups'};
+export const update_create_page_groups = { type: "UPDATE_CREATE_PAGE_GROUPS", method: "put"};
 
 // Delete page
 // Delete a wiki page
@@ -187,7 +187,7 @@ export const update_create_page_groups = { type: "UPDATE_CREATE_PAGE_GROUPS", me
 //
 // Example:
 // return canvasRequest(delete_page_courses, {course_id, url});
-export const delete_page_courses = { type: "DELETE_PAGE_COURSES", method: "delete", key: 'delete_page_courses'};
+export const delete_page_courses = { type: "DELETE_PAGE_COURSES", method: "delete"};
 
 // Delete page
 // Delete a wiki page
@@ -197,7 +197,7 @@ export const delete_page_courses = { type: "DELETE_PAGE_COURSES", method: "delet
 //
 // Example:
 // return canvasRequest(delete_page_groups, {group_id, url});
-export const delete_page_groups = { type: "DELETE_PAGE_GROUPS", method: "delete", key: 'delete_page_groups'};
+export const delete_page_groups = { type: "DELETE_PAGE_GROUPS", method: "delete"};
 
 // List revisions
 // List the revisions of a page. Callers must have update rights on the page in order to see page history.
@@ -207,7 +207,7 @@ export const delete_page_groups = { type: "DELETE_PAGE_GROUPS", method: "delete"
 //
 // Example:
 // return canvasRequest(list_revisions_courses, {course_id, url});
-export const list_revisions_courses = { type: "LIST_REVISIONS_COURSES", method: "get", key: 'list_revisions_courses'};
+export const list_revisions_courses = { type: "LIST_REVISIONS_COURSES", method: "get"};
 
 // List revisions
 // List the revisions of a page. Callers must have update rights on the page in order to see page history.
@@ -217,7 +217,7 @@ export const list_revisions_courses = { type: "LIST_REVISIONS_COURSES", method: 
 //
 // Example:
 // return canvasRequest(list_revisions_groups, {group_id, url});
-export const list_revisions_groups = { type: "LIST_REVISIONS_GROUPS", method: "get", key: 'list_revisions_groups'};
+export const list_revisions_groups = { type: "LIST_REVISIONS_GROUPS", method: "get"};
 
 // Show revision
 // Retrieve the metadata and optionally content of a revision of the page.
@@ -231,7 +231,7 @@ export const list_revisions_groups = { type: "LIST_REVISIONS_GROUPS", method: "g
 //   summary
 // }
 // return canvasRequest(show_revision_courses_latest, {course_id, url}, query);
-export const show_revision_courses_latest = { type: "SHOW_REVISION_COURSES_LATEST", method: "get", key: 'show_revision_courses_latest'};
+export const show_revision_courses_latest = { type: "SHOW_REVISION_COURSES_LATEST", method: "get"};
 
 // Show revision
 // Retrieve the metadata and optionally content of a revision of the page.
@@ -245,7 +245,7 @@ export const show_revision_courses_latest = { type: "SHOW_REVISION_COURSES_LATES
 //   summary
 // }
 // return canvasRequest(show_revision_groups_latest, {group_id, url}, query);
-export const show_revision_groups_latest = { type: "SHOW_REVISION_GROUPS_LATEST", method: "get", key: 'show_revision_groups_latest'};
+export const show_revision_groups_latest = { type: "SHOW_REVISION_GROUPS_LATEST", method: "get"};
 
 // Show revision
 // Retrieve the metadata and optionally content of a revision of the page.
@@ -259,7 +259,7 @@ export const show_revision_groups_latest = { type: "SHOW_REVISION_GROUPS_LATEST"
 //   summary
 // }
 // return canvasRequest(show_revision_courses_revision_id, {course_id, url, revision_id}, query);
-export const show_revision_courses_revision_id = { type: "SHOW_REVISION_COURSES_REVISION_ID", method: "get", key: 'show_revision_courses_revision_id'};
+export const show_revision_courses_revision_id = { type: "SHOW_REVISION_COURSES_REVISION_ID", method: "get"};
 
 // Show revision
 // Retrieve the metadata and optionally content of a revision of the page.
@@ -273,7 +273,7 @@ export const show_revision_courses_revision_id = { type: "SHOW_REVISION_COURSES_
 //   summary
 // }
 // return canvasRequest(show_revision_groups_revision_id, {group_id, url, revision_id}, query);
-export const show_revision_groups_revision_id = { type: "SHOW_REVISION_GROUPS_REVISION_ID", method: "get", key: 'show_revision_groups_revision_id'};
+export const show_revision_groups_revision_id = { type: "SHOW_REVISION_GROUPS_REVISION_ID", method: "get"};
 
 // Revert to revision
 // Revert a page to a prior revision.
@@ -283,7 +283,7 @@ export const show_revision_groups_revision_id = { type: "SHOW_REVISION_GROUPS_RE
 //
 // Example:
 // return canvasRequest(revert_to_revision_courses, {course_id, url, revision_id});
-export const revert_to_revision_courses = { type: "REVERT_TO_REVISION_COURSES", method: "post", key: 'revert_to_revision_courses'};
+export const revert_to_revision_courses = { type: "REVERT_TO_REVISION_COURSES", method: "post"};
 
 // Revert to revision
 // Revert a page to a prior revision.
@@ -293,4 +293,4 @@ export const revert_to_revision_courses = { type: "REVERT_TO_REVISION_COURSES", 
 //
 // Example:
 // return canvasRequest(revert_to_revision_groups, {group_id, url, revision_id});
-export const revert_to_revision_groups = { type: "REVERT_TO_REVISION_GROUPS", method: "post", key: 'revert_to_revision_groups'};
+export const revert_to_revision_groups = { type: "REVERT_TO_REVISION_GROUPS", method: "post"};

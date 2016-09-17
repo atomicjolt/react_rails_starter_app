@@ -20,4 +20,4 @@
 //   extend_from_end_at
 // }
 // return canvasRequest(quiz_extensions_set_extensions_for_student_quiz_submissions, {course_id, quiz_id}, query);
-export const quiz_extensions_set_extensions_for_student_quiz_submissions = { type: "QUIZ_EXTENSIONS_SET_EXTENSIONS_FOR_STUDENT_QUIZ_SUBMISSIONS", method: "post", key: 'quiz_extensions_set_extensions_for_student_quiz_submissions'};
+export const quiz_extensions_set_extensions_for_student_quiz_submissions = { type: "QUIZ_EXTENSIONS_SET_EXTENSIONS_FOR_STUDENT_QUIZ_SUBMISSIONS", method: "post"};

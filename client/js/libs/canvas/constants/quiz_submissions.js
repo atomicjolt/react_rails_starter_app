@@ -19,7 +19,7 @@
 //   include
 // }
 // return canvasRequest(get_all_quiz_submissions, {course_id, quiz_id}, query);
-export const get_all_quiz_submissions = { type: "GET_ALL_QUIZ_SUBMISSIONS", method: "get", key: 'get_all_quiz_submissions'};
+export const get_all_quiz_submissions = { type: "GET_ALL_QUIZ_SUBMISSIONS", method: "get"};
 
 // Get the quiz submission.
 // Get the submission for this quiz for the current user.
@@ -34,7 +34,7 @@ export const get_all_quiz_submissions = { type: "GET_ALL_QUIZ_SUBMISSIONS", meth
 //   include
 // }
 // return canvasRequest(get_quiz_submission, {course_id, quiz_id}, query);
-export const get_quiz_submission = { type: "GET_QUIZ_SUBMISSION", method: "get", key: 'get_quiz_submission'};
+export const get_quiz_submission = { type: "GET_QUIZ_SUBMISSION", method: "get"};
 
 // Get a single quiz submission.
 // Get a single quiz submission.
@@ -49,7 +49,7 @@ export const get_quiz_submission = { type: "GET_QUIZ_SUBMISSION", method: "get",
 //   include
 // }
 // return canvasRequest(get_single_quiz_submission, {course_id, quiz_id, id}, query);
-export const get_single_quiz_submission = { type: "GET_SINGLE_QUIZ_SUBMISSION", method: "get", key: 'get_single_quiz_submission'};
+export const get_single_quiz_submission = { type: "GET_SINGLE_QUIZ_SUBMISSION", method: "get"};
 
 // Create the quiz submission (start a quiz-taking session)
 // Start taking a Quiz by creating a QuizSubmission which you can use to answer
@@ -72,7 +72,7 @@ export const get_single_quiz_submission = { type: "GET_SINGLE_QUIZ_SUBMISSION", 
 //   preview
 // }
 // return canvasRequest(create_quiz_submission_start_quiz_taking_session, {course_id, quiz_id}, query);
-export const create_quiz_submission_start_quiz_taking_session = { type: "CREATE_QUIZ_SUBMISSION_START_QUIZ_TAKING_SESSION", method: "post", key: 'create_quiz_submission_start_quiz_taking_session'};
+export const create_quiz_submission_start_quiz_taking_session = { type: "CREATE_QUIZ_SUBMISSION_START_QUIZ_TAKING_SESSION", method: "post"};
 
 // Update student question scores and comments.
 // Update the amount of points a student has scored for questions they've
@@ -96,7 +96,7 @@ export const create_quiz_submission_start_quiz_taking_session = { type: "CREATE_
 //   questions
 // }
 // return canvasRequest(update_student_question_scores_and_comments, {course_id, quiz_id, id}, query);
-export const update_student_question_scores_and_comments = { type: "UPDATE_STUDENT_QUESTION_SCORES_AND_COMMENTS", method: "put", key: 'update_student_question_scores_and_comments'};
+export const update_student_question_scores_and_comments = { type: "UPDATE_STUDENT_QUESTION_SCORES_AND_COMMENTS", method: "put"};
 
 // Complete the quiz submission (turn it in).
 // Complete the quiz submission by marking it as complete and grading it. When
@@ -123,7 +123,7 @@ export const update_student_question_scores_and_comments = { type: "UPDATE_STUDE
 //   access_code
 // }
 // return canvasRequest(complete_quiz_submission_turn_it_in, {course_id, quiz_id, id}, query);
-export const complete_quiz_submission_turn_it_in = { type: "COMPLETE_QUIZ_SUBMISSION_TURN_IT_IN", method: "post", key: 'complete_quiz_submission_turn_it_in'};
+export const complete_quiz_submission_turn_it_in = { type: "COMPLETE_QUIZ_SUBMISSION_TURN_IT_IN", method: "post"};
 
 // Get current quiz submission times.
 // Get the current timing data for the quiz attempt, both the end_at timestamp
@@ -138,4 +138,4 @@ export const complete_quiz_submission_turn_it_in = { type: "COMPLETE_QUIZ_SUBMIS
 //
 // Example:
 // return canvasRequest(get_current_quiz_submission_times, {course_id, quiz_id, id});
-export const get_current_quiz_submission_times = { type: "GET_CURRENT_QUIZ_SUBMISSION_TIMES", method: "get", key: 'get_current_quiz_submission_times'};
+export const get_current_quiz_submission_times = { type: "GET_CURRENT_QUIZ_SUBMISSION_TIMES", method: "get"};

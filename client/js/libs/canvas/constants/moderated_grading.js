@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_students_selected_for_moderation, {course_id, assignment_id});
-export const list_students_selected_for_moderation = { type: "LIST_STUDENTS_SELECTED_FOR_MODERATION", method: "get", key: 'list_students_selected_for_moderation'};
+export const list_students_selected_for_moderation = { type: "LIST_STUDENTS_SELECTED_FOR_MODERATION", method: "get"};
 
 // Select students for moderation
 // Returns an array of users that were selected for moderation
@@ -22,7 +22,7 @@ export const list_students_selected_for_moderation = { type: "LIST_STUDENTS_SELE
 //   student_ids
 // }
 // return canvasRequest(select_students_for_moderation, {course_id, assignment_id}, query);
-export const select_students_for_moderation = { type: "SELECT_STUDENTS_FOR_MODERATION", method: "post", key: 'select_students_for_moderation'};
+export const select_students_for_moderation = { type: "SELECT_STUDENTS_FOR_MODERATION", method: "post"};
 
 // Show provisional grade status for a student
 // Tell whether the student's submission needs one or more provisional grades.
@@ -35,7 +35,7 @@ export const select_students_for_moderation = { type: "SELECT_STUDENTS_FOR_MODER
 //   student_id
 // }
 // return canvasRequest(show_provisional_grade_status_for_student, {course_id, assignment_id}, query);
-export const show_provisional_grade_status_for_student = { type: "SHOW_PROVISIONAL_GRADE_STATUS_FOR_STUDENT", method: "get", key: 'show_provisional_grade_status_for_student'};
+export const show_provisional_grade_status_for_student = { type: "SHOW_PROVISIONAL_GRADE_STATUS_FOR_STUDENT", method: "get"};
 
 // Select provisional grade
 // Choose which provisional grade the student should receive for a submission.
@@ -46,7 +46,7 @@ export const show_provisional_grade_status_for_student = { type: "SHOW_PROVISION
 //
 // Example:
 // return canvasRequest(select_provisional_grade, {course_id, assignment_id, provisional_grade_id});
-export const select_provisional_grade = { type: "SELECT_PROVISIONAL_GRADE", method: "put", key: 'select_provisional_grade'};
+export const select_provisional_grade = { type: "SELECT_PROVISIONAL_GRADE", method: "put"};
 
 // Copy provisional grade
 // Given a provisional grade, copy the grade (and associated submission comments and rubric assessments)
@@ -62,7 +62,7 @@ export const select_provisional_grade = { type: "SELECT_PROVISIONAL_GRADE", meth
 //
 // Example:
 // return canvasRequest(copy_provisional_grade, {course_id, assignment_id, provisional_grade_id});
-export const copy_provisional_grade = { type: "COPY_PROVISIONAL_GRADE", method: "post", key: 'copy_provisional_grade'};
+export const copy_provisional_grade = { type: "COPY_PROVISIONAL_GRADE", method: "post"};
 
 // Publish provisional grades for an assignment
 // Publish the selected provisional grade for all submissions to an assignment.
@@ -78,4 +78,4 @@ export const copy_provisional_grade = { type: "COPY_PROVISIONAL_GRADE", method: 
 //
 // Example:
 // return canvasRequest(publish_provisional_grades_for_assignment, {course_id, assignment_id});
-export const publish_provisional_grades_for_assignment = { type: "PUBLISH_PROVISIONAL_GRADES_FOR_ASSIGNMENT", method: "post", key: 'publish_provisional_grades_for_assignment'};
+export const publish_provisional_grades_for_assignment = { type: "PUBLISH_PROVISIONAL_GRADES_FOR_ASSIGNMENT", method: "post"};

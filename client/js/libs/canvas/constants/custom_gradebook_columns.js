@@ -12,7 +12,7 @@
 //   include_hidden
 // }
 // return canvasRequest(list_custom_gradebook_columns, {course_id}, query);
-export const list_custom_gradebook_columns = { type: "LIST_CUSTOM_GRADEBOOK_COLUMNS", method: "get", key: 'list_custom_gradebook_columns'};
+export const list_custom_gradebook_columns = { type: "LIST_CUSTOM_GRADEBOOK_COLUMNS", method: "get"};
 
 // Create a custom gradebook column
 // Create a custom gradebook column
@@ -28,7 +28,7 @@ export const list_custom_gradebook_columns = { type: "LIST_CUSTOM_GRADEBOOK_COLU
 //   column[teacher_notes]
 // }
 // return canvasRequest(create_custom_gradebook_column, {course_id}, query);
-export const create_custom_gradebook_column = { type: "CREATE_CUSTOM_GRADEBOOK_COLUMN", method: "post", key: 'create_custom_gradebook_column'};
+export const create_custom_gradebook_column = { type: "CREATE_CUSTOM_GRADEBOOK_COLUMN", method: "post"};
 
 // Update a custom gradebook column
 // Accepts the same parameters as custom gradebook column creation
@@ -38,7 +38,7 @@ export const create_custom_gradebook_column = { type: "CREATE_CUSTOM_GRADEBOOK_C
 //
 // Example:
 // return canvasRequest(update_custom_gradebook_column, {course_id, id});
-export const update_custom_gradebook_column = { type: "UPDATE_CUSTOM_GRADEBOOK_COLUMN", method: "put", key: 'update_custom_gradebook_column'};
+export const update_custom_gradebook_column = { type: "UPDATE_CUSTOM_GRADEBOOK_COLUMN", method: "put"};
 
 // Delete a custom gradebook column
 // Permanently deletes a custom column and its associated data
@@ -48,7 +48,7 @@ export const update_custom_gradebook_column = { type: "UPDATE_CUSTOM_GRADEBOOK_C
 //
 // Example:
 // return canvasRequest(delete_custom_gradebook_column, {course_id, id});
-export const delete_custom_gradebook_column = { type: "DELETE_CUSTOM_GRADEBOOK_COLUMN", method: "delete", key: 'delete_custom_gradebook_column'};
+export const delete_custom_gradebook_column = { type: "DELETE_CUSTOM_GRADEBOOK_COLUMN", method: "delete"};
 
 // Reorder custom columns
 // Puts the given columns in the specified order
@@ -63,7 +63,7 @@ export const delete_custom_gradebook_column = { type: "DELETE_CUSTOM_GRADEBOOK_C
 //   order (required)
 // }
 // return canvasRequest(reorder_custom_columns, {course_id}, query);
-export const reorder_custom_columns = { type: "REORDER_CUSTOM_COLUMNS", method: "post", key: 'reorder_custom_columns'};
+export const reorder_custom_columns = { type: "REORDER_CUSTOM_COLUMNS", method: "post"};
 
 // List entries for a column
 // This does not list entries for students without associated data.
@@ -76,7 +76,7 @@ export const reorder_custom_columns = { type: "REORDER_CUSTOM_COLUMNS", method: 
 //   include_hidden
 // }
 // return canvasRequest(list_entries_for_column, {course_id, id}, query);
-export const list_entries_for_column = { type: "LIST_ENTRIES_FOR_COLUMN", method: "get", key: 'list_entries_for_column'};
+export const list_entries_for_column = { type: "LIST_ENTRIES_FOR_COLUMN", method: "get"};
 
 // Update column data
 // Set the content of a custom column
@@ -89,4 +89,4 @@ export const list_entries_for_column = { type: "LIST_ENTRIES_FOR_COLUMN", method
 //   column_data[content] (required)
 // }
 // return canvasRequest(update_column_data, {course_id, id, user_id}, query);
-export const update_column_data = { type: "UPDATE_COLUMN_DATA", method: "put", key: 'update_column_data'};
+export const update_column_data = { type: "UPDATE_COLUMN_DATA", method: "put"};

@@ -12,7 +12,7 @@
 //
 // Example:
 // return canvasRequest(list_collaborations_courses, {course_id});
-export const list_collaborations_courses = { type: "LIST_COLLABORATIONS_COURSES", method: "get", key: 'list_collaborations_courses'};
+export const list_collaborations_courses = { type: "LIST_COLLABORATIONS_COURSES", method: "get"};
 
 // List collaborations
 // List collaborations the current user has access to in the context of the course
@@ -25,7 +25,7 @@ export const list_collaborations_courses = { type: "LIST_COLLABORATIONS_COURSES"
 //
 // Example:
 // return canvasRequest(list_collaborations_groups, {group_id});
-export const list_collaborations_groups = { type: "LIST_COLLABORATIONS_GROUPS", method: "get", key: 'list_collaborations_groups'};
+export const list_collaborations_groups = { type: "LIST_COLLABORATIONS_GROUPS", method: "get"};
 
 // List members of a collaboration.
 // List the collaborators of a given collaboration
@@ -38,4 +38,4 @@ export const list_collaborations_groups = { type: "LIST_COLLABORATIONS_GROUPS", 
 //   include
 // }
 // return canvasRequest(list_members_of_collaboration, {id}, query);
-export const list_members_of_collaboration = { type: "LIST_MEMBERS_OF_COLLABORATION", method: "get", key: 'list_members_of_collaboration'};
+export const list_members_of_collaboration = { type: "LIST_MEMBERS_OF_COLLABORATION", method: "get"};

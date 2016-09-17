@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_features_courses, {course_id});
-export const list_features_courses = { type: "LIST_FEATURES_COURSES", method: "get", key: 'list_features_courses'};
+export const list_features_courses = { type: "LIST_FEATURES_COURSES", method: "get"};
 
 // List features
 // List all features that apply to a given Account, Course, or User.
@@ -19,7 +19,7 @@ export const list_features_courses = { type: "LIST_FEATURES_COURSES", method: "g
 //
 // Example:
 // return canvasRequest(list_features_accounts, {account_id});
-export const list_features_accounts = { type: "LIST_FEATURES_ACCOUNTS", method: "get", key: 'list_features_accounts'};
+export const list_features_accounts = { type: "LIST_FEATURES_ACCOUNTS", method: "get"};
 
 // List features
 // List all features that apply to a given Account, Course, or User.
@@ -29,7 +29,7 @@ export const list_features_accounts = { type: "LIST_FEATURES_ACCOUNTS", method: 
 //
 // Example:
 // return canvasRequest(list_features_users, {user_id});
-export const list_features_users = { type: "LIST_FEATURES_USERS", method: "get", key: 'list_features_users'};
+export const list_features_users = { type: "LIST_FEATURES_USERS", method: "get"};
 
 // List enabled features
 // List all features that are enabled on a given Account, Course, or User.
@@ -40,7 +40,7 @@ export const list_features_users = { type: "LIST_FEATURES_USERS", method: "get",
 //
 // Example:
 // return canvasRequest(list_enabled_features_courses, {course_id});
-export const list_enabled_features_courses = { type: "LIST_ENABLED_FEATURES_COURSES", method: "get", key: 'list_enabled_features_courses'};
+export const list_enabled_features_courses = { type: "LIST_ENABLED_FEATURES_COURSES", method: "get"};
 
 // List enabled features
 // List all features that are enabled on a given Account, Course, or User.
@@ -51,7 +51,7 @@ export const list_enabled_features_courses = { type: "LIST_ENABLED_FEATURES_COUR
 //
 // Example:
 // return canvasRequest(list_enabled_features_accounts, {account_id});
-export const list_enabled_features_accounts = { type: "LIST_ENABLED_FEATURES_ACCOUNTS", method: "get", key: 'list_enabled_features_accounts'};
+export const list_enabled_features_accounts = { type: "LIST_ENABLED_FEATURES_ACCOUNTS", method: "get"};
 
 // List enabled features
 // List all features that are enabled on a given Account, Course, or User.
@@ -62,7 +62,7 @@ export const list_enabled_features_accounts = { type: "LIST_ENABLED_FEATURES_ACC
 //
 // Example:
 // return canvasRequest(list_enabled_features_users, {user_id});
-export const list_enabled_features_users = { type: "LIST_ENABLED_FEATURES_USERS", method: "get", key: 'list_enabled_features_users'};
+export const list_enabled_features_users = { type: "LIST_ENABLED_FEATURES_USERS", method: "get"};
 
 // Get feature flag
 // Get the feature flag that applies to a given Account, Course, or User.
@@ -76,7 +76,7 @@ export const list_enabled_features_users = { type: "LIST_ENABLED_FEATURES_USERS"
 //
 // Example:
 // return canvasRequest(get_feature_flag_courses, {course_id, feature});
-export const get_feature_flag_courses = { type: "GET_FEATURE_FLAG_COURSES", method: "get", key: 'get_feature_flag_courses'};
+export const get_feature_flag_courses = { type: "GET_FEATURE_FLAG_COURSES", method: "get"};
 
 // Get feature flag
 // Get the feature flag that applies to a given Account, Course, or User.
@@ -90,7 +90,7 @@ export const get_feature_flag_courses = { type: "GET_FEATURE_FLAG_COURSES", meth
 //
 // Example:
 // return canvasRequest(get_feature_flag_accounts, {account_id, feature});
-export const get_feature_flag_accounts = { type: "GET_FEATURE_FLAG_ACCOUNTS", method: "get", key: 'get_feature_flag_accounts'};
+export const get_feature_flag_accounts = { type: "GET_FEATURE_FLAG_ACCOUNTS", method: "get"};
 
 // Get feature flag
 // Get the feature flag that applies to a given Account, Course, or User.
@@ -104,7 +104,7 @@ export const get_feature_flag_accounts = { type: "GET_FEATURE_FLAG_ACCOUNTS", me
 //
 // Example:
 // return canvasRequest(get_feature_flag_users, {user_id, feature});
-export const get_feature_flag_users = { type: "GET_FEATURE_FLAG_USERS", method: "get", key: 'get_feature_flag_users'};
+export const get_feature_flag_users = { type: "GET_FEATURE_FLAG_USERS", method: "get"};
 
 // Set feature flag
 // Set a feature flag for a given Account, Course, or User. This call will fail if a parent account sets
@@ -118,7 +118,7 @@ export const get_feature_flag_users = { type: "GET_FEATURE_FLAG_USERS", method: 
 //   state
 // }
 // return canvasRequest(set_feature_flag_courses, {course_id, feature}, query);
-export const set_feature_flag_courses = { type: "SET_FEATURE_FLAG_COURSES", method: "put", key: 'set_feature_flag_courses'};
+export const set_feature_flag_courses = { type: "SET_FEATURE_FLAG_COURSES", method: "put"};
 
 // Set feature flag
 // Set a feature flag for a given Account, Course, or User. This call will fail if a parent account sets
@@ -132,7 +132,7 @@ export const set_feature_flag_courses = { type: "SET_FEATURE_FLAG_COURSES", meth
 //   state
 // }
 // return canvasRequest(set_feature_flag_accounts, {account_id, feature}, query);
-export const set_feature_flag_accounts = { type: "SET_FEATURE_FLAG_ACCOUNTS", method: "put", key: 'set_feature_flag_accounts'};
+export const set_feature_flag_accounts = { type: "SET_FEATURE_FLAG_ACCOUNTS", method: "put"};
 
 // Set feature flag
 // Set a feature flag for a given Account, Course, or User. This call will fail if a parent account sets
@@ -146,7 +146,7 @@ export const set_feature_flag_accounts = { type: "SET_FEATURE_FLAG_ACCOUNTS", me
 //   state
 // }
 // return canvasRequest(set_feature_flag_users, {user_id, feature}, query);
-export const set_feature_flag_users = { type: "SET_FEATURE_FLAG_USERS", method: "put", key: 'set_feature_flag_users'};
+export const set_feature_flag_users = { type: "SET_FEATURE_FLAG_USERS", method: "put"};
 
 // Remove feature flag
 // Remove feature flag for a given Account, Course, or User.  (Note that the flag must
@@ -159,7 +159,7 @@ export const set_feature_flag_users = { type: "SET_FEATURE_FLAG_USERS", method: 
 //
 // Example:
 // return canvasRequest(remove_feature_flag_courses, {course_id, feature});
-export const remove_feature_flag_courses = { type: "REMOVE_FEATURE_FLAG_COURSES", method: "delete", key: 'remove_feature_flag_courses'};
+export const remove_feature_flag_courses = { type: "REMOVE_FEATURE_FLAG_COURSES", method: "delete"};
 
 // Remove feature flag
 // Remove feature flag for a given Account, Course, or User.  (Note that the flag must
@@ -172,7 +172,7 @@ export const remove_feature_flag_courses = { type: "REMOVE_FEATURE_FLAG_COURSES"
 //
 // Example:
 // return canvasRequest(remove_feature_flag_accounts, {account_id, feature});
-export const remove_feature_flag_accounts = { type: "REMOVE_FEATURE_FLAG_ACCOUNTS", method: "delete", key: 'remove_feature_flag_accounts'};
+export const remove_feature_flag_accounts = { type: "REMOVE_FEATURE_FLAG_ACCOUNTS", method: "delete"};
 
 // Remove feature flag
 // Remove feature flag for a given Account, Course, or User.  (Note that the flag must
@@ -185,4 +185,4 @@ export const remove_feature_flag_accounts = { type: "REMOVE_FEATURE_FLAG_ACCOUNT
 //
 // Example:
 // return canvasRequest(remove_feature_flag_users, {user_id, feature});
-export const remove_feature_flag_users = { type: "REMOVE_FEATURE_FLAG_USERS", method: "delete", key: 'remove_feature_flag_users'};
+export const remove_feature_flag_users = { type: "REMOVE_FEATURE_FLAG_USERS", method: "delete"};

@@ -12,7 +12,7 @@
 //
 // Example:
 // return canvasRequest(list_conferences_courses, {course_id});
-export const list_conferences_courses = { type: "LIST_CONFERENCES_COURSES", method: "get", key: 'list_conferences_courses'};
+export const list_conferences_courses = { type: "LIST_CONFERENCES_COURSES", method: "get"};
 
 // List conferences
 // Retrieve the list of conferences for this context
@@ -25,4 +25,4 @@ export const list_conferences_courses = { type: "LIST_CONFERENCES_COURSES", meth
 //
 // Example:
 // return canvasRequest(list_conferences_groups, {group_id});
-export const list_conferences_groups = { type: "LIST_CONFERENCES_GROUPS", method: "get", key: 'list_conferences_groups'};
+export const list_conferences_groups = { type: "LIST_CONFERENCES_GROUPS", method: "get"};

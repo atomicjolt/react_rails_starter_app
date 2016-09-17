@@ -10,7 +10,7 @@
 //
 // Example:
 // return canvasRequest(list_user_communication_channels, {user_id});
-export const list_user_communication_channels = { type: "LIST_USER_COMMUNICATION_CHANNELS", method: "get", key: 'list_user_communication_channels'};
+export const list_user_communication_channels = { type: "LIST_USER_COMMUNICATION_CHANNELS", method: "get"};
 
 // Create a communication channel
 // Creates a new communication channel for the specified user.
@@ -26,7 +26,7 @@ export const list_user_communication_channels = { type: "LIST_USER_COMMUNICATION
 //   skip_confirmation
 // }
 // return canvasRequest(create_communication_channel, {user_id}, query);
-export const create_communication_channel = { type: "CREATE_COMMUNICATION_CHANNEL", method: "post", key: 'create_communication_channel'};
+export const create_communication_channel = { type: "CREATE_COMMUNICATION_CHANNEL", method: "post"};
 
 // Delete a communication channel
 // Delete an existing communication channel.
@@ -36,7 +36,7 @@ export const create_communication_channel = { type: "CREATE_COMMUNICATION_CHANNE
 //
 // Example:
 // return canvasRequest(delete_communication_channel_id, {user_id, id});
-export const delete_communication_channel_id = { type: "DELETE_COMMUNICATION_CHANNEL_ID", method: "delete", key: 'delete_communication_channel_id'};
+export const delete_communication_channel_id = { type: "DELETE_COMMUNICATION_CHANNEL_ID", method: "delete"};
 
 // Delete a communication channel
 // Delete an existing communication channel.
@@ -46,4 +46,4 @@ export const delete_communication_channel_id = { type: "DELETE_COMMUNICATION_CHA
 //
 // Example:
 // return canvasRequest(delete_communication_channel_type, {user_id, type, address});
-export const delete_communication_channel_type = { type: "DELETE_COMMUNICATION_CHANNEL_TYPE", method: "delete", key: 'delete_communication_channel_type'};
+export const delete_communication_channel_type = { type: "DELETE_COMMUNICATION_CHANNEL_TYPE", method: "delete"};

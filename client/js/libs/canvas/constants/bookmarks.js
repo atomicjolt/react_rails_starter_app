@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_bookmarks, {});
-export const list_bookmarks = { type: "LIST_BOOKMARKS", method: "get", key: 'list_bookmarks'};
+export const list_bookmarks = { type: "LIST_BOOKMARKS", method: "get"};
 
 // Create bookmark
 // Creates a bookmark.
@@ -25,7 +25,7 @@ export const list_bookmarks = { type: "LIST_BOOKMARKS", method: "get", key: 'lis
 //   data
 // }
 // return canvasRequest(create_bookmark, {}, query);
-export const create_bookmark = { type: "CREATE_BOOKMARK", method: "post", key: 'create_bookmark'};
+export const create_bookmark = { type: "CREATE_BOOKMARK", method: "post"};
 
 // Get bookmark
 // Returns the details for a bookmark.
@@ -35,7 +35,7 @@ export const create_bookmark = { type: "CREATE_BOOKMARK", method: "post", key: '
 //
 // Example:
 // return canvasRequest(get_bookmark, {id});
-export const get_bookmark = { type: "GET_BOOKMARK", method: "get", key: 'get_bookmark'};
+export const get_bookmark = { type: "GET_BOOKMARK", method: "get"};
 
 // Update bookmark
 // Updates a bookmark
@@ -51,7 +51,7 @@ export const get_bookmark = { type: "GET_BOOKMARK", method: "get", key: 'get_boo
 //   data
 // }
 // return canvasRequest(update_bookmark, {id}, query);
-export const update_bookmark = { type: "UPDATE_BOOKMARK", method: "put", key: 'update_bookmark'};
+export const update_bookmark = { type: "UPDATE_BOOKMARK", method: "put"};
 
 // Delete bookmark
 // Deletes a bookmark
@@ -61,4 +61,4 @@ export const update_bookmark = { type: "UPDATE_BOOKMARK", method: "put", key: 'u
 //
 // Example:
 // return canvasRequest(delete_bookmark, {id});
-export const delete_bookmark = { type: "DELETE_BOOKMARK", method: "delete", key: 'delete_bookmark'};
+export const delete_bookmark = { type: "DELETE_BOOKMARK", method: "delete"};

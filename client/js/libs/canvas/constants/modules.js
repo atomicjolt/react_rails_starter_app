@@ -14,7 +14,7 @@
 //   student_id
 // }
 // return canvasRequest(list_modules, {course_id}, query);
-export const list_modules = { type: "LIST_MODULES", method: "get", key: 'list_modules'};
+export const list_modules = { type: "LIST_MODULES", method: "get"};
 
 // Show module
 // Get information about a single module
@@ -28,7 +28,7 @@ export const list_modules = { type: "LIST_MODULES", method: "get", key: 'list_mo
 //   student_id
 // }
 // return canvasRequest(show_module, {course_id, id}, query);
-export const show_module = { type: "SHOW_MODULE", method: "get", key: 'show_module'};
+export const show_module = { type: "SHOW_MODULE", method: "get"};
 
 // Create a module
 // Create and return a new module
@@ -46,7 +46,7 @@ export const show_module = { type: "SHOW_MODULE", method: "get", key: 'show_modu
 //   module[publish_final_grade]
 // }
 // return canvasRequest(create_module, {course_id}, query);
-export const create_module = { type: "CREATE_MODULE", method: "post", key: 'create_module'};
+export const create_module = { type: "CREATE_MODULE", method: "post"};
 
 // Update a module
 // Update and return an existing module
@@ -65,7 +65,7 @@ export const create_module = { type: "CREATE_MODULE", method: "post", key: 'crea
 //   module[published]
 // }
 // return canvasRequest(update_module, {course_id, id}, query);
-export const update_module = { type: "UPDATE_MODULE", method: "put", key: 'update_module'};
+export const update_module = { type: "UPDATE_MODULE", method: "put"};
 
 // Delete module
 // Delete a module
@@ -75,7 +75,7 @@ export const update_module = { type: "UPDATE_MODULE", method: "put", key: 'updat
 //
 // Example:
 // return canvasRequest(delete_module, {course_id, id});
-export const delete_module = { type: "DELETE_MODULE", method: "delete", key: 'delete_module'};
+export const delete_module = { type: "DELETE_MODULE", method: "delete"};
 
 // Re-lock module progressions
 // Resets module progressions to their default locked state and
@@ -89,7 +89,7 @@ export const delete_module = { type: "DELETE_MODULE", method: "delete", key: 'de
 //
 // Example:
 // return canvasRequest(re_lock_module_progressions, {course_id, id});
-export const re_lock_module_progressions = { type: "RE_LOCK_MODULE_PROGRESSIONS", method: "put", key: 're_lock_module_progressions'};
+export const re_lock_module_progressions = { type: "RE_LOCK_MODULE_PROGRESSIONS", method: "put"};
 
 // List module items
 // List the items in a module
@@ -104,7 +104,7 @@ export const re_lock_module_progressions = { type: "RE_LOCK_MODULE_PROGRESSIONS"
 //   student_id
 // }
 // return canvasRequest(list_module_items, {course_id, module_id}, query);
-export const list_module_items = { type: "LIST_MODULE_ITEMS", method: "get", key: 'list_module_items'};
+export const list_module_items = { type: "LIST_MODULE_ITEMS", method: "get"};
 
 // Show module item
 // Get information about a single module item
@@ -118,7 +118,7 @@ export const list_module_items = { type: "LIST_MODULE_ITEMS", method: "get", key
 //   student_id
 // }
 // return canvasRequest(show_module_item, {course_id, module_id, id}, query);
-export const show_module_item = { type: "SHOW_MODULE_ITEM", method: "get", key: 'show_module_item'};
+export const show_module_item = { type: "SHOW_MODULE_ITEM", method: "get"};
 
 // Create a module item
 // Create and return a new module item
@@ -140,7 +140,7 @@ export const show_module_item = { type: "SHOW_MODULE_ITEM", method: "get", key: 
 //   module_item[completion_requirement][min_score]
 // }
 // return canvasRequest(create_module_item, {course_id, module_id}, query);
-export const create_module_item = { type: "CREATE_MODULE_ITEM", method: "post", key: 'create_module_item'};
+export const create_module_item = { type: "CREATE_MODULE_ITEM", method: "post"};
 
 // Update a module item
 // Update and return an existing module item
@@ -161,7 +161,7 @@ export const create_module_item = { type: "CREATE_MODULE_ITEM", method: "post", 
 //   module_item[module_id]
 // }
 // return canvasRequest(update_module_item, {course_id, module_id, id}, query);
-export const update_module_item = { type: "UPDATE_MODULE_ITEM", method: "put", key: 'update_module_item'};
+export const update_module_item = { type: "UPDATE_MODULE_ITEM", method: "put"};
 
 // Delete module item
 // Delete a module item
@@ -171,7 +171,7 @@ export const update_module_item = { type: "UPDATE_MODULE_ITEM", method: "put", k
 //
 // Example:
 // return canvasRequest(delete_module_item, {course_id, module_id, id});
-export const delete_module_item = { type: "DELETE_MODULE_ITEM", method: "delete", key: 'delete_module_item'};
+export const delete_module_item = { type: "DELETE_MODULE_ITEM", method: "delete"};
 
 // Mark module item as done/not done
 // Mark a module item as done/not done. Use HTTP method PUT to mark as done,
@@ -182,7 +182,7 @@ export const delete_module_item = { type: "DELETE_MODULE_ITEM", method: "delete"
 //
 // Example:
 // return canvasRequest(mark_module_item_as_done_not_done, {course_id, module_id, id});
-export const mark_module_item_as_done_not_done = { type: "MARK_MODULE_ITEM_AS_DONE_NOT_DONE", method: "put", key: 'mark_module_item_as_done_not_done'};
+export const mark_module_item_as_done_not_done = { type: "MARK_MODULE_ITEM_AS_DONE_NOT_DONE", method: "put"};
 
 // Get module item sequence
 // Given an asset in a course, find the ModuleItem it belongs to, and also the previous and next Module Items
@@ -197,7 +197,7 @@ export const mark_module_item_as_done_not_done = { type: "MARK_MODULE_ITEM_AS_DO
 //   asset_id
 // }
 // return canvasRequest(get_module_item_sequence, {course_id}, query);
-export const get_module_item_sequence = { type: "GET_MODULE_ITEM_SEQUENCE", method: "get", key: 'get_module_item_sequence'};
+export const get_module_item_sequence = { type: "GET_MODULE_ITEM_SEQUENCE", method: "get"};
 
 // Mark module item read
 // Fulfills "must view" requirement for a module item. It is generally not necessary to do this explicitly,
@@ -211,4 +211,4 @@ export const get_module_item_sequence = { type: "GET_MODULE_ITEM_SEQUENCE", meth
 //
 // Example:
 // return canvasRequest(mark_module_item_read, {course_id, module_id, id});
-export const mark_module_item_read = { type: "MARK_MODULE_ITEM_READ", method: "post", key: 'mark_module_item_read'};
+export const mark_module_item_read = { type: "MARK_MODULE_ITEM_READ", method: "post"};

@@ -14,7 +14,7 @@
 //   include
 // }
 // return canvasRequest(get_all_quiz_submission_questions, {quiz_submission_id}, query);
-export const get_all_quiz_submission_questions = { type: "GET_ALL_QUIZ_SUBMISSION_QUESTIONS", method: "get", key: 'get_all_quiz_submission_questions'};
+export const get_all_quiz_submission_questions = { type: "GET_ALL_QUIZ_SUBMISSION_QUESTIONS", method: "get"};
 
 // Answering questions
 // Provide or update an answer to one or more QuizQuestions.
@@ -30,7 +30,7 @@ export const get_all_quiz_submission_questions = { type: "GET_ALL_QUIZ_SUBMISSIO
 //   quiz_questions
 // }
 // return canvasRequest(answering_questions, {quiz_submission_id}, query);
-export const answering_questions = { type: "ANSWERING_QUESTIONS", method: "post", key: 'answering_questions'};
+export const answering_questions = { type: "ANSWERING_QUESTIONS", method: "post"};
 
 // Flagging a question.
 // Set a flag on a quiz question to indicate that you want to return to it
@@ -46,7 +46,7 @@ export const answering_questions = { type: "ANSWERING_QUESTIONS", method: "post"
 //   access_code
 // }
 // return canvasRequest(flagging_question, {quiz_submission_id, id}, query);
-export const flagging_question = { type: "FLAGGING_QUESTION", method: "put", key: 'flagging_question'};
+export const flagging_question = { type: "FLAGGING_QUESTION", method: "put"};
 
 // Unflagging a question.
 // Remove the flag that you previously set on a quiz question after you've
@@ -62,4 +62,4 @@ export const flagging_question = { type: "FLAGGING_QUESTION", method: "put", key
 //   access_code
 // }
 // return canvasRequest(unflagging_question, {quiz_submission_id, id}, query);
-export const unflagging_question = { type: "UNFLAGGING_QUESTION", method: "put", key: 'unflagging_question'};
+export const unflagging_question = { type: "UNFLAGGING_QUESTION", method: "put"};
