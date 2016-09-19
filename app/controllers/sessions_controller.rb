@@ -19,8 +19,8 @@ class SessionsController < Devise::SessionsController
     respond_with resource, location: after_sign_in_path_for(resource) do |format|
       format.json { render json: {
         userId: resource.id,
-        email: resource.email, 
-        displayName: resource.name, 
+        email: resource.email,
+        displayName: resource.name,
         jwt_token: token
       } }
     end
