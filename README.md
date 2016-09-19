@@ -12,6 +12,7 @@ Be sure to use the correct relative path:
 
 
 ## Running LTI Starter App
+-----------
 
 ### With Foreman
 Foreman makes it simple to startup all the services required to run the application in development mode. To start the application using foreman simply run:
@@ -34,16 +35,16 @@ $ cd client && nodemon webpack.hot.js
 ```
 
 ## Setting up LTI Starter App
+-----------
 
 ### File Modifications
 
 #### Change bin/bootstrap
 In bin/bootstrap change the following line to point to a dropbox folder containing the correct config files for
 the project:
+DROPBOX_FOLDER=aj-dev/lti_starter_app
 
-  DROPBOX_FOLDER=aj-dev/lti_starter_app
-
-#### Change .env for Foreman
+#### Change .env
 Rename `.env.example` to `.env` and configure it to your liking.
 
 Note: the App and Assets subdomains must be different.
@@ -52,6 +53,14 @@ Note: the App and Assets subdomains must be different.
 1. Open application.rb and change `ltistarterapp` to the name you choose.
 2. Do a global search and replace for `lti_starter_app` and change it to the name you choose.
 3. Do a global search and replace for `ltistarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
+
+### Setup script
+Run the setup script to configure your local nginx and to setup symlinks to your configuration files (database.yml, etc)
+
+```
+$ ./bin/setup
+```
+
 ## Assets
 -----------
 Any files added to the assets directory can be used by in code and assigned to a variable. This
