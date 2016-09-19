@@ -37,6 +37,12 @@ $ cd client && nodemon webpack.hot.js
 
 ### File Modifications
 
+#### Change bin/bootstrap
+In bin/bootstrap change the following line to point to a dropbox folder containing the correct config files for
+the project:
+
+  DROPBOX_FOLDER=aj-dev/lti_starter_app
+
 #### Change .env for Foreman
 Rename `.env.example` to `.env` and configure it to your liking.
 
