@@ -1,4 +1,4 @@
-<% parameters_doc = parameters_doc(operation) -%> 
+<% parameters_doc = parameters_doc(operation) -%>
 // <%=@summary%>
 // <%=@notes%>
 //
@@ -7,4 +7,4 @@
 //
 // Example:<%=parameters_doc%>
 // return canvasRequest(<%=@nickname%>, {<%=@args.join(', ')%>}<%= parameters_doc.present? ? ", query" : ""%>);
-export const <%=@nickname%> = { type: "<%=@nickname.upcase%>", method: "<%=@method.downcase%>"};
+export const <%=@nickname%> = { type: "<%=@nickname.upcase%>", method: "<%=@method.downcase%>", key: "<%=reducer_key(@nickname, @args)%>", required: <%=js_args(@args)%> };

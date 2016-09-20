@@ -127,6 +127,20 @@ namespace :canvas do
       end
     end
 
+    def key_args(args)
+      if args.blank?
+        ""
+      elsif args.length > 1
+        "#{nickname}_{#{args.join('}_{')}}"
+      else
+        "#{nickname}_#{args[0]}"
+      end
+    end
+
+    def reducer_key(nickname, args)
+      "#{nickname}#{key_args(args)}"
+    end
+
   end
 
   module RubyHelpers
