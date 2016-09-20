@@ -13,7 +13,7 @@
 //   show_inherited
 // }
 // return canvasRequest(list_roles, {account_id}, query);
-export const list_roles = { type: "LIST_ROLES", method: "get"};
+export const list_roles = { type: "LIST_ROLES", method: "get", key: "list_roleslist_roles_account_id", required: ["account_id"] };
 
 // Get a single role
 // Retrieve information about a single role
@@ -27,7 +27,7 @@ export const list_roles = { type: "LIST_ROLES", method: "get"};
 //   role
 // }
 // return canvasRequest(get_single_role, {account_id, id}, query);
-export const get_single_role = { type: "GET_SINGLE_ROLE", method: "get"};
+export const get_single_role = { type: "GET_SINGLE_ROLE", method: "get", key: "get_single_roleget_single_role_{account_id}_{id}", required: ["account_id","id"] };
 
 // Create a new role
 // Create a new course-level or account-level role.
@@ -47,7 +47,7 @@ export const get_single_role = { type: "GET_SINGLE_ROLE", method: "get"};
 //   permissions[<X>][applies_to_descendants]
 // }
 // return canvasRequest(create_new_role, {account_id}, query);
-export const create_new_role = { type: "CREATE_NEW_ROLE", method: "post"};
+export const create_new_role = { type: "CREATE_NEW_ROLE", method: "post", key: "create_new_rolecreate_new_role_account_id", required: ["account_id"] };
 
 // Deactivate a role
 // Deactivates a custom role.  This hides it in the user interface and prevents it
@@ -64,7 +64,7 @@ export const create_new_role = { type: "CREATE_NEW_ROLE", method: "post"};
 //   role
 // }
 // return canvasRequest(deactivate_role, {account_id, id}, query);
-export const deactivate_role = { type: "DEACTIVATE_ROLE", method: "delete"};
+export const deactivate_role = { type: "DEACTIVATE_ROLE", method: "delete", key: "deactivate_roledeactivate_role_{account_id}_{id}", required: ["account_id","id"] };
 
 // Activate a role
 // Re-activates an inactive role (allowing it to be assigned to new users)
@@ -78,7 +78,7 @@ export const deactivate_role = { type: "DEACTIVATE_ROLE", method: "delete"};
 //   role
 // }
 // return canvasRequest(activate_role, {account_id, id}, query);
-export const activate_role = { type: "ACTIVATE_ROLE", method: "post"};
+export const activate_role = { type: "ACTIVATE_ROLE", method: "post", key: "activate_roleactivate_role_{account_id}_{id}", required: ["account_id","id"] };
 
 // Update a role
 // Update permissions for an existing role.
@@ -104,4 +104,4 @@ export const activate_role = { type: "ACTIVATE_ROLE", method: "post"};
 //   permissions[<X>][applies_to_descendants]
 // }
 // return canvasRequest(update_role, {account_id, id}, query);
-export const update_role = { type: "UPDATE_ROLE", method: "put"};
+export const update_role = { type: "UPDATE_ROLE", method: "put", key: "update_roleupdate_role_{account_id}_{id}", required: ["account_id","id"] };

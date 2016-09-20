@@ -9,4 +9,4 @@
 //
 // Example:
 // return canvasRequest(query_progress, {id});
-export const query_progress = { type: "QUERY_PROGRESS", method: "get"};
+export const query_progress = { type: "QUERY_PROGRESS", method: "get", key: "query_progressquery_progress_id", required: ["id"] };

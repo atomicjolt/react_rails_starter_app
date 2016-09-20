@@ -16,7 +16,7 @@
 //   created_since
 // }
 // return canvasRequest(get_sis_import_list, {account_id}, query);
-export const get_sis_import_list = { type: "GET_SIS_IMPORT_LIST", method: "get"};
+export const get_sis_import_list = { type: "GET_SIS_IMPORT_LIST", method: "get", key: "get_sis_import_listget_sis_import_list_account_id", required: ["account_id"] };
 
 // Import SIS data
 // Import SIS data into Canvas. Must be on a root account with SIS imports
@@ -42,7 +42,7 @@ export const get_sis_import_list = { type: "GET_SIS_IMPORT_LIST", method: "get"}
 //   diffing_remaster_data_set
 // }
 // return canvasRequest(import_sis_data, {account_id}, query);
-export const import_sis_data = { type: "IMPORT_SIS_DATA", method: "post"};
+export const import_sis_data = { type: "IMPORT_SIS_DATA", method: "post", key: "import_sis_dataimport_sis_data_account_id", required: ["account_id"] };
 
 // Get SIS import status
 // Get the status of an already created SIS import.
@@ -56,4 +56,4 @@ export const import_sis_data = { type: "IMPORT_SIS_DATA", method: "post"};
 //
 // Example:
 // return canvasRequest(get_sis_import_status, {account_id, id});
-export const get_sis_import_status = { type: "GET_SIS_IMPORT_STATUS", method: "get"};
+export const get_sis_import_status = { type: "GET_SIS_IMPORT_STATUS", method: "get", key: "get_sis_import_statusget_sis_import_status_{account_id}_{id}", required: ["account_id","id"] };

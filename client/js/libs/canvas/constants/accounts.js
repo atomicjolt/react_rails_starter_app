@@ -14,7 +14,7 @@
 //   include
 // }
 // return canvasRequest(list_accounts, {}, query);
-export const list_accounts = { type: "LIST_ACCOUNTS", method: "get"};
+export const list_accounts = { type: "LIST_ACCOUNTS", method: "get", key: "list_accounts", required: [] };
 
 // List accounts for course admins
 // List accounts that the current user can view through their admin course enrollments.
@@ -26,7 +26,7 @@ export const list_accounts = { type: "LIST_ACCOUNTS", method: "get"};
 //
 // Example:
 // return canvasRequest(list_accounts_for_course_admins, {});
-export const list_accounts_for_course_admins = { type: "LIST_ACCOUNTS_FOR_COURSE_ADMINS", method: "get"};
+export const list_accounts_for_course_admins = { type: "LIST_ACCOUNTS_FOR_COURSE_ADMINS", method: "get", key: "list_accounts_for_course_admins", required: [] };
 
 // Get a single account
 // Retrieve information on an individual account, given by id or sis
@@ -37,7 +37,7 @@ export const list_accounts_for_course_admins = { type: "LIST_ACCOUNTS_FOR_COURSE
 //
 // Example:
 // return canvasRequest(get_single_account, {id});
-export const get_single_account = { type: "GET_SINGLE_ACCOUNT", method: "get"};
+export const get_single_account = { type: "GET_SINGLE_ACCOUNT", method: "get", key: "get_single_accountget_single_account_id", required: ["id"] };
 
 // Get the sub-accounts of an account
 // List accounts that are sub-accounts of the given account.
@@ -50,7 +50,7 @@ export const get_single_account = { type: "GET_SINGLE_ACCOUNT", method: "get"};
 //   recursive
 // }
 // return canvasRequest(get_sub_accounts_of_account, {account_id}, query);
-export const get_sub_accounts_of_account = { type: "GET_SUB_ACCOUNTS_OF_ACCOUNT", method: "get"};
+export const get_sub_accounts_of_account = { type: "GET_SUB_ACCOUNTS_OF_ACCOUNT", method: "get", key: "get_sub_accounts_of_accountget_sub_accounts_of_account_account_id", required: ["account_id"] };
 
 // List active courses in an account
 // Retrieve the list of courses in this account.
@@ -73,7 +73,7 @@ export const get_sub_accounts_of_account = { type: "GET_SUB_ACCOUNTS_OF_ACCOUNT"
 //   include
 // }
 // return canvasRequest(list_active_courses_in_account, {account_id}, query);
-export const list_active_courses_in_account = { type: "LIST_ACTIVE_COURSES_IN_ACCOUNT", method: "get"};
+export const list_active_courses_in_account = { type: "LIST_ACTIVE_COURSES_IN_ACCOUNT", method: "get", key: "list_active_courses_in_accountlist_active_courses_in_account_account_id", required: ["account_id"] };
 
 // Update an account
 // Update an existing account.
@@ -96,7 +96,7 @@ export const list_active_courses_in_account = { type: "LIST_ACTIVE_COURSES_IN_AC
 //   account[settings][restrict_student_future_listing][locked]
 // }
 // return canvasRequest(update_account, {id}, query);
-export const update_account = { type: "UPDATE_ACCOUNT", method: "put"};
+export const update_account = { type: "UPDATE_ACCOUNT", method: "put", key: "update_accountupdate_account_id", required: ["id"] };
 
 // Delete a user from the root account
 // Delete a user record from a Canvas root account. If a user is associated
@@ -112,7 +112,7 @@ export const update_account = { type: "UPDATE_ACCOUNT", method: "put"};
 //
 // Example:
 // return canvasRequest(delete_user_from_root_account, {account_id, user_id});
-export const delete_user_from_root_account = { type: "DELETE_USER_FROM_ROOT_ACCOUNT", method: "delete"};
+export const delete_user_from_root_account = { type: "DELETE_USER_FROM_ROOT_ACCOUNT", method: "delete", key: "delete_user_from_root_accountdelete_user_from_root_account_{account_id}_{user_id}", required: ["account_id","user_id"] };
 
 // Create a new root account
 // to '1', service will be enabled. If '0', service will be disabled.
@@ -137,7 +137,7 @@ export const delete_user_from_root_account = { type: "DELETE_USER_FROM_ROOT_ACCO
 //   account[external_integration_keys][salesforce_account_id]
 // }
 // return canvasRequest(create_new_root_account, {}, query);
-export const create_new_root_account = { type: "CREATE_NEW_ROOT_ACCOUNT", method: "post"};
+export const create_new_root_account = { type: "CREATE_NEW_ROOT_ACCOUNT", method: "post", key: "create_new_root_account", required: [] };
 
 // Create a new root account
 // to '1', service will be enabled. If '0', service will be disabled.
@@ -162,7 +162,7 @@ export const create_new_root_account = { type: "CREATE_NEW_ROOT_ACCOUNT", method
 //   account[external_integration_keys][salesforce_account_id]
 // }
 // return canvasRequest(create_new_root_account_account_id, {account_id}, query);
-export const create_new_root_account_account_id = { type: "CREATE_NEW_ROOT_ACCOUNT_ACCOUNT_ID", method: "post"};
+export const create_new_root_account_account_id = { type: "CREATE_NEW_ROOT_ACCOUNT_ACCOUNT_ID", method: "post", key: "create_new_root_account_account_idcreate_new_root_account_account_id_account_id", required: ["account_id"] };
 
 // Search all users in consortium
 // Returns the list of users with the provided search term.
@@ -176,7 +176,7 @@ export const create_new_root_account_account_id = { type: "CREATE_NEW_ROOT_ACCOU
 //   include
 // }
 // return canvasRequest(search_all_users_in_consortium_accounts, {account_id}, query);
-export const search_all_users_in_consortium_accounts = { type: "SEARCH_ALL_USERS_IN_CONSORTIUM_ACCOUNTS", method: "get"};
+export const search_all_users_in_consortium_accounts = { type: "SEARCH_ALL_USERS_IN_CONSORTIUM_ACCOUNTS", method: "get", key: "search_all_users_in_consortium_accountssearch_all_users_in_consortium_accounts_account_id", required: ["account_id"] };
 
 // Search all users in consortium
 // Returns the list of users with the provided search term.
@@ -190,7 +190,7 @@ export const search_all_users_in_consortium_accounts = { type: "SEARCH_ALL_USERS
 //   include
 // }
 // return canvasRequest(search_all_users_in_consortium_site_admin, {}, query);
-export const search_all_users_in_consortium_site_admin = { type: "SEARCH_ALL_USERS_IN_CONSORTIUM_SITE_ADMIN", method: "get"};
+export const search_all_users_in_consortium_site_admin = { type: "SEARCH_ALL_USERS_IN_CONSORTIUM_SITE_ADMIN", method: "get", key: "search_all_users_in_consortium_site_admin", required: [] };
 
 // Create a new sub-account
 // Add a new sub-account to a given account.
@@ -207,4 +207,4 @@ export const search_all_users_in_consortium_site_admin = { type: "SEARCH_ALL_USE
 //   account[default_group_storage_quota_mb]
 // }
 // return canvasRequest(create_new_sub_account, {account_id}, query);
-export const create_new_sub_account = { type: "CREATE_NEW_SUB_ACCOUNT", method: "post"};
+export const create_new_sub_account = { type: "CREATE_NEW_SUB_ACCOUNT", method: "post", key: "create_new_sub_accountcreate_new_sub_account_account_id", required: ["account_id"] };

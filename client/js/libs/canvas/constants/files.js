@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(get_quota_information_courses, {course_id});
-export const get_quota_information_courses = { type: "GET_QUOTA_INFORMATION_COURSES", method: "get"};
+export const get_quota_information_courses = { type: "GET_QUOTA_INFORMATION_COURSES", method: "get", key: "get_quota_information_coursesget_quota_information_courses_course_id", required: ["course_id"] };
 
 // Get quota information
 // Returns the total and used storage quota for the course, group, or user.
@@ -19,7 +19,7 @@ export const get_quota_information_courses = { type: "GET_QUOTA_INFORMATION_COUR
 //
 // Example:
 // return canvasRequest(get_quota_information_groups, {group_id});
-export const get_quota_information_groups = { type: "GET_QUOTA_INFORMATION_GROUPS", method: "get"};
+export const get_quota_information_groups = { type: "GET_QUOTA_INFORMATION_GROUPS", method: "get", key: "get_quota_information_groupsget_quota_information_groups_group_id", required: ["group_id"] };
 
 // Get quota information
 // Returns the total and used storage quota for the course, group, or user.
@@ -29,7 +29,7 @@ export const get_quota_information_groups = { type: "GET_QUOTA_INFORMATION_GROUP
 //
 // Example:
 // return canvasRequest(get_quota_information_users, {user_id});
-export const get_quota_information_users = { type: "GET_QUOTA_INFORMATION_USERS", method: "get"};
+export const get_quota_information_users = { type: "GET_QUOTA_INFORMATION_USERS", method: "get", key: "get_quota_information_usersget_quota_information_users_user_id", required: ["user_id"] };
 
 // List files
 // Returns the paginated list of files for the folder or course.
@@ -47,7 +47,7 @@ export const get_quota_information_users = { type: "GET_QUOTA_INFORMATION_USERS"
 //   order
 // }
 // return canvasRequest(list_files_courses, {course_id}, query);
-export const list_files_courses = { type: "LIST_FILES_COURSES", method: "get"};
+export const list_files_courses = { type: "LIST_FILES_COURSES", method: "get", key: "list_files_courseslist_files_courses_course_id", required: ["course_id"] };
 
 // List files
 // Returns the paginated list of files for the folder or course.
@@ -65,7 +65,7 @@ export const list_files_courses = { type: "LIST_FILES_COURSES", method: "get"};
 //   order
 // }
 // return canvasRequest(list_files_users, {user_id}, query);
-export const list_files_users = { type: "LIST_FILES_USERS", method: "get"};
+export const list_files_users = { type: "LIST_FILES_USERS", method: "get", key: "list_files_userslist_files_users_user_id", required: ["user_id"] };
 
 // List files
 // Returns the paginated list of files for the folder or course.
@@ -83,7 +83,7 @@ export const list_files_users = { type: "LIST_FILES_USERS", method: "get"};
 //   order
 // }
 // return canvasRequest(list_files_groups, {group_id}, query);
-export const list_files_groups = { type: "LIST_FILES_GROUPS", method: "get"};
+export const list_files_groups = { type: "LIST_FILES_GROUPS", method: "get", key: "list_files_groupslist_files_groups_group_id", required: ["group_id"] };
 
 // List files
 // Returns the paginated list of files for the folder or course.
@@ -101,7 +101,7 @@ export const list_files_groups = { type: "LIST_FILES_GROUPS", method: "get"};
 //   order
 // }
 // return canvasRequest(list_files_folders, {id}, query);
-export const list_files_folders = { type: "LIST_FILES_FOLDERS", method: "get"};
+export const list_files_folders = { type: "LIST_FILES_FOLDERS", method: "get", key: "list_files_folderslist_files_folders_id", required: ["id"] };
 
 // Get public inline preview url
 // Determine the URL that should be used for inline preview of the file.
@@ -114,7 +114,7 @@ export const list_files_folders = { type: "LIST_FILES_FOLDERS", method: "get"};
 //   submission_id
 // }
 // return canvasRequest(get_public_inline_preview_url, {id}, query);
-export const get_public_inline_preview_url = { type: "GET_PUBLIC_INLINE_PREVIEW_URL", method: "get"};
+export const get_public_inline_preview_url = { type: "GET_PUBLIC_INLINE_PREVIEW_URL", method: "get", key: "get_public_inline_preview_urlget_public_inline_preview_url_id", required: ["id"] };
 
 // Get file
 // Returns the standard attachment json object
@@ -127,7 +127,7 @@ export const get_public_inline_preview_url = { type: "GET_PUBLIC_INLINE_PREVIEW_
 //   include
 // }
 // return canvasRequest(get_file_files, {id}, query);
-export const get_file_files = { type: "GET_FILE_FILES", method: "get"};
+export const get_file_files = { type: "GET_FILE_FILES", method: "get", key: "get_file_filesget_file_files_id", required: ["id"] };
 
 // Get file
 // Returns the standard attachment json object
@@ -140,7 +140,7 @@ export const get_file_files = { type: "GET_FILE_FILES", method: "get"};
 //   include
 // }
 // return canvasRequest(get_file_courses, {course_id, id}, query);
-export const get_file_courses = { type: "GET_FILE_COURSES", method: "get"};
+export const get_file_courses = { type: "GET_FILE_COURSES", method: "get", key: "get_file_coursesget_file_courses_{course_id}_{id}", required: ["course_id","id"] };
 
 // Get file
 // Returns the standard attachment json object
@@ -153,7 +153,7 @@ export const get_file_courses = { type: "GET_FILE_COURSES", method: "get"};
 //   include
 // }
 // return canvasRequest(get_file_groups, {group_id, id}, query);
-export const get_file_groups = { type: "GET_FILE_GROUPS", method: "get"};
+export const get_file_groups = { type: "GET_FILE_GROUPS", method: "get", key: "get_file_groupsget_file_groups_{group_id}_{id}", required: ["group_id","id"] };
 
 // Get file
 // Returns the standard attachment json object
@@ -166,7 +166,7 @@ export const get_file_groups = { type: "GET_FILE_GROUPS", method: "get"};
 //   include
 // }
 // return canvasRequest(get_file_users, {user_id, id}, query);
-export const get_file_users = { type: "GET_FILE_USERS", method: "get"};
+export const get_file_users = { type: "GET_FILE_USERS", method: "get", key: "get_file_usersget_file_users_{user_id}_{id}", required: ["user_id","id"] };
 
 // Update file
 // Update some settings on the specified file
@@ -185,7 +185,7 @@ export const get_file_users = { type: "GET_FILE_USERS", method: "get"};
 //   hidden
 // }
 // return canvasRequest(update_file, {id}, query);
-export const update_file = { type: "UPDATE_FILE", method: "put"};
+export const update_file = { type: "UPDATE_FILE", method: "put", key: "update_fileupdate_file_id", required: ["id"] };
 
 // Delete file
 // Remove the specified file
@@ -198,7 +198,7 @@ export const update_file = { type: "UPDATE_FILE", method: "put"};
 //
 // Example:
 // return canvasRequest(delete_file, {id});
-export const delete_file = { type: "DELETE_FILE", method: "delete"};
+export const delete_file = { type: "DELETE_FILE", method: "delete", key: "delete_filedelete_file_id", required: ["id"] };
 
 // List folders
 // Returns the paginated list of folders in the folder.
@@ -208,7 +208,7 @@ export const delete_file = { type: "DELETE_FILE", method: "delete"};
 //
 // Example:
 // return canvasRequest(list_folders, {id});
-export const list_folders = { type: "LIST_FOLDERS", method: "get"};
+export const list_folders = { type: "LIST_FOLDERS", method: "get", key: "list_folderslist_folders_id", required: ["id"] };
 
 // List all folders
 // Returns the paginated list of all folders for the given context. This will
@@ -219,7 +219,7 @@ export const list_folders = { type: "LIST_FOLDERS", method: "get"};
 //
 // Example:
 // return canvasRequest(list_all_folders_courses, {course_id});
-export const list_all_folders_courses = { type: "LIST_ALL_FOLDERS_COURSES", method: "get"};
+export const list_all_folders_courses = { type: "LIST_ALL_FOLDERS_COURSES", method: "get", key: "list_all_folders_courseslist_all_folders_courses_course_id", required: ["course_id"] };
 
 // List all folders
 // Returns the paginated list of all folders for the given context. This will
@@ -230,7 +230,7 @@ export const list_all_folders_courses = { type: "LIST_ALL_FOLDERS_COURSES", meth
 //
 // Example:
 // return canvasRequest(list_all_folders_users, {user_id});
-export const list_all_folders_users = { type: "LIST_ALL_FOLDERS_USERS", method: "get"};
+export const list_all_folders_users = { type: "LIST_ALL_FOLDERS_USERS", method: "get", key: "list_all_folders_userslist_all_folders_users_user_id", required: ["user_id"] };
 
 // List all folders
 // Returns the paginated list of all folders for the given context. This will
@@ -241,7 +241,7 @@ export const list_all_folders_users = { type: "LIST_ALL_FOLDERS_USERS", method: 
 //
 // Example:
 // return canvasRequest(list_all_folders_groups, {group_id});
-export const list_all_folders_groups = { type: "LIST_ALL_FOLDERS_GROUPS", method: "get"};
+export const list_all_folders_groups = { type: "LIST_ALL_FOLDERS_GROUPS", method: "get", key: "list_all_folders_groupslist_all_folders_groups_group_id", required: ["group_id"] };
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -256,7 +256,7 @@ export const list_all_folders_groups = { type: "LIST_ALL_FOLDERS_GROUPS", method
 //
 // Example:
 // return canvasRequest(resolve_path_courses_full_path, {course_id});
-export const resolve_path_courses_full_path = { type: "RESOLVE_PATH_COURSES_FULL_PATH", method: "get"};
+export const resolve_path_courses_full_path = { type: "RESOLVE_PATH_COURSES_FULL_PATH", method: "get", key: "resolve_path_courses_full_pathresolve_path_courses_full_path_course_id", required: ["course_id"] };
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -271,7 +271,7 @@ export const resolve_path_courses_full_path = { type: "RESOLVE_PATH_COURSES_FULL
 //
 // Example:
 // return canvasRequest(resolve_path_courses, {course_id});
-export const resolve_path_courses = { type: "RESOLVE_PATH_COURSES", method: "get"};
+export const resolve_path_courses = { type: "RESOLVE_PATH_COURSES", method: "get", key: "resolve_path_coursesresolve_path_courses_course_id", required: ["course_id"] };
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -286,7 +286,7 @@ export const resolve_path_courses = { type: "RESOLVE_PATH_COURSES", method: "get
 //
 // Example:
 // return canvasRequest(resolve_path_users_full_path, {user_id});
-export const resolve_path_users_full_path = { type: "RESOLVE_PATH_USERS_FULL_PATH", method: "get"};
+export const resolve_path_users_full_path = { type: "RESOLVE_PATH_USERS_FULL_PATH", method: "get", key: "resolve_path_users_full_pathresolve_path_users_full_path_user_id", required: ["user_id"] };
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -301,7 +301,7 @@ export const resolve_path_users_full_path = { type: "RESOLVE_PATH_USERS_FULL_PAT
 //
 // Example:
 // return canvasRequest(resolve_path_users, {user_id});
-export const resolve_path_users = { type: "RESOLVE_PATH_USERS", method: "get"};
+export const resolve_path_users = { type: "RESOLVE_PATH_USERS", method: "get", key: "resolve_path_usersresolve_path_users_user_id", required: ["user_id"] };
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -316,7 +316,7 @@ export const resolve_path_users = { type: "RESOLVE_PATH_USERS", method: "get"};
 //
 // Example:
 // return canvasRequest(resolve_path_groups_full_path, {group_id});
-export const resolve_path_groups_full_path = { type: "RESOLVE_PATH_GROUPS_FULL_PATH", method: "get"};
+export const resolve_path_groups_full_path = { type: "RESOLVE_PATH_GROUPS_FULL_PATH", method: "get", key: "resolve_path_groups_full_pathresolve_path_groups_full_path_group_id", required: ["group_id"] };
 
 // Resolve path
 // Given the full path to a folder, returns a list of all Folders in the path hierarchy,
@@ -331,7 +331,7 @@ export const resolve_path_groups_full_path = { type: "RESOLVE_PATH_GROUPS_FULL_P
 //
 // Example:
 // return canvasRequest(resolve_path_groups, {group_id});
-export const resolve_path_groups = { type: "RESOLVE_PATH_GROUPS", method: "get"};
+export const resolve_path_groups = { type: "RESOLVE_PATH_GROUPS", method: "get", key: "resolve_path_groupsresolve_path_groups_group_id", required: ["group_id"] };
 
 // Get folder
 // Returns the details for a folder
@@ -344,7 +344,7 @@ export const resolve_path_groups = { type: "RESOLVE_PATH_GROUPS", method: "get"}
 //
 // Example:
 // return canvasRequest(get_folder_courses, {course_id, id});
-export const get_folder_courses = { type: "GET_FOLDER_COURSES", method: "get"};
+export const get_folder_courses = { type: "GET_FOLDER_COURSES", method: "get", key: "get_folder_coursesget_folder_courses_{course_id}_{id}", required: ["course_id","id"] };
 
 // Get folder
 // Returns the details for a folder
@@ -357,7 +357,7 @@ export const get_folder_courses = { type: "GET_FOLDER_COURSES", method: "get"};
 //
 // Example:
 // return canvasRequest(get_folder_users, {user_id, id});
-export const get_folder_users = { type: "GET_FOLDER_USERS", method: "get"};
+export const get_folder_users = { type: "GET_FOLDER_USERS", method: "get", key: "get_folder_usersget_folder_users_{user_id}_{id}", required: ["user_id","id"] };
 
 // Get folder
 // Returns the details for a folder
@@ -370,7 +370,7 @@ export const get_folder_users = { type: "GET_FOLDER_USERS", method: "get"};
 //
 // Example:
 // return canvasRequest(get_folder_groups, {group_id, id});
-export const get_folder_groups = { type: "GET_FOLDER_GROUPS", method: "get"};
+export const get_folder_groups = { type: "GET_FOLDER_GROUPS", method: "get", key: "get_folder_groupsget_folder_groups_{group_id}_{id}", required: ["group_id","id"] };
 
 // Get folder
 // Returns the details for a folder
@@ -383,7 +383,7 @@ export const get_folder_groups = { type: "GET_FOLDER_GROUPS", method: "get"};
 //
 // Example:
 // return canvasRequest(get_folder_folders, {id});
-export const get_folder_folders = { type: "GET_FOLDER_FOLDERS", method: "get"};
+export const get_folder_folders = { type: "GET_FOLDER_FOLDERS", method: "get", key: "get_folder_foldersget_folder_folders_id", required: ["id"] };
 
 // Update folder
 // Updates a folder
@@ -402,7 +402,7 @@ export const get_folder_folders = { type: "GET_FOLDER_FOLDERS", method: "get"};
 //   position
 // }
 // return canvasRequest(update_folder, {id}, query);
-export const update_folder = { type: "UPDATE_FOLDER", method: "put"};
+export const update_folder = { type: "UPDATE_FOLDER", method: "put", key: "update_folderupdate_folder_id", required: ["id"] };
 
 // Create folder
 // Creates a folder in the specified context
@@ -422,7 +422,7 @@ export const update_folder = { type: "UPDATE_FOLDER", method: "put"};
 //   position
 // }
 // return canvasRequest(create_folder_courses, {course_id}, query);
-export const create_folder_courses = { type: "CREATE_FOLDER_COURSES", method: "post"};
+export const create_folder_courses = { type: "CREATE_FOLDER_COURSES", method: "post", key: "create_folder_coursescreate_folder_courses_course_id", required: ["course_id"] };
 
 // Create folder
 // Creates a folder in the specified context
@@ -442,7 +442,7 @@ export const create_folder_courses = { type: "CREATE_FOLDER_COURSES", method: "p
 //   position
 // }
 // return canvasRequest(create_folder_users, {user_id}, query);
-export const create_folder_users = { type: "CREATE_FOLDER_USERS", method: "post"};
+export const create_folder_users = { type: "CREATE_FOLDER_USERS", method: "post", key: "create_folder_userscreate_folder_users_user_id", required: ["user_id"] };
 
 // Create folder
 // Creates a folder in the specified context
@@ -462,7 +462,7 @@ export const create_folder_users = { type: "CREATE_FOLDER_USERS", method: "post"
 //   position
 // }
 // return canvasRequest(create_folder_groups, {group_id}, query);
-export const create_folder_groups = { type: "CREATE_FOLDER_GROUPS", method: "post"};
+export const create_folder_groups = { type: "CREATE_FOLDER_GROUPS", method: "post", key: "create_folder_groupscreate_folder_groups_group_id", required: ["group_id"] };
 
 // Create folder
 // Creates a folder in the specified context
@@ -482,7 +482,7 @@ export const create_folder_groups = { type: "CREATE_FOLDER_GROUPS", method: "pos
 //   position
 // }
 // return canvasRequest(create_folder_folders, {folder_id}, query);
-export const create_folder_folders = { type: "CREATE_FOLDER_FOLDERS", method: "post"};
+export const create_folder_folders = { type: "CREATE_FOLDER_FOLDERS", method: "post", key: "create_folder_folderscreate_folder_folders_folder_id", required: ["folder_id"] };
 
 // Delete folder
 // Remove the specified folder. You can only delete empty folders unless you
@@ -496,7 +496,7 @@ export const create_folder_folders = { type: "CREATE_FOLDER_FOLDERS", method: "p
 //   force
 // }
 // return canvasRequest(delete_folder, {id}, query);
-export const delete_folder = { type: "DELETE_FOLDER", method: "delete"};
+export const delete_folder = { type: "DELETE_FOLDER", method: "delete", key: "delete_folderdelete_folder_id", required: ["id"] };
 
 // Upload a file
 // Upload a file to a folder.
@@ -513,7 +513,7 @@ export const delete_folder = { type: "DELETE_FOLDER", method: "delete"};
 //
 // Example:
 // return canvasRequest(files_upload_file, {folder_id});
-export const files_upload_file = { type: "FILES_UPLOAD_FILE", method: "post"};
+export const files_upload_file = { type: "FILES_UPLOAD_FILE", method: "post", key: "files_upload_filefiles_upload_file_folder_id", required: ["folder_id"] };
 
 // Copy a file
 // Copy a file from elsewhere in Canvas into a folder.
@@ -530,7 +530,7 @@ export const files_upload_file = { type: "FILES_UPLOAD_FILE", method: "post"};
 //   on_duplicate
 // }
 // return canvasRequest(copy_file, {dest_folder_id}, query);
-export const copy_file = { type: "COPY_FILE", method: "post"};
+export const copy_file = { type: "COPY_FILE", method: "post", key: "copy_filecopy_file_dest_folder_id", required: ["dest_folder_id"] };
 
 // Copy a folder
 // Copy a folder (and its contents) from elsewhere in Canvas into a folder.
@@ -550,7 +550,7 @@ export const copy_file = { type: "COPY_FILE", method: "post"};
 //   source_folder_id (required)
 // }
 // return canvasRequest(copy_folder, {dest_folder_id}, query);
-export const copy_folder = { type: "COPY_FOLDER", method: "post"};
+export const copy_folder = { type: "COPY_FOLDER", method: "post", key: "copy_foldercopy_folder_dest_folder_id", required: ["dest_folder_id"] };
 
 // Set usage rights
 // Sets copyright and license information for one or more files
@@ -568,7 +568,7 @@ export const copy_folder = { type: "COPY_FOLDER", method: "post"};
 //   usage_rights[license]
 // }
 // return canvasRequest(set_usage_rights_courses, {course_id}, query);
-export const set_usage_rights_courses = { type: "SET_USAGE_RIGHTS_COURSES", method: "put"};
+export const set_usage_rights_courses = { type: "SET_USAGE_RIGHTS_COURSES", method: "put", key: "set_usage_rights_coursesset_usage_rights_courses_course_id", required: ["course_id"] };
 
 // Set usage rights
 // Sets copyright and license information for one or more files
@@ -586,7 +586,7 @@ export const set_usage_rights_courses = { type: "SET_USAGE_RIGHTS_COURSES", meth
 //   usage_rights[license]
 // }
 // return canvasRequest(set_usage_rights_groups, {group_id}, query);
-export const set_usage_rights_groups = { type: "SET_USAGE_RIGHTS_GROUPS", method: "put"};
+export const set_usage_rights_groups = { type: "SET_USAGE_RIGHTS_GROUPS", method: "put", key: "set_usage_rights_groupsset_usage_rights_groups_group_id", required: ["group_id"] };
 
 // Set usage rights
 // Sets copyright and license information for one or more files
@@ -604,7 +604,7 @@ export const set_usage_rights_groups = { type: "SET_USAGE_RIGHTS_GROUPS", method
 //   usage_rights[license]
 // }
 // return canvasRequest(set_usage_rights_users, {user_id}, query);
-export const set_usage_rights_users = { type: "SET_USAGE_RIGHTS_USERS", method: "put"};
+export const set_usage_rights_users = { type: "SET_USAGE_RIGHTS_USERS", method: "put", key: "set_usage_rights_usersset_usage_rights_users_user_id", required: ["user_id"] };
 
 // Remove usage rights
 // Removes copyright and license information associated with one or more files
@@ -618,7 +618,7 @@ export const set_usage_rights_users = { type: "SET_USAGE_RIGHTS_USERS", method: 
 //   folder_ids
 // }
 // return canvasRequest(remove_usage_rights_courses, {course_id}, query);
-export const remove_usage_rights_courses = { type: "REMOVE_USAGE_RIGHTS_COURSES", method: "delete"};
+export const remove_usage_rights_courses = { type: "REMOVE_USAGE_RIGHTS_COURSES", method: "delete", key: "remove_usage_rights_coursesremove_usage_rights_courses_course_id", required: ["course_id"] };
 
 // Remove usage rights
 // Removes copyright and license information associated with one or more files
@@ -632,7 +632,7 @@ export const remove_usage_rights_courses = { type: "REMOVE_USAGE_RIGHTS_COURSES"
 //   folder_ids
 // }
 // return canvasRequest(remove_usage_rights_groups, {group_id}, query);
-export const remove_usage_rights_groups = { type: "REMOVE_USAGE_RIGHTS_GROUPS", method: "delete"};
+export const remove_usage_rights_groups = { type: "REMOVE_USAGE_RIGHTS_GROUPS", method: "delete", key: "remove_usage_rights_groupsremove_usage_rights_groups_group_id", required: ["group_id"] };
 
 // Remove usage rights
 // Removes copyright and license information associated with one or more files
@@ -646,7 +646,7 @@ export const remove_usage_rights_groups = { type: "REMOVE_USAGE_RIGHTS_GROUPS", 
 //   folder_ids
 // }
 // return canvasRequest(remove_usage_rights_users, {user_id}, query);
-export const remove_usage_rights_users = { type: "REMOVE_USAGE_RIGHTS_USERS", method: "delete"};
+export const remove_usage_rights_users = { type: "REMOVE_USAGE_RIGHTS_USERS", method: "delete", key: "remove_usage_rights_usersremove_usage_rights_users_user_id", required: ["user_id"] };
 
 // List licenses
 // Lists licenses that can be applied
@@ -656,7 +656,7 @@ export const remove_usage_rights_users = { type: "REMOVE_USAGE_RIGHTS_USERS", me
 //
 // Example:
 // return canvasRequest(list_licenses_courses, {course_id});
-export const list_licenses_courses = { type: "LIST_LICENSES_COURSES", method: "get"};
+export const list_licenses_courses = { type: "LIST_LICENSES_COURSES", method: "get", key: "list_licenses_courseslist_licenses_courses_course_id", required: ["course_id"] };
 
 // List licenses
 // Lists licenses that can be applied
@@ -666,7 +666,7 @@ export const list_licenses_courses = { type: "LIST_LICENSES_COURSES", method: "g
 //
 // Example:
 // return canvasRequest(list_licenses_groups, {group_id});
-export const list_licenses_groups = { type: "LIST_LICENSES_GROUPS", method: "get"};
+export const list_licenses_groups = { type: "LIST_LICENSES_GROUPS", method: "get", key: "list_licenses_groupslist_licenses_groups_group_id", required: ["group_id"] };
 
 // List licenses
 // Lists licenses that can be applied
@@ -676,4 +676,4 @@ export const list_licenses_groups = { type: "LIST_LICENSES_GROUPS", method: "get
 //
 // Example:
 // return canvasRequest(list_licenses_users, {user_id});
-export const list_licenses_users = { type: "LIST_LICENSES_USERS", method: "get"};
+export const list_licenses_users = { type: "LIST_LICENSES_USERS", method: "get", key: "list_licenses_userslist_licenses_users_user_id", required: ["user_id"] };

@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(get_single_poll_submission, {poll_id, poll_session_id, id});
-export const get_single_poll_submission = { type: "GET_SINGLE_POLL_SUBMISSION", method: "get"};
+export const get_single_poll_submission = { type: "GET_SINGLE_POLL_SUBMISSION", method: "get", key: "get_single_poll_submissionget_single_poll_submission_{poll_id}_{poll_session_id}_{id}", required: ["poll_id","poll_session_id","id"] };
 
 // Create a single poll submission
 // Create a new poll submission for this poll session
@@ -22,4 +22,4 @@ export const get_single_poll_submission = { type: "GET_SINGLE_POLL_SUBMISSION", 
 //   poll_submissions[poll_choice_id] (required)
 // }
 // return canvasRequest(create_single_poll_submission, {poll_id, poll_session_id}, query);
-export const create_single_poll_submission = { type: "CREATE_SINGLE_POLL_SUBMISSION", method: "post"};
+export const create_single_poll_submission = { type: "CREATE_SINGLE_POLL_SUBMISSION", method: "post", key: "create_single_poll_submissioncreate_single_poll_submission_{poll_id}_{poll_session_id}", required: ["poll_id","poll_session_id"] };

@@ -17,7 +17,7 @@
 //   include
 // }
 // return canvasRequest(list_conversations, {}, query);
-export const list_conversations = { type: "LIST_CONVERSATIONS", method: "get"};
+export const list_conversations = { type: "LIST_CONVERSATIONS", method: "get", key: "list_conversations", required: [] };
 
 // Create a conversation
 // Create a new conversation with one or more recipients. If there is already
@@ -44,7 +44,7 @@ export const list_conversations = { type: "LIST_CONVERSATIONS", method: "get"};
 //   context_code
 // }
 // return canvasRequest(create_conversation, {}, query);
-export const create_conversation = { type: "CREATE_CONVERSATION", method: "post"};
+export const create_conversation = { type: "CREATE_CONVERSATION", method: "post", key: "create_conversation", required: [] };
 
 // Get running batches
 // Returns any currently running conversation batches for the current user.
@@ -56,7 +56,7 @@ export const create_conversation = { type: "CREATE_CONVERSATION", method: "post"
 //
 // Example:
 // return canvasRequest(get_running_batches, {});
-export const get_running_batches = { type: "GET_RUNNING_BATCHES", method: "get"};
+export const get_running_batches = { type: "GET_RUNNING_BATCHES", method: "get", key: "get_running_batches", required: [] };
 
 // Get a single conversation
 // Returns information for a single conversation. Response includes all
@@ -75,7 +75,7 @@ export const get_running_batches = { type: "GET_RUNNING_BATCHES", method: "get"}
 //   auto_mark_as_read
 // }
 // return canvasRequest(get_single_conversation, {id}, query);
-export const get_single_conversation = { type: "GET_SINGLE_CONVERSATION", method: "get"};
+export const get_single_conversation = { type: "GET_SINGLE_CONVERSATION", method: "get", key: "get_single_conversationget_single_conversation_id", required: ["id"] };
 
 // Edit a conversation
 // Updates attributes for a single conversation.
@@ -94,7 +94,7 @@ export const get_single_conversation = { type: "GET_SINGLE_CONVERSATION", method
 //   filter_mode
 // }
 // return canvasRequest(edit_conversation, {id}, query);
-export const edit_conversation = { type: "EDIT_CONVERSATION", method: "put"};
+export const edit_conversation = { type: "EDIT_CONVERSATION", method: "put", key: "edit_conversationedit_conversation_id", required: ["id"] };
 
 // Mark all as read
 // Mark all conversations as read.
@@ -104,7 +104,7 @@ export const edit_conversation = { type: "EDIT_CONVERSATION", method: "put"};
 //
 // Example:
 // return canvasRequest(mark_all_as_read, {});
-export const mark_all_as_read = { type: "MARK_ALL_AS_READ", method: "post"};
+export const mark_all_as_read = { type: "MARK_ALL_AS_READ", method: "post", key: "mark_all_as_read", required: [] };
 
 // Delete a conversation
 // Delete this conversation and its messages. Note that this only deletes
@@ -117,7 +117,7 @@ export const mark_all_as_read = { type: "MARK_ALL_AS_READ", method: "post"};
 //
 // Example:
 // return canvasRequest(delete_conversation, {id});
-export const delete_conversation = { type: "DELETE_CONVERSATION", method: "delete"};
+export const delete_conversation = { type: "DELETE_CONVERSATION", method: "delete", key: "delete_conversationdelete_conversation_id", required: ["id"] };
 
 // Add recipients
 // Add recipients to an existing group conversation. Response is similar to
@@ -132,7 +132,7 @@ export const delete_conversation = { type: "DELETE_CONVERSATION", method: "delet
 //   recipients (required)
 // }
 // return canvasRequest(add_recipients, {id}, query);
-export const add_recipients = { type: "ADD_RECIPIENTS", method: "post"};
+export const add_recipients = { type: "ADD_RECIPIENTS", method: "post", key: "add_recipientsadd_recipients_id", required: ["id"] };
 
 // Add a message
 // Add a message to an existing conversation. Response is similar to the
@@ -161,7 +161,7 @@ export const add_recipients = { type: "ADD_RECIPIENTS", method: "post"};
 //   user_note
 // }
 // return canvasRequest(add_message, {id}, query);
-export const add_message = { type: "ADD_MESSAGE", method: "post"};
+export const add_message = { type: "ADD_MESSAGE", method: "post", key: "add_messageadd_message_id", required: ["id"] };
 
 // Delete a message
 // Delete messages from this conversation. Note that this only affects this
@@ -176,7 +176,7 @@ export const add_message = { type: "ADD_MESSAGE", method: "post"};
 //   remove (required)
 // }
 // return canvasRequest(delete_message, {id}, query);
-export const delete_message = { type: "DELETE_MESSAGE", method: "post"};
+export const delete_message = { type: "DELETE_MESSAGE", method: "post", key: "delete_messagedelete_message_id", required: ["id"] };
 
 // Batch update conversations
 // Perform a change on a set of conversations. Operates asynchronously; use the {api:ProgressController#show progress endpoint}
@@ -191,7 +191,7 @@ export const delete_message = { type: "DELETE_MESSAGE", method: "post"};
 //   event (required)
 // }
 // return canvasRequest(batch_update_conversations, {}, query);
-export const batch_update_conversations = { type: "BATCH_UPDATE_CONVERSATIONS", method: "put"};
+export const batch_update_conversations = { type: "BATCH_UPDATE_CONVERSATIONS", method: "put", key: "batch_update_conversations", required: [] };
 
 // Find recipients
 // Deprecated, see the {api:SearchController#recipients Find recipients endpoint} in the Search API
@@ -201,7 +201,7 @@ export const batch_update_conversations = { type: "BATCH_UPDATE_CONVERSATIONS", 
 //
 // Example:
 // return canvasRequest(find_recipients, {});
-export const find_recipients = { type: "FIND_RECIPIENTS", method: "get"};
+export const find_recipients = { type: "FIND_RECIPIENTS", method: "get", key: "find_recipients", required: [] };
 
 // Unread count
 // Get the number of unread conversations for the current user
@@ -211,4 +211,4 @@ export const find_recipients = { type: "FIND_RECIPIENTS", method: "get"};
 //
 // Example:
 // return canvasRequest(unread_count, {});
-export const unread_count = { type: "UNREAD_COUNT", method: "get"};
+export const unread_count = { type: "UNREAD_COUNT", method: "get", key: "unread_count", required: [] };

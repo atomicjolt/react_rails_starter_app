@@ -22,7 +22,7 @@
 //   permissions
 // }
 // return canvasRequest(find_recipients_conversations, {}, query);
-export const find_recipients_conversations = { type: "FIND_RECIPIENTS_CONVERSATIONS", method: "get"};
+export const find_recipients_conversations = { type: "FIND_RECIPIENTS_CONVERSATIONS", method: "get", key: "find_recipients_conversations", required: [] };
 
 // Find recipients
 // Find valid recipients (users, courses and groups) that the current user
@@ -45,7 +45,7 @@ export const find_recipients_conversations = { type: "FIND_RECIPIENTS_CONVERSATI
 //   permissions
 // }
 // return canvasRequest(find_recipients_search, {}, query);
-export const find_recipients_search = { type: "FIND_RECIPIENTS_SEARCH", method: "get"};
+export const find_recipients_search = { type: "FIND_RECIPIENTS_SEARCH", method: "get", key: "find_recipients_search", required: [] };
 
 // List all courses
 // List all courses visible in the public index
@@ -60,4 +60,4 @@ export const find_recipients_search = { type: "FIND_RECIPIENTS_SEARCH", method: 
 //   open_enrollment_only
 // }
 // return canvasRequest(list_all_courses, {}, query);
-export const list_all_courses = { type: "LIST_ALL_COURSES", method: "get"};
+export const list_all_courses = { type: "LIST_ALL_COURSES", method: "get", key: "list_all_courses", required: [] };

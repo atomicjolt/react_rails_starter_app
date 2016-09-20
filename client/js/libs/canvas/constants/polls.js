@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(list_polls, {});
-export const list_polls = { type: "LIST_POLLS", method: "get"};
+export const list_polls = { type: "LIST_POLLS", method: "get", key: "list_polls", required: [] };
 
 // Get a single poll
 // Returns the poll with the given id
@@ -19,7 +19,7 @@ export const list_polls = { type: "LIST_POLLS", method: "get"};
 //
 // Example:
 // return canvasRequest(get_single_poll, {id});
-export const get_single_poll = { type: "GET_SINGLE_POLL", method: "get"};
+export const get_single_poll = { type: "GET_SINGLE_POLL", method: "get", key: "get_single_pollget_single_poll_id", required: ["id"] };
 
 // Create a single poll
 // Create a new poll for the current user
@@ -33,7 +33,7 @@ export const get_single_poll = { type: "GET_SINGLE_POLL", method: "get"};
 //   polls[description]
 // }
 // return canvasRequest(create_single_poll, {}, query);
-export const create_single_poll = { type: "CREATE_SINGLE_POLL", method: "post"};
+export const create_single_poll = { type: "CREATE_SINGLE_POLL", method: "post", key: "create_single_poll", required: [] };
 
 // Update a single poll
 // Update an existing poll belonging to the current user
@@ -47,7 +47,7 @@ export const create_single_poll = { type: "CREATE_SINGLE_POLL", method: "post"};
 //   polls[description]
 // }
 // return canvasRequest(update_single_poll, {id}, query);
-export const update_single_poll = { type: "UPDATE_SINGLE_POLL", method: "put"};
+export const update_single_poll = { type: "UPDATE_SINGLE_POLL", method: "put", key: "update_single_pollupdate_single_poll_id", required: ["id"] };
 
 // Delete a poll
 // <b>204 No Content</b> response code is returned if the deletion was successful.
@@ -57,4 +57,4 @@ export const update_single_poll = { type: "UPDATE_SINGLE_POLL", method: "put"};
 //
 // Example:
 // return canvasRequest(delete_poll, {id});
-export const delete_poll = { type: "DELETE_POLL", method: "delete"};
+export const delete_poll = { type: "DELETE_POLL", method: "delete", key: "delete_polldelete_poll_id", required: ["id"] };

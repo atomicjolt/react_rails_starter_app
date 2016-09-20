@@ -14,7 +14,7 @@
 //   selectable
 // }
 // return canvasRequest(list_external_tools_courses, {course_id}, query);
-export const list_external_tools_courses = { type: "LIST_EXTERNAL_TOOLS_COURSES", method: "get"};
+export const list_external_tools_courses = { type: "LIST_EXTERNAL_TOOLS_COURSES", method: "get", key: "list_external_tools_courseslist_external_tools_courses_course_id", required: ["course_id"] };
 
 // List external tools
 // Returns the paginated list of external tools for the current context.
@@ -29,7 +29,7 @@ export const list_external_tools_courses = { type: "LIST_EXTERNAL_TOOLS_COURSES"
 //   selectable
 // }
 // return canvasRequest(list_external_tools_accounts, {account_id}, query);
-export const list_external_tools_accounts = { type: "LIST_EXTERNAL_TOOLS_ACCOUNTS", method: "get"};
+export const list_external_tools_accounts = { type: "LIST_EXTERNAL_TOOLS_ACCOUNTS", method: "get", key: "list_external_tools_accountslist_external_tools_accounts_account_id", required: ["account_id"] };
 
 // List external tools
 // Returns the paginated list of external tools for the current context.
@@ -44,7 +44,7 @@ export const list_external_tools_accounts = { type: "LIST_EXTERNAL_TOOLS_ACCOUNT
 //   selectable
 // }
 // return canvasRequest(list_external_tools_groups, {group_id}, query);
-export const list_external_tools_groups = { type: "LIST_EXTERNAL_TOOLS_GROUPS", method: "get"};
+export const list_external_tools_groups = { type: "LIST_EXTERNAL_TOOLS_GROUPS", method: "get", key: "list_external_tools_groupslist_external_tools_groups_group_id", required: ["group_id"] };
 
 // Get a sessionless launch url for an external tool.
 // Returns a sessionless launch url for an external tool.
@@ -62,7 +62,7 @@ export const list_external_tools_groups = { type: "LIST_EXTERNAL_TOOLS_GROUPS", 
 //   launch_type
 // }
 // return canvasRequest(get_sessionless_launch_url_for_external_tool_courses, {course_id}, query);
-export const get_sessionless_launch_url_for_external_tool_courses = { type: "GET_SESSIONLESS_LAUNCH_URL_FOR_EXTERNAL_TOOL_COURSES", method: "get"};
+export const get_sessionless_launch_url_for_external_tool_courses = { type: "GET_SESSIONLESS_LAUNCH_URL_FOR_EXTERNAL_TOOL_COURSES", method: "get", key: "get_sessionless_launch_url_for_external_tool_coursesget_sessionless_launch_url_for_external_tool_courses_course_id", required: ["course_id"] };
 
 // Get a sessionless launch url for an external tool.
 // Returns a sessionless launch url for an external tool.
@@ -80,7 +80,7 @@ export const get_sessionless_launch_url_for_external_tool_courses = { type: "GET
 //   launch_type
 // }
 // return canvasRequest(get_sessionless_launch_url_for_external_tool_accounts, {account_id}, query);
-export const get_sessionless_launch_url_for_external_tool_accounts = { type: "GET_SESSIONLESS_LAUNCH_URL_FOR_EXTERNAL_TOOL_ACCOUNTS", method: "get"};
+export const get_sessionless_launch_url_for_external_tool_accounts = { type: "GET_SESSIONLESS_LAUNCH_URL_FOR_EXTERNAL_TOOL_ACCOUNTS", method: "get", key: "get_sessionless_launch_url_for_external_tool_accountsget_sessionless_launch_url_for_external_tool_accounts_account_id", required: ["account_id"] };
 
 // Get a single external tool
 // Returns the specified external tool.
@@ -90,7 +90,7 @@ export const get_sessionless_launch_url_for_external_tool_accounts = { type: "GE
 //
 // Example:
 // return canvasRequest(get_single_external_tool_courses, {course_id, external_tool_id});
-export const get_single_external_tool_courses = { type: "GET_SINGLE_EXTERNAL_TOOL_COURSES", method: "get"};
+export const get_single_external_tool_courses = { type: "GET_SINGLE_EXTERNAL_TOOL_COURSES", method: "get", key: "get_single_external_tool_coursesget_single_external_tool_courses_{course_id}_{external_tool_id}", required: ["course_id","external_tool_id"] };
 
 // Get a single external tool
 // Returns the specified external tool.
@@ -100,7 +100,7 @@ export const get_single_external_tool_courses = { type: "GET_SINGLE_EXTERNAL_TOO
 //
 // Example:
 // return canvasRequest(get_single_external_tool_accounts, {account_id, external_tool_id});
-export const get_single_external_tool_accounts = { type: "GET_SINGLE_EXTERNAL_TOOL_ACCOUNTS", method: "get"};
+export const get_single_external_tool_accounts = { type: "GET_SINGLE_EXTERNAL_TOOL_ACCOUNTS", method: "get", key: "get_single_external_tool_accountsget_single_external_tool_accounts_{account_id}_{external_tool_id}", required: ["account_id","external_tool_id"] };
 
 // Create an external tool
 // Create an external tool in the specified course/account.
@@ -148,7 +148,7 @@ export const get_single_external_tool_accounts = { type: "GET_SINGLE_EXTERNAL_TO
 //   config_url
 // }
 // return canvasRequest(create_external_tool_courses, {course_id}, query);
-export const create_external_tool_courses = { type: "CREATE_EXTERNAL_TOOL_COURSES", method: "post"};
+export const create_external_tool_courses = { type: "CREATE_EXTERNAL_TOOL_COURSES", method: "post", key: "create_external_tool_coursescreate_external_tool_courses_course_id", required: ["course_id"] };
 
 // Create an external tool
 // Create an external tool in the specified course/account.
@@ -196,7 +196,7 @@ export const create_external_tool_courses = { type: "CREATE_EXTERNAL_TOOL_COURSE
 //   config_url
 // }
 // return canvasRequest(create_external_tool_accounts, {account_id}, query);
-export const create_external_tool_accounts = { type: "CREATE_EXTERNAL_TOOL_ACCOUNTS", method: "post"};
+export const create_external_tool_accounts = { type: "CREATE_EXTERNAL_TOOL_ACCOUNTS", method: "post", key: "create_external_tool_accountscreate_external_tool_accounts_account_id", required: ["account_id"] };
 
 // Edit an external tool
 // Update the specified external tool. Uses same parameters as create
@@ -206,7 +206,7 @@ export const create_external_tool_accounts = { type: "CREATE_EXTERNAL_TOOL_ACCOU
 //
 // Example:
 // return canvasRequest(edit_external_tool_courses, {course_id, external_tool_id});
-export const edit_external_tool_courses = { type: "EDIT_EXTERNAL_TOOL_COURSES", method: "put"};
+export const edit_external_tool_courses = { type: "EDIT_EXTERNAL_TOOL_COURSES", method: "put", key: "edit_external_tool_coursesedit_external_tool_courses_{course_id}_{external_tool_id}", required: ["course_id","external_tool_id"] };
 
 // Edit an external tool
 // Update the specified external tool. Uses same parameters as create
@@ -216,7 +216,7 @@ export const edit_external_tool_courses = { type: "EDIT_EXTERNAL_TOOL_COURSES", 
 //
 // Example:
 // return canvasRequest(edit_external_tool_accounts, {account_id, external_tool_id});
-export const edit_external_tool_accounts = { type: "EDIT_EXTERNAL_TOOL_ACCOUNTS", method: "put"};
+export const edit_external_tool_accounts = { type: "EDIT_EXTERNAL_TOOL_ACCOUNTS", method: "put", key: "edit_external_tool_accountsedit_external_tool_accounts_{account_id}_{external_tool_id}", required: ["account_id","external_tool_id"] };
 
 // Delete an external tool
 // Remove the specified external tool
@@ -226,7 +226,7 @@ export const edit_external_tool_accounts = { type: "EDIT_EXTERNAL_TOOL_ACCOUNTS"
 //
 // Example:
 // return canvasRequest(delete_external_tool_courses, {course_id, external_tool_id});
-export const delete_external_tool_courses = { type: "DELETE_EXTERNAL_TOOL_COURSES", method: "delete"};
+export const delete_external_tool_courses = { type: "DELETE_EXTERNAL_TOOL_COURSES", method: "delete", key: "delete_external_tool_coursesdelete_external_tool_courses_{course_id}_{external_tool_id}", required: ["course_id","external_tool_id"] };
 
 // Delete an external tool
 // Remove the specified external tool
@@ -236,4 +236,4 @@ export const delete_external_tool_courses = { type: "DELETE_EXTERNAL_TOOL_COURSE
 //
 // Example:
 // return canvasRequest(delete_external_tool_accounts, {account_id, external_tool_id});
-export const delete_external_tool_accounts = { type: "DELETE_EXTERNAL_TOOL_ACCOUNTS", method: "delete"};
+export const delete_external_tool_accounts = { type: "DELETE_EXTERNAL_TOOL_ACCOUNTS", method: "delete", key: "delete_external_tool_accountsdelete_external_tool_accounts_{account_id}_{external_tool_id}", required: ["account_id","external_tool_id"] };

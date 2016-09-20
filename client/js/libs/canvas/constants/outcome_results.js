@@ -14,7 +14,7 @@
 //   include
 // }
 // return canvasRequest(get_outcome_results, {course_id}, query);
-export const get_outcome_results = { type: "GET_OUTCOME_RESULTS", method: "get"};
+export const get_outcome_results = { type: "GET_OUTCOME_RESULTS", method: "get", key: "get_outcome_resultsget_outcome_results_course_id", required: ["course_id"] };
 
 // Get outcome result rollups
 // Gets the outcome rollups for the users and outcomes in the specified
@@ -31,4 +31,4 @@ export const get_outcome_results = { type: "GET_OUTCOME_RESULTS", method: "get"}
 //   include
 // }
 // return canvasRequest(get_outcome_result_rollups, {course_id}, query);
-export const get_outcome_result_rollups = { type: "GET_OUTCOME_RESULT_ROLLUPS", method: "get"};
+export const get_outcome_result_rollups = { type: "GET_OUTCOME_RESULT_ROLLUPS", method: "get", key: "get_outcome_result_rollupsget_outcome_result_rollups_course_id", required: ["course_id"] };
