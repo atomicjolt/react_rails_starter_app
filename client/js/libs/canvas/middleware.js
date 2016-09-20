@@ -1,3 +1,4 @@
+import _                           from "lodash";
 import api                         from "../api";
 import Network                     from "../../constants/network";
 import { DONE }                    from "../../constants/wrapper";
@@ -5,9 +6,20 @@ import { getNextUrl, parseParams } from "../urls";
 
 const canvasProxyUrl = "api/canvas";
 
+function checkRequired(action){
+  if(action.canvas.required.length > 0){
+    const missing = _.difference(action.canvas.required, _.keys(action.params));
+    if(missing.length > 0){
+      throw `Missing required parameter(s): ${missing.join(", ")}`;
+    }
+  }
+}
+
 function proxyCanvas(store, action, params){
 
   const state = store.getState();
+
+  checkRequired(action);
 
   api.execRequest(
     action.canvas.method,
