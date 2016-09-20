@@ -15,7 +15,7 @@
 //   search_term
 // }
 // return canvasRequest(list_discussion_topics_courses, {course_id}, query);
-export const list_discussion_topics_courses = { type: "LIST_DISCUSSION_TOPICS_COURSES", method: "get", key: 'list_discussion_topics_courses'};
+export const list_discussion_topics_courses = { type: "LIST_DISCUSSION_TOPICS_COURSES", method: "get", key: "list_discussion_topics_courseslist_discussion_topics_courses_course_id", required: ["course_id"] };
 
 // List discussion topics
 // Returns the paginated list of discussion topics for this course or group.
@@ -31,7 +31,7 @@ export const list_discussion_topics_courses = { type: "LIST_DISCUSSION_TOPICS_CO
 //   search_term
 // }
 // return canvasRequest(list_discussion_topics_groups, {group_id}, query);
-export const list_discussion_topics_groups = { type: "LIST_DISCUSSION_TOPICS_GROUPS", method: "get", key: 'list_discussion_topics_groups'};
+export const list_discussion_topics_groups = { type: "LIST_DISCUSSION_TOPICS_GROUPS", method: "get", key: "list_discussion_topics_groupslist_discussion_topics_groups_group_id", required: ["group_id"] };
 
 // Create a new discussion topic
 // Create an new discussion topic for the course or group.
@@ -61,7 +61,7 @@ export const list_discussion_topics_groups = { type: "LIST_DISCUSSION_TOPICS_GRO
 //   attachment
 // }
 // return canvasRequest(create_new_discussion_topic_courses, {course_id}, query);
-export const create_new_discussion_topic_courses = { type: "CREATE_NEW_DISCUSSION_TOPIC_COURSES", method: "post", key: 'create_new_discussion_topic_courses'};
+export const create_new_discussion_topic_courses = { type: "CREATE_NEW_DISCUSSION_TOPIC_COURSES", method: "post", key: "create_new_discussion_topic_coursescreate_new_discussion_topic_courses_course_id", required: ["course_id"] };
 
 // Create a new discussion topic
 // Create an new discussion topic for the course or group.
@@ -91,7 +91,7 @@ export const create_new_discussion_topic_courses = { type: "CREATE_NEW_DISCUSSIO
 //   attachment
 // }
 // return canvasRequest(create_new_discussion_topic_groups, {group_id}, query);
-export const create_new_discussion_topic_groups = { type: "CREATE_NEW_DISCUSSION_TOPIC_GROUPS", method: "post", key: 'create_new_discussion_topic_groups'};
+export const create_new_discussion_topic_groups = { type: "CREATE_NEW_DISCUSSION_TOPIC_GROUPS", method: "post", key: "create_new_discussion_topic_groupscreate_new_discussion_topic_groups_group_id", required: ["group_id"] };
 
 // Update a topic
 // Update an existing discussion topic for the course or group.
@@ -120,7 +120,7 @@ export const create_new_discussion_topic_groups = { type: "CREATE_NEW_DISCUSSION
 //   sort_by_rating
 // }
 // return canvasRequest(update_topic_courses, {course_id, topic_id}, query);
-export const update_topic_courses = { type: "UPDATE_TOPIC_COURSES", method: "put", key: 'update_topic_courses'};
+export const update_topic_courses = { type: "UPDATE_TOPIC_COURSES", method: "put", key: "update_topic_coursesupdate_topic_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Update a topic
 // Update an existing discussion topic for the course or group.
@@ -149,7 +149,7 @@ export const update_topic_courses = { type: "UPDATE_TOPIC_COURSES", method: "put
 //   sort_by_rating
 // }
 // return canvasRequest(update_topic_groups, {group_id, topic_id}, query);
-export const update_topic_groups = { type: "UPDATE_TOPIC_GROUPS", method: "put", key: 'update_topic_groups'};
+export const update_topic_groups = { type: "UPDATE_TOPIC_GROUPS", method: "put", key: "update_topic_groupsupdate_topic_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Delete a topic
 // Deletes the discussion topic. This will also delete the assignment, if it's
@@ -160,7 +160,7 @@ export const update_topic_groups = { type: "UPDATE_TOPIC_GROUPS", method: "put",
 //
 // Example:
 // return canvasRequest(delete_topic_courses, {course_id, topic_id});
-export const delete_topic_courses = { type: "DELETE_TOPIC_COURSES", method: "delete", key: 'delete_topic_courses'};
+export const delete_topic_courses = { type: "DELETE_TOPIC_COURSES", method: "delete", key: "delete_topic_coursesdelete_topic_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Delete a topic
 // Deletes the discussion topic. This will also delete the assignment, if it's
@@ -171,7 +171,7 @@ export const delete_topic_courses = { type: "DELETE_TOPIC_COURSES", method: "del
 //
 // Example:
 // return canvasRequest(delete_topic_groups, {group_id, topic_id});
-export const delete_topic_groups = { type: "DELETE_TOPIC_GROUPS", method: "delete", key: 'delete_topic_groups'};
+export const delete_topic_groups = { type: "DELETE_TOPIC_GROUPS", method: "delete", key: "delete_topic_groupsdelete_topic_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Reorder pinned topics
 // Puts the pinned discussion topics in the specified order.
@@ -185,7 +185,7 @@ export const delete_topic_groups = { type: "DELETE_TOPIC_GROUPS", method: "delet
 //   order (required)
 // }
 // return canvasRequest(reorder_pinned_topics_courses, {course_id}, query);
-export const reorder_pinned_topics_courses = { type: "REORDER_PINNED_TOPICS_COURSES", method: "post", key: 'reorder_pinned_topics_courses'};
+export const reorder_pinned_topics_courses = { type: "REORDER_PINNED_TOPICS_COURSES", method: "post", key: "reorder_pinned_topics_coursesreorder_pinned_topics_courses_course_id", required: ["course_id"] };
 
 // Reorder pinned topics
 // Puts the pinned discussion topics in the specified order.
@@ -199,7 +199,7 @@ export const reorder_pinned_topics_courses = { type: "REORDER_PINNED_TOPICS_COUR
 //   order (required)
 // }
 // return canvasRequest(reorder_pinned_topics_groups, {group_id}, query);
-export const reorder_pinned_topics_groups = { type: "REORDER_PINNED_TOPICS_GROUPS", method: "post", key: 'reorder_pinned_topics_groups'};
+export const reorder_pinned_topics_groups = { type: "REORDER_PINNED_TOPICS_GROUPS", method: "post", key: "reorder_pinned_topics_groupsreorder_pinned_topics_groups_group_id", required: ["group_id"] };
 
 // Update an entry
 // Update an existing discussion entry.
@@ -215,7 +215,7 @@ export const reorder_pinned_topics_groups = { type: "REORDER_PINNED_TOPICS_GROUP
 //   message
 // }
 // return canvasRequest(update_entry_courses, {course_id, topic_id, id}, query);
-export const update_entry_courses = { type: "UPDATE_ENTRY_COURSES", method: "put", key: 'update_entry_courses'};
+export const update_entry_courses = { type: "UPDATE_ENTRY_COURSES", method: "put", key: "update_entry_coursesupdate_entry_courses_{course_id}_{topic_id}_{id}", required: ["course_id","topic_id","id"] };
 
 // Update an entry
 // Update an existing discussion entry.
@@ -231,7 +231,7 @@ export const update_entry_courses = { type: "UPDATE_ENTRY_COURSES", method: "put
 //   message
 // }
 // return canvasRequest(update_entry_groups, {group_id, topic_id, id}, query);
-export const update_entry_groups = { type: "UPDATE_ENTRY_GROUPS", method: "put", key: 'update_entry_groups'};
+export const update_entry_groups = { type: "UPDATE_ENTRY_GROUPS", method: "put", key: "update_entry_groupsupdate_entry_groups_{group_id}_{topic_id}_{id}", required: ["group_id","topic_id","id"] };
 
 // Delete an entry
 // Delete a discussion entry.
@@ -246,7 +246,7 @@ export const update_entry_groups = { type: "UPDATE_ENTRY_GROUPS", method: "put",
 //
 // Example:
 // return canvasRequest(delete_entry_courses, {course_id, topic_id, id});
-export const delete_entry_courses = { type: "DELETE_ENTRY_COURSES", method: "delete", key: 'delete_entry_courses'};
+export const delete_entry_courses = { type: "DELETE_ENTRY_COURSES", method: "delete", key: "delete_entry_coursesdelete_entry_courses_{course_id}_{topic_id}_{id}", required: ["course_id","topic_id","id"] };
 
 // Delete an entry
 // Delete a discussion entry.
@@ -261,7 +261,7 @@ export const delete_entry_courses = { type: "DELETE_ENTRY_COURSES", method: "del
 //
 // Example:
 // return canvasRequest(delete_entry_groups, {group_id, topic_id, id});
-export const delete_entry_groups = { type: "DELETE_ENTRY_GROUPS", method: "delete", key: 'delete_entry_groups'};
+export const delete_entry_groups = { type: "DELETE_ENTRY_GROUPS", method: "delete", key: "delete_entry_groupsdelete_entry_groups_{group_id}_{topic_id}_{id}", required: ["group_id","topic_id","id"] };
 
 // Get a single topic
 // Returns data on an individual discussion topic. See the List action for the response formatting.
@@ -271,7 +271,7 @@ export const delete_entry_groups = { type: "DELETE_ENTRY_GROUPS", method: "delet
 //
 // Example:
 // return canvasRequest(get_single_topic_courses, {course_id, topic_id});
-export const get_single_topic_courses = { type: "GET_SINGLE_TOPIC_COURSES", method: "get", key: 'get_single_topic_courses'};
+export const get_single_topic_courses = { type: "GET_SINGLE_TOPIC_COURSES", method: "get", key: "get_single_topic_coursesget_single_topic_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Get a single topic
 // Returns data on an individual discussion topic. See the List action for the response formatting.
@@ -281,7 +281,7 @@ export const get_single_topic_courses = { type: "GET_SINGLE_TOPIC_COURSES", meth
 //
 // Example:
 // return canvasRequest(get_single_topic_groups, {group_id, topic_id});
-export const get_single_topic_groups = { type: "GET_SINGLE_TOPIC_GROUPS", method: "get", key: 'get_single_topic_groups'};
+export const get_single_topic_groups = { type: "GET_SINGLE_TOPIC_GROUPS", method: "get", key: "get_single_topic_groupsget_single_topic_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Get the full topic
 // Return a cached structure of the discussion topic, containing all entries,
@@ -321,7 +321,7 @@ export const get_single_topic_groups = { type: "GET_SINGLE_TOPIC_GROUPS", method
 //
 // Example:
 // return canvasRequest(get_full_topic_courses, {course_id, topic_id});
-export const get_full_topic_courses = { type: "GET_FULL_TOPIC_COURSES", method: "get", key: 'get_full_topic_courses'};
+export const get_full_topic_courses = { type: "GET_FULL_TOPIC_COURSES", method: "get", key: "get_full_topic_coursesget_full_topic_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Get the full topic
 // Return a cached structure of the discussion topic, containing all entries,
@@ -361,7 +361,7 @@ export const get_full_topic_courses = { type: "GET_FULL_TOPIC_COURSES", method: 
 //
 // Example:
 // return canvasRequest(get_full_topic_groups, {group_id, topic_id});
-export const get_full_topic_groups = { type: "GET_FULL_TOPIC_GROUPS", method: "get", key: 'get_full_topic_groups'};
+export const get_full_topic_groups = { type: "GET_FULL_TOPIC_GROUPS", method: "get", key: "get_full_topic_groupsget_full_topic_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Post an entry
 // Create a new entry in a discussion topic. Returns a json representation of
@@ -376,7 +376,7 @@ export const get_full_topic_groups = { type: "GET_FULL_TOPIC_GROUPS", method: "g
 //   attachment
 // }
 // return canvasRequest(post_entry_courses, {course_id, topic_id}, query);
-export const post_entry_courses = { type: "POST_ENTRY_COURSES", method: "post", key: 'post_entry_courses'};
+export const post_entry_courses = { type: "POST_ENTRY_COURSES", method: "post", key: "post_entry_coursespost_entry_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Post an entry
 // Create a new entry in a discussion topic. Returns a json representation of
@@ -391,7 +391,7 @@ export const post_entry_courses = { type: "POST_ENTRY_COURSES", method: "post", 
 //   attachment
 // }
 // return canvasRequest(post_entry_groups, {group_id, topic_id}, query);
-export const post_entry_groups = { type: "POST_ENTRY_GROUPS", method: "post", key: 'post_entry_groups'};
+export const post_entry_groups = { type: "POST_ENTRY_GROUPS", method: "post", key: "post_entry_groupspost_entry_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // List topic entries
 // Retrieve the (paginated) top-level entries in a discussion topic.
@@ -414,7 +414,7 @@ export const post_entry_groups = { type: "POST_ENTRY_GROUPS", method: "post", ke
 //
 // Example:
 // return canvasRequest(list_topic_entries_courses, {course_id, topic_id});
-export const list_topic_entries_courses = { type: "LIST_TOPIC_ENTRIES_COURSES", method: "get", key: 'list_topic_entries_courses'};
+export const list_topic_entries_courses = { type: "LIST_TOPIC_ENTRIES_COURSES", method: "get", key: "list_topic_entries_courseslist_topic_entries_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // List topic entries
 // Retrieve the (paginated) top-level entries in a discussion topic.
@@ -437,7 +437,7 @@ export const list_topic_entries_courses = { type: "LIST_TOPIC_ENTRIES_COURSES", 
 //
 // Example:
 // return canvasRequest(list_topic_entries_groups, {group_id, topic_id});
-export const list_topic_entries_groups = { type: "LIST_TOPIC_ENTRIES_GROUPS", method: "get", key: 'list_topic_entries_groups'};
+export const list_topic_entries_groups = { type: "LIST_TOPIC_ENTRIES_GROUPS", method: "get", key: "list_topic_entries_groupslist_topic_entries_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Post a reply
 // Add a reply to an entry in a discussion topic. Returns a json
@@ -457,7 +457,7 @@ export const list_topic_entries_groups = { type: "LIST_TOPIC_ENTRIES_GROUPS", me
 //   attachment
 // }
 // return canvasRequest(post_reply_courses, {course_id, topic_id, entry_id}, query);
-export const post_reply_courses = { type: "POST_REPLY_COURSES", method: "post", key: 'post_reply_courses'};
+export const post_reply_courses = { type: "POST_REPLY_COURSES", method: "post", key: "post_reply_coursespost_reply_courses_{course_id}_{topic_id}_{entry_id}", required: ["course_id","topic_id","entry_id"] };
 
 // Post a reply
 // Add a reply to an entry in a discussion topic. Returns a json
@@ -477,7 +477,7 @@ export const post_reply_courses = { type: "POST_REPLY_COURSES", method: "post", 
 //   attachment
 // }
 // return canvasRequest(post_reply_groups, {group_id, topic_id, entry_id}, query);
-export const post_reply_groups = { type: "POST_REPLY_GROUPS", method: "post", key: 'post_reply_groups'};
+export const post_reply_groups = { type: "POST_REPLY_GROUPS", method: "post", key: "post_reply_groupspost_reply_groups_{group_id}_{topic_id}_{entry_id}", required: ["group_id","topic_id","entry_id"] };
 
 // List entry replies
 // Retrieve the (paginated) replies to a top-level entry in a discussion
@@ -494,7 +494,7 @@ export const post_reply_groups = { type: "POST_REPLY_GROUPS", method: "post", ke
 //
 // Example:
 // return canvasRequest(list_entry_replies_courses, {course_id, topic_id, entry_id});
-export const list_entry_replies_courses = { type: "LIST_ENTRY_REPLIES_COURSES", method: "get", key: 'list_entry_replies_courses'};
+export const list_entry_replies_courses = { type: "LIST_ENTRY_REPLIES_COURSES", method: "get", key: "list_entry_replies_courseslist_entry_replies_courses_{course_id}_{topic_id}_{entry_id}", required: ["course_id","topic_id","entry_id"] };
 
 // List entry replies
 // Retrieve the (paginated) replies to a top-level entry in a discussion
@@ -511,7 +511,7 @@ export const list_entry_replies_courses = { type: "LIST_ENTRY_REPLIES_COURSES", 
 //
 // Example:
 // return canvasRequest(list_entry_replies_groups, {group_id, topic_id, entry_id});
-export const list_entry_replies_groups = { type: "LIST_ENTRY_REPLIES_GROUPS", method: "get", key: 'list_entry_replies_groups'};
+export const list_entry_replies_groups = { type: "LIST_ENTRY_REPLIES_GROUPS", method: "get", key: "list_entry_replies_groupslist_entry_replies_groups_{group_id}_{topic_id}_{entry_id}", required: ["group_id","topic_id","entry_id"] };
 
 // List entries
 // Retrieve a paginated list of discussion entries, given a list of ids.
@@ -528,7 +528,7 @@ export const list_entry_replies_groups = { type: "LIST_ENTRY_REPLIES_GROUPS", me
 //   ids
 // }
 // return canvasRequest(list_entries_courses, {course_id, topic_id}, query);
-export const list_entries_courses = { type: "LIST_ENTRIES_COURSES", method: "get", key: 'list_entries_courses'};
+export const list_entries_courses = { type: "LIST_ENTRIES_COURSES", method: "get", key: "list_entries_courseslist_entries_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // List entries
 // Retrieve a paginated list of discussion entries, given a list of ids.
@@ -545,7 +545,7 @@ export const list_entries_courses = { type: "LIST_ENTRIES_COURSES", method: "get
 //   ids
 // }
 // return canvasRequest(list_entries_groups, {group_id, topic_id}, query);
-export const list_entries_groups = { type: "LIST_ENTRIES_GROUPS", method: "get", key: 'list_entries_groups'};
+export const list_entries_groups = { type: "LIST_ENTRIES_GROUPS", method: "get", key: "list_entries_groupslist_entries_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Mark topic as read
 // Mark the initial text of the discussion topic as read.
@@ -559,7 +559,7 @@ export const list_entries_groups = { type: "LIST_ENTRIES_GROUPS", method: "get",
 //
 // Example:
 // return canvasRequest(mark_topic_as_read_courses, {course_id, topic_id});
-export const mark_topic_as_read_courses = { type: "MARK_TOPIC_AS_READ_COURSES", method: "put", key: 'mark_topic_as_read_courses'};
+export const mark_topic_as_read_courses = { type: "MARK_TOPIC_AS_READ_COURSES", method: "put", key: "mark_topic_as_read_coursesmark_topic_as_read_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Mark topic as read
 // Mark the initial text of the discussion topic as read.
@@ -573,7 +573,7 @@ export const mark_topic_as_read_courses = { type: "MARK_TOPIC_AS_READ_COURSES", 
 //
 // Example:
 // return canvasRequest(mark_topic_as_read_groups, {group_id, topic_id});
-export const mark_topic_as_read_groups = { type: "MARK_TOPIC_AS_READ_GROUPS", method: "put", key: 'mark_topic_as_read_groups'};
+export const mark_topic_as_read_groups = { type: "MARK_TOPIC_AS_READ_GROUPS", method: "put", key: "mark_topic_as_read_groupsmark_topic_as_read_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Mark topic as unread
 // Mark the initial text of the discussion topic as unread.
@@ -587,7 +587,7 @@ export const mark_topic_as_read_groups = { type: "MARK_TOPIC_AS_READ_GROUPS", me
 //
 // Example:
 // return canvasRequest(mark_topic_as_unread_courses, {course_id, topic_id});
-export const mark_topic_as_unread_courses = { type: "MARK_TOPIC_AS_UNREAD_COURSES", method: "delete", key: 'mark_topic_as_unread_courses'};
+export const mark_topic_as_unread_courses = { type: "MARK_TOPIC_AS_UNREAD_COURSES", method: "delete", key: "mark_topic_as_unread_coursesmark_topic_as_unread_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Mark topic as unread
 // Mark the initial text of the discussion topic as unread.
@@ -601,7 +601,7 @@ export const mark_topic_as_unread_courses = { type: "MARK_TOPIC_AS_UNREAD_COURSE
 //
 // Example:
 // return canvasRequest(mark_topic_as_unread_groups, {group_id, topic_id});
-export const mark_topic_as_unread_groups = { type: "MARK_TOPIC_AS_UNREAD_GROUPS", method: "delete", key: 'mark_topic_as_unread_groups'};
+export const mark_topic_as_unread_groups = { type: "MARK_TOPIC_AS_UNREAD_GROUPS", method: "delete", key: "mark_topic_as_unread_groupsmark_topic_as_unread_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Mark all entries as read
 // Mark the discussion topic and all its entries as read.
@@ -618,7 +618,7 @@ export const mark_topic_as_unread_groups = { type: "MARK_TOPIC_AS_UNREAD_GROUPS"
 //   forced_read_state
 // }
 // return canvasRequest(mark_all_entries_as_read_courses, {course_id, topic_id}, query);
-export const mark_all_entries_as_read_courses = { type: "MARK_ALL_ENTRIES_AS_READ_COURSES", method: "put", key: 'mark_all_entries_as_read_courses'};
+export const mark_all_entries_as_read_courses = { type: "MARK_ALL_ENTRIES_AS_READ_COURSES", method: "put", key: "mark_all_entries_as_read_coursesmark_all_entries_as_read_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Mark all entries as read
 // Mark the discussion topic and all its entries as read.
@@ -635,7 +635,7 @@ export const mark_all_entries_as_read_courses = { type: "MARK_ALL_ENTRIES_AS_REA
 //   forced_read_state
 // }
 // return canvasRequest(mark_all_entries_as_read_groups, {group_id, topic_id}, query);
-export const mark_all_entries_as_read_groups = { type: "MARK_ALL_ENTRIES_AS_READ_GROUPS", method: "put", key: 'mark_all_entries_as_read_groups'};
+export const mark_all_entries_as_read_groups = { type: "MARK_ALL_ENTRIES_AS_READ_GROUPS", method: "put", key: "mark_all_entries_as_read_groupsmark_all_entries_as_read_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Mark all entries as unread
 // Mark the discussion topic and all its entries as unread.
@@ -652,7 +652,7 @@ export const mark_all_entries_as_read_groups = { type: "MARK_ALL_ENTRIES_AS_READ
 //   forced_read_state
 // }
 // return canvasRequest(mark_all_entries_as_unread_courses, {course_id, topic_id}, query);
-export const mark_all_entries_as_unread_courses = { type: "MARK_ALL_ENTRIES_AS_UNREAD_COURSES", method: "delete", key: 'mark_all_entries_as_unread_courses'};
+export const mark_all_entries_as_unread_courses = { type: "MARK_ALL_ENTRIES_AS_UNREAD_COURSES", method: "delete", key: "mark_all_entries_as_unread_coursesmark_all_entries_as_unread_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Mark all entries as unread
 // Mark the discussion topic and all its entries as unread.
@@ -669,7 +669,7 @@ export const mark_all_entries_as_unread_courses = { type: "MARK_ALL_ENTRIES_AS_U
 //   forced_read_state
 // }
 // return canvasRequest(mark_all_entries_as_unread_groups, {group_id, topic_id}, query);
-export const mark_all_entries_as_unread_groups = { type: "MARK_ALL_ENTRIES_AS_UNREAD_GROUPS", method: "delete", key: 'mark_all_entries_as_unread_groups'};
+export const mark_all_entries_as_unread_groups = { type: "MARK_ALL_ENTRIES_AS_UNREAD_GROUPS", method: "delete", key: "mark_all_entries_as_unread_groupsmark_all_entries_as_unread_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Mark entry as read
 // Mark a discussion entry as read.
@@ -686,7 +686,7 @@ export const mark_all_entries_as_unread_groups = { type: "MARK_ALL_ENTRIES_AS_UN
 //   forced_read_state
 // }
 // return canvasRequest(mark_entry_as_read_courses, {course_id, topic_id, entry_id}, query);
-export const mark_entry_as_read_courses = { type: "MARK_ENTRY_AS_READ_COURSES", method: "put", key: 'mark_entry_as_read_courses'};
+export const mark_entry_as_read_courses = { type: "MARK_ENTRY_AS_READ_COURSES", method: "put", key: "mark_entry_as_read_coursesmark_entry_as_read_courses_{course_id}_{topic_id}_{entry_id}", required: ["course_id","topic_id","entry_id"] };
 
 // Mark entry as read
 // Mark a discussion entry as read.
@@ -703,7 +703,7 @@ export const mark_entry_as_read_courses = { type: "MARK_ENTRY_AS_READ_COURSES", 
 //   forced_read_state
 // }
 // return canvasRequest(mark_entry_as_read_groups, {group_id, topic_id, entry_id}, query);
-export const mark_entry_as_read_groups = { type: "MARK_ENTRY_AS_READ_GROUPS", method: "put", key: 'mark_entry_as_read_groups'};
+export const mark_entry_as_read_groups = { type: "MARK_ENTRY_AS_READ_GROUPS", method: "put", key: "mark_entry_as_read_groupsmark_entry_as_read_groups_{group_id}_{topic_id}_{entry_id}", required: ["group_id","topic_id","entry_id"] };
 
 // Mark entry as unread
 // Mark a discussion entry as unread.
@@ -720,7 +720,7 @@ export const mark_entry_as_read_groups = { type: "MARK_ENTRY_AS_READ_GROUPS", me
 //   forced_read_state
 // }
 // return canvasRequest(mark_entry_as_unread_courses, {course_id, topic_id, entry_id}, query);
-export const mark_entry_as_unread_courses = { type: "MARK_ENTRY_AS_UNREAD_COURSES", method: "delete", key: 'mark_entry_as_unread_courses'};
+export const mark_entry_as_unread_courses = { type: "MARK_ENTRY_AS_UNREAD_COURSES", method: "delete", key: "mark_entry_as_unread_coursesmark_entry_as_unread_courses_{course_id}_{topic_id}_{entry_id}", required: ["course_id","topic_id","entry_id"] };
 
 // Mark entry as unread
 // Mark a discussion entry as unread.
@@ -737,7 +737,7 @@ export const mark_entry_as_unread_courses = { type: "MARK_ENTRY_AS_UNREAD_COURSE
 //   forced_read_state
 // }
 // return canvasRequest(mark_entry_as_unread_groups, {group_id, topic_id, entry_id}, query);
-export const mark_entry_as_unread_groups = { type: "MARK_ENTRY_AS_UNREAD_GROUPS", method: "delete", key: 'mark_entry_as_unread_groups'};
+export const mark_entry_as_unread_groups = { type: "MARK_ENTRY_AS_UNREAD_GROUPS", method: "delete", key: "mark_entry_as_unread_groupsmark_entry_as_unread_groups_{group_id}_{topic_id}_{entry_id}", required: ["group_id","topic_id","entry_id"] };
 
 // Rate entry
 // Rate a discussion entry.
@@ -752,7 +752,7 @@ export const mark_entry_as_unread_groups = { type: "MARK_ENTRY_AS_UNREAD_GROUPS"
 //   rating
 // }
 // return canvasRequest(rate_entry_courses, {course_id, topic_id, entry_id}, query);
-export const rate_entry_courses = { type: "RATE_ENTRY_COURSES", method: "post", key: 'rate_entry_courses'};
+export const rate_entry_courses = { type: "RATE_ENTRY_COURSES", method: "post", key: "rate_entry_coursesrate_entry_courses_{course_id}_{topic_id}_{entry_id}", required: ["course_id","topic_id","entry_id"] };
 
 // Rate entry
 // Rate a discussion entry.
@@ -767,7 +767,7 @@ export const rate_entry_courses = { type: "RATE_ENTRY_COURSES", method: "post", 
 //   rating
 // }
 // return canvasRequest(rate_entry_groups, {group_id, topic_id, entry_id}, query);
-export const rate_entry_groups = { type: "RATE_ENTRY_GROUPS", method: "post", key: 'rate_entry_groups'};
+export const rate_entry_groups = { type: "RATE_ENTRY_GROUPS", method: "post", key: "rate_entry_groupsrate_entry_groups_{group_id}_{topic_id}_{entry_id}", required: ["group_id","topic_id","entry_id"] };
 
 // Subscribe to a topic
 // Subscribe to a topic to receive notifications about new entries
@@ -779,7 +779,7 @@ export const rate_entry_groups = { type: "RATE_ENTRY_GROUPS", method: "post", ke
 //
 // Example:
 // return canvasRequest(subscribe_to_topic_courses, {course_id, topic_id});
-export const subscribe_to_topic_courses = { type: "SUBSCRIBE_TO_TOPIC_COURSES", method: "put", key: 'subscribe_to_topic_courses'};
+export const subscribe_to_topic_courses = { type: "SUBSCRIBE_TO_TOPIC_COURSES", method: "put", key: "subscribe_to_topic_coursessubscribe_to_topic_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Subscribe to a topic
 // Subscribe to a topic to receive notifications about new entries
@@ -791,7 +791,7 @@ export const subscribe_to_topic_courses = { type: "SUBSCRIBE_TO_TOPIC_COURSES", 
 //
 // Example:
 // return canvasRequest(subscribe_to_topic_groups, {group_id, topic_id});
-export const subscribe_to_topic_groups = { type: "SUBSCRIBE_TO_TOPIC_GROUPS", method: "put", key: 'subscribe_to_topic_groups'};
+export const subscribe_to_topic_groups = { type: "SUBSCRIBE_TO_TOPIC_GROUPS", method: "put", key: "subscribe_to_topic_groupssubscribe_to_topic_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };
 
 // Unsubscribe from a topic
 // Unsubscribe from a topic to stop receiving notifications about new entries
@@ -803,7 +803,7 @@ export const subscribe_to_topic_groups = { type: "SUBSCRIBE_TO_TOPIC_GROUPS", me
 //
 // Example:
 // return canvasRequest(unsubscribe_from_topic_courses, {course_id, topic_id});
-export const unsubscribe_from_topic_courses = { type: "UNSUBSCRIBE_FROM_TOPIC_COURSES", method: "delete", key: 'unsubscribe_from_topic_courses'};
+export const unsubscribe_from_topic_courses = { type: "UNSUBSCRIBE_FROM_TOPIC_COURSES", method: "delete", key: "unsubscribe_from_topic_coursesunsubscribe_from_topic_courses_{course_id}_{topic_id}", required: ["course_id","topic_id"] };
 
 // Unsubscribe from a topic
 // Unsubscribe from a topic to stop receiving notifications about new entries
@@ -815,4 +815,4 @@ export const unsubscribe_from_topic_courses = { type: "UNSUBSCRIBE_FROM_TOPIC_CO
 //
 // Example:
 // return canvasRequest(unsubscribe_from_topic_groups, {group_id, topic_id});
-export const unsubscribe_from_topic_groups = { type: "UNSUBSCRIBE_FROM_TOPIC_GROUPS", method: "delete", key: 'unsubscribe_from_topic_groups'};
+export const unsubscribe_from_topic_groups = { type: "UNSUBSCRIBE_FROM_TOPIC_GROUPS", method: "delete", key: "unsubscribe_from_topic_groupsunsubscribe_from_topic_groups_{group_id}_{topic_id}", required: ["group_id","topic_id"] };

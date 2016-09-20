@@ -14,7 +14,7 @@
 //   shared_brand_config[brand_config_md5] (required)
 // }
 // return canvasRequest(share_brandconfig_theme, {account_id}, query);
-export const share_brandconfig_theme = { type: "SHARE_BRANDCONFIG_THEME", method: "post", key: 'share_brandconfig_theme'};
+export const share_brandconfig_theme = { type: "SHARE_BRANDCONFIG_THEME", method: "post", key: "share_brandconfig_themeshare_brandconfig_theme_account_id", required: ["account_id"] };
 
 // Update a shared theme
 // Update the specified shared_brand_config with a new name or to point to a new brand_config.
@@ -25,7 +25,7 @@ export const share_brandconfig_theme = { type: "SHARE_BRANDCONFIG_THEME", method
 //
 // Example:
 // return canvasRequest(update_shared_theme, {account_id, id});
-export const update_shared_theme = { type: "UPDATE_SHARED_THEME", method: "put", key: 'update_shared_theme'};
+export const update_shared_theme = { type: "UPDATE_SHARED_THEME", method: "put", key: "update_shared_themeupdate_shared_theme_{account_id}_{id}", required: ["account_id","id"] };
 
 // Un-share a BrandConfig (Theme)
 // Delete a SharedBrandConfig, which will unshare it so you nor anyone else in
@@ -36,4 +36,4 @@ export const update_shared_theme = { type: "UPDATE_SHARED_THEME", method: "put",
 //
 // Example:
 // return canvasRequest(un_share_brandconfig_theme, {id});
-export const un_share_brandconfig_theme = { type: "UN_SHARE_BRANDCONFIG_THEME", method: "delete", key: 'un_share_brandconfig_theme'};
+export const un_share_brandconfig_theme = { type: "UN_SHARE_BRANDCONFIG_THEME", method: "delete", key: "un_share_brandconfig_themeun_share_brandconfig_theme_id", required: ["id"] };

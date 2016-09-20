@@ -12,4 +12,4 @@
 //
 // Example:
 // return canvasRequest(get_brand_config_variables_that_should_be_used_for_this_domain, {});
-export const get_brand_config_variables_that_should_be_used_for_this_domain = { type: "GET_BRAND_CONFIG_VARIABLES_THAT_SHOULD_BE_USED_FOR_THIS_DOMAIN", method: "get", key: 'get_brand_config_variables_that_should_be_used_for_this_domain'};
+export const get_brand_config_variables_that_should_be_used_for_this_domain = { type: "GET_BRAND_CONFIG_VARIABLES_THAT_SHOULD_BE_USED_FOR_THIS_DOMAIN", method: "get", key: "get_brand_config_variables_that_should_be_used_for_this_domain", required: [] };

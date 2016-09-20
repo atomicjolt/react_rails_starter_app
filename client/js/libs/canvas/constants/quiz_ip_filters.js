@@ -11,4 +11,4 @@
 //
 // Example:
 // return canvasRequest(get_available_quiz_ip_filters, {course_id, quiz_id});
-export const get_available_quiz_ip_filters = { type: "GET_AVAILABLE_QUIZ_IP_FILTERS", method: "get", key: 'get_available_quiz_ip_filters'};
+export const get_available_quiz_ip_filters = { type: "GET_AVAILABLE_QUIZ_IP_FILTERS", method: "get", key: "get_available_quiz_ip_filtersget_available_quiz_ip_filters_{course_id}_{quiz_id}", required: ["course_id","quiz_id"] };

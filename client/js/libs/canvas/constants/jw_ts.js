@@ -12,4 +12,4 @@
 //
 // Example:
 // return canvasRequest(create_jwt, {});
-export const create_jwt = { type: "CREATE_JWT", method: "post", key: 'create_jwt'};
+export const create_jwt = { type: "CREATE_JWT", method: "post", key: "create_jwt", required: [] };

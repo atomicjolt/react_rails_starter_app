@@ -17,7 +17,7 @@
 //   scope_assignments_to_student
 // }
 // return canvasRequest(list_assignment_groups, {course_id}, query);
-export const list_assignment_groups = { type: "LIST_ASSIGNMENT_GROUPS", method: "get", key: 'list_assignment_groups'};
+export const list_assignment_groups = { type: "LIST_ASSIGNMENT_GROUPS", method: "get", key: "list_assignment_groupslist_assignment_groups_course_id", required: ["course_id"] };
 
 // Get an Assignment Group
 // Returns the assignment group with the given id.
@@ -32,7 +32,7 @@ export const list_assignment_groups = { type: "LIST_ASSIGNMENT_GROUPS", method: 
 //   grading_period_id
 // }
 // return canvasRequest(get_assignment_group, {course_id, assignment_group_id}, query);
-export const get_assignment_group = { type: "GET_ASSIGNMENT_GROUP", method: "get", key: 'get_assignment_group'};
+export const get_assignment_group = { type: "GET_ASSIGNMENT_GROUP", method: "get", key: "get_assignment_groupget_assignment_group_{course_id}_{assignment_group_id}", required: ["course_id","assignment_group_id"] };
 
 // Create an Assignment Group
 // Create a new assignment group for this course.
@@ -48,7 +48,7 @@ export const get_assignment_group = { type: "GET_ASSIGNMENT_GROUP", method: "get
 //   rules
 // }
 // return canvasRequest(create_assignment_group, {course_id}, query);
-export const create_assignment_group = { type: "CREATE_ASSIGNMENT_GROUP", method: "post", key: 'create_assignment_group'};
+export const create_assignment_group = { type: "CREATE_ASSIGNMENT_GROUP", method: "post", key: "create_assignment_groupcreate_assignment_group_course_id", required: ["course_id"] };
 
 // Edit an Assignment Group
 // Modify an existing Assignment Group.
@@ -59,7 +59,7 @@ export const create_assignment_group = { type: "CREATE_ASSIGNMENT_GROUP", method
 //
 // Example:
 // return canvasRequest(edit_assignment_group, {course_id, assignment_group_id});
-export const edit_assignment_group = { type: "EDIT_ASSIGNMENT_GROUP", method: "put", key: 'edit_assignment_group'};
+export const edit_assignment_group = { type: "EDIT_ASSIGNMENT_GROUP", method: "put", key: "edit_assignment_groupedit_assignment_group_{course_id}_{assignment_group_id}", required: ["course_id","assignment_group_id"] };
 
 // Destroy an Assignment Group
 // Deletes the assignment group with the given id.
@@ -72,4 +72,4 @@ export const edit_assignment_group = { type: "EDIT_ASSIGNMENT_GROUP", method: "p
 //   move_assignments_to
 // }
 // return canvasRequest(destroy_assignment_group, {course_id, assignment_group_id}, query);
-export const destroy_assignment_group = { type: "DESTROY_ASSIGNMENT_GROUP", method: "delete", key: 'destroy_assignment_group'};
+export const destroy_assignment_group = { type: "DESTROY_ASSIGNMENT_GROUP", method: "delete", key: "destroy_assignment_groupdestroy_assignment_group_{course_id}_{assignment_group_id}", required: ["course_id","assignment_group_id"] };

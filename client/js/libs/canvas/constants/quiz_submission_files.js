@@ -18,4 +18,4 @@
 //   on_duplicate
 // }
 // return canvasRequest(quiz_submission_files_upload_file, {course_id, quiz_id}, query);
-export const quiz_submission_files_upload_file = { type: "QUIZ_SUBMISSION_FILES_UPLOAD_FILE", method: "post", key: 'quiz_submission_files_upload_file'};
+export const quiz_submission_files_upload_file = { type: "QUIZ_SUBMISSION_FILES_UPLOAD_FILE", method: "post", key: "quiz_submission_files_upload_filequiz_submission_files_upload_file_{course_id}_{quiz_id}", required: ["course_id","quiz_id"] };

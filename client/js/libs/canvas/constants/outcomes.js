@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(show_outcome, {id});
-export const show_outcome = { type: "SHOW_OUTCOME", method: "get", key: 'show_outcome'};
+export const show_outcome = { type: "SHOW_OUTCOME", method: "get", key: "show_outcomeshow_outcome_id", required: ["id"] };
 
 // Update an outcome
 // Modify an existing outcome. Fields not provided are left as is;
@@ -41,4 +41,4 @@ export const show_outcome = { type: "SHOW_OUTCOME", method: "get", key: 'show_ou
 //   calculation_int
 // }
 // return canvasRequest(update_outcome, {id}, query);
-export const update_outcome = { type: "UPDATE_OUTCOME", method: "put", key: 'update_outcome'};
+export const update_outcome = { type: "UPDATE_OUTCOME", method: "put", key: "update_outcomeupdate_outcome_id", required: ["id"] };

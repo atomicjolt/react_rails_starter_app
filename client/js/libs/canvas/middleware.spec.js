@@ -1,9 +1,10 @@
-import _                     from "lodash";
+import _                         from "lodash";
 
-import canvasRequest         from "./action";
-import { list_accounts }     from "./constants/accounts";
-import CanvasMiddlware       from "./middleware";
-import Helper                from "../../../specs_support/helper";
+import canvasRequest             from "./action";
+import { list_accounts }         from "./constants/accounts";
+import { list_courses_for_user } from "./constants/courses";
+import CanvasMiddlware           from "./middleware";
+import Helper                    from "../../../specs_support/helper";
 
 describe('Canvas Middleware', () => {
 
@@ -47,6 +48,29 @@ describe('Canvas Middleware', () => {
     // the server returns. We mock the server call but the request
     // still appears to be async which means we have to check the result
     // in the next loop. We use setTimeout with 0 to do this.
+    setTimeout(function(){
+      expect(store.dispatch).toHaveBeenCalled();
+      done();
+    }, 0);
+  });
+
+  it("raises an error if a required parameter is not supplied", () => {
+    const action = canvasRequest(list_courses_for_user);
+    const store = Helper.makeStore();
+    const middleware = CanvasMiddlware(store);
+    const nextHandler = () => {};
+    const actionHandler = middleware(nextHandler);
+    expect(function() { actionHandler(action); } ).toThrow("Missing required parameter(s): user_id");
+  });
+
+  fit('correctly supplies required parameters', (done) => {
+    const action = canvasRequest(list_courses_for_user, {user_id: 1});
+    const store = Helper.makeStore();
+    spyOn(store, 'dispatch');
+    const middleware = CanvasMiddlware(store);
+    const nextHandler = () => {};
+    const actionHandler = middleware(nextHandler);
+    actionHandler(action);
     setTimeout(function(){
       expect(store.dispatch).toHaveBeenCalled();
       done();

@@ -17,7 +17,7 @@
 //   search_term
 // }
 // return canvasRequest(list_users_in_account, {account_id}, query);
-export const list_users_in_account = { type: "LIST_USERS_IN_ACCOUNT", method: "get", key: 'list_users_in_account'};
+export const list_users_in_account = { type: "LIST_USERS_IN_ACCOUNT", method: "get", key: "list_users_in_accountlist_users_in_account_account_id", required: ["account_id"] };
 
 // List the activity stream
 // Returns the current user's global activity stream, paginated.
@@ -125,7 +125,7 @@ export const list_users_in_account = { type: "LIST_USERS_IN_ACCOUNT", method: "g
 //
 // Example:
 // return canvasRequest(list_activity_stream_self, {});
-export const list_activity_stream_self = { type: "LIST_ACTIVITY_STREAM_SELF", method: "get", key: 'list_activity_stream_self'};
+export const list_activity_stream_self = { type: "LIST_ACTIVITY_STREAM_SELF", method: "get", key: "list_activity_stream_self", required: [] };
 
 // List the activity stream
 // Returns the current user's global activity stream, paginated.
@@ -233,7 +233,7 @@ export const list_activity_stream_self = { type: "LIST_ACTIVITY_STREAM_SELF", me
 //
 // Example:
 // return canvasRequest(list_activity_stream_activity_stream, {});
-export const list_activity_stream_activity_stream = { type: "LIST_ACTIVITY_STREAM_ACTIVITY_STREAM", method: "get", key: 'list_activity_stream_activity_stream'};
+export const list_activity_stream_activity_stream = { type: "LIST_ACTIVITY_STREAM_ACTIVITY_STREAM", method: "get", key: "list_activity_stream_activity_stream", required: [] };
 
 // Activity stream summary
 // Returns a summary of the current user's global activity stream.
@@ -243,7 +243,7 @@ export const list_activity_stream_activity_stream = { type: "LIST_ACTIVITY_STREA
 //
 // Example:
 // return canvasRequest(activity_stream_summary, {});
-export const activity_stream_summary = { type: "ACTIVITY_STREAM_SUMMARY", method: "get", key: 'activity_stream_summary'};
+export const activity_stream_summary = { type: "ACTIVITY_STREAM_SUMMARY", method: "get", key: "activity_stream_summary", required: [] };
 
 // List the TODO items
 // Returns the current user's list of todo items, as seen on the user dashboard.
@@ -262,7 +262,7 @@ export const activity_stream_summary = { type: "ACTIVITY_STREAM_SUMMARY", method
 //
 // Example:
 // return canvasRequest(list_todo_items, {});
-export const list_todo_items = { type: "LIST_TODO_ITEMS", method: "get", key: 'list_todo_items'};
+export const list_todo_items = { type: "LIST_TODO_ITEMS", method: "get", key: "list_todo_items", required: [] };
 
 // List upcoming assignments, calendar events
 // Returns the current user's upcoming events, i.e. the same things shown
@@ -273,7 +273,7 @@ export const list_todo_items = { type: "LIST_TODO_ITEMS", method: "get", key: 'l
 //
 // Example:
 // return canvasRequest(list_upcoming_assignments_calendar_events, {});
-export const list_upcoming_assignments_calendar_events = { type: "LIST_UPCOMING_ASSIGNMENTS_CALENDAR_EVENTS", method: "get", key: 'list_upcoming_assignments_calendar_events'};
+export const list_upcoming_assignments_calendar_events = { type: "LIST_UPCOMING_ASSIGNMENTS_CALENDAR_EVENTS", method: "get", key: "list_upcoming_assignments_calendar_events", required: [] };
 
 // List Missing Submissions
 // returns past-due assignments for which the student does not have a submission.
@@ -284,7 +284,7 @@ export const list_upcoming_assignments_calendar_events = { type: "LIST_UPCOMING_
 //
 // Example:
 // return canvasRequest(list_missing_submissions, {user_id});
-export const list_missing_submissions = { type: "LIST_MISSING_SUBMISSIONS", method: "get", key: 'list_missing_submissions'};
+export const list_missing_submissions = { type: "LIST_MISSING_SUBMISSIONS", method: "get", key: "list_missing_submissionslist_missing_submissions_user_id", required: ["user_id"] };
 
 // Hide a stream item
 // Hide the given stream item.
@@ -294,7 +294,7 @@ export const list_missing_submissions = { type: "LIST_MISSING_SUBMISSIONS", meth
 //
 // Example:
 // return canvasRequest(hide_stream_item, {id});
-export const hide_stream_item = { type: "HIDE_STREAM_ITEM", method: "delete", key: 'hide_stream_item'};
+export const hide_stream_item = { type: "HIDE_STREAM_ITEM", method: "delete", key: "hide_stream_itemhide_stream_item_id", required: ["id"] };
 
 // Hide all stream items
 // Hide all stream items for the user
@@ -304,7 +304,7 @@ export const hide_stream_item = { type: "HIDE_STREAM_ITEM", method: "delete", ke
 //
 // Example:
 // return canvasRequest(hide_all_stream_items, {});
-export const hide_all_stream_items = { type: "HIDE_ALL_STREAM_ITEMS", method: "delete", key: 'hide_all_stream_items'};
+export const hide_all_stream_items = { type: "HIDE_ALL_STREAM_ITEMS", method: "delete", key: "hide_all_stream_items", required: [] };
 
 // Upload a file
 // Upload a file to the user's personal files section.
@@ -322,7 +322,7 @@ export const hide_all_stream_items = { type: "HIDE_ALL_STREAM_ITEMS", method: "d
 //
 // Example:
 // return canvasRequest(users_upload_file, {user_id});
-export const users_upload_file = { type: "USERS_UPLOAD_FILE", method: "post", key: 'users_upload_file'};
+export const users_upload_file = { type: "USERS_UPLOAD_FILE", method: "post", key: "users_upload_fileusers_upload_file_user_id", required: ["user_id"] };
 
 // Show user details
 // Shows details for user.
@@ -340,7 +340,7 @@ export const users_upload_file = { type: "USERS_UPLOAD_FILE", method: "post", ke
 //
 // Example:
 // return canvasRequest(show_user_details, {id});
-export const show_user_details = { type: "SHOW_USER_DETAILS", method: "get", key: 'show_user_details'};
+export const show_user_details = { type: "SHOW_USER_DETAILS", method: "get", key: "show_user_detailsshow_user_details_id", required: ["id"] };
 
 // Create a user
 // Create and return a new user and pseudonym for an account.
@@ -378,7 +378,7 @@ export const show_user_details = { type: "SHOW_USER_DETAILS", method: "get", key
 //   enable_sis_reactivation
 // }
 // return canvasRequest(create_user, {account_id}, query);
-export const create_user = { type: "CREATE_USER", method: "post", key: 'create_user'};
+export const create_user = { type: "CREATE_USER", method: "post", key: "create_usercreate_user_account_id", required: ["account_id"] };
 
 // Self register a user
 // Self register and return a new user and pseudonym for an account.
@@ -403,7 +403,7 @@ export const create_user = { type: "CREATE_USER", method: "post", key: 'create_u
 //   communication_channel[address]
 // }
 // return canvasRequest(self_register_user, {account_id}, query);
-export const self_register_user = { type: "SELF_REGISTER_USER", method: "post", key: 'self_register_user'};
+export const self_register_user = { type: "SELF_REGISTER_USER", method: "post", key: "self_register_userself_register_user_account_id", required: ["account_id"] };
 
 // Update user settings.
 // Update an existing user's settings.
@@ -416,7 +416,7 @@ export const self_register_user = { type: "SELF_REGISTER_USER", method: "post", 
 //   manual_mark_as_read
 // }
 // return canvasRequest(update_user_settings, {id}, query);
-export const update_user_settings = { type: "UPDATE_USER_SETTINGS", method: "get", key: 'update_user_settings'};
+export const update_user_settings = { type: "UPDATE_USER_SETTINGS", method: "get", key: "update_user_settingsupdate_user_settings_id", required: ["id"] };
 
 // Get custom colors
 // Returns all custom colors that have been saved for a user.
@@ -426,7 +426,7 @@ export const update_user_settings = { type: "UPDATE_USER_SETTINGS", method: "get
 //
 // Example:
 // return canvasRequest(get_custom_colors, {id});
-export const get_custom_colors = { type: "GET_CUSTOM_COLORS", method: "get", key: 'get_custom_colors'};
+export const get_custom_colors = { type: "GET_CUSTOM_COLORS", method: "get", key: "get_custom_colorsget_custom_colors_id", required: ["id"] };
 
 // Get custom color
 // Returns the custom colors that have been saved for a user for a given context.
@@ -439,7 +439,7 @@ export const get_custom_colors = { type: "GET_CUSTOM_COLORS", method: "get", key
 //
 // Example:
 // return canvasRequest(get_custom_color, {id, asset_string});
-export const get_custom_color = { type: "GET_CUSTOM_COLOR", method: "get", key: 'get_custom_color'};
+export const get_custom_color = { type: "GET_CUSTOM_COLOR", method: "get", key: "get_custom_colorget_custom_color_{id}_{asset_string}", required: ["id","asset_string"] };
 
 // Update custom color
 // Updates a custom color for a user for a given context.  This allows
@@ -456,7 +456,7 @@ export const get_custom_color = { type: "GET_CUSTOM_COLOR", method: "get", key: 
 //   hexcode
 // }
 // return canvasRequest(update_custom_color, {id, asset_string}, query);
-export const update_custom_color = { type: "UPDATE_CUSTOM_COLOR", method: "put", key: 'update_custom_color'};
+export const update_custom_color = { type: "UPDATE_CUSTOM_COLOR", method: "put", key: "update_custom_colorupdate_custom_color_{id}_{asset_string}", required: ["id","asset_string"] };
 
 // Edit a user
 // Modify an existing user. To modify a user's login, see the documentation for logins.
@@ -476,7 +476,7 @@ export const update_custom_color = { type: "UPDATE_CUSTOM_COLOR", method: "put",
 //   user[avatar][url]
 // }
 // return canvasRequest(edit_user, {id}, query);
-export const edit_user = { type: "EDIT_USER", method: "put", key: 'edit_user'};
+export const edit_user = { type: "EDIT_USER", method: "put", key: "edit_useredit_user_id", required: ["id"] };
 
 // Merge user into another user
 // Merge a user into another user.
@@ -494,7 +494,7 @@ export const edit_user = { type: "EDIT_USER", method: "put", key: 'edit_user'};
 //
 // Example:
 // return canvasRequest(merge_user_into_another_user_destination_user_id, {id, destination_user_id});
-export const merge_user_into_another_user_destination_user_id = { type: "MERGE_USER_INTO_ANOTHER_USER_DESTINATION_USER_ID", method: "put", key: 'merge_user_into_another_user_destination_user_id'};
+export const merge_user_into_another_user_destination_user_id = { type: "MERGE_USER_INTO_ANOTHER_USER_DESTINATION_USER_ID", method: "put", key: "merge_user_into_another_user_destination_user_idmerge_user_into_another_user_destination_user_id_{id}_{destination_user_id}", required: ["id","destination_user_id"] };
 
 // Merge user into another user
 // Merge a user into another user.
@@ -512,7 +512,7 @@ export const merge_user_into_another_user_destination_user_id = { type: "MERGE_U
 //
 // Example:
 // return canvasRequest(merge_user_into_another_user_accounts, {id, destination_account_id, destination_user_id});
-export const merge_user_into_another_user_accounts = { type: "MERGE_USER_INTO_ANOTHER_USER_ACCOUNTS", method: "put", key: 'merge_user_into_another_user_accounts'};
+export const merge_user_into_another_user_accounts = { type: "MERGE_USER_INTO_ANOTHER_USER_ACCOUNTS", method: "put", key: "merge_user_into_another_user_accountsmerge_user_into_another_user_accounts_{id}_{destination_account_id}_{destination_user_id}", required: ["id","destination_account_id","destination_user_id"] };
 
 // Split merged users into separate users
 // Merged users cannot be fully restored to their previous state, but this will
@@ -533,7 +533,7 @@ export const merge_user_into_another_user_accounts = { type: "MERGE_USER_INTO_AN
 //
 // Example:
 // return canvasRequest(split_merged_users_into_separate_users, {id});
-export const split_merged_users_into_separate_users = { type: "SPLIT_MERGED_USERS_INTO_SEPARATE_USERS", method: "post", key: 'split_merged_users_into_separate_users'};
+export const split_merged_users_into_separate_users = { type: "SPLIT_MERGED_USERS_INTO_SEPARATE_USERS", method: "post", key: "split_merged_users_into_separate_userssplit_merged_users_into_separate_users_id", required: ["id"] };
 
 // Get user profile
 // Returns user profile data, including user id, name, and profile pic.
@@ -546,7 +546,7 @@ export const split_merged_users_into_separate_users = { type: "SPLIT_MERGED_USER
 //
 // Example:
 // return canvasRequest(get_user_profile, {user_id});
-export const get_user_profile = { type: "GET_USER_PROFILE", method: "get", key: 'get_user_profile'};
+export const get_user_profile = { type: "GET_USER_PROFILE", method: "get", key: "get_user_profileget_user_profile_user_id", required: ["user_id"] };
 
 // List avatar options
 // Retrieve the possible user avatar options that can be set with the user update endpoint. The response will be an array of avatar records. If the 'type' field is 'attachment', the record will include all the normal attachment json fields; otherwise it will include only the 'url' and 'display_name' fields. Additionally, all records will include a 'type' field and a 'token' field. The following explains each field in more detail
@@ -564,7 +564,7 @@ export const get_user_profile = { type: "GET_USER_PROFILE", method: "get", key: 
 //
 // Example:
 // return canvasRequest(list_avatar_options, {user_id});
-export const list_avatar_options = { type: "LIST_AVATAR_OPTIONS", method: "get", key: 'list_avatar_options'};
+export const list_avatar_options = { type: "LIST_AVATAR_OPTIONS", method: "get", key: "list_avatar_optionslist_avatar_options_user_id", required: ["user_id"] };
 
 // List user page views
 // Return the user's page view history in json format, similar to the
@@ -580,7 +580,7 @@ export const list_avatar_options = { type: "LIST_AVATAR_OPTIONS", method: "get",
 //   end_time
 // }
 // return canvasRequest(list_user_page_views, {user_id}, query);
-export const list_user_page_views = { type: "LIST_USER_PAGE_VIEWS", method: "get", key: 'list_user_page_views'};
+export const list_user_page_views = { type: "LIST_USER_PAGE_VIEWS", method: "get", key: "list_user_page_viewslist_user_page_views_user_id", required: ["user_id"] };
 
 // Store custom data
 // Store arbitrary user data as JSON.
@@ -738,7 +738,7 @@ export const list_user_page_views = { type: "LIST_USER_PAGE_VIEWS", method: "get
 //   data (required)
 // }
 // return canvasRequest(store_custom_data, {user_id}, query);
-export const store_custom_data = { type: "STORE_CUSTOM_DATA", method: "put", key: 'store_custom_data'};
+export const store_custom_data = { type: "STORE_CUSTOM_DATA", method: "put", key: "store_custom_datastore_custom_data_user_id", required: ["user_id"] };
 
 // Load custom data
 // Load custom user data.
@@ -761,7 +761,7 @@ export const store_custom_data = { type: "STORE_CUSTOM_DATA", method: "put", key
 //   ns (required)
 // }
 // return canvasRequest(load_custom_data, {user_id}, query);
-export const load_custom_data = { type: "LOAD_CUSTOM_DATA", method: "get", key: 'load_custom_data'};
+export const load_custom_data = { type: "LOAD_CUSTOM_DATA", method: "get", key: "load_custom_dataload_custom_data_user_id", required: ["user_id"] };
 
 // Delete custom data
 // Delete custom user data.
@@ -876,7 +876,7 @@ export const load_custom_data = { type: "LOAD_CUSTOM_DATA", method: "get", key: 
 //   ns (required)
 // }
 // return canvasRequest(delete_custom_data, {user_id}, query);
-export const delete_custom_data = { type: "DELETE_CUSTOM_DATA", method: "delete", key: 'delete_custom_data'};
+export const delete_custom_data = { type: "DELETE_CUSTOM_DATA", method: "delete", key: "delete_custom_datadelete_custom_data_user_id", required: ["user_id"] };
 
 // List course nicknames
 // Returns all course nicknames you have set.
@@ -886,7 +886,7 @@ export const delete_custom_data = { type: "DELETE_CUSTOM_DATA", method: "delete"
 //
 // Example:
 // return canvasRequest(list_course_nicknames, {});
-export const list_course_nicknames = { type: "LIST_COURSE_NICKNAMES", method: "get", key: 'list_course_nicknames'};
+export const list_course_nicknames = { type: "LIST_COURSE_NICKNAMES", method: "get", key: "list_course_nicknames", required: [] };
 
 // Get course nickname
 // Returns the nickname for a specific course.
@@ -896,7 +896,7 @@ export const list_course_nicknames = { type: "LIST_COURSE_NICKNAMES", method: "g
 //
 // Example:
 // return canvasRequest(get_course_nickname, {course_id});
-export const get_course_nickname = { type: "GET_COURSE_NICKNAME", method: "get", key: 'get_course_nickname'};
+export const get_course_nickname = { type: "GET_COURSE_NICKNAME", method: "get", key: "get_course_nicknameget_course_nickname_course_id", required: ["course_id"] };
 
 // Set course nickname
 // Set a nickname for the given course. This will replace the course's name
@@ -911,7 +911,7 @@ export const get_course_nickname = { type: "GET_COURSE_NICKNAME", method: "get",
 //   nickname (required)
 // }
 // return canvasRequest(set_course_nickname, {course_id}, query);
-export const set_course_nickname = { type: "SET_COURSE_NICKNAME", method: "put", key: 'set_course_nickname'};
+export const set_course_nickname = { type: "SET_COURSE_NICKNAME", method: "put", key: "set_course_nicknameset_course_nickname_course_id", required: ["course_id"] };
 
 // Remove course nickname
 // Remove the nickname for the given course.
@@ -922,7 +922,7 @@ export const set_course_nickname = { type: "SET_COURSE_NICKNAME", method: "put",
 //
 // Example:
 // return canvasRequest(remove_course_nickname, {course_id});
-export const remove_course_nickname = { type: "REMOVE_COURSE_NICKNAME", method: "delete", key: 'remove_course_nickname'};
+export const remove_course_nickname = { type: "REMOVE_COURSE_NICKNAME", method: "delete", key: "remove_course_nicknameremove_course_nickname_course_id", required: ["course_id"] };
 
 // Clear course nicknames
 // Remove all stored course nicknames.
@@ -932,4 +932,4 @@ export const remove_course_nickname = { type: "REMOVE_COURSE_NICKNAME", method: 
 //
 // Example:
 // return canvasRequest(clear_course_nicknames, {});
-export const clear_course_nicknames = { type: "CLEAR_COURSE_NICKNAMES", method: "delete", key: 'clear_course_nicknames'};
+export const clear_course_nicknames = { type: "CLEAR_COURSE_NICKNAMES", method: "delete", key: "clear_course_nicknames", required: [] };

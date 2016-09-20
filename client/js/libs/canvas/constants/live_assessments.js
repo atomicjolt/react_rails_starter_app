@@ -9,7 +9,7 @@
 //
 // Example:
 // return canvasRequest(create_live_assessment_results, {course_id, assessment_id});
-export const create_live_assessment_results = { type: "CREATE_LIVE_ASSESSMENT_RESULTS", method: "post", key: 'create_live_assessment_results'};
+export const create_live_assessment_results = { type: "CREATE_LIVE_ASSESSMENT_RESULTS", method: "post", key: "create_live_assessment_resultscreate_live_assessment_results_{course_id}_{assessment_id}", required: ["course_id","assessment_id"] };
 
 // List live assessment results
 // Returns a list of live assessment results
@@ -22,7 +22,7 @@ export const create_live_assessment_results = { type: "CREATE_LIVE_ASSESSMENT_RE
 //   user_id
 // }
 // return canvasRequest(list_live_assessment_results, {course_id, assessment_id}, query);
-export const list_live_assessment_results = { type: "LIST_LIVE_ASSESSMENT_RESULTS", method: "get", key: 'list_live_assessment_results'};
+export const list_live_assessment_results = { type: "LIST_LIVE_ASSESSMENT_RESULTS", method: "get", key: "list_live_assessment_resultslist_live_assessment_results_{course_id}_{assessment_id}", required: ["course_id","assessment_id"] };
 
 // Create or find a live assessment
 // Creates or finds an existing live assessment with the given key and aligns it with
@@ -33,7 +33,7 @@ export const list_live_assessment_results = { type: "LIST_LIVE_ASSESSMENT_RESULT
 //
 // Example:
 // return canvasRequest(create_or_find_live_assessment, {course_id});
-export const create_or_find_live_assessment = { type: "CREATE_OR_FIND_LIVE_ASSESSMENT", method: "post", key: 'create_or_find_live_assessment'};
+export const create_or_find_live_assessment = { type: "CREATE_OR_FIND_LIVE_ASSESSMENT", method: "post", key: "create_or_find_live_assessmentcreate_or_find_live_assessment_course_id", required: ["course_id"] };
 
 // List live assessments
 // Returns a list of live assessments.
@@ -43,4 +43,4 @@ export const create_or_find_live_assessment = { type: "CREATE_OR_FIND_LIVE_ASSES
 //
 // Example:
 // return canvasRequest(list_live_assessments, {course_id});
-export const list_live_assessments = { type: "LIST_LIVE_ASSESSMENTS", method: "get", key: 'list_live_assessments'};
+export const list_live_assessments = { type: "LIST_LIVE_ASSESSMENTS", method: "get", key: "list_live_assessmentslist_live_assessments_course_id", required: ["course_id"] };

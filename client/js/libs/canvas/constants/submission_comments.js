@@ -15,4 +15,4 @@
 //
 // Example:
 // return canvasRequest(submission_comments_upload_file, {course_id, assignment_id, user_id});
-export const submission_comments_upload_file = { type: "SUBMISSION_COMMENTS_UPLOAD_FILE", method: "post", key: 'submission_comments_upload_file'};
+export const submission_comments_upload_file = { type: "SUBMISSION_COMMENTS_UPLOAD_FILE", method: "post", key: "submission_comments_upload_filesubmission_comments_upload_file_{course_id}_{assignment_id}_{user_id}", required: ["course_id","assignment_id","user_id"] };

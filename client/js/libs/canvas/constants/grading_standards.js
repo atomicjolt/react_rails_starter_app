@@ -29,7 +29,7 @@
 //   grading_scheme_entry[value] (required)
 // }
 // return canvasRequest(create_new_grading_standard_accounts, {account_id}, query);
-export const create_new_grading_standard_accounts = { type: "CREATE_NEW_GRADING_STANDARD_ACCOUNTS", method: "post", key: 'create_new_grading_standard_accounts'};
+export const create_new_grading_standard_accounts = { type: "CREATE_NEW_GRADING_STANDARD_ACCOUNTS", method: "post", key: "create_new_grading_standard_accountscreate_new_grading_standard_accounts_account_id", required: ["account_id"] };
 
 // Create a new grading standard
 // Create a new grading standard
@@ -59,7 +59,7 @@ export const create_new_grading_standard_accounts = { type: "CREATE_NEW_GRADING_
 //   grading_scheme_entry[value] (required)
 // }
 // return canvasRequest(create_new_grading_standard_courses, {course_id}, query);
-export const create_new_grading_standard_courses = { type: "CREATE_NEW_GRADING_STANDARD_COURSES", method: "post", key: 'create_new_grading_standard_courses'};
+export const create_new_grading_standard_courses = { type: "CREATE_NEW_GRADING_STANDARD_COURSES", method: "post", key: "create_new_grading_standard_coursescreate_new_grading_standard_courses_course_id", required: ["course_id"] };
 
 // List the grading standards available in a context.
 // Returns the list of grading standards in the given context that are visible to user.
@@ -69,7 +69,7 @@ export const create_new_grading_standard_courses = { type: "CREATE_NEW_GRADING_S
 //
 // Example:
 // return canvasRequest(list_grading_standards_available_in_context_courses, {course_id});
-export const list_grading_standards_available_in_context_courses = { type: "LIST_GRADING_STANDARDS_AVAILABLE_IN_CONTEXT_COURSES", method: "get", key: 'list_grading_standards_available_in_context_courses'};
+export const list_grading_standards_available_in_context_courses = { type: "LIST_GRADING_STANDARDS_AVAILABLE_IN_CONTEXT_COURSES", method: "get", key: "list_grading_standards_available_in_context_courseslist_grading_standards_available_in_context_courses_course_id", required: ["course_id"] };
 
 // List the grading standards available in a context.
 // Returns the list of grading standards in the given context that are visible to user.
@@ -79,4 +79,4 @@ export const list_grading_standards_available_in_context_courses = { type: "LIST
 //
 // Example:
 // return canvasRequest(list_grading_standards_available_in_context_accounts, {account_id});
-export const list_grading_standards_available_in_context_accounts = { type: "LIST_GRADING_STANDARDS_AVAILABLE_IN_CONTEXT_ACCOUNTS", method: "get", key: 'list_grading_standards_available_in_context_accounts'};
+export const list_grading_standards_available_in_context_accounts = { type: "LIST_GRADING_STANDARDS_AVAILABLE_IN_CONTEXT_ACCOUNTS", method: "get", key: "list_grading_standards_available_in_context_accountslist_grading_standards_available_in_context_accounts_account_id", required: ["account_id"] };

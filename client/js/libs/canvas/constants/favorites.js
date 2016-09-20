@@ -12,7 +12,7 @@
 //
 // Example:
 // return canvasRequest(list_favorite_courses, {});
-export const list_favorite_courses = { type: "LIST_FAVORITE_COURSES", method: "get", key: 'list_favorite_courses'};
+export const list_favorite_courses = { type: "LIST_FAVORITE_COURSES", method: "get", key: "list_favorite_courses", required: [] };
 
 // List favorite groups
 // Retrieve the list of favorite groups for the current user. If the user has not chosen
@@ -23,7 +23,7 @@ export const list_favorite_courses = { type: "LIST_FAVORITE_COURSES", method: "g
 //
 // Example:
 // return canvasRequest(list_favorite_groups, {});
-export const list_favorite_groups = { type: "LIST_FAVORITE_GROUPS", method: "get", key: 'list_favorite_groups'};
+export const list_favorite_groups = { type: "LIST_FAVORITE_GROUPS", method: "get", key: "list_favorite_groups", required: [] };
 
 // Add course to favorites
 // Add a course to the current user's favorites.  If the course is already
@@ -34,7 +34,7 @@ export const list_favorite_groups = { type: "LIST_FAVORITE_GROUPS", method: "get
 //
 // Example:
 // return canvasRequest(add_course_to_favorites, {id});
-export const add_course_to_favorites = { type: "ADD_COURSE_TO_FAVORITES", method: "post", key: 'add_course_to_favorites'};
+export const add_course_to_favorites = { type: "ADD_COURSE_TO_FAVORITES", method: "post", key: "add_course_to_favoritesadd_course_to_favorites_id", required: ["id"] };
 
 // Add group to favorites
 // Add a group to the current user's favorites.  If the group is already
@@ -45,7 +45,7 @@ export const add_course_to_favorites = { type: "ADD_COURSE_TO_FAVORITES", method
 //
 // Example:
 // return canvasRequest(add_group_to_favorites, {id});
-export const add_group_to_favorites = { type: "ADD_GROUP_TO_FAVORITES", method: "post", key: 'add_group_to_favorites'};
+export const add_group_to_favorites = { type: "ADD_GROUP_TO_FAVORITES", method: "post", key: "add_group_to_favoritesadd_group_to_favorites_id", required: ["id"] };
 
 // Remove course from favorites
 // Remove a course from the current user's favorites.
@@ -55,7 +55,7 @@ export const add_group_to_favorites = { type: "ADD_GROUP_TO_FAVORITES", method: 
 //
 // Example:
 // return canvasRequest(remove_course_from_favorites, {id});
-export const remove_course_from_favorites = { type: "REMOVE_COURSE_FROM_FAVORITES", method: "delete", key: 'remove_course_from_favorites'};
+export const remove_course_from_favorites = { type: "REMOVE_COURSE_FROM_FAVORITES", method: "delete", key: "remove_course_from_favoritesremove_course_from_favorites_id", required: ["id"] };
 
 // Remove group from favorites
 // Remove a group from the current user's favorites.
@@ -65,7 +65,7 @@ export const remove_course_from_favorites = { type: "REMOVE_COURSE_FROM_FAVORITE
 //
 // Example:
 // return canvasRequest(remove_group_from_favorites, {id});
-export const remove_group_from_favorites = { type: "REMOVE_GROUP_FROM_FAVORITES", method: "delete", key: 'remove_group_from_favorites'};
+export const remove_group_from_favorites = { type: "REMOVE_GROUP_FROM_FAVORITES", method: "delete", key: "remove_group_from_favoritesremove_group_from_favorites_id", required: ["id"] };
 
 // Reset course favorites
 // Reset the current user's course favorites to the default
@@ -76,7 +76,7 @@ export const remove_group_from_favorites = { type: "REMOVE_GROUP_FROM_FAVORITES"
 //
 // Example:
 // return canvasRequest(reset_course_favorites, {});
-export const reset_course_favorites = { type: "RESET_COURSE_FAVORITES", method: "delete", key: 'reset_course_favorites'};
+export const reset_course_favorites = { type: "RESET_COURSE_FAVORITES", method: "delete", key: "reset_course_favorites", required: [] };
 
 // Reset group favorites
 // Reset the current user's group favorites to the default
@@ -87,4 +87,4 @@ export const reset_course_favorites = { type: "RESET_COURSE_FAVORITES", method: 
 //
 // Example:
 // return canvasRequest(reset_group_favorites, {});
-export const reset_group_favorites = { type: "RESET_GROUP_FAVORITES", method: "delete", key: 'reset_group_favorites'};
+export const reset_group_favorites = { type: "RESET_GROUP_FAVORITES", method: "delete", key: "reset_group_favorites", required: [] };

@@ -16,7 +16,7 @@
 //   state
 // }
 // return canvasRequest(list_your_courses, {}, query);
-export const list_your_courses = { type: "LIST_YOUR_COURSES", method: "get", key: 'list_your_courses'};
+export const list_your_courses = { type: "LIST_YOUR_COURSES", method: "get", key: "list_your_courses", required: [] };
 
 // List courses for a user
 // Returns a list of active courses for this user. To view the course list for a user other than yourself, you must be either an observer of that user or an administrator.
@@ -30,7 +30,7 @@ export const list_your_courses = { type: "LIST_YOUR_COURSES", method: "get", key
 //   state
 // }
 // return canvasRequest(list_courses_for_user, {user_id}, query);
-export const list_courses_for_user = { type: "LIST_COURSES_FOR_USER", method: "get", key: 'list_courses_for_user'};
+export const list_courses_for_user = { type: "LIST_COURSES_FOR_USER", method: "get", key: "list_courses_for_userlist_courses_for_user_user_id", required: ["user_id"] };
 
 // Create a new course
 // Create a new course
@@ -48,6 +48,7 @@ export const list_courses_for_user = { type: "LIST_COURSES_FOR_USER", method: "g
 //   course[is_public]
 //   course[is_public_to_auth_users]
 //   course[public_syllabus]
+//   course[public_syllabus_to_auth]
 //   course[public_description]
 //   course[allow_student_wiki_edits]
 //   course[allow_wiki_comments]
@@ -69,7 +70,7 @@ export const list_courses_for_user = { type: "LIST_COURSES_FOR_USER", method: "g
 //   enable_sis_reactivation
 // }
 // return canvasRequest(create_new_course, {account_id}, query);
-export const create_new_course = { type: "CREATE_NEW_COURSE", method: "post", key: 'create_new_course'};
+export const create_new_course = { type: "CREATE_NEW_COURSE", method: "post", key: "create_new_coursecreate_new_course_account_id", required: ["account_id"] };
 
 // Upload a file
 // Upload a file to the course.
@@ -86,7 +87,7 @@ export const create_new_course = { type: "CREATE_NEW_COURSE", method: "post", ke
 //
 // Example:
 // return canvasRequest(courses_upload_file, {course_id});
-export const courses_upload_file = { type: "COURSES_UPLOAD_FILE", method: "post", key: 'courses_upload_file'};
+export const courses_upload_file = { type: "COURSES_UPLOAD_FILE", method: "post", key: "courses_upload_filecourses_upload_file_course_id", required: ["course_id"] };
 
 // List students
 // Returns the list of students enrolled in this course.
@@ -99,7 +100,7 @@ export const courses_upload_file = { type: "COURSES_UPLOAD_FILE", method: "post"
 //
 // Example:
 // return canvasRequest(list_students, {course_id});
-export const list_students = { type: "LIST_STUDENTS", method: "get", key: 'list_students'};
+export const list_students = { type: "LIST_STUDENTS", method: "get", key: "list_studentslist_students_course_id", required: ["course_id"] };
 
 // List users in course
 // Returns the list of users in this course. And optionally the user's enrollments in the course.
@@ -119,7 +120,7 @@ export const list_students = { type: "LIST_STUDENTS", method: "get", key: 'list_
 //   enrollment_state
 // }
 // return canvasRequest(list_users_in_course_users, {course_id}, query);
-export const list_users_in_course_users = { type: "LIST_USERS_IN_COURSE_USERS", method: "get", key: 'list_users_in_course_users'};
+export const list_users_in_course_users = { type: "LIST_USERS_IN_COURSE_USERS", method: "get", key: "list_users_in_course_userslist_users_in_course_users_course_id", required: ["course_id"] };
 
 // List users in course
 // Returns the list of users in this course. And optionally the user's enrollments in the course.
@@ -139,7 +140,7 @@ export const list_users_in_course_users = { type: "LIST_USERS_IN_COURSE_USERS", 
 //   enrollment_state
 // }
 // return canvasRequest(list_users_in_course_search_users, {course_id}, query);
-export const list_users_in_course_search_users = { type: "LIST_USERS_IN_COURSE_SEARCH_USERS", method: "get", key: 'list_users_in_course_search_users'};
+export const list_users_in_course_search_users = { type: "LIST_USERS_IN_COURSE_SEARCH_USERS", method: "get", key: "list_users_in_course_search_userslist_users_in_course_search_users_course_id", required: ["course_id"] };
 
 // List recently logged in students
 // Returns the list of users in this course, ordered by how recently they have
@@ -152,7 +153,7 @@ export const list_users_in_course_search_users = { type: "LIST_USERS_IN_COURSE_S
 //
 // Example:
 // return canvasRequest(list_recently_logged_in_students, {course_id});
-export const list_recently_logged_in_students = { type: "LIST_RECENTLY_LOGGED_IN_STUDENTS", method: "get", key: 'list_recently_logged_in_students'};
+export const list_recently_logged_in_students = { type: "LIST_RECENTLY_LOGGED_IN_STUDENTS", method: "get", key: "list_recently_logged_in_studentslist_recently_logged_in_students_course_id", required: ["course_id"] };
 
 // Get single user
 // Return information on a single user.
@@ -165,7 +166,7 @@ export const list_recently_logged_in_students = { type: "LIST_RECENTLY_LOGGED_IN
 //
 // Example:
 // return canvasRequest(get_single_user, {course_id, id});
-export const get_single_user = { type: "GET_SINGLE_USER", method: "get", key: 'get_single_user'};
+export const get_single_user = { type: "GET_SINGLE_USER", method: "get", key: "get_single_userget_single_user_{course_id}_{id}", required: ["course_id","id"] };
 
 // Preview processed html
 // Preview html content processed for this course
@@ -178,7 +179,7 @@ export const get_single_user = { type: "GET_SINGLE_USER", method: "get", key: 'g
 //   html
 // }
 // return canvasRequest(courses_preview_processed_html, {course_id}, query);
-export const courses_preview_processed_html = { type: "COURSES_PREVIEW_PROCESSED_HTML", method: "post", key: 'courses_preview_processed_html'};
+export const courses_preview_processed_html = { type: "COURSES_PREVIEW_PROCESSED_HTML", method: "post", key: "courses_preview_processed_htmlcourses_preview_processed_html_course_id", required: ["course_id"] };
 
 // Course activity stream
 // Returns the current user's course-specific activity stream, paginated.
@@ -191,7 +192,7 @@ export const courses_preview_processed_html = { type: "COURSES_PREVIEW_PROCESSED
 //
 // Example:
 // return canvasRequest(course_activity_stream, {course_id});
-export const course_activity_stream = { type: "COURSE_ACTIVITY_STREAM", method: "get", key: 'course_activity_stream'};
+export const course_activity_stream = { type: "COURSE_ACTIVITY_STREAM", method: "get", key: "course_activity_streamcourse_activity_stream_course_id", required: ["course_id"] };
 
 // Course activity stream summary
 // Returns a summary of the current user's course-specific activity stream.
@@ -204,7 +205,7 @@ export const course_activity_stream = { type: "COURSE_ACTIVITY_STREAM", method: 
 //
 // Example:
 // return canvasRequest(course_activity_stream_summary, {course_id});
-export const course_activity_stream_summary = { type: "COURSE_ACTIVITY_STREAM_SUMMARY", method: "get", key: 'course_activity_stream_summary'};
+export const course_activity_stream_summary = { type: "COURSE_ACTIVITY_STREAM_SUMMARY", method: "get", key: "course_activity_stream_summarycourse_activity_stream_summary_course_id", required: ["course_id"] };
 
 // Course TODO items
 // Returns the current user's course-specific todo items.
@@ -216,7 +217,7 @@ export const course_activity_stream_summary = { type: "COURSE_ACTIVITY_STREAM_SU
 //
 // Example:
 // return canvasRequest(course_todo_items, {course_id});
-export const course_todo_items = { type: "COURSE_TODO_ITEMS", method: "get", key: 'course_todo_items'};
+export const course_todo_items = { type: "COURSE_TODO_ITEMS", method: "get", key: "course_todo_itemscourse_todo_items_course_id", required: ["course_id"] };
 
 // Conclude a course
 // Delete or conclude an existing course
@@ -229,7 +230,7 @@ export const course_todo_items = { type: "COURSE_TODO_ITEMS", method: "get", key
 //   event (required)
 // }
 // return canvasRequest(conclude_course, {id}, query);
-export const conclude_course = { type: "CONCLUDE_COURSE", method: "delete", key: 'conclude_course'};
+export const conclude_course = { type: "CONCLUDE_COURSE", method: "delete", key: "conclude_courseconclude_course_id", required: ["id"] };
 
 // Get course settings
 // Returns some of a course's settings.
@@ -239,7 +240,7 @@ export const conclude_course = { type: "CONCLUDE_COURSE", method: "delete", key:
 //
 // Example:
 // return canvasRequest(get_course_settings, {course_id});
-export const get_course_settings = { type: "GET_COURSE_SETTINGS", method: "get", key: 'get_course_settings'};
+export const get_course_settings = { type: "GET_COURSE_SETTINGS", method: "get", key: "get_course_settingsget_course_settings_course_id", required: ["course_id"] };
 
 // Update course settings
 // Can update the following course settings:
@@ -260,7 +261,7 @@ export const get_course_settings = { type: "GET_COURSE_SETTINGS", method: "get",
 //   restrict_student_future_view
 // }
 // return canvasRequest(update_course_settings, {course_id}, query);
-export const update_course_settings = { type: "UPDATE_COURSE_SETTINGS", method: "put", key: 'update_course_settings'};
+export const update_course_settings = { type: "UPDATE_COURSE_SETTINGS", method: "put", key: "update_course_settingsupdate_course_settings_course_id", required: ["course_id"] };
 
 // Get a single course
 // Return information on a single course.
@@ -275,7 +276,7 @@ export const update_course_settings = { type: "UPDATE_COURSE_SETTINGS", method: 
 //   include
 // }
 // return canvasRequest(get_single_course_courses, {id}, query);
-export const get_single_course_courses = { type: "GET_SINGLE_COURSE_COURSES", method: "get", key: 'get_single_course_courses'};
+export const get_single_course_courses = { type: "GET_SINGLE_COURSE_COURSES", method: "get", key: "get_single_course_coursesget_single_course_courses_id", required: ["id"] };
 
 // Get a single course
 // Return information on a single course.
@@ -290,7 +291,7 @@ export const get_single_course_courses = { type: "GET_SINGLE_COURSE_COURSES", me
 //   include
 // }
 // return canvasRequest(get_single_course_accounts, {account_id, id}, query);
-export const get_single_course_accounts = { type: "GET_SINGLE_COURSE_ACCOUNTS", method: "get", key: 'get_single_course_accounts'};
+export const get_single_course_accounts = { type: "GET_SINGLE_COURSE_ACCOUNTS", method: "get", key: "get_single_course_accountsget_single_course_accounts_{account_id}_{id}", required: ["account_id","id"] };
 
 // Update a course
 // Update an existing course.
@@ -314,6 +315,7 @@ export const get_single_course_accounts = { type: "GET_SINGLE_COURSE_ACCOUNTS", 
 //   course[is_public]
 //   course[is_public_to_auth_users]
 //   course[public_syllabus]
+//   course[public_syllabus_to_auth]
 //   course[public_description]
 //   course[allow_student_wiki_edits]
 //   course[allow_wiki_comments]
@@ -329,7 +331,7 @@ export const get_single_course_accounts = { type: "GET_SINGLE_COURSE_ACCOUNTS", 
 //   course[apply_assignment_group_weights]
 //   course[storage_quota_mb]
 //   offer
-//   event
+//   course[event]
 //   course[syllabus_body]
 //   course[grading_standard_id]
 //   course[course_format]
@@ -338,7 +340,7 @@ export const get_single_course_accounts = { type: "GET_SINGLE_COURSE_ACCOUNTS", 
 //   course[remove_image]
 // }
 // return canvasRequest(update_course, {id}, query);
-export const update_course = { type: "UPDATE_COURSE", method: "put", key: 'update_course'};
+export const update_course = { type: "UPDATE_COURSE", method: "put", key: "update_courseupdate_course_id", required: ["id"] };
 
 // Update courses
 // Update multiple courses in an account.  Operates asynchronously; use the {api:ProgressController#show progress endpoint}
@@ -363,7 +365,7 @@ export const update_course = { type: "UPDATE_COURSE", method: "put", key: 'updat
 //   event (required)
 // }
 // return canvasRequest(update_courses, {account_id}, query);
-export const update_courses = { type: "UPDATE_COURSES", method: "put", key: 'update_courses'};
+export const update_courses = { type: "UPDATE_COURSES", method: "put", key: "update_coursesupdate_courses_account_id", required: ["account_id"] };
 
 // Reset a course
 // Deletes the current course, and creates a new equivalent course with
@@ -374,7 +376,7 @@ export const update_courses = { type: "UPDATE_COURSES", method: "put", key: 'upd
 //
 // Example:
 // return canvasRequest(reset_course, {course_id});
-export const reset_course = { type: "RESET_COURSE", method: "post", key: 'reset_course'};
+export const reset_course = { type: "RESET_COURSE", method: "post", key: "reset_coursereset_course_course_id", required: ["course_id"] };
 
 // Get course copy status
 // DEPRECATED: Please use the {api:ContentMigrationsController#create Content Migrations API}
@@ -386,7 +388,7 @@ export const reset_course = { type: "RESET_COURSE", method: "post", key: 'reset_
 //
 // Example:
 // return canvasRequest(get_course_copy_status, {course_id, id});
-export const get_course_copy_status = { type: "GET_COURSE_COPY_STATUS", method: "get", key: 'get_course_copy_status'};
+export const get_course_copy_status = { type: "GET_COURSE_COPY_STATUS", method: "get", key: "get_course_copy_statusget_course_copy_status_{course_id}_{id}", required: ["course_id","id"] };
 
 // Copy course content
 // DEPRECATED: Please use the {api:ContentMigrationsController#create Content Migrations API}
@@ -407,4 +409,4 @@ export const get_course_copy_status = { type: "GET_COURSE_COPY_STATUS", method: 
 //   only
 // }
 // return canvasRequest(copy_course_content, {course_id}, query);
-export const copy_course_content = { type: "COPY_COURSE_CONTENT", method: "post", key: 'copy_course_content'};
+export const copy_course_content = { type: "COPY_COURSE_CONTENT", method: "post", key: "copy_course_contentcopy_course_content_course_id", required: ["course_id"] };
