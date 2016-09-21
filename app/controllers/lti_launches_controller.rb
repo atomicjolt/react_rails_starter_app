@@ -48,7 +48,7 @@ class LtiLaunchesController < ApplicationController
         # store the lti launch url in the session, so we can relaunch the tool after the oauth
         session[:canvas_lti_tool_uri] = request.referer
         session[:canvas_url] = current_account.canvas_uri
-        redirect_to user_omniauth_authorize_path(:canvas, :canvas_url => current_account.canvas_uri)
+        redirect_to user_canvas_omniauth_authorize_path(:canvas_url => current_account.canvas_uri)
       end
     end
   end
