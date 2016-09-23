@@ -44,7 +44,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # and store it for account level access.
     # The first admin user to log in sets the account level token.
     if account.canvas_token.blank?
-      api = Canvas.new(auth.provider_url, auth.token)
+      api = Canvas.new(auth.provider_url, auth)
       if api.is_account_admin
         account.canvas_token = auth.token
         account.save!

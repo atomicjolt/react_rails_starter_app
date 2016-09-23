@@ -6,7 +6,7 @@ describe Canvas do
     @token = 'test'
     @base_uri = 'http://www.example.com'
     @canvas_authentication = FactoryGirl.create(:authentication, :provider => 'canvas', :token => @token, :provider_url => @base_uri)
-    @api = Canvas.new(@canvas_authentication.provider_url, @canvas_authentication.token)
+    @api = Canvas.new(@canvas_authentication.provider_url, @canvas_authentication)
     @external_tool_id = 1
     lti_options = {
       launch_url: 'http://www.example.com/launch'
@@ -15,6 +15,34 @@ describe Canvas do
       "config_type" => "by_xml",
       "config_xml" => Lti::Canvas.config_xml(lti_options)
     }
+  end
+
+  describe "initialization" do
+    it "doesn't raise an exception if the user doesn't pass options" do
+      expect(@api).to be_present
+    end
+    it "raises an error if the user passes invalid options" do
+      too_many_options = {
+        client_id: 1,
+        client_secret: "a secret",
+        refresh_token: "a refresh token",
+        redirect_uri: "http://www.example.com",
+        invalid_option: "bad value"
+      }
+      expect {
+        Canvas.new(@canvas_authentication.provider_url, @canvas_authentication, too_many_options)
+      }.to raise_exception(Canvas::InvalidRefreshOptionsException)
+    end
+    it "raises an error if the user doesn't pass all required options" do
+      too_few_options = {
+        client_id: 1,
+        client_secret: "a secret",
+        refresh_token: "a refresh token"
+      }
+      expect {
+        Canvas.new(@canvas_authentication.provider_url, @canvas_authentication, too_few_options)
+      }.to raise_exception(Canvas::InvalidRefreshOptionsException)
+    end
   end
 
   describe "api_put_request" do
@@ -60,6 +88,30 @@ describe Canvas do
         expect(result.first['course_code']).to eq("Biology")
       end
       expect(times_called).to eq(2)
+    end
+  end
+
+  describe "token has expired" do
+    it "refreshes the token" do
+      options = {
+        client_id: 1,
+        client_secret: "a secret",
+        refresh_token: "a refresh token",
+        redirect_uri: "http://www.example.com"
+      }
+      api = Canvas.new(@canvas_authentication.provider_url, @canvas_authentication, options)
+      initial_result = http_party_get_response(401, 'OK', "", { "WWW-Authenticate" => 'Bearer realm="canvas-lms"' })
+      refresh_result = http_party_post_response(200, 'OK', '{"access_token":"anewtoken"}')
+      final_result = http_party_get_response
+      expect(HTTParty).to receive(:get).with("#{@base_uri}/api/v1/courses", headers: @api.headers).and_return(initial_result).ordered
+      expect(HTTParty).to receive(:post).with("#{@base_uri}/login/oauth2/token", headers: @api.headers, body: { grant_type: "refresh_token" }.merge(options)).and_return(refresh_result).ordered
+      expect(HTTParty).to receive(:get).with("#{@base_uri}/api/v1/courses", headers: @api.headers.merge({"Authorization"=>"Bearer anewtoken"})).and_return(final_result).ordered
+      api.api_get_request("courses")
+    end
+    it "raises an exception for a standard Unauthorize 401" do
+      result = http_party_get_response(401, 'OK', "")
+      expect(HTTParty).to receive(:get).with("#{@base_uri}/api/v1/courses", :headers => @api.headers).and_return(result)
+      expect { @api.api_get_request("courses") }.to raise_exception(Canvas::UnauthorizedException)
     end
   end
 
@@ -122,27 +174,30 @@ describe Canvas do
 
   describe "check_result" do
     before do
-      @url = "http://www.example.com"
+      @method = "GET"
+      @api_url = "http://www.example.com"
+      @payload = ""
+      @additional_headers = ""
     end
     it "should raise an UnauthorizedException if 401 not authorized" do
       result = http_party_get_response(401, 'Unauthorized')
-      expect { @api.check_result(result, @url) }.to raise_exception(Canvas::UnauthorizedException)
+      expect { @api.check_result(result) }.to raise_exception(Canvas::UnauthorizedException)
     end
     it "should raise an NotFoundException if 404 not found" do
       result = http_party_get_response(404, 'Not Found')
-      expect { @api.check_result(result, @url) }.to raise_exception(Canvas::NotFoundException)
+      expect { @api.check_result(result) }.to raise_exception(Canvas::NotFoundException)
     end
     it "should raise an InvalidRequestException if canvas call fails" do
-      result = http_party_get_response(500, 'Internal Server Error', "{errors:'Something terrible'}")
-      expect { @api.check_result(result, @url) }.to raise_exception(Canvas::InvalidRequestException)
+      result = http_party_get_response(500, 'Internal Server Error', '{"errors":"Something terrible"}')
+      expect { @api.check_result(result) }.to raise_exception(Canvas::InvalidRequestException)
     end
     it "should return the result for a 200" do
       result = http_party_get_response
-      expect(@api.check_result(result, @url)).to eq(result)
+      expect(@api.check_result(result)).to eq(result)
     end
     it "should return the result for a 201" do
       result = http_party_get_response(201)
-      expect(@api.check_result(result, @url)).to eq(result)
+      expect(@api.check_result(result)).to eq(result)
     end
   end
 

@@ -68,7 +68,7 @@ class LtiInstallsController < ApplicationController
 
       if authentications.present?
         authentications.each do |auth|
-          api = Canvas.new(auth.provider_url, auth.token)
+          api = Canvas.new(auth.provider_url, auth)
           @accounts[auth] = api.all_accounts.map{|a| OpenStruct.new(a.merge(auth: auth)) }
           @courses[auth] = api.proxy("LIST_YOUR_COURSES", {}, nil, true).map{|a| OpenStruct.new(a.merge(auth: auth)) }
         end

@@ -2,16 +2,27 @@ class Canvas
 
   IGNORE_PARAMS = :controller, :action, :format, :type
 
-  def initialize(canvas_uri, canvas_api_key, refresh_token_options=nil)
+  def initialize(canvas_uri, authentication, refresh_token_options=nil)
     @per_page = 100
     @canvas_uri = UrlHelper.scheme_host(canvas_uri)
-    @canvas_api_key = canvas_api_key
     @refresh_token_options = refresh_token_options
+    if authentication.is_a?(String)
+      @authentication = OpenStruct.new(token: authentication)
+    else
+      @authentication = authentication
+    end
+    if refresh_token_options.present?
+      required_options = [:client_id, :client_secret, :redirect_uri, :refresh_token]
+      extra_options = @refresh_token_options.keys - required_options
+      raise InvalidRefreshOptionsException, "Invalid option(s) provided: #{extra_options.join(', ')}" unless extra_options.length == 0
+      missing_options = required_options - @refresh_token_options.keys
+      raise InvalidRefreshOptionsException, "Missing required option(s): #{missing_options.join(', ')}" unless missing_options.length == 0
+    end
   end
 
   def headers(additional_headers = {})
     {
-      "Authorization" => "Bearer #{@canvas_api_key}",
+      "Authorization" => "Bearer #{@authentication.token}",
       "User-Agent" => "CanvasAPI Ruby"
     }.merge(additional_headers)
   end
@@ -29,29 +40,40 @@ class Canvas
   end
 
   def api_put_request(api_url, payload, additional_headers = {})
-    @method = 'PUT'
-    @api_url = api_url
-    @payload = payload
     url = full_url(api_url)
-    check_result(HTTParty.put(url, headers: headers(additional_headers), body: payload), url)
+    refreshably do
+      HTTParty.put(url, headers: headers(additional_headers), body: payload)
+    end
   end
 
   def api_post_request(api_url, payload, additional_headers = {})
-    unless @refreshing_token
-      @method = 'POST'
-      @api_url = api_url
-      @payload = payload
-    end
     url = full_url(api_url)
-    result = HTTParty.post(url, headers: headers(additional_headers), body: payload)
-    check_result(result, url)
+    refreshably do
+      HTTParty.post(url, headers: headers(additional_headers), body: payload)
+    end
   end
 
   def api_get_request(api_url, additional_headers = {})
-    @method = 'GET'
-    @api_url = api_url
     url = full_url(api_url)
-    check_result(HTTParty.get(url, headers: headers(additional_headers)), url)
+    refreshably do
+      HTTParty.get(url, headers: headers(additional_headers))
+    end
+  end
+
+  def refreshably
+    result = yield
+    check_result(result)
+  rescue Canvas::RefreshTokenRequired => ex
+    raise ex if @refresh_token_options.blank?
+    Authentication.transaction do
+      authentication = Authentication.lock.find(@authentication.id)
+      if authentication.token == @authentication.token
+        refresh_token
+      else
+        @authentication = authentication
+      end
+    end
+    retry
   end
 
   def api_get_all_request(api_url, additional_headers = {})
@@ -77,57 +99,31 @@ class Canvas
   end
 
   def refresh_token
-    @refreshing_token = true
     payload = {
-      grant_type: 'refresh_token',
-      client_id: @refresh_token_options[:client_id],
-      client_secret: @refresh_token_options[:client_secret],
-      refresh_token: @refresh_token_options[:refresh_token],
-      redirect_uri: @refresh_token_options[:redirect_uri]
-    }
+      grant_type: 'refresh_token'
+    }.merge(@refresh_token_options)
     url = full_url("login/oauth2/token", false)
     result = HTTParty.post(url, headers: headers, body: payload)
-    check_result(result, url)
-    @refreshing_token = false
-    result
+    raise Canvas::RefreshTokenFailedException, "Error: #{result['errors']}" unless [200, 201].include?(result.response.code.to_i)
+    @authentication.update_attributes(token: result['access_token'])
   end
 
-  def retry_request
-    @retrying = true
-    case @method
-      when 'GET'
-        result = api_get_request(@api_url)
-      when 'POST'
-        result = api_post_request(@api_url, @payload)
-      when 'PUT'
-        result = api_put_request(@api_url, @payload)
-      else
-        result = nil
-    end
-    @retrying = false
-    result
-  end
+  def check_result(result)
 
-  def refresh_token_and_retry
-    result = refresh_token
-    if result
-      @canvas_api_key = result['access_token']
-      @refresh_token_options[:auth].update_attribute(:token, @canvas_api_key)
-      retry_request
-    end
-  end
+    return result if [200, 201].include?(result.response.code.to_i)
 
-  def check_result(result, url=nil)
     if result.response.code == '401'
-      # TODO need to check header for 'authenticate' flag
-      return refresh_token_and_retry unless !@refresh_token_options || @refreshing_token || @retrying
-      raise Canvas::UnauthorizedException, "#{result['errors']} Url: #{url}, API Key: #{@canvas_api_key}"
+      if @refresh_token_options.present? && result.headers['www-authenticate'] == 'Bearer realm="canvas-lms"'
+        raise Canvas::RefreshTokenRequired
+      else
+        raise Canvas::UnauthorizedException, "#{result['errors']}, API Key: #{@authentication.token}"
+      end
     elsif result.response.code == '404'
-      raise Canvas::NotFoundException, "#{result['errors']} Url: #{url}, API Key: #{@canvas_api_key}"
-    elsif !['200', '201'].include?(result.response.code)
-      raise Canvas::InvalidRequestException, "Status: #{result.response.code} Error: #{result['errors']} Url: #{url}, API Key: #{@canvas_api_key}"
+      raise Canvas::NotFoundException, "#{result['errors']}, API Key: #{@authentication.token}"
+    else
+      raise Canvas::InvalidRequestException, "Status: #{result.response.code} Error: #{result['errors']}, API Key: #{@authentication.token}"
     end
-    result
+
   end
 
   def get_next_url(link)
@@ -244,6 +240,15 @@ class Canvas
   #
   # Exceptions
   #
+
+  class RefreshTokenRequired < Exception
+  end
+
+  class InvalidRefreshOptionsException < Exception
+  end
+
+  class RefreshTokenFailedException < Exception
+  end
 
   class UnauthorizedException < Exception
   end
