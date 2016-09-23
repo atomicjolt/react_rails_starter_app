@@ -42,7 +42,11 @@ class Course < ActiveRecord::Base
   def sync_sections
     api = self.canvas_api
     return unless api
-    canvas_sections = api.sections(self.lms_course_id)
+
+    canvas_sections = api.proxy("LIST_COURSE_SECTIONS", {
+      course_id: self.lms_course_id
+    }, nil, true)
+
     canvas_sections.each do |canvas_section|
       section = self.sections.find_by(lms_section_id: canvas_section['id'])
       if section

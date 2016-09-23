@@ -54,6 +54,28 @@ class Canvas
     check_result(HTTParty.get(url, headers: headers(additional_headers)), url)
   end
 
+  def api_get_all_request(api_url, additional_headers = {})
+    connector = api_url.include?('?') ? '&' : '?'
+    next_url = "#{api_url}#{connector}per_page=#{@per_page}"
+    results = []
+    while next_url do
+      result = api_get_request(next_url, additional_headers)
+      result.each{ |r| results << r }
+      next_url = get_next_url(result.headers['link'])
+    end
+    results
+  end
+
+  def api_get_blocks_request(api_url, additional_headers = {})
+    connector = api_url.include?('?') ? '&' : '?'
+    next_url = "#{api_url}#{connector}per_page=#{@per_page}"
+    while next_url do
+      result = api_get_request(next_url, additional_headers)
+      yield result
+      next_url = get_next_url(result.headers['link'])
+    end
+  end
+
   def refresh_token
     @refreshing_token = true
     payload = {
@@ -97,6 +119,7 @@ class Canvas
 
   def check_result(result, url=nil)
     if result.response.code == '401'
+      # TODO need to check header for 'authenticate' flag
       return refresh_token_and_retry unless !@refresh_token_options || @refreshing_token || @retrying
       raise Canvas::UnauthorizedException, "#{result['errors']} Url: #{url}, API Key: #{@canvas_api_key}"
     elsif result.response.code == '404'
@@ -114,40 +137,26 @@ class Canvas
     end
   end
 
-  def make_paged_api_request(api_url)
-    connector = api_url.include?('?') ? '&' : '?'
-    next_url = "#{api_url}#{connector}per_page=#{@per_page}"
-    results = []
-    while next_url do
-      result = api_get_request(next_url)
-      result.each{ |r| results << r }
-      next_url = get_next_url(result.headers['link'])
-    end
-    results
-  end
+  def proxy(type, params, payload = nil, get_all = false)
 
-  def page_requests(api_url)
-    connector = api_url.include?('?') ? '&' : '?'
-    next_url = "#{api_url}#{connector}per_page=#{@per_page}"
-    while next_url do
-      result = api_get_request(next_url)
-      yield result
-      next_url = get_next_url(result.headers['link'])
-    end
-  end
-
-  def proxy(type, params, payload = nil)
-   
     additional_headers = {
       "Content-Type" => "application/json"
-    }  
+    }
 
     method = CanvasUrls.urls[type][:method]
-    url = Canvas.canvas_url(type, params)
+    url = Canvas.canvas_url(type, params, payload)
 
     case method
     when 'GET'
-      api_get_request(url, additional_headers)
+      if block_given?
+        api_get_blocks_request(url, additional_headers) do |result|
+          yield result
+        end
+      elsif get_all
+        api_get_all_request(url, additional_headers)
+      else
+        api_get_request(url, additional_headers)
+      end
     when 'POST'
       api_post_request(url, payload, additional_headers)
     when 'PUT'
@@ -158,227 +167,33 @@ class Canvas
 
   end
 
-  def is_account_admin
-    api_get_request("accounts/self") # If user can access this endpoint they are an account admin
-    true
-  rescue Canvas::UnauthorizedException => ex
-    false
+  # Ignore required params for specific calls. For example, the external tool calls
+  # have required params "name, privacy_level, consumer_key, shared_secret". However, those
+  # params are not required if the call specifies config_type: "by_xml".
+  def self.ignore_required(type)
+    [
+      "CREATE_EXTERNAL_TOOL_COURSES",
+      "CREATE_EXTERNAL_TOOL_ACCOUNTS"
+    ].include?(type)
   end
 
-  def all_accounts
-    all = []
-    self.accounts.each do |account|
-      all << account
-      all = all.concat(self.sub_accounts(account['id']))
-    end
-    all
-  end
-
-  def user_role(account_id, role_id)
-    api_get_request("accounts/#{account_id}/roles/#{role_id}")
-  end
-
-  def accounts
-    api_get_request("accounts")
-  rescue Canvas::UnauthorizedException => ex
-    api_get_request("course_accounts")
-  end
-
-  def account_users(account_id, per_page = 25)
-    make_paged_api_request("accounts/#{account_id}/users?per_page=#{per_page}")
-  end
-
-  def sub_accounts(account_id)
-    api_get_request("accounts/#{account_id}/sub_accounts")
-  end
-
-  def assignments(course_id)
-    api_get_request("courses/#{course_id}/assignments")
-  end
-
-  def discussion_topics(course_id)
-    api_get_request("courses/#{course_id}/discussion_topics")
-  end
-
-  def courses(user_id = nil)
-    if user_id
-      api_get_request("courses?as_user_id=#{user_id}")
-    else
-      api_get_request("courses")
-    end
-  end
-
-#This is used to list sections in a particular course, given a course_id.
-  def sections(course_id, *include_options)
-    include_param = include_options.map{|option| "include[]=#{option}"}.join("&")
-    api_get_request("courses/#{course_id}/sections?#{include_param}")
-  end
-
-  def course_groups(course_id)
-    api_get_request("courses/#{course_id}/groups")
-  end
-
-  def group_memberships(group_id)
-    api_get_request("groups/#{group_id}/memberships")
-  end
-
-  def recent_logins(course_id)
-    api_get_request("courses/#{course_id}/recent_students")
-  end
-
-  def students(course_id, *include_options)
-    include_param = include_options.map{|option| "&include[]=#{option}"}.join
-    make_paged_api_request("courses/#{course_id}/users?enrollment_type=student#{include_param}")
-  end
-
-  def students_and_observers(course_id, *include_options)
-    include_param = include_options.map{|option| "&include[]=#{option}"}.join
-    make_paged_api_request("courses/#{course_id}/users?enrollment_type[]=student&enrollment_type[]=observer#{include_param}")
-  end
-
-  def section_students_and_observers(section_id, *include_options)
-    include_param = include_options.map{|option| "&include[]=#{option}"}.join
-    make_paged_api_request("sections/#{section_id}/enrollments?type[]=StudentEnrollment&type[]=ObserverEnrollment")
-  end
-
-  def tas(course_id)
-    make_paged_api_request("courses/#{course_id}/users?enrollment_type=ta")
-  end
-
-  def course_info(course_id)
-    api_get_request("courses/#{course_id}")
-  end
-
-  def enrollments(course_id)
-    make_paged_api_request("courses/#{course_id}/enrollments")
-  end
-
-  def user_enrollments(user_id)
-    make_paged_api_request("users/#{user_id}/enrollments")
-  end
-
-  def all_courses(account_id, options = {})
-    make_paged_api_request("accounts/#{account_id}/courses?#{options.to_param}")
-  end
-
-  def course_participation(course_id, student_id)
-    api_get_request("courses/#{course_id}/analytics/users/#{student_id}/activity")
-  end
-
-  def quiz_submissions(course_id, quiz_id)
-    api_get_request("courses/#{course_id}/quizzes/#{quiz_id}/submissions")
-  end
-
-  def quizzes(course_id)
-    api_get_request("courses/#{course_id}/quizzes")
-  end
-
-  def assignment_submissions(course_id)
-    api_get_request("courses/#{course_id}/students/submissions?student_ids[]=all")
-  end
-
-  def student_assignment_data(course_id, student_id)
-    api_get_request("courses/#{course_id}/analytics/users/#{student_id}/assignments")
-  end
-
-  def course_assignment_data(course_id)
-    api_get_request("courses/#{course_id}/analytics/assignments")
-  end
-
-  def get_user(user_id)
-    api_get_request("users/#{user_id}")
-  end
-
-  def get_user_custom_data(user_id, namespace, scope=nil)
-    api_get_request("users/#{user_id}/custom_data#{scope}?ns=#{namespace}")
-  end
-
-  def get_user_enrollments(user_id)
-    api_get_request("users/#{user_id}/enrollments")
-  end
-
-  def get_single_role_info(account_id, id)
-    api_get_request("accounts/#{account_id}/roles/#{role_id}")
-  end
-
-  def get_profile(user_id)
-    api_get_request("users/self/profile?as_user_id=#{user_id}")
-  end
-
-  def user_activity(user_id)
-    api_get_request("users/activity_stream?as_user_id=#{user_id}")
-  end
-
-  def create_conversation(recipients, subject, body)
-    api_post_request("conversations", {
-      recipients: recipients,
-      subject: subject,
-      body: body,
-      scope: 'unread'
-    })
-  end
-
-  def get_conversation(conversation_id)
-    api_get_request("conversations/#{conversation_id}")
-  end
-
-  def add_message(conversation_id, recipients, body)
-    api_post_request("conversations/#{conversation_id}/add_message", {
-      recipients: recipients,
-      body: body,
-      scope: 'unread'
-    })
-  end
-
-  def get_course_lti_tools(course_id)
-    api_get_request("courses/#{course_id}/external_tools")
-  end
-
-  def update_course_lti_tool(course_id, external_tool_id, tool_config)
-    api_put_request("courses/#{course_id}/external_tools/#{external_tool_id}", tool_config)
-  end
-
-  def create_course_lti_tool(course_id, tool_config)
-    api_post_request("courses/#{course_id}/external_tools", tool_config)
-  end
-
-  def get_account_lti_tools(account_id)
-    api_get_request("accounts/#{account_id}/external_tools")
-  end
-
-  def update_account_lti_tool(account_id, external_tool_id, tool_config)
-    api_put_request("accounts/#{account_id}/external_tools/#{external_tool_id}", tool_config)
-  end
-
-  def create_account_lti_tool(account_id, tool_config)
-    api_post_request("accounts/#{account_id}/external_tools", tool_config)
-  end
-
-  # Exceptions
-
-  class UnauthorizedException < Exception
-  end
-
-  class InvalidRequestException < Exception
-  end
-
-  class NotFoundException < Exception
-  end
-
-  def self.canvas_url(type, params)
+  def self.canvas_url(type, params, payload = nil)
     endpoint = CanvasUrls.urls[type]
     parameters = endpoint[:parameters]
 
     # Make sure all required parameters are present
     missing = []
-    parameters.find_all{|p| p["required"]}.map{|p| p["name"]}.each do |p|
-      if p.include?("[") && p.include?("]")
-        parts = p.split('[')
-        parent = parts[0].to_sym
-        child = parts[1].gsub("]", "").to_sym
-        missing << p unless params[parent].present? && params[parent][child].present?
-      else
-        missing << p unless params[p.to_sym].present?
+    if !self.ignore_required(type)
+      parameters.find_all{|p| p["required"]}.map{|p| p["name"]}.each do |p|
+        if p.include?("[") && p.include?("]")
+          parts = p.split('[')
+          parent = parts[0].to_sym
+          child = parts[1].gsub("]", "").to_sym
+          missing << p unless (params[parent].present? && params[parent][child].present?) ||
+                              (payload.present? && payload[parent].present? && payload[parent][child].present?)
+        else
+          missing << p unless params[p.to_sym].present? || payload[p.to_sym].present?
+        end
       end
     end
 
@@ -394,18 +209,49 @@ class Canvas
 
     # Generate the query string
     query_parameters = parameters.find_all{|p| p["paramType"] == "query"}.map{|p| p["name"].to_sym}
-    
+
     # always allow paging parameters
     query_parameters << :per_page
     query_parameters << :page
 
     allowed_params = params.slice(*query_parameters)
+
     if allowed_params.present?
       "#{uri}?#{allowed_params.to_query}"
     else
       uri
     end
 
+  end
+
+
+  #
+  # Helper methods
+  #
+
+  # Get all accounts including sub accounts
+  def all_accounts
+    all = []
+    self.proxy("LIST_ACCOUNTS", {}, nil, true).each do |account|
+      all << account
+      sub_accounts = self.proxy("GET_SUB_ACCOUNTS_OF_ACCOUNT", {account_id: account['id']}, nil, true)
+      all = all.concat(sub_accounts)
+    end
+    all
+  end
+
+
+  #
+  # Exceptions
+  #
+
+  class UnauthorizedException < Exception
+  end
+
+  class InvalidRequestException < Exception
+  end
+
+  class NotFoundException < Exception
   end
 
 end

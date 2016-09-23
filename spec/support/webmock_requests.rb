@@ -5,24 +5,24 @@ WebMock.disable_net_connect!(allow_localhost: true)
 
 def canvas_headers(options = {})
   {
-    "cache-control"  => ["must-revalidate, private, max-age=0"], 
-    "content-type" => ["application/json; charset=utf-8"], 
-    "date" => ["Tue, 17 Mar 2015 20:58:42 GMT"], 
-    "etag" => ["\"c130ed4522ebea32d2649aff2e30fd3a\""], 
-    "p3p"  => ["CP=\"None, see http://www.instructure.com/privacy-policy\""], 
-    "server" => ["Apache"], 
-    "set-cookie" => ["_csrf_token=9ATKDp5mkAhXm5DTVw54PeMj0FoKrA%2BUNQnFEfXgUs6eL4cl5hXEZwL5xoM%2FdhlS2xWAMT%2BHQs1iRLYkv9YTtg%3D%3D; path=/; secure", "canvas_session=LxC99e7zSpIBWuoSrxCHdg.xTKVNyuNeaLj864o1zvSA2YTzFQTPbQNpYoi2ktpSRSfjl0Q7CQe7W543_0So0FLILT3TkPbbGjcfoRGZNBhdWw8iOr7QRrIFwTHFdLNE7DWMRM4ZhX16kNxCI0_OD7g.iGFa_i2CresH7XxNz2ZwUksLtOk.VQiVgw; path=/; secure; HttpOnly"], 
-    "status" => ["200"], 
-    "vary" => ["Accept-Encoding"], 
-    "x-canvas-meta"  => ["a=1;g=4MRcxnx6vQbFXxhLb8005m5WXFM2Z2i8lQwhJ1QT;s=4346;c=cluster35;z=us-east-1e;b=746692;m=746756;u=0.05;y=0.00;d=0.05;"], 
-    "x-canvas-user-id" => ["43460000000000001"], 
-    "x-frame-options"  => ["SAMEORIGIN"], 
-    "x-rack-cache" => ["miss"], 
-    "x-request-context-id" => ["51a34ee0-af16-0132-cb5f-12e99fa8d58a"], 
-    "x-runtime"  => ["0.186145"], 
-    "x-session-id" => ["48896cba407171322f5b940099073514"], 
-    "x-ua-compatible"  => ["IE=Edge,chrome=1"], 
-    "content-length" => ["2561"], 
+    "cache-control"  => ["must-revalidate, private, max-age=0"],
+    "content-type" => ["application/json; charset=utf-8"],
+    "date" => ["Tue, 17 Mar 2015 20:58:42 GMT"],
+    "etag" => ["\"c130ed4522ebea32d2649aff2e30fd3a\""],
+    "p3p"  => ["CP=\"None, see http://www.instructure.com/privacy-policy\""],
+    "server" => ["Apache"],
+    "set-cookie" => ["_csrf_token=9ATKDp5mkAhXm5DTVw54PeMj0FoKrA%2BUNQnFEfXgUs6eL4cl5hXEZwL5xoM%2FdhlS2xWAMT%2BHQs1iRLYkv9YTtg%3D%3D; path=/; secure", "canvas_session=LxC99e7zSpIBWuoSrxCHdg.xTKVNyuNeaLj864o1zvSA2YTzFQTPbQNpYoi2ktpSRSfjl0Q7CQe7W543_0So0FLILT3TkPbbGjcfoRGZNBhdWw8iOr7QRrIFwTHFdLNE7DWMRM4ZhX16kNxCI0_OD7g.iGFa_i2CresH7XxNz2ZwUksLtOk.VQiVgw; path=/; secure; HttpOnly"],
+    "status" => ["200"],
+    "vary" => ["Accept-Encoding"],
+    "x-canvas-meta"  => ["a=1;g=4MRcxnx6vQbFXxhLb8005m5WXFM2Z2i8lQwhJ1QT;s=4346;c=cluster35;z=us-east-1e;b=746692;m=746756;u=0.05;y=0.00;d=0.05;"],
+    "x-canvas-user-id" => ["43460000000000001"],
+    "x-frame-options"  => ["SAMEORIGIN"],
+    "x-rack-cache" => ["miss"],
+    "x-request-context-id" => ["51a34ee0-af16-0132-cb5f-12e99fa8d58a"],
+    "x-runtime"  => ["0.186145"],
+    "x-session-id" => ["48896cba407171322f5b940099073514"],
+    "x-ua-compatible"  => ["IE=Edge,chrome=1"],
+    "content-length" => ["2561"],
     "connection" => ["Close"]
   }.merge(options)
 end
@@ -45,7 +45,7 @@ canvas_students = '[{"associated_user_id":null,"course_id":263,"course_section_i
 RSpec.configure do |config|
   config.before(:each) do
 
-    # ####################################################################################### 
+    # #######################################################################################
     # Canvas API
     #
 
@@ -74,8 +74,8 @@ RSpec.configure do |config|
                 <https://next-courses.instructure.com/api/v1/courses.json?opaqueD>; rel="last"})
       )
 
-#"link" => ["<https://canvas.instructure.com/api/v1/courses/4346~228/external_tools?page=1&per_page=10>; rel=\"current\",<https://canvas.instructure.com/api/v1/courses/4346~228/external_tools?page=1&per_page=10>; rel=\"first\",<https://canvas.instructure.com/api/v1/courses/4346~228/external_tools?page=1&per_page=10>; rel=\"last\""], 
-    
+#"link" => ["<https://canvas.instructure.com/api/v1/courses/4346~228/external_tools?page=1&per_page=10>; rel=\"current\",<https://canvas.instructure.com/api/v1/courses/4346~228/external_tools?page=1&per_page=10>; rel=\"first\",<https://canvas.instructure.com/api/v1/courses/4346~228/external_tools?page=1&per_page=10>; rel=\"last\""],
+
     stub_request(:get, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.com/api/v1/courses/.+|).
       to_return(
         status: 200,
@@ -83,20 +83,31 @@ RSpec.configure do |config|
         headers: canvas_headers
       )
 
+    stub_request(:get, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/courses/.+/users.*|).
+      to_return(
+        status: 200,
+        body: canvas_students,
+        headers: canvas_headers(
+          "link" => %Q{<https://atomicjolt.instructure.com/api/v1/courses/26/users?include%5B%5D=avatar_url&enrollment_type%5B%5D=student&enrollment_type%5B%5D=observer&page=1&per_page=100>;
+            rel="current",<https://atomicjolt.instructure.com/api/v1/courses/26/users?include%5B%5D=avatar_url&enrollment_type%5B%5D=student&enrollment_type%5B%5D=observer&page=1&per_page=100>;
+            rel="first",<https://atomicjolt.instructure.com/api/v1/courses/26/users?include%5B%5D=avatar_url&enrollment_type%5B%5D=student&enrollment_type%5B%5D=observer&page=1&per_page=100>;
+            rel="last"})
+      )
+
     #
     # Sections
     #
     stub_request(:get, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/courses/.+/sections|).
       to_return(
-        status: 200, 
-        body: canvas_sections, 
+        status: 200,
+        body: canvas_sections,
         headers: canvas_headers
       )
 
     stub_request(:get, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/courses//sections|).
       to_return(
-        status: 401, 
-        body: "", 
+        status: 401,
+        body: "",
         headers: canvas_headers
       )
 
@@ -105,8 +116,8 @@ RSpec.configure do |config|
     #
     stub_request(:get, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/sections/.+/enrollments?.*|).
       to_return(
-        status: 200, 
-        body: canvas_students, 
+        status: 200,
+        body: canvas_students,
         headers: canvas_headers(
           "link" => %Q{<https://atomicjolt.instructure.com/api/v1/sections/260/enrollments?include%5B%5D=avatar_url&type%5B%5D=StudentEnrollment&type%5B%5D=ObserverEnrollment&page=1&per_page=100>;
             rel="current",<https://atomicjolt.instructure.com/api/v1/sections/260/enrollments?include%5B%5D=avatar_url&type%5B%5D=StudentEnrollment&type%5B%5D=ObserverEnrollment&page=1&per_page=100>;
@@ -116,8 +127,8 @@ RSpec.configure do |config|
 
     stub_request(:get, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/courses//sections|).
       to_return(
-        status: 401, 
-        body: "", 
+        status: 401,
+        body: "",
         headers: canvas_headers
       )
 
@@ -127,8 +138,8 @@ RSpec.configure do |config|
     #
     stub_request(:get, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/accounts/self|).
       to_return(
-        status: 200, 
-        body: canvas_accounts, 
+        status: 200,
+        body: canvas_accounts,
         headers: canvas_headers(
           "link" => ["<https://canvas.instructure.com/api/v1/accounts?page=first&per_page=10>; rel=\"current\",<https://canvas.instructure.com/api/v1/accounts?page=first&per_page=10>; rel=\"first\",<https://canvas.instructure.com/api/v1/accounts?page=first&per_page=10>; rel=\"last\""]
         )
@@ -136,8 +147,8 @@ RSpec.configure do |config|
 
     stub_request(:get, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/accounts|).
       to_return(
-        status: 200, 
-        body: canvas_accounts, 
+        status: 200,
+        body: canvas_accounts,
         headers: canvas_headers(
           "link" => ["<https://canvas.instructure.com/api/v1/accounts?page=first&per_page=10>; rel=\"current\",<https://canvas.instructure.com/api/v1/accounts?page=first&per_page=10>; rel=\"first\",<https://canvas.instructure.com/api/v1/accounts?page=first&per_page=10>; rel=\"last\""]
         )
@@ -145,8 +156,8 @@ RSpec.configure do |config|
 
     stub_request(:get, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/accounts/.+/sub_accounts|).
       to_return(
-        status: 200, 
-        body: canvas_sub_accounts, 
+        status: 200,
+        body: canvas_sub_accounts,
         headers: canvas_headers(
           "link" => ["<https://canvas.instructure.com/api/v1/accounts?page=first&per_page=10>; rel=\"current\",<https://canvas.instructure.com/api/v1/accounts?page=first&per_page=10>; rel=\"first\",<https://canvas.instructure.com/api/v1/accounts?page=first&per_page=10>; rel=\"last\""]
         )
@@ -154,14 +165,14 @@ RSpec.configure do |config|
 
     stub_request(:post, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/accounts/.+/sub_accounts|).
       to_return(
-        status: 200, 
+        status: 200,
         body: canvas_account,
         headers: canvas_headers
       )
 
     stub_request(:put, %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/accounts/.+|).
       to_return(
-        status: 200, 
+        status: 200,
         body: canvas_account,
         headers: canvas_headers
       )
@@ -170,24 +181,24 @@ RSpec.configure do |config|
     # LTI tools
     #
     ['accounts', 'courses'].each do |kind|
-     
+
       canvas_external_tool_url = %r|http[s]*://[a-zA-Z0-9]+\.[a-zA-Z0-9]+.*com/api/v1/#{kind}/.+/external_tools|
 
       stub_request(:get, canvas_external_tool_url).
         to_return(
-          status: 200, 
-          body: "[#{lti_tool_json}, #{lti_tool_json2}]", 
+          status: 200,
+          body: "[#{lti_tool_json}, #{lti_tool_json2}]",
           headers: canvas_headers)
-    
+
       stub_request(:post, canvas_external_tool_url).
         to_return(
-          status: 200, 
-          body: lti_tool_json, 
+          status: 200,
+          body: lti_tool_json,
           headers: canvas_headers)
 
       stub_request(:put, canvas_external_tool_url).
         to_return(
-          status: 200, 
+          status: 200,
           body: lti_tool_json,
           headers: canvas_headers)
     end

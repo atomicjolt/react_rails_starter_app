@@ -70,7 +70,7 @@ class LtiInstallsController < ApplicationController
         authentications.each do |auth|
           api = Canvas.new(auth.provider_url, auth.token)
           @accounts[auth] = api.all_accounts.map{|a| OpenStruct.new(a.merge(auth: auth)) }
-          @courses[auth] = api.courses.map{|a| OpenStruct.new(a.merge(auth: auth)) }
+          @courses[auth] = api.proxy("LIST_YOUR_COURSES", {}, nil, true).map{|a| OpenStruct.new(a.merge(auth: auth)) }
         end
       else
         flash[:info] = "Please authenticate with Canvas before attempting to install an LTI tool"

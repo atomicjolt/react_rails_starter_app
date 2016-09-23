@@ -36,7 +36,7 @@ describe Integrations::CanvasCoursesLti do
       }
       result = Integrations::CanvasCoursesLti.setup(@course, @consumer_key, @shared_secret, @provider_url, @token, lti_options)
       expect(result.parsed_response).to eq(@result)
-    end    
+    end
   end
 
 end

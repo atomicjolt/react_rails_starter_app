@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  
+
   include Lti::Methods
 
   validates :domain, uniqueness: true

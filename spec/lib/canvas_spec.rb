@@ -4,7 +4,7 @@ describe Canvas do
   before do
     @course_id = 11
     @token = 'test'
-    @base_uri = 'http://www.example.com'    
+    @base_uri = 'http://www.example.com'
     @canvas_authentication = FactoryGirl.create(:authentication, :provider => 'canvas', :token => @token, :provider_url => @base_uri)
     @api = Canvas.new(@canvas_authentication.provider_url, @canvas_authentication.token)
     @external_tool_id = 1
@@ -42,7 +42,7 @@ describe Canvas do
       @api.api_get_request("courses")
     end
   end
-  
+
   describe "get_next_url" do
     it "Returns the rel='next' url" do
       link = %Q{<https://example.instructure.com/api/v1/courses/45/discussion_topics.json?opaqueA>; rel="current",
@@ -73,19 +73,19 @@ describe Canvas do
     end
   end
 
-  describe "make_paged_api_request" do
+  describe "api_get_all_request" do
     it "should return all results from the api call" do
-      results = @api.make_paged_api_request("#{@base_uri}/api/v1/courses")
+      results = @api.api_get_all_request("#{@base_uri}/api/v1/courses")
       expect(results.length).to eq(16)
       expect(results.first['course_code']).to eq("Biology")
       expect(results[8]['course_code']).to eq("Biology")
     end
   end
 
-  describe "page_requests" do
+  describe "api_get_blocks_request" do
     it "yields results from the canvas api to the block" do
       times_called = 0
-      @api.page_requests("#{@base_uri}/api/v1/courses") do |result|
+      @api.api_get_blocks_request("#{@base_uri}/api/v1/courses") do |result|
         times_called += 1
         expect(result.first['course_code']).to eq("Biology")
       end
@@ -105,6 +105,19 @@ describe Canvas do
     it "raises an exception if required parameters aren't included" do
       expect { @api.proxy("GET_SINGLE_COURSE_COURSES") }.to raise_exception(ArgumentError)
     end
+    it "makes multiple api calls to load all courses" do
+      results = @api.proxy("LIST_YOUR_COURSES", {}, nil, true)
+      expect(results.count).to eq(16)
+    end
+    it "calls the provided block for each page of data returned" do
+      block_calls = 0
+      @api.proxy("LIST_YOUR_COURSES", {}) do |results|
+        expect(results.count).to eq(8)
+        expect(results[0]["course_code"]).to eq("Biology")
+        block_calls+=1
+      end
+      expect(block_calls).to eq(2)
+    end
   end
 
   describe "check_result" do
@@ -114,7 +127,7 @@ describe Canvas do
     it "should raise an UnauthorizedException if 401 not authorized" do
       result = http_party_get_response(401, 'Unauthorized')
       expect { @api.check_result(result, @url) }.to raise_exception(Canvas::UnauthorizedException)
-    end    
+    end
     it "should raise an NotFoundException if 404 not found" do
       result = http_party_get_response(404, 'Not Found')
       expect { @api.check_result(result, @url) }.to raise_exception(Canvas::NotFoundException)
@@ -135,47 +148,36 @@ describe Canvas do
 
   describe "courses" do
     it "should retrieve courses from the Canvas API" do
-      courses = @api.courses
+      courses = @api.proxy("LIST_YOUR_COURSES", {}, nil, true)
       expect(courses.length).to be > 0
     end
   end
 
-  describe "is_account_admin" do
-    it "Returns true when the user is an account admin" do
-      stub_request(:get, %r|http[s]*://www.example.com/api/v1/accounts/self|).
-        to_return(
-          :status => 200, 
-          :body => "", 
-          :headers => canvas_headers)
-      @api.is_account_admin
+  describe "is account admin" do
+    it "Returns account information when the user is an account admin" do
+      result = @api.proxy("GET_SINGLE_ACCOUNT", {id: "self"}, nil, true)
+      expect(result[0]['id']).to eq(43460000000000001)
     end
     it "Returns false when the user is not an account admin" do
       stub_request(:get, %r|http[s]*://www.example.com/api/v1/accounts/self|).
         to_return(
-          :status => 401, 
-          :body => "", 
+          :status => 401,
+          :body => "",
           :headers => canvas_headers)
-      @api.is_account_admin
-    end
-  end
-
-  describe "all_accounts" do
-    it "retrieves all accounts and subaccounts" do
-      all = @api.all_accounts
-      expect(all.length).to be > 0
+      expect { @api.proxy("GET_SINGLE_ACCOUNT", {id: "self"}, nil, true) }.to raise_error
     end
   end
 
   describe "accounts" do
     it "should retrieve accounts from the Canvas API" do
-      accounts = @api.accounts
+      accounts = @api.proxy("LIST_ACCOUNTS", {}, nil, true)
       expect(accounts.length).to be > 0
     end
   end
 
   describe "sub_accounts" do
     it "should retrieve sub accounts from the Canvas API for the given account" do
-      accounts = @api.sub_accounts("43460000000000001")
+      accounts = @api.proxy("GET_SUB_ACCOUNTS_OF_ACCOUNT", {account_id: "43460000000000001"})
       expect(accounts.length).to be > 0
       manual = accounts.find{|a| a['id'] == 43460000000000002}
       expect(manual).to be_present
@@ -184,23 +186,30 @@ describe Canvas do
     end
   end
 
-  describe "get_course_lti_tools" do
+  describe "get course lti tools" do
     it "should find installed LTI tools for the given course" do
-      tools = @api.get_course_lti_tools(@course_id)
+      tools = @api.proxy("LIST_EXTERNAL_TOOLS_COURSES", {course_id: @course_id})
       expect(tools.first['consumer_key']).to eq('fake')
     end
   end
 
-  describe "update_course_lti_tool" do
-    it "should find installed LTI tools for the given course" do
-      tool = @api.update_course_lti_tool(@course_id, @external_tool_id, @tool_config)
+  describe "update course lti tool" do
+    it "should update installed LTI tools for the given course" do
+      tool = @api.proxy("EDIT_EXTERNAL_TOOL_COURSES", {course_id: @course_id, external_tool_id: @external_tool_id, tool_config: @tool_config})
       expect(tool['consumer_key']).to eq('fake')
     end
   end
 
-  describe "create_course_lti_tool" do
-    it "should find installed LTI tools for the given course" do
-      tool = @api.create_course_lti_tool(@course_id, @tool_config)
+  describe "create course lti tool" do
+    it "should create a new LTI tool install for the given course" do
+      tool = @api.proxy("CREATE_EXTERNAL_TOOL_COURSES", {
+        course_id: @course_id,
+        external_tool_id: @external_tool_id,
+        name: "test tool",
+        privacy_level: "public",
+        consumer_key: "thekey",
+        shared_secret: "thisisasecret"
+      })
       expect(tool['consumer_key']).to eq('fake')
     end
   end
@@ -214,7 +223,7 @@ describe Canvas do
       params = {
         action: "test",
         controller: "test",
-        per_page: 100, 
+        per_page: 100,
         "include": ["lti_guid", "registration_settings"]
       }
       url = Canvas.canvas_url("LIST_ACCOUNTS", params)
@@ -230,7 +239,7 @@ describe Canvas do
       url = Canvas.canvas_url("LIST_ACTIVE_COURSES_IN_ACCOUNT", params)
       expect(url).to eq("accounts/1/courses?with_enrollments=true")
     end
-    
+
     it "only allows query params in the query" do
       id = 5
       course_id = 6

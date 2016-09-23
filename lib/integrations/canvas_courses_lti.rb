@@ -1,10 +1,10 @@
-module Integrations 
+module Integrations
 
   class CanvasCoursesLti < CanvasBaseLti
 
     def self.courses(canvas_authentication, lti_launch_url)
       api = Canvas.new(canvas_authentication.provider_url, canvas_authentication.token)
-      
+
       allowed_enrollments = %w(teacher ta designer)
       allowed_courses = []
       already_courses = []
@@ -30,7 +30,7 @@ module Integrations
       config_xml = Lti::Canvas.config_xml(lti_options)
 
       api = Canvas.new(provider_url, token)
-      existing_tools = api.get_course_lti_tools(course['id'])
+      existing_tools = api.proxy("LIST_EXTERNAL_TOOLS_COURSES", {course_id: course['id']})
 
       # Reset config for each iteration since we might not want the key and secret
       tool_config = {
@@ -47,11 +47,11 @@ module Integrations
           tool_config["shared_secret"] = shared_secret
         end
         # Important! If lti_connected_resource is valid then don't update the 'oauth_consumer_key' or else external identifiers will break.
-        api.update_course_lti_tool(course["id"], id, tool_config)
+        api.proxy("EDIT_EXTERNAL_TOOL_COURSES", { course_id: course['id'], external_tool_id: id }, tool_config)
       else
         tool_config["consumer_key"] = consumer_key
         tool_config["shared_secret"] = shared_secret
-        api.create_course_lti_tool(course["id"], tool_config)
+        api.proxy("CREATE_EXTERNAL_TOOL_COURSES", { course_id: course['id'] }, tool_config)
       end
 
     end

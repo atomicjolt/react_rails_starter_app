@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe LtiInstallsController, type: :controller do
-  
+
   before do
     @account = FactoryGirl.create(:account)
     allow(controller).to receive(:current_account).and_return(@account)
   end
 
   login_user
-  
+
   describe "GET new" do
     context "user has not authenticated with canvas" do
       it "redirects the user to the canvas authentication page" do

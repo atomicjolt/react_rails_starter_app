@@ -16,14 +16,17 @@ class Section < ActiveRecord::Base
     course = self.course
 
     old_students = Hash[self.students.collect { |student| [student.lms_user_id, student] }]
-    # puts "Users in db: #{old_students.count}"
 
-    canvas_students = api.section_students_and_observers(self.lms_section_id, "avatar_url")
-    # puts "Users in canvas: #{canvas_students.count}"
+    canvas_students = api.proxy("LIST_USERS_IN_COURSE_USERS", {
+      course_id: self.lms_section_id,
+      enrollment_type: ["student", "observer"],
+      include: ["avatar_url"]
+    }, nil, true)
 
     num_added_students = 0
 
     canvas_students.each do |canvas_student|
+
       student = canvas_student['user']
       if old_students.has_key?(student['id'].to_s)
 
