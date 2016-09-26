@@ -33,3 +33,28 @@ task :lti_test_params, [:lti_launch_url] => :environment do |t, args|
   puts "--------------------------------------"
   puts lti_params({"launch_url" => url}).to_json
 end
+
+def remove_tool(api, id_type, list_constant, constant, remove_tools)
+  api.proxy(list_constant, {}, nil, true) do |results|
+    results.each do |result|
+      external_tools = api.proxy("LIST_EXTERNAL_TOOLS_#{constant}", {id_type => result['id']}, nil, true)
+      external_tools.each do |external_tool|
+        puts "Removing LTI tool: #{external_tool["name"]}"
+        if remove_tools.include?(external_tool["name"])
+          #result = api.proxy("DELETE_EXTERNAL_TOOL_#{constant}", {id_type => result['id'], external_tool_id: external_tool['id']})
+        end
+      end
+    end
+  end
+end
+
+desc "Remove all installs of the LTI tool"
+task :lti_destroy_all => :environment do |t|
+  remove_tools = [] # Add the names of LTI tools that you wish to remove to this array.
+  puts "Removing lti tools"
+  Account.find_each do |account|
+    api = account.canvas_api
+    remove_tool(api, :course_id, "LIST_YOUR_COURSES", "COURSES", remove_tools)
+    remove_tool(api, :account_id, "LIST_ACCOUNTS", "ACCOUNTS", remove_tools)
+  end
+end
