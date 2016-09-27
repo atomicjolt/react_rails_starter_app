@@ -67,22 +67,6 @@ class Canvas
     end
   end
 
-  def refreshably
-    result = yield
-    check_result(result)
-  rescue Canvas::RefreshTokenRequired => ex
-    raise ex if @refresh_token_options.blank?
-    Authentication.transaction do
-      authentication = Authentication.lock.find(@authentication.id)
-      if authentication.token == @authentication.token
-        refresh_token
-      else
-        @authentication = authentication
-      end
-    end
-    retry
-  end
-
   def api_get_all_request(api_url, additional_headers = {})
     connector = api_url.include?('?') ? '&' : '?'
     next_url = "#{api_url}#{connector}per_page=#{@per_page}"
@@ -103,6 +87,22 @@ class Canvas
       yield result
       next_url = get_next_url(result.headers['link'])
     end
+  end
+
+  def refreshably
+    result = yield
+    check_result(result)
+  rescue Canvas::RefreshTokenRequired => ex
+    raise ex if @refresh_token_options.blank?
+    Authentication.transaction do
+      authentication = Authentication.lock.find(@authentication.id)
+      if authentication.token == @authentication.token
+        refresh_token
+      else
+        @authentication = authentication
+      end
+    end
+    retry
   end
 
   def refresh_token
