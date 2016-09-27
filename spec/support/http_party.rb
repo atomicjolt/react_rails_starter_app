@@ -3,6 +3,11 @@ def http_party_get_response(code = 200, code_response = 'OK', body = '{"foo" : "
   http_party_response(code, code_response, body, request_object, headers)
 end
 
+def http_party_delete_response(code = 200, code_response = 'OK', body = '{"foo" : "bar_get"}', headers = {})
+  request_object = HTTParty::Request.new Net::HTTP::Delete, '/'
+  http_party_response(code, code_response, body, request_object, headers)
+end
+
 def http_party_post_response(code = 200, code_response = 'OK', body = '{"foo" : "bar_post"}', headers = {})
   request_object = HTTParty::Request.new Net::HTTP::Post, '/'
   http_party_response(code, code_response, body, request_object, headers)

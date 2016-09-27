@@ -63,6 +63,14 @@ describe Canvas do
     end
   end
 
+  describe "api_delete_request" do
+    it "calls the given url with a DELETE request" do
+      result = http_party_delete_response
+      expect(HTTParty).to receive(:delete).with("#{@base_uri}/api/v1/courses", :headers => @api.headers).and_return(result)
+      @api.api_delete_request("courses")
+    end
+  end
+
   describe "api_get_request" do
     it "calls the given url with a GET request" do
       result = http_party_get_response

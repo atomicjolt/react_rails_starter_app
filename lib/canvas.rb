@@ -60,6 +60,13 @@ class Canvas
     end
   end
 
+  def api_delete_request(api_url, additional_headers = {})
+    url = full_url(api_url)
+    refreshably do
+      HTTParty.delete(url, headers: headers(additional_headers))
+    end
+  end
+
   def refreshably
     result = yield
     check_result(result)
@@ -157,6 +164,8 @@ class Canvas
       api_post_request(url, payload, additional_headers)
     when 'PUT'
       api_put_request(url, payload, additional_headers)
+    when 'DELETE'
+      api_delete_request(url, additional_headers)
     else
       raise "invalid method type"
     end
