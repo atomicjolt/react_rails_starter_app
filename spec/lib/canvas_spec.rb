@@ -119,7 +119,7 @@ describe Canvas do
     it "raises an exception for a standard Unauthorize 401" do
       result = http_party_get_response(401, 'OK', "")
       expect(HTTParty).to receive(:get).with("#{@base_uri}/api/v1/courses", :headers => @api.headers).and_return(result)
-      expect { @api.api_get_request("courses") }.to raise_exception(Canvas::UnauthorizedException)
+      expect { @api.api_get_request("courses") }.to raise_exception(Canvas::InvalidAPIRequestException)
     end
   end
 
@@ -187,17 +187,17 @@ describe Canvas do
       @payload = ""
       @additional_headers = ""
     end
-    it "should raise an UnauthorizedException if 401 not authorized" do
+    it "should raise an InvalidAPIRequestException if 401 not authorized" do
       result = http_party_get_response(401, 'Unauthorized')
-      expect { @api.check_result(result) }.to raise_exception(Canvas::UnauthorizedException)
+      expect { @api.check_result(result) }.to raise_exception(Canvas::InvalidAPIRequestException)
     end
-    it "should raise an NotFoundException if 404 not found" do
+    it "should raise an InvalidAPIRequestException if 404 not found" do
       result = http_party_get_response(404, 'Not Found')
-      expect { @api.check_result(result) }.to raise_exception(Canvas::NotFoundException)
+      expect { @api.check_result(result) }.to raise_exception(Canvas::InvalidAPIRequestException)
     end
-    it "should raise an InvalidRequestException if canvas call fails" do
+    it "should raise an InvalidAPIRequestException if canvas call fails" do
       result = http_party_get_response(500, 'Internal Server Error', '{"errors":"Something terrible"}')
-      expect { @api.check_result(result) }.to raise_exception(Canvas::InvalidRequestException)
+      expect { @api.check_result(result) }.to raise_exception(Canvas::InvalidAPIRequestException)
     end
     it "should return the result for a 200" do
       result = http_party_get_response
@@ -244,7 +244,7 @@ describe Canvas do
             :status => 401,
             :body => "",
             :headers => canvas_headers)
-        expect { @api.proxy("GET_SINGLE_ACCOUNT", {id: "self"}, nil, true) }.to raise_error
+        expect { @api.proxy("GET_SINGLE_ACCOUNT", {id: "self"}, nil, true) }.to raise_error(Canvas::InvalidAPIRequestFailedException)
       end
     end
 

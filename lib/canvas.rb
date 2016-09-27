@@ -111,26 +111,26 @@ class Canvas
     }.merge(@refresh_token_options)
     url = full_url("login/oauth2/token", false)
     result = HTTParty.post(url, headers: headers, body: payload)
-    raise Canvas::RefreshTokenFailedException, "Error: #{result['errors']}" unless [200, 201].include?(result.response.code.to_i)
+    raise Canvas::RefreshTokenFailedException, api_error(result) unless [200, 201].include?(result.response.code.to_i)
     @authentication.update_attributes(token: result['access_token'])
   end
 
   def check_result(result)
 
-    return result if [200, 201].include?(result.response.code.to_i)
+    code = result.response.code.to_i
+    return result if [200, 201].include?(code)
 
-    if result.response.code == '401'
-      if @refresh_token_options.present? && result.headers['www-authenticate'] == 'Bearer realm="canvas-lms"'
-        raise Canvas::RefreshTokenRequired
-      else
-        raise Canvas::UnauthorizedException, "#{result['errors']}, API Key: #{@authentication.token}"
-      end
-    elsif result.response.code == '404'
-      raise Canvas::NotFoundException, "#{result['errors']}, API Key: #{@authentication.token}"
-    else
-      raise Canvas::InvalidRequestException, "Status: #{result.response.code} Error: #{result['errors']}, API Key: #{@authentication.token}"
+    if code == 401 && @refresh_token_options.present? && result.headers['www-authenticate'] == 'Bearer realm="canvas-lms"'
+      raise Canvas::RefreshTokenRequired
     end
 
+    raise Canvas::InvalidAPIRequestException, api_error(result)
+  end
+
+  def api_error(result)
+    error = "Status: #{result.headers['status']} \n"
+    error << "Http Response: #{result.response.code} \n"
+    error << "Error: #{result['errors'] || result.response.message} \n"
   end
 
   def get_next_url(link)
@@ -167,8 +167,17 @@ class Canvas
     when 'DELETE'
       api_delete_request(url, additional_headers)
     else
-      raise "invalid method type"
+      raise Canvas::InvalidAPIMethodRequestException "Invalid method type: #{method}"
     end
+
+    rescue Canvas::InvalidAPIRequestException => ex
+      error = ex.to_s
+      error << "API Request Url: #{url} \n"
+      error << "API Request Params: #{params} \n"
+      error << "API Request Payload: #{payload} \n"
+      new_ex = Canvas::InvalidAPIRequestFailedException.new(error)
+      new_ex.set_backtrace(ex.backtrace)
+      raise new_ex
 
   end
 
@@ -259,13 +268,13 @@ class Canvas
   class RefreshTokenFailedException < Exception
   end
 
-  class UnauthorizedException < Exception
+  class InvalidAPIRequestException < Exception
   end
 
-  class InvalidRequestException < Exception
+  class InvalidAPIRequestFailedException < Exception
   end
 
-  class NotFoundException < Exception
+  class InvalidAPIMethodRequestException < Exception
   end
 
 end
