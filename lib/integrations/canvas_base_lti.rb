@@ -1,4 +1,4 @@
-module Integrations 
+module Integrations
 
   class CanvasBaseLti
 
@@ -11,7 +11,7 @@ module Integrations
     def self.find_tool(existing_tools, tool_launch_url)
       existing_tools.find{|t| t['url'] == tool_launch_url}
     end
-    
+
   end
 
 end

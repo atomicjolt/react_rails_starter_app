@@ -96,7 +96,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     def associated_using_oauth
-      # Used at the profile#edit to integrated other networks to the same account
       if user_signed_in?
         @user = current_user
         auth = request.env["omniauth.auth"]
@@ -110,9 +109,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if authentication
         if authentication.errors[:provider].length > 0
           user_link = 'user'
-          if previous_authentication = Authentication.find_by(provider: auth['provider'], uid: auth['uid'])
-            user_link = %Q{<a href="#{user_profile_path(previous_authentication.user)}">#{previous_authentication.user.display_name}</a>}
-          end
           message = "Another #{Rails.application.secrets.application_name} account: #{user_link} has already been associated with the specified #{auth['provider']} account."
         else
           message = authentication.errors.full_messages.join('<br />')

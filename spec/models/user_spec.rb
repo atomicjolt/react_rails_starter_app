@@ -16,19 +16,11 @@ describe User, type: :model do
 
   it { should belong_to(:account) }
 
-  it { should have_one(:profile) }
-
   it "should create a new instance given a valid attribute" do
     user = User.new(@attr)
     user.account = @account
     user.skip_confirmation!
     user.save!
-  end
-
-  describe "user profile" do
-    it "adds a profile after the user is created" do
-      expect(@user.profile).to be_present
-    end
   end
 
   it "should require an email address" do
@@ -177,16 +169,6 @@ describe User, type: :model do
     # end
     # describe "setup_authentication" do
     #   it "should create an authentication for the user using the provider" do
-    #   end
-    # end
-    # describe "associate_profile" do
-    #   it "should create a profile if it doesn't exist" do
-    #   end
-    #   it "should not create the profile if it doesn't exist" do
-    #   end
-    #   it "should set profile about from auth" do
-    #   end
-    #   it "should set profile website from auth" do
     #   end
     # end
     # describe "associate_account" do

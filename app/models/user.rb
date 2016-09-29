@@ -13,10 +13,6 @@ class User < ActiveRecord::Base
   has_many :courses, through: :user_courses
   has_many :sections, through: :courses
 
-  has_one :profile, :dependent => :destroy
-
-  after_create {|user| user.create_profile unless user.profile }
-
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
 
   def display_name
@@ -56,12 +52,10 @@ class User < ActiveRecord::Base
 
   def apply_oauth(auth)
     self.attributes = User.params_for_create(auth)
-    self.associate_profile(auth)
     self.setup_authentication(auth)
   end
 
   def update_oauth(auth)
-    self.associate_profile(auth)
     self.setup_authentication(auth)
   end
 
@@ -101,26 +95,12 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
-  def associate_profile(auth)
-    self.build_profile unless self.profile
-    self.profile.about ||= auth['info']['description']
-    self.profile.location ||= auth['info']['location']
-    if auth['info']['urls']
-      self.profile.website ||= auth['info']['urls']['Website']
-      self.profile.twitter ||= auth['info']['urls']['Twitter']
-      self.profile.facebook ||= auth['info']['urls']['Facebook']
-      self.profile.linkedin ||= auth['info']['urls']['public_profile']
-      self.profile.blog ||= auth['info']['urls']['Blog']
-    end
-  end
-
   def associate_oauth_account(auth)
     data = auth['info'] || {}
     name = data['name'] rescue nil
     name ||= "#{data['first_name']} #{data['last_name']}"
     self.name ||= name
     self.time_zone ||= (ActiveSupport::TimeZone[data['timezone'].try(:to_i)].name unless data['timezone'].blank? rescue nil)
-    self.associate_profile(auth)
     self.save!
     self.setup_authentication(auth)
   end

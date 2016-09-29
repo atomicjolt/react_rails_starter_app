@@ -62,27 +62,6 @@ class Initial < ActiveRecord::Migration
 
     add_index "permissions", ["role_id", "user_id"], name: "index_permissions_on_role_id_and_user_id", using: :btree
 
-    create_table "profiles", force: :cascade do |t|
-      t.integer  "user_id"
-      t.string   "location"
-      t.decimal  "lat",           precision: 15, scale: 10
-      t.decimal  "lng",           precision: 15, scale: 10
-      t.text     "about"
-      t.string   "city"
-      t.integer  "state_id"
-      t.integer  "country_id"
-      t.integer  "language_id"
-      t.integer  "profile_views"
-      t.text     "policy"
-      t.datetime "created_at",                              null: false
-      t.datetime "updated_at",                              null: false
-      t.string   "website"
-      t.string   "blog"
-      t.string   "twitter"
-      t.string   "facebook"
-      t.string   "linkedin"
-    end
-
     create_table "roles", force: :cascade do |t|
       t.string   "name"
       t.datetime "created_at"
@@ -153,8 +132,6 @@ class Initial < ActiveRecord::Migration
       t.string   "lti_key"
       t.string   "lti_secret"
       t.string   "provider_avatar"
-      t.string   "profile_privacy",                     default: "private"
-      t.string   "profile_privacy_token"
       t.string   "active_avatar",                       default: "none"
       t.boolean  "admin",                               default: false
       t.boolean  "super_admin",                         default: false
