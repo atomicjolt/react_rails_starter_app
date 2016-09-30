@@ -95,7 +95,7 @@ class Canvas
   rescue Canvas::RefreshTokenRequired => ex
     raise ex if @refresh_token_options.blank?
     Authentication.transaction do
-      authentication = Authentication.lock.find(@authentication.id)
+      authentication = Authentication.lock(true).find(@authentication.id)
       if authentication.token == @authentication.token
         refresh_token
       else
@@ -112,7 +112,8 @@ class Canvas
     url = full_url("login/oauth2/token", false)
     result = HTTParty.post(url, headers: headers, body: payload)
     raise Canvas::RefreshTokenFailedException, api_error(result) unless [200, 201].include?(result.response.code.to_i)
-    @authentication.update_attributes(token: result['access_token'])
+    @authentication.token = result['access_token']
+    @authentication.save!
   end
 
   def check_result(result)
