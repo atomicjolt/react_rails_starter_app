@@ -156,10 +156,11 @@ describe Canvas do
           thread1.run_until(:after_get_authentication_lock)
           thread2.run_until(:before_get_authentication_lock)
 
-# TODO we need to try to let thread 2 finish here. It should block until thread 1 has finished
-
-          thread1.finish
           thread2.finish
+          sleep(1)
+
+          thread1.finish_wait
+          thread2.finish_wait
 
         end
       end

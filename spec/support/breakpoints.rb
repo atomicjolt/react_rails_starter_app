@@ -42,8 +42,14 @@ class Breakpoints
       @block_to_run = block
     end
 
-    # Continue a thread to stop at the next breakpoint or finish running.
     def finish
+      Breakpoints.main_thread = ::Thread.current
+      @thread.wakeup
+      Breakpoints.main_thread.run
+    end
+
+    # Continue a thread to stop at the next breakpoint or finish running.
+    def finish_wait
       if @thread
         unless @thread.alive?
           breakpoints = @thread[:breakpoints] || []
