@@ -1,6 +1,6 @@
 require 'rails_helper'
 Capybara.default_driver = :selenium
-Capybara.default_wait_time = 30
+Capybara.default_max_wait_time = 30
 WebMock.allow_net_connect!
 Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
