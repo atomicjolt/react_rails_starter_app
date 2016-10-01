@@ -90,23 +90,16 @@ class Canvas
   end
 
   def refreshably
-    logger_id = rand(100000)
-    puts "#{logger_id} Canvas request with token: #{@authentication.token}"
     result = yield
     check_result(result)
   rescue Canvas::RefreshTokenRequired => ex
     raise ex if @refresh_token_options.blank?
     Authentication.transaction do
-      puts "#{logger_id} Before lock"
       authentication = get_authentication_lock
-      puts "#{logger_id} After lock before breakpoint"
-      puts "#{logger_id} After lock"
       if authentication.token == @authentication.token
-        puts "#{logger_id} Calling refresh token"
         authentication.token = refresh_token
         authentication.save!
       end
-      puts "#{logger_id} Updating from #{@authentication.token} to #{authentication.token}."
       @authentication = authentication
     end
     retry
