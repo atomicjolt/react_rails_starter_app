@@ -90,19 +90,30 @@ class Canvas
   end
 
   def refreshably
+    logger_id = rand(100000)
+    puts "#{logger_id} Canvas request with token: #{@authentication.token}"
     result = yield
     check_result(result)
   rescue Canvas::RefreshTokenRequired => ex
     raise ex if @refresh_token_options.blank?
     Authentication.transaction do
-      authentication = Authentication.lock(true).find(@authentication.id)
+      puts "#{logger_id} Before lock"
+      authentication = get_authentication_lock
+      puts "#{logger_id} After lock before breakpoint"
+      puts "#{logger_id} After lock"
       if authentication.token == @authentication.token
-        refresh_token
-      else
-        @authentication = authentication
+        puts "#{logger_id} Calling refresh token"
+        authentication.token = refresh_token
+        authentication.save!
       end
+      puts "#{logger_id} Updating from #{@authentication.token} to #{authentication.token}."
+      @authentication = authentication
     end
     retry
+  end
+
+  def get_authentication_lock
+    Authentication.lock(true).find(@authentication.id)
   end
 
   def refresh_token
@@ -112,13 +123,13 @@ class Canvas
     url = full_url("login/oauth2/token", false)
     result = HTTParty.post(url, headers: headers, body: payload)
     raise Canvas::RefreshTokenFailedException, api_error(result) unless [200, 201].include?(result.response.code.to_i)
-    @authentication.token = result['access_token']
-    @authentication.save!
+    result['access_token']
   end
 
   def check_result(result)
 
     code = result.response.code.to_i
+
     return result if [200, 201].include?(code)
 
     if code == 401 && @refresh_token_options.present? && result.headers['www-authenticate'] == 'Bearer realm="canvas-lms"'
