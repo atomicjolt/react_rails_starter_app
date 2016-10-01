@@ -1,3 +1,4 @@
+# From http://eng.flipp.com/breakpoints-a-ruby-class-for-testing-race-conditions/
 # Fail the spec if any thread throws an error
 ::Thread.abort_on_exception = true
 
