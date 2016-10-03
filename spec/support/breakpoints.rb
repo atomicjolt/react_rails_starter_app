@@ -30,6 +30,7 @@ class Breakpoints
       if ::Thread.current[:breakpoints] &&
         ::Thread.current[:breakpoints].include?(breakpoint)
           ::Thread.current[:breakpoints_reached] << breakpoint
+          puts "breaking on #{breakpoint}"
           self.main_thread.run
           ::Thread.stop
       end
@@ -43,9 +44,24 @@ class Breakpoints
     end
 
     def finish
-      Breakpoints.main_thread = ::Thread.current
-      @thread.wakeup
-      Breakpoints.main_thread.run
+      puts "Asked to finish a thread"
+      if @thread
+        puts "Thread already allocated... continuing"
+        unless @thread.alive?
+          puts "Doing some bookkeeping"
+          breakpoints = @thread[:breakpoints] || []
+          breakpoints_reached = @thread[:breakpoints_reached] || []
+          missed_breakpoints = breakpoints - breakpoints_reached
+          if missed_breakpoints.any?
+            raise "Breakpoint(s) #{missed_breakpoints.to_a.join(', ')}" +
+              "not reached!"
+          end
+        end
+        @thread.wakeup
+      else
+        puts "Thread not allocated; asking to run w/o breakpoint"
+        run
+      end
     end
 
     # Continue a thread to stop at the next breakpoint or finish running.
@@ -75,7 +91,7 @@ class Breakpoints
         @thread[:breakpoints] ||= Set.new
         @thread[:breakpoints_reached] ||= Set.new
         @thread[:breakpoints] << breakpoint
-        self.finish
+        self.finish_wait
         return
       end
 
@@ -98,5 +114,17 @@ class Breakpoints
       end
       ::Thread.stop
     end
+
+
+    # Run the thread without stopping
+    def run
+      puts "Asked to run w/o breakpoint"
+      Breakpoints.main_thread = ::Thread.current
+
+      @thread ||= ::Thread.new do
+        @block_to_run.call
+      end
+    end
+
   end
 end

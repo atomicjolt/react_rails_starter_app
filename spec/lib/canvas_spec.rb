@@ -129,6 +129,12 @@ describe Canvas do
         api.api_get_request("courses")
       end
 
+      it "raises Canvas::RefreshTokenRequired if options are not provided" do
+        api = Canvas.new(@canvas_authentication.provider_url, @canvas_authentication)
+        expect(HTTParty).to receive(:get).with("#{@base_uri}/api/v1/courses", headers: @api.headers).and_return(@initial_result)
+        expect { api.api_get_request("courses") }.to raise_exception(Canvas::RefreshTokenRequired)
+      end
+
       describe "concurrent requests" do
         after(:each) do
           ActiveRecord::Base.connection_pool.disconnect!
@@ -147,8 +153,9 @@ describe Canvas do
           end
 
           thread2 = Breakpoints::Thread.new do
-          api = Canvas.new(@canvas_authentication.provider_url, @canvas_authentication, @options)
+            api = Canvas.new(@canvas_authentication.provider_url, @canvas_authentication, @options)
             expect(HTTParty).to receive(:get).with("#{@base_uri}/api/v1/courses", headers: api.headers).and_return(@initial_result)
+            expect(HTTParty).not_to receive(:post)
             expect(HTTParty).to receive(:get).with("#{@base_uri}/api/v1/courses", headers: api.headers.merge({"Authorization"=>"Bearer anewtoken"})).and_return(@final_result)
             api.api_get_request("courses")
           end
