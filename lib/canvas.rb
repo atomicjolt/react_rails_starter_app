@@ -125,7 +125,7 @@ class Canvas
 
     return result if [200, 201].include?(code)
 
-    if code == 401 && @refresh_token_options.present? && result.headers['www-authenticate'] == 'Bearer realm="canvas-lms"'
+    if code == 401 && result.headers['www-authenticate'] == 'Bearer realm="canvas-lms"'
       raise Canvas::RefreshTokenRequired
     end
 
