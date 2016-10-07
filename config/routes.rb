@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   }
 
   as :user do
-    get   '/auth/failure'         => 'sessions#new'
+    get     '/auth/failure'         => 'sessions#new'
     get     'users/auth/:provider'  => 'users/omniauth_callbacks#passthru'
     get     'sign_in'               => 'sessions#new'
     post    'sign_in'               => 'sessions#create'
@@ -34,7 +34,5 @@ Rails.application.routes.draw do
     end
     resources :jwts
   end
-
-  mount MailPreview => 'mail_view' if Rails.env.development?
 
 end
