@@ -6,12 +6,19 @@ set -o pipefail
 
 # If need be nginx can proxy to another ip eg for docker env, or virtual machine
 
+if [ ! -f .env ]; then
+    echo ".env file not found!"
+    exit 1
+fi
+
 set -a
 source .env
 set +a
 
-# Create config file for the app / site.
+# Bootstrap the site - sets up symlinks to database.yml, etc. Be sure to set the correct dropbox folder in bootstrap first.
+bin/bootstrap
 
+# Create config file for the app / site.
 cat > "/usr/local/etc/nginx/servers/${APP_SUBDOMAIN}.conf" <<-EOF
 server {
     listen *:443;
