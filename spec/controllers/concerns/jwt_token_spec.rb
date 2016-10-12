@@ -3,7 +3,7 @@ require "rails_helper"
 describe ApplicationController, type: :controller do
 
   controller do
-    include JwtToken
+    include Concerns::JwtToken
 
     before_action :validate_token
     respond_to :json

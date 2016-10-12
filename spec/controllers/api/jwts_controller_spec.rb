@@ -26,7 +26,7 @@ RSpec.describe Api::JwtsController, type: :controller do
   end
 
   describe 'includes JwtToken' do
-    it { expect(Api::JwtsController.ancestors.include? JwtToken).to eq(true) }
+    it { expect(Api::JwtsController.ancestors.include? Concerns::JwtToken).to eq(true) }
   end
 
 end

@@ -1,6 +1,6 @@
 class Api::JwtsController < ApplicationController
 
-  include JwtToken
+  include Concerns::JwtToken
 
   before_action :validate_token
 
