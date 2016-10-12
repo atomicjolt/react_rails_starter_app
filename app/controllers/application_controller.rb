@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  helper_method :current_account
-
   protected
 
     rescue_from CanCan::AccessDenied do |exception|
@@ -72,7 +70,6 @@ class ApplicationController < ActionController::Base
   private
 
     def current_ability
-      @current_ability ||= Ability.new(current_user, current_account)
     end
 
     def user_not_authorized
