@@ -2,7 +2,7 @@
 
 # Meant to be run from root directory of project
 # ./bin/bootstrap
-DROPBOX_FOLDER=aj-dev/react_starter_app
+DROPBOX_FOLDER=aj-dev/react_rails_starter_app
 
 # All config files for project
 files=("config/secrets.yml" "config/database.yml")

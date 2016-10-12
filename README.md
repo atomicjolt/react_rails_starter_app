@@ -1,13 +1,13 @@
-# React Starter App
+# React Rails Starter App
 -----------------------
 This project provides a starting point for building a React or OAuth application using Ruby on Rails as a backend.
 There are many starter kits that will help you get started with React and Redux. This is the one created by, maintained by and used by [Atomic Jolt](http://www.atomicjolt.com). 
 
 
-## Build a new application using the React Starter App Rails application template:
-rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_starter_app/master/template.rb
+## Build a new application using the React Rails Starter App Rails application template:
+rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_rails_starter_app/master/template.rb
 
-## Running React Starter App
+## Running React Rails Starter App
 
 ### With Foreman
 Foreman makes it simple to startup all the services required to run the application in development mode. To start the application using foreman simply run:
@@ -26,12 +26,10 @@ If you need to run services individually or just don't like Foreman you can run 
 
 ```
 $ rails server
-$ cd client && nodemon webpack.hot.js
-$ ngrok --subdomain master_assets --log stdout 8080
-$ ngrok --subdomain reactstarterapp --log stdout 3000
+$ npm run hot
 ```
 
-## Setting up React Starter App
+## Setting up React Rails Starter App
 
 ### File Modifications
 
@@ -41,9 +39,9 @@ Rename `.env.example` to `.env` and configure it to your liking.
 Note: the App and Assets subdomains must be different.
 
 #### Modify application name
-1. Open application.rb and change `ReactStarterApp` to the name you choose.
-2. Do a global search and replace for `react_starter_app` and change it to the name you choose.
-3. Do a global search and replace for `reactstarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
+1. Open application.rb and change `reactrailsstarterapp` to the name you choose.
+2. Do a global search and replace for `react_rails_starter_app` and change it to the name you choose.
+3. Do a global search and replace for `reactrailsstarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
 ## Assets
 -----------
 Any files added to the assets directory can be used by in code and assigned to a variable. This
@@ -95,13 +93,6 @@ This application requires:
 
 Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
 
-#### NGROK
-To test your application with an OAuth provider you will need to provide a public SSL url. The simpliest way to do this is to use ngrok which can be downloaded from [ngrok](https://ngrok.io/).
-
-Running 'ngrok --subdomain reactstarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
-
-`https://reactstarterapp.ngrok.io`
-
 #### Webpack
 Packs CommonJs/AMD modules for the browser.
 ```
@@ -116,34 +107,28 @@ To get started run:
 $ npm install
 ```
 
-##### npm-shrinkwrap
-[npm-shrinkwrap](https://github.com/uber/npm-shrinkwrap) is used to lock specific versions.
-npm-shrinkwrap.json is included in the project. To verify your package.json & node_modules tree are in sync run:
+or if you have yarn installed:
 
 ```
-$ npm shrinkwrap
+$ yarn
 ```
+
 
 To find outdated modules run:
 
 ```
-$ npm outdated
+$ npm-check-updates
 ```
 
-Packages must be updated manually. For example:
+Updated packages by passing -u
 
 ```
-$ npm update lodash
+$ npm-check-updates -u
 ```
 
-After updating be sure to run shrinkwrap again:
-
-```
-$ npm shrinkwrap
-```
 
 #### React
-The React Starter App uses React. During development run the [React Hot Loader](https://github.com/gaearon/react-hot-loader).
+The React Rails Starter App uses React.
 
 
 ### <a name="seeds"></a>Setting up Database
@@ -172,15 +157,15 @@ $ rake db:seed
 ### <a name="developer_key"></a>Setting up OAuth
 
 Visit the provider (Facebook, Twitter, Google, etc) to obtain an OAuth key and secret. Most of the fields will be specific to your organization. 
-The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `reactstarterapp.ngrok.io` with your domain. 
+The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `reactrailsstarterapp.ngrok.io` with your domain. 
 You will need an ID and secret for development and for production. The
 development URI will use ngrok while the production URI will use your domain.
 
 **Oauth2 Redirect URI:**
-https://reactstarterapp.ngrok.io/auth/[provider]/callback
+https://reactrailsstarterapp.ngrok.io/auth/[provider]/callback
 
 **Icon URL:**
-https://reactstarterapp.ngrok.io/oauth_icon.png
+https://reactrailsstarterapp.ngrok.io/oauth_icon.png
 
 Once your request is approved you will receive a Key and Secret. Add these credentials to the `config/secrets.yml`.
 

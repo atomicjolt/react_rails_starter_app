@@ -1,12 +1,12 @@
 # run with:
-# rails new my_app -m ./react_starter_app/template.rb
-# rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_starter_app/master/template.rb
+# rails new my_app -m ./react_rails_starter_app/template.rb
+# rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_rails_starter_app/master/template.rb
 
 require "fileutils"
 require "securerandom"
 
-#repo = "git@github.com:atomicjolt/react_starter_app.git"
-repo = "https://github.com/atomicjolt/react_starter_app.git"
+#repo = "git@github.com:atomicjolt/react_rails_starter_app.git"
+repo = "https://github.com/atomicjolt/react_rails_starter_app.git"
 
 # keep track if the initial directory
 @working_dir = destination_root
@@ -121,15 +121,15 @@ modify_files << ".ruby-gemset"
 
 modify_files.each do |f|
   
-  gsub_file(f, "react_starter_app") do |match|
+  gsub_file(f, "react_rails_starter_app") do |match|
     app_name.underscore
   end
 
-  gsub_file(f, "ReactStarterApp") do |match|
+  gsub_file(f, "reactrailsstarterapp") do |match|
     app_name.titleize.gsub(' ', '')
   end
 
-  gsub_file(f, "reactstarterapp") do |match|
+  gsub_file(f, "reactrailsstarterapp") do |match|
     url_safe_name
   end
 
