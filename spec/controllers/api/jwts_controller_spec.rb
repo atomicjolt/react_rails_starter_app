@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Api::JwtsController, type: :controller do
 
   before do
-    @user = FactoryGirl.create(:user, account: @account)
+    @user = FactoryGirl.create(:user)
     @user.confirm
     @user_token = AuthToken.issue_token({ user_id: @user.id })
   end

@@ -1,4 +1,4 @@
-class ExternalIdentifier < ActiveRecord::Base
+class ExternalIdentifier < ApplicationRecord
 
   belongs_to :user
 

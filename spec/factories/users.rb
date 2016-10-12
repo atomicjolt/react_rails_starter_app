@@ -4,7 +4,6 @@ FactoryGirl.define do
     name { FactoryGirl.generate(:name) }
     email { FactoryGirl.generate(:email) }
     password { FactoryGirl.generate(:password) }
-    account
     after(:build) { |user| user.confirm }
 
     factory :user_facebook do

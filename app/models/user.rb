@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -15,14 +15,6 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :roles, :through => :permissions
 
-  has_many :user_accounts
-  has_many :accounts, through: :user_accounts
-  belongs_to :account
-
-  has_one :profile, :dependent => :destroy
-
-  after_create {|user| user.create_profile unless user.profile }
-
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
 
   def display_name
@@ -31,10 +23,6 @@ class User < ActiveRecord::Base
 
   def set_default_role
     self.role ||= :user
-  end
-
-  def add_account(account)
-    self.accounts << account unless self.accounts.include?(account)
   end
 
   ####################################################
@@ -48,12 +36,10 @@ class User < ActiveRecord::Base
 
   def apply_oauth(auth)
     self.attributes = User.params_for_create(auth)
-    self.associate_profile(auth)
     self.setup_authentication(auth)
   end
 
   def update_oauth(auth)
-    self.associate_profile(auth)
     self.setup_authentication(auth)
   end
 
@@ -93,26 +79,12 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
-  def associate_profile(auth)
-    self.build_profile unless self.profile
-    self.profile.about ||= auth['info']['description']
-    self.profile.location ||= auth['info']['location']
-    if auth['info']['urls']
-      self.profile.website ||= auth['info']['urls']['Website']
-      self.profile.twitter ||= auth['info']['urls']['Twitter']
-      self.profile.facebook ||= auth['info']['urls']['Facebook']
-      self.profile.linkedin ||= auth['info']['urls']['public_profile']
-      self.profile.blog ||= auth['info']['urls']['Blog']
-    end
-  end
-
   def associate_account(auth)
     data = auth['info'] || {}
     name = data['name'] rescue nil
     name ||= "#{data['first_name']} #{data['last_name']}"
     self.name ||= name
     self.time_zone ||= (ActiveSupport::TimeZone[data['timezone'].try(:to_i)].name unless data['timezone'].blank? rescue nil)
-    self.associate_profile(auth)
     self.save!
     self.setup_authentication(auth)
   end
@@ -148,22 +120,8 @@ class User < ActiveRecord::Base
     self.roles << role if !self.roles.include?(role) # Make sure that the user can only be put into a role once
   end
 
-  def make_account_admin(options)
-    if user_account = self.user_accounts.find_by(account_id: options[:account_id])
-      user_account.update_attribute(:role, 'account_administrator')
-    else
-      self.user_accounts.create!(account_id: options[:account_id], role: 'account_administrator')
-    end
-  end
-
   def admin?
     self.role?('administrator')
-  end
-
-  def account_admin?(account)
-    return true if self.role?('administrator')
-    account = Account.find_by(code: account) unless account.instance_of?(Account)
-    return true if account && self.user_accounts.where(role: 'account_administrator', account_id: account.id).any?
   end
 
   def can_edit?(user)
