@@ -20,20 +20,6 @@ class ApplicationController < ActionController::Base
     end
 
     # **********************************************
-    # Admin methods
-    #
-    def check_admin
-      if !current_user.admin?
-        respond_to do |format|
-          format.json {
-            render json: { error: "Unauthorized: User not allowed to access requested resource." }, status: :unauthorized
-          }
-        end
-      end
-    end
-
-
-    # **********************************************
     #
     # OAuth related functionality:
     #
