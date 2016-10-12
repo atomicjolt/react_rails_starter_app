@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312162723) do
+ActiveRecord::Schema.define(version: 20120209004849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,50 +34,16 @@ ActiveRecord::Schema.define(version: 20150312162723) do
     t.string   "encrypted_refresh_token"
     t.string   "encrypted_refresh_token_salt"
     t.string   "encrypted_refresh_token_iv"
+    t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid", using: :btree
+    t.index ["user_id"], name: "index_authentications_on_user_id", using: :btree
   end
-
-  add_index "authentications", ["provider", "uid"], name: "index_authentications_on_provider_and_uid", using: :btree
-  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
-
-  create_table "external_identifiers", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "identifier"
-    t.string   "provider"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "external_identifiers", ["identifier", "provider"], name: "index_external_identifiers_on_identifier_and_provider", using: :btree
-  add_index "external_identifiers", ["user_id"], name: "index_external_identifiers_on_user_id", using: :btree
 
   create_table "permissions", force: :cascade do |t|
     t.integer  "role_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  add_index "permissions", ["role_id", "user_id"], name: "index_permissions_on_role_id_and_user_id", using: :btree
-
-  create_table "profiles", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "location"
-    t.decimal  "lat",           precision: 15, scale: 10
-    t.decimal  "lng",           precision: 15, scale: 10
-    t.text     "about"
-    t.string   "city"
-    t.integer  "state_id"
-    t.integer  "country_id"
-    t.integer  "language_id"
-    t.integer  "profile_views"
-    t.text     "policy"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.string   "website"
-    t.string   "blog"
-    t.string   "twitter"
-    t.string   "facebook"
-    t.string   "linkedin"
+    t.index ["role_id", "user_id"], name: "index_permissions_on_role_id_and_user_id", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
@@ -106,7 +71,6 @@ ActiveRecord::Schema.define(version: 20150312162723) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.integer  "role"
-    t.integer  "account_id"
     t.string   "username"
     t.string   "avatar"
     t.string   "time_zone",              default: "UTC"
@@ -115,10 +79,8 @@ ActiveRecord::Schema.define(version: 20150312162723) do
     t.string   "profile_privacy",        default: "private"
     t.string   "profile_privacy_token"
     t.string   "active_avatar",          default: "none"
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["account_id"], name: "index_users_on_account_id", using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
