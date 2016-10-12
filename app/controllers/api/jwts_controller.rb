@@ -1,7 +1,6 @@
 class Api::JwtsController < ApplicationController
 
-  # Require our abstraction for encoding/deconding JWT.
-  require 'auth_token'
+  include JwtToken
 
   before_action :validate_token
 
