@@ -4,28 +4,24 @@ describe User, type: :model do
 
   before do
     @user = FactoryGirl.create(:user)
-    @account = FactoryGirl.create(:account)
     @attr = {
       :name => "Example User",
       :email => "user@example.com",
       :password => "foobar888",
-      :password_confirmation => "foobar888",
-      :account_id => @account.id
+      :password_confirmation => "foobar888"
     }
   end
 
-  it { should belong_to(:account) }
+  it { should have_many(:external_identifiers) }
 
   it "should create a new instance given a valid attribute" do
     user = User.new(@attr)
-    user.account = @account
     user.skip_confirmation!
     user.save!
   end
 
   it "should require an email address" do
     no_email_user = User.new(@attr.merge(:email => ""))
-    no_email_user.account = @account
     expect(no_email_user).to be_invalid
   end
 
@@ -33,7 +29,6 @@ describe User, type: :model do
     addresses = %w[user@foo.com THE_USER@foo.bar.org first.last@foo.jp]
     addresses.each do |address|
       valid_email_user = User.new(@attr.merge(:email => address))
-      valid_email_user.account = @account
       expect(valid_email_user).to be_valid
     end
   end
@@ -42,7 +37,6 @@ describe User, type: :model do
     addresses = %w[user@foo,com user_at_foo.org example.user@foo.]
     addresses.each do |address|
       invalid_email_user = User.new(@attr.merge(:email => address))
-      invalid_email_user.account = @account
       expect(invalid_email_user).to be_invalid
     end
   end
@@ -50,7 +44,6 @@ describe User, type: :model do
   it "should reject duplicate email addresses" do
     user = FactoryGirl.create(:user)
     user_with_duplicate_email = User.new(@attr.merge(:email => user.email))
-    user_with_duplicate_email.account = @account
     expect(user_with_duplicate_email).to be_invalid
   end
 
@@ -58,14 +51,12 @@ describe User, type: :model do
     email = 'a_random_uppercase_email@example.com'
     user = FactoryGirl.create(:user, :email => email)
     user_with_duplicate_email = User.new(@attr.merge(:email => email.upcase))
-    user_with_duplicate_email.account = @account
     expect(user_with_duplicate_email).to be_invalid
   end
 
   it "should raise an exception if an attempt is made to write a duplicate email to the database" do
     user = FactoryGirl.create(:user)
     user_with_duplicate_email = User.new(@attr.merge(:email => user.email))
-    user_with_duplicate_email.account = @account
     expect {
       user_with_duplicate_email.save(:validate => false)
     }.to raise_error(ActiveRecord::RecordNotUnique)
@@ -90,7 +81,6 @@ describe User, type: :model do
 
     it "should require a matching password confirmation" do
       user = User.new(@attr.merge(:password_confirmation => "invalid"))
-      user.account = @account
       expect(user).to be_invalid
     end
 
@@ -98,7 +88,6 @@ describe User, type: :model do
       short = "a" * 5
       hash = @attr.merge(:password => short, :password_confirmation => short)
       user = User.new(hash)
-      user.account = @account
       expect(user).to be_invalid
     end
 
@@ -207,6 +196,25 @@ describe User, type: :model do
         auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @email, 'url' => provider_url})
         auth = @user.setup_authentication(auth)
         expect(auth.provider_url).to eq('http://foo.example.com')
+      end
+    end
+  end
+
+  describe "roles" do
+    describe "add_to_role" do
+      it "adds the user to given role" do
+        user = FactoryGirl.create(:user)
+        user.add_to_role('thefoo')
+        expect(user.role?('thefoo')).to be true
+      end
+    end
+    describe "any_role?" do
+      it "checks to see if the user is any of the specified roles" do
+        user = FactoryGirl.create(:user)
+        user.add_to_role('thefoo')
+        user.add_to_role('thewall')
+        expect(user.any_role?('thewall', 'brick')).to be true
+        expect(user.any_role?('brick', 'foo')).to be false
       end
     end
   end

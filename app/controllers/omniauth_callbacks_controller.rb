@@ -69,8 +69,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   protected
 
+    # Check for OAuth errors
     def verify_oauth_response
-      # Check for OAuth errors
       if request.env["omniauth.auth"].blank?
 
         error_type = env['omniauth.error.type']
@@ -95,6 +95,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     end
 
+    # Used to associate other OAuth accounts to the same account
     def associated_using_oauth
       if user_signed_in?
         @user = current_user
@@ -120,6 +121,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to after_sign_in_path_for(current_user)
     end
 
+    # Try to find an existing user via the oauth request
     def find_using_oauth
       return if @user # Previous filter was successful and we already have a user
       @user = User.find_for_oauth(request.env["omniauth.auth"])

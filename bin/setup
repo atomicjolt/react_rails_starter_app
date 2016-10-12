@@ -18,7 +18,7 @@ set +a
 # Bootstrap the site - sets up symlinks to database.yml, etc. Be sure to set the correct dropbox folder in bootstrap first.
 bin/bootstrap
 
-# Create nginx config file for the app / site.
+# Create config file for the app / site.
 cat > "/usr/local/etc/nginx/servers/${APP_SUBDOMAIN}.conf" <<-EOF
 server {
     listen *:443;

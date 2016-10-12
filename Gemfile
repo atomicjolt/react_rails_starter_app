@@ -6,26 +6,22 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7'
+gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 
 # Database
 gem "pg"
 
 # UI
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
-gem 'bootstrap-sass'
-gem 'font_assets', github: 'atomicjolt/font_assets' # sets headers and mimetypes for fonts in the asset pipeline
 gem 'autoprefixer-rails'
 gem 'non-stupid-digest-assets' # also compile assets without digest (fixes font problem)
-gem "bower-rails"
 
 # authentication, authorization, integrations
 gem 'devise'
-gem 'omniauth', '~> 1.3.1'
+gem 'omniauth'
 gem 'omniauth-canvas', '~> 0.1.2' #, :path => '~/projects/omniauth-canvas'
-gem 'oauth', '~> 0.4.7'
+gem 'oauth', '~> 0.5.0'
 gem 'ims-lti', '~> 1.1.12' # IMS LTI tool consumers and providers
 gem 'cancancan'
 gem 'rolify'
@@ -38,43 +34,38 @@ gem 'sendgrid'
 # JSON parser
 gem 'yajl-ruby', require: 'yajl'
 
-# deployment
-gem 'unicorn'
-gem 'unicorn-rails'
+# server
+gem 'puma', '~> 3.0'
+#gem 'unicorn'
+#gem 'unicorn-rails'
 
 # Used for deploying to Heroku. Can be removed if not deploying to Heroku.
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 # API Related
-gem 'httparty', '~> 0.13.5'
+gem 'httparty'
 gem 'rack-cors', :require => 'rack/cors'
 
 # Paging
-gem 'will_paginate', '~> 3.0.6'
+gem 'will_paginate'
 
 group :development do
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem 'web-console'
+  gem 'listen', '~> 3.0.5'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'better_errors'
-  gem 'binding_of_caller', :platforms=>[:mri_21]
+  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'better_errors'      # Modifies default Rails error page to be more useful
+  gem 'binding_of_caller'  # Used by better_errors gem
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-rspec'
-  gem 'hub', :require=>nil
-  gem 'mail_view'
-  gem 'mailcatcher'
-  gem 'quiet_assets'
-  gem 'rails_apps_pages'
-  gem 'rails_apps_testing'
-  gem 'rails_layout'
-  gem 'rb-fchange', :require=>false
-  gem 'rb-fsevent', :require=>false
-  gem 'rb-inotify', :require=>false
-  gem 'nokogiri'
 end
 
 group :development, :test do
+  gem 'byebug', platform: :mri
   gem 'dotenv-rails'
-  gem 'byebug'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rspec-rails'
@@ -87,10 +78,11 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'webmock'
-  gem 'vcr'
 end
 
 group :production do
   gem 'rails_12factor'
 end
 
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -1,4 +1,5 @@
 class SessionsController < Devise::SessionsController
+
   # Require our abstraction for encoding/deconding JWT.
   require 'auth_token'
 

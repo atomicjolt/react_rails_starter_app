@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   as :user do
     get     '/auth/failure'         => 'sessions#new'
-    get     'auth/:provider'        => 'omniauth_callbacks#passthru'
+    get     'users/auth/:provider'  => 'users/omniauth_callbacks#passthru'
     get     'sign_in'               => 'sessions#new'
     post    'sign_in'               => 'sessions#create'
     get     'sign_up'               => 'devise/registrations#new'
@@ -49,7 +49,7 @@ Rails.application.routes.draw do
     resources :accounts do
       resources :users
     end
-    resources :sessions
+    resources :jwts
     resources :courses, only: [] do
       resources :students, only: [:index]
       resources :sections, only: [] do

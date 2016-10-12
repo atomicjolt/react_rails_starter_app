@@ -31,7 +31,7 @@ If you need to run services individually or just don't like Foreman you can run 
 
 ```
 $ rails server
-$ cd client && nodemon webpack.hot.js
+$ npm run hot
 ```
 
 ## Setting up LTI Starter App
@@ -112,13 +112,6 @@ This application requires:
 
 Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
 
-#### NGROK (optional)
-To test your application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to use ngrok which can be downloaded from [ngrok](https://ngrok.com/).
-
-Running 'ngrok --subdomain ltistarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
-
-`https://ltistarterapp.ngrok.com`
-
 #### Webpack
 Packs CommonJs/AMD modules for the browser.
 ```
@@ -133,40 +126,25 @@ To get started run:
 $ npm install
 ```
 
-##### npm-shrinkwrap
-[npm-shrinkwrap](https://github.com/uber/npm-shrinkwrap) is used to lock specific versions.
-npm-shrinkwrap.json is included in the project. To verify your package.json & node_modules tree are in sync run:
+or if you have yarn installed:
 
 ```
-$ npm shrinkwrap
+$ yarn
 ```
 
-##### npm-check-updates
-[npm-check-updates](https://www.npmjs.com/package/npm-check-updates) is used to find out of date modules and automatically update them.
-To find outdated modules install npm-check-updates:
 
-```
-$ npm install -g npm-check-updates
-```
-
-and then run:
+To find outdated modules run:
 
 ```
 $ npm-check-updates
 ```
 
-to update all out of date packages run:
+Updated packages by passing -u
 
 ```
 $ npm-check-updates -u
 ```
 
-
-After updating be sure to run shrinkwrap again:
-
-```
-$ npm shrinkwrap
-```
 
 #### React
 Most LTI applications need to be single page applications in order to avoid a bug that prevents cookies from being written in some

@@ -4,7 +4,6 @@ FactoryGirl.define do
     name { FactoryGirl.generate(:name) }
     email { FactoryGirl.generate(:email) }
     password { FactoryGirl.generate(:password) }
-    account
     after(:build) { |user| user.confirm }
     after(:create) { |user| 
       FactoryGirl.create(:authentication, user_id: user.id, provider_url: user.account.canvas_uri) 

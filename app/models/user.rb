@@ -1,17 +1,19 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
+  enum role: [:user, :instructor, :admin]
+
+  after_initialize :set_default_role, :if => :new_record?
+
+  has_many :external_identifiers, :dependent => :destroy, :inverse_of => :user
   has_many :authentications, :dependent => :destroy, :inverse_of => :user
 
-  belongs_to :account
-
-  has_many :user_courses, dependent: :destroy
-  has_many :courses, through: :user_courses
-  has_many :sections, through: :courses
+  has_many :permissions
+  has_many :roles, :through => :permissions
 
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
 
@@ -19,6 +21,8 @@ class User < ActiveRecord::Base
     self.name || self.email
   end
 
+  def set_default_role
+    self.role ||= :user
   def canvas_api
     if auth = self.canvas_auth
       options = {
@@ -35,10 +39,6 @@ class User < ActiveRecord::Base
 
   def canvas_auth
     self.authentications.find_by(provider_url: self.account.canvas_uri)
-  end
-
-  def display_name
-    self.name || self.email
   end
 
   ####################################################
@@ -95,7 +95,7 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
-  def associate_oauth_account(auth)
+  def associate_account(auth)
     data = auth['info'] || {}
     name = data['name'] rescue nil
     name ||= "#{data['first_name']} #{data['last_name']}"
@@ -109,9 +109,40 @@ class User < ActiveRecord::Base
     self.bio.gsub(/\n/, '<br />') unless self.bio.blank?
   end
 
+  ####################################################
+  #
+  # Role related methods
+  #
+  def is_in_role?(object, roles)
+    raise 'not implemented'
+  end
+
+  def role?(name)
+    self.any_role?(name)
+  end
+
+  def any_role?(*test_names)
+    test_names = [test_names] unless test_names.is_a?(Array)
+    test_names.flatten!
+    @role_names = self.roles.map(&:name) if @role_names.blank?
+    return false if @role_names.blank?
+    (@role_names & test_names).length > 0
+  end
+
+  # Add the user to a new role
+  def add_to_role(name)
+    @role_names = nil
+    role = Role.find_or_create_by(name: name)
+    self.roles << role if !self.roles.include?(role) # Make sure that the user can only be put into a role once
+  end
+
+  def admin?
+    self.role?('administrator')
+  end
+
   def can_edit?(user)
     return false if user.nil?
-    self.id == user.id || user.admin
+    self.id == user.id || user.admin?
   end
 
   def self.convert_name_to_initials(sortable_name)

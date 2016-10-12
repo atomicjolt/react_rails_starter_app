@@ -214,7 +214,9 @@ if !git_repo_specified?
   puts "git remote set-url origin [URL_OF_YOUR_GIT_REPOSITORY]"
 end
 
-puts "If you need API access you will need to request a Canvas ID and Secret from Instructure - https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform ."
+puts "If you need API access you will need to get a Canvas ID and Secret from your Canvs instance."
+puts "Get keys from here: https://atomicjolt.instructure.com/accounts/1/developer_keys"
+puts "** Replace atomicjolt with your Canvas subdomain"
 
 puts "*                                             *"
 puts "***********************************************"
