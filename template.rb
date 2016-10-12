@@ -129,6 +129,10 @@ modify_files.each do |f|
     app_name.titleize.gsub(' ', '')
   end
 
+  gsub_file(f, "ReactRailsStarterApp") do |match|
+    app_name.titleize.gsub(' ', '')
+  end
+
   gsub_file(f, "reactrailsstarterapp") do |match|
     url_safe_name
   end
