@@ -40,18 +40,6 @@ class ApplicationController < ActionController::Base
       user.external_identifiers.create(:identifier => auth.uid, :provider => key) # If they already have an exernal identifier this can just fail silently
     end
 
-    def safe_save_email(user)
-      begin
-        user.save!
-      rescue ActiveRecord::RecordInvalid => ex
-        if ex.to_s == "Validation failed: Email has already been taken"
-          false
-        else
-          raise ex
-        end
-      end
-    end
-
 
   private
 
