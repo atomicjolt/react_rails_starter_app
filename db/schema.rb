@@ -16,17 +16,6 @@ ActiveRecord::Schema.define(version: 20150312162723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "accounts", force: :cascade do |t|
-    t.string   "name"
-    t.string   "domain"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "code"
-  end
-
-  add_index "accounts", ["code"], name: "index_accounts_on_code", using: :btree
-  add_index "accounts", ["domain"], name: "index_accounts_on_domain", unique: true, using: :btree
-
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "provider"
@@ -97,16 +86,6 @@ ActiveRecord::Schema.define(version: 20150312162723) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "user_accounts", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "account_id"
-    t.string   "role"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_accounts", ["user_id", "account_id"], name: "index_user_accounts_on_user_id_and_account_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",        null: false
