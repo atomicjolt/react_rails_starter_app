@@ -19,28 +19,6 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.for(:account_update) << :name
     end
 
-    # **********************************************
-    #
-    # OAuth related functionality:
-    #
-
-    def check_external_identifier(user, only_build=false)
-      if session[:external_identifier]
-        exid = user.external_identifiers.build(:identifier => session[:external_identifier], :provider => session[:provider])
-        exid.save! unless only_build
-        session[:external_identifier] = nil
-        session[:provider] = nil
-        exid
-      end
-    end
-
-    def create_external_identifier_with_url(auth, user)
-      json = Yajl::Parser.parse(auth['json_response'])
-      key = UrlHelper.host(json['info']['url'])
-      user.external_identifiers.create(:identifier => auth.uid, :provider => key) # If they already have an exernal identifier this can just fail silently
-    end
-
-
   private
 
     def current_ability
