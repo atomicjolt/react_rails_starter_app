@@ -108,7 +108,7 @@ function build(isHot){
   return new Promise(function(resolve, reject){
 
     // Delete everything in the output path
-    fs.emptydir(outputPath), function(){
+    fs.emptydir(outputPath, function(){
 
       // Copy static files to build directory
       try {
