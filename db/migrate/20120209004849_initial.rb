@@ -24,17 +24,6 @@ class Initial < ActiveRecord::Migration
   add_index "authentications", ["provider", "uid"], name: "index_authentications_on_provider_and_uid", using: :btree
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
-  create_table "external_identifiers", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "identifier"
-    t.string   "provider"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "external_identifiers", ["identifier", "provider"], name: "index_external_identifiers_on_identifier_and_provider", using: :btree
-  add_index "external_identifiers", ["user_id"], name: "index_external_identifiers_on_user_id", using: :btree
-
   create_table "permissions", force: :cascade do |t|
     t.integer  "role_id"
     t.integer  "user_id"
