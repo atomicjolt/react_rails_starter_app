@@ -113,14 +113,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    # **********************************************
-    #
-    # Account related functionality:
-    #
-
-    def current_account
-      @current_account ||= Account.find_by(code: request.subdomains.first) || Account.find_by(domain: request.host) || Account.main
-    end
 
   private
 
