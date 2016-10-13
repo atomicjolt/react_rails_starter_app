@@ -1,7 +1,7 @@
 {
-  "name": "react_client_starter_app",
+  "name": "react_rails_starter_app",
   "version": "0.0.3",
-  "description": "Client only React Starter App.",
+  "description": "React Starter App with Rails.",
   "engines": {
     "node": "5.10.1"
   },
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/atomicjolt/react_client_starter_app"
+    "url": "https://github.com/atomicjolt/react_rails_starter_app"
   },
   "keywords": [
     "react"
   ],
   "author": "atomicjolt",
   "license": "MIT",
-  "homepage": "https://github.com/atomicjolt/react_client_starter_app",
+  "homepage": "https://github.com/atomicjolt/react_rails_starter_app",
   "dependencies": {
     "del": "^2.2.0"
   },
