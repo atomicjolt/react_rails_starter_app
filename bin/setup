@@ -124,8 +124,8 @@ fi
 
 # Restarting nginx
 echo "Restarting nginx..."
-sudo launchctl unload ~/Library/LaunchDaemons/homebrew.mxcl.nginx.plist
-sudo launchctl load ~/Library/LaunchDaemons/homebrew.mxcl.nginx.plist && echo "nginx started."
+sudo launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist
+sudo launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist && echo "nginx started."
 echo "-------------------------------------"
 echo "Your app has been added."
 echo "Your next steps..."
