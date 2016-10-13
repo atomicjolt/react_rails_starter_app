@@ -1,7 +1,7 @@
 # React Rails Starter App
 -----------------------
 This project provides a starting point for building a React or OAuth application using Ruby on Rails as a backend.
-There are many starter kits that will help you get started with React and Redux. This is the one created by, maintained by and used by [Atomic Jolt](http://www.atomicjolt.com). 
+There are many starter kits that will help you get started with React and Redux. This is the one created by, maintained by and used by [Atomic Jolt](http://www.atomicjolt.com).
 
 
 ## Build a new application using the React Rails Starter App Rails application template:
@@ -156,18 +156,22 @@ $ rake db:seed
 
 ### <a name="developer_key"></a>Setting up OAuth
 
-Visit the provider (Facebook, Twitter, Google, etc) to obtain an OAuth key and secret. Most of the fields will be specific to your organization. 
-The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `reactrailsstarterapp.ngrok.io` with your domain. 
-You will need an ID and secret for development and for production. The
-development URI will use ngrok while the production URI will use your domain.
+Visit the provider (Facebook, Twitter, Google, etc) to obtain an OAuth key and secret. Most of the fields will be specific to your organization.
+The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `reactrailsstarterapp.atomicjolt.xyz` with your domain.
+You will need an ID and secret for development and for production. The development URI will use a local domain while the production URI will use your domain.
+At AtomicJolt we use atomicjolt.xyz to point to a local computer. lvh.me also works. Ngrok can also be used to simplify tunneling a public
+address into your local computer.
 
 **Oauth2 Redirect URI:**
-https://reactrailsstarterapp.ngrok.io/auth/[provider]/callback
+https://reactrailsstarterapp.atomicjolt.xyz/auth/[provider]/callback
 
 **Icon URL:**
-https://reactrailsstarterapp.ngrok.io/oauth_icon.png
+https://reactrailsstarterapp.atomicjolt.xyz/oauth_icon.png
 
-Once your request is approved you will receive a Key and Secret. Add these credentials to the `config/secrets.yml`.
+Once your request is approved you will receive a Key and Secret. Add these credentials to `config/secrets.yml` and
+then add those values to devise.rb. It will look something like this:
+
+config.omniauth :github, Rails.application.secrets.github_developer_id, Rails.application.secrets.github_developer_key, scope: 'user,public_repo'
 
 
 ## Deployment
