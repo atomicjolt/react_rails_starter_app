@@ -88,10 +88,6 @@ class User < ApplicationRecord
     self.setup_authentication(auth)
   end
 
-  def formatted_bio
-    self.bio.gsub(/\n/, '<br />') unless self.bio.blank?
-  end
-
   ####################################################
   #
   # Role related methods
