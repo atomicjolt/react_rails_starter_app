@@ -81,7 +81,7 @@ EOF
 if ! [ -z ${APP_SUBDOMAINS+x} ];
 then
   IFS=, SUBDOMAINS=($APP_SUBDOMAINS)
-  for SUBDOMAIN in "${SUBDOMAINS[@]};" do
+  for SUBDOMAIN in ${SUBDOMAINS[@]}; do
 
     cat >> "/usr/local/etc/nginx/servers/${APP_SUBDOMAIN}.conf" <<-EOFSINGLE
 
