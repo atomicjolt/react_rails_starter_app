@@ -1,4 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+
   before_filter :verify_oauth_response, :except => [:passthru]
   before_filter :associated_using_oauth, :except => [:passthru]
   before_filter :find_using_oauth, :except => [:passthru]
@@ -40,7 +41,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         kind = params[:action].titleize # Should give us Facebook, Twitter, Linked In, etc
         authentication = current_user.associate_account(auth)
         current_user.save!
-        check_external_identifier(@user)
         flash[:notice] = "Your #{Rails.application.secrets.application_name} account has been associated with #{kind}"
         redirect_to after_sign_in_path_for(current_user) if should_redirect?
       end
@@ -65,13 +65,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Try to find an existing user via the oauth request
     def find_using_oauth
       return if @user # Previous filter was successful and we already have a user
-      @user = User.find_for_oauth(request.env["omniauth.auth"])
-      if @user
+      if @user = User.find_for_oauth(request.env["omniauth.auth"])
         @user.update_oauth(request.env["omniauth.auth"])
-        @user.add_account(current_account)
         @user.skip_confirmation!
         @user.save # do we want to log an error if save fails?
-        check_external_identifier(@user)
         sign_in_or_register(params[:action].titleize)
       end
     end
@@ -82,11 +79,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       kind = params[:action].titleize # Should give us Facebook, Twitter, Linked In, etc
       @user = User.new
       @user.apply_oauth(auth)
-      @user.account_id = current_account.id
-      @user.add_account(current_account)
       @user.skip_confirmation!
       @user.save!
-      check_external_identifier(@user)
       sign_in_or_register(kind)
     rescue ActiveRecord::RecordInvalid => ex
       # A user is already registered with the same email and he tried to sign in using facebook but the account is not connected to facebook.
