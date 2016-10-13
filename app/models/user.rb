@@ -20,6 +20,10 @@ class User < ApplicationRecord
     self.name || self.email
   end
 
+  def password_required?
+    (authentications.empty? || !password.blank?) && super
+  end
+
   ####################################################
   #
   # Omniauth related methods
@@ -57,21 +61,16 @@ class User < ApplicationRecord
       :provider_url => UrlHelper.scheme_host(auth['info']['url']),
       :json_response => auth.to_json
     }
-    data = auth['credentials']
-    if data
-      attributes[:token] = data['token']
-      attributes[:secret] = data['secret']
-      attributes[:refresh_token] = data['refresh_token'] if data['refresh_token'] # Google sends a refresh token
+    if credentials = auth['credentials']
+      attributes[:token] = credentials['token']
+      attributes[:secret] = credentials['secret']
+      attributes[:refresh_token] = credentials['refresh_token'] if credentials['refresh_token'] # Google sends a refresh token
     end
     if self.persisted? && authentication = self.authentications.where({:provider => auth['provider'], :provider_url => auth['info']['url']}).first
       authentication.update_attributes!(attributes)
     else
       self.authentications.build(attributes)
     end
-  end
-
-  def password_required?
-    (authentications.empty? || !password.blank?) && super
   end
 
   def associate_account(auth)
