@@ -5,7 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
-  enum role: [:user, :instructor, :admin]
+  enum role: [:user, :admin]
 
   after_initialize :set_default_role, :if => :new_record?
 
@@ -18,10 +18,6 @@ class User < ApplicationRecord
 
   def display_name
     self.name || self.email
-  end
-
-  def set_default_role
-    self.role ||= :user
   end
 
   ####################################################
@@ -92,6 +88,10 @@ class User < ApplicationRecord
   #
   # Role related methods
   #
+  def set_default_role
+    self.role ||= :user
+  end
+
   def is_in_role?(object, roles)
     raise 'not implemented'
   end
