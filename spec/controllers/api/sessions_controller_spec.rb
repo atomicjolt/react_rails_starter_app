@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe Api::JwtsController, type: :controller do
-
+RSpec.describe Api::SessionsController, type: :controller do
+  
   before do
     @user = FactoryGirl.create(:user)
     @user.confirm
