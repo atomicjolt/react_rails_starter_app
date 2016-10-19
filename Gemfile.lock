@@ -128,6 +128,9 @@ GEM
       multi_xml (>= 0.5.2)
     hub (1.12.4)
     i18n (0.7.0)
+    ims-lti (1.1.13)
+      builder
+      oauth (>= 0.4.5, < 0.6)
     json (1.8.3)
     jwt (1.5.4)
     kgio (2.10.0)
@@ -161,7 +164,6 @@ GEM
     minitest (5.9.0)
     multi_json (1.12.1)
     multi_xml (0.5.5)
-    multipart-post (2.0.0)
     nenv (0.3.0)
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
@@ -231,6 +233,7 @@ GEM
       ffi (>= 0.5.0)
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
+    rolify (5.1.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -340,6 +343,7 @@ DEPENDENCIES
   heroku_secrets!
   httparty
   hub
+  ims-lti (~> 1.1.12)
   jwt (~> 1.5.0)
   launchy
   mail_view
@@ -358,6 +362,7 @@ DEPENDENCIES
   rb-fchange
   rb-fsevent
   rb-inotify
+  rolify
   rspec-rails
   sass-rails
   selenium-webdriver
