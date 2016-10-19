@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  helper_method :current_account
-
   protected
 
     rescue_from CanCan::AccessDenied do |exception|
@@ -19,78 +17,6 @@ class ApplicationController < ActionController::Base
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << :name
       devise_parameter_sanitizer.for(:account_update) << :name
-    end
-
-
-    # **********************************************
-    # JWT methods
-    #
-
-    class InvalidTokenError < StandardError; end
-
-    def validate_token
-      begin
-        authorization = request.headers['Authorization']
-        raise InvalidTokenError.new("Empty authorization header.") if authorization.nil?
-
-        token = request.headers['Authorization'].split(' ').last
-        decoded_token = AuthToken.valid?(token)
-
-        raise InvalidTokenError.new("Invalid client id") if Rails.application.secrets.auth0_client_id != decoded_token[0]["aud"]
-
-        @user = User.find(decoded_token[0]['user_id'])
-        sign_in(@user, :event => :authentication)
-      rescue InvalidTokenError => ex
-        render :json => { :error => "Unauthorized: #{ex}" }, status: :unauthorized
-      rescue JWT::DecodeError => ex
-        render :json => { :error => "Unauthorized: Invalid token. #{ex}" }, status: :unauthorized
-      end
-    end
-
-    # **********************************************
-    # Admin methods
-    #
-    def check_admin
-      if !current_user.admin
-        respond_to do |format|
-          format.json {
-            render json: { error: "Unauthorized: User not allowed to access requested resource." }, status: :unauthorized
-          }
-        end
-      end
-    end
-
-    # **********************************************
-    # Paging methods
-    #
-
-    def setup_paging
-      @page = (params[:page] || 1).to_i
-      @page = 1 if @page < 1
-      @per_page = (params[:per_page] || (::Rails.env=='test' ? 1 : 40)).to_i
-    end
-
-    def set_will_paginate_string
-      # Because I18n.locale are dynamically determined in ApplicationController,
-      # it should not put in config/initializers/will_paginate.rb
-      WillPaginate::ViewHelpers.pagination_options[:previous_label] = "previous"
-      WillPaginate::ViewHelpers.pagination_options[:next_label] = "next"
-    end
-
-    def setup_will_paginate
-      setup_paging
-      set_will_paginate_string
-    end
-
-    # **********************************************
-    #
-    # OAuth related functionality:
-    #
-
-    def find_consumer
-      key = params[:oauth_consumer_key].strip
-      Account.find_by(lti_key: key) ||
-      User.find_by(lti_key: key)
     end
 
     # **********************************************
@@ -156,19 +82,10 @@ class ApplicationController < ActionController::Base
 
     end
 
-    # **********************************************
-    #
-    # Account related functionality:
-    #
-
-    def current_account
-      @current_account ||= Account.find_by(code: request.subdomains.first) || Account.find_by(domain: request.host) || Account.main
-    end
-
   private
 
     def current_ability
-      @current_ability ||= Ability.new(current_user, current_account)
+      @current_ability ||= Ability.new(current_user)
     end
 
     def user_not_authorized

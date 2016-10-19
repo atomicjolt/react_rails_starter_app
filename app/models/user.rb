@@ -1,15 +1,14 @@
-class User < ApplicationRecord
+class User < ActiveRecord::Base
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
-  enum role: [:user, :instructor, :admin]
+  enum role: [:user, :admin]
 
   after_initialize :set_default_role, :if => :new_record?
 
-  has_many :external_identifiers, :dependent => :destroy, :inverse_of => :user
   has_many :authentications, :dependent => :destroy, :inverse_of => :user
 
   has_many :permissions
@@ -21,8 +20,6 @@ class User < ApplicationRecord
     self.name || self.email
   end
 
-  def set_default_role
-    self.role ||= :user
   def canvas_api
     if auth = self.canvas_auth
       options = {
@@ -78,21 +75,16 @@ class User < ApplicationRecord
       :provider_url => UrlHelper.scheme_host(auth['info']['url']),
       :json_response => auth.to_json
     }
-    data = auth['credentials']
-    if data
-      attributes[:token] = data['token']
-      attributes[:secret] = data['secret']
-      attributes[:refresh_token] = data['refresh_token'] if data['refresh_token'] # Google sends a refresh token
+    if credentials = auth['credentials']
+      attributes[:token] = credentials['token']
+      attributes[:secret] = credentials['secret']
+      attributes[:refresh_token] = credentials['refresh_token'] if credentials['refresh_token'] # Google sends a refresh token
     end
     if self.persisted? && authentication = self.authentications.where({:provider => auth['provider'], :provider_url => auth['info']['url']}).first
       authentication.update_attributes!(attributes)
     else
       self.authentications.build(attributes)
     end
-  end
-
-  def password_required?
-    (authentications.empty? || !password.blank?) && super
   end
 
   def associate_account(auth)
@@ -105,14 +97,14 @@ class User < ApplicationRecord
     self.setup_authentication(auth)
   end
 
-  def formatted_bio
-    self.bio.gsub(/\n/, '<br />') unless self.bio.blank?
-  end
-
   ####################################################
   #
   # Role related methods
   #
+  def set_default_role
+    self.role ||= :user
+  end
+
   def is_in_role?(object, roles)
     raise 'not implemented'
   end

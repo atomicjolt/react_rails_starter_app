@@ -12,8 +12,6 @@ describe User, type: :model do
     }
   end
 
-  it { should have_many(:external_identifiers) }
-
   it "should create a new instance given a valid attribute" do
     user = User.new(@attr)
     user.skip_confirmation!

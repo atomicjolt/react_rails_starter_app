@@ -1,4 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+
   before_filter :verify_oauth_response, :except => [:passthru]
   before_filter :associated_using_oauth, :except => [:passthru]
   before_filter :find_using_oauth, :except => [:passthru]
@@ -69,8 +70,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   protected
 
-    # Check for OAuth errors
     def verify_oauth_response
+      # Check for OAuth errors
       if request.env["omniauth.auth"].blank?
 
         error_type = env['omniauth.error.type']
@@ -95,8 +96,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     end
 
-    # Used to associate other OAuth accounts to the same account
     def associated_using_oauth
+      # Used at the profile#edit to integrated other networks to the same account
       if user_signed_in?
         @user = current_user
         auth = request.env["omniauth.auth"]
@@ -121,13 +122,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to after_sign_in_path_for(current_user)
     end
 
-    # Try to find an existing user via the oauth request
     def find_using_oauth
       return if @user # Previous filter was successful and we already have a user
-      @user = User.find_for_oauth(request.env["omniauth.auth"])
-      if @user
+      if @user = User.find_for_oauth(request.env["omniauth.auth"])
         @user.update_oauth(request.env["omniauth.auth"])
-        @user.account_id = current_account.id
         @user.skip_confirmation!
         @user.save # do we want to log an error if save fails?
         sign_in_or_register(params[:action].titleize)
@@ -140,7 +138,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       kind = params[:action].titleize # Should give us Facebook, Twitter, Linked In, etc
       @user = User.new
       @user.apply_oauth(auth)
-      @user.account_id = current_account.id
       @user.skip_confirmation!
       @user.save!
       sign_in_or_register(kind)

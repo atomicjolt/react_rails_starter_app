@@ -187,6 +187,8 @@ $ rake db:seed
 Only a Canvas Account Admin can create a developer key for your LTI Application. To create a key, go to 
 Accounts, Developer Keys and enter the info described below below. Be sure to replace `ltistarterapp.ngrok.io` with your domain. You will need an ID and secret for development and for production. The development URI will use ngrok while the production URI will use your domain (e.g. ltistarterapp.herokuapp.com).
 
+**Oauth2 Redirect URI:**
+https://reactrailsstarterapp.atomicjolt.xyz/auth/[provider]/callback
 **Key Name:**
 Can be anything you choose (e.g. LTI Starter App)
 

@@ -135,6 +135,10 @@ modify_files.each do |f|
     app_name.titleize.gsub(' ', '')
   end
 
+  gsub_file(f, "LtiStarterApp") do |match|
+    app_name.titleize.gsub(' ', '')
+  end
+
   gsub_file(f, "ltistarterapp") do |match|
     url_safe_name
   end
