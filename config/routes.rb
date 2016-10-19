@@ -9,6 +9,22 @@ Rails.application.routes.draw do
 
   root to: "home#index"
 
+  get 'iframe_cookies_fix_redirect' => 'lti_launches#iframe_cookies_fix_redirect'
+  get 'relaunch_lti_tool' => 'lti_launches#relaunch_lti_tool'
+
+  resources :lti_launches do
+    collection do
+      post :index
+      get :index
+    end
+  end
+
+  resources :lti_installs do
+    collection do
+      get :xml
+    end
+  end
+
   devise_for :users, controllers: {
     sessions: "sessions",
     registrations: "registrations",
@@ -25,6 +41,7 @@ Rails.application.routes.draw do
   end
 
   resources :users
+  resources :canvas_authentications
 
   resources :admin, only: [:index]
 
@@ -33,6 +50,19 @@ Rails.application.routes.draw do
       resources :users
     end
     resources :jwts
+    resources :courses, only: [] do
+      resources :students, only: [:index]
+      resources :sections, only: [] do
+        resources :students, only: [:index]
+      end
+    end
   end
+
+  mount MailPreview => 'mail_view' if Rails.env.development?
+
+  get 'api/canvas' => 'api/canvas_proxy#proxy'
+  post 'api/canvas' => 'api/canvas_proxy#proxy'
+  put 'api/canvas' => 'api/canvas_proxy#proxy'
+  delete 'api/canvas' => 'api/canvas_proxy#proxy'
 
 end

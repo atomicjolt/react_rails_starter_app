@@ -81,7 +81,7 @@ EOF
 if ! [ -z ${APP_SUBDOMAINS+x} ];
 then
   IFS=, SUBDOMAINS=($APP_SUBDOMAINS)
-  for SUBDOMAIN in ${SUBDOMAINS[@]}; do
+  for SUBDOMAIN in "${SUBDOMAINS[@]}"; do
 
     cat >> "/usr/local/etc/nginx/servers/${APP_SUBDOMAIN}.conf" <<-EOFSINGLE
 
@@ -100,7 +100,6 @@ server {
   ssl_certificate_key ssl/STAR_atomicjolt_xyz.key;
 
   location / {
-
     proxy_set_header   Host \$host;
     proxy_set_header   X-Forwarded-Ssl on;
     proxy_set_header   X-Forwarded-For \$remote_addr;
@@ -114,18 +113,14 @@ server {
   }
 }
 EOFSINGLE
-
-
-
   done
 fi
 
 
-
 # Restarting nginx
 echo "Restarting nginx..."
-sudo launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist
-sudo launchctl load ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist && echo "nginx started."
+sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist && echo "nginx started."
 echo "-------------------------------------"
 echo "Your app has been added."
 echo "Your next steps..."

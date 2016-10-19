@@ -1,6 +1,6 @@
 # If bundler starts to act up run these commands to start over and clean up:
 # rm -rf ~/.bundle/ ~/.gem/; rm -rf $GEM_HOME/bundler/ $GEM_HOME/cache/bundler/; rm -rf .bundle/; rm -rf vendor/cache/; rm -rf Gemfile.lock
-# rvm gemset empty reactrailsstarterapp
+# rvm gemset empty ltistarterapp
 # bundle install
 
 source 'https://rubygems.org'
@@ -22,6 +22,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'oauth', '~> 0.5.0'
 gem 'cancancan'
+gem 'rolify'
 gem 'attr_encrypted'
 gem 'jwt', '~> 1.5.0' # json web token
 

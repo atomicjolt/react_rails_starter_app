@@ -1,12 +1,14 @@
 # run with:
-# rails new my_app -m ./react_rails_starter_app/template.rb
-# rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_rails_starter_app/master/template.rb
+# rails new my_app -m ./lti_starter_app/template.rb
+# rails new my_app -m https://raw.githubusercontent.com/atomicjolt/lti_starter_app/master/template.rb
 
 require "fileutils"
 require "securerandom"
 
-#repo = "git@github.com:atomicjolt/react_rails_starter_app.git"
-repo = "https://github.com/atomicjolt/react_rails_starter_app.git"
+
+#repo = "git@github.com:atomicjolt/lti_starter_app.git"
+#repo = "https://github.com/atomicjolt/lti_starter_app.git"
+repo = "git@bitbucket.com:atomicjolt/lti_starter_app.git"
 
 # keep track if the initial directory
 @working_dir = destination_root
@@ -99,12 +101,16 @@ end
 #
 create_file '.env' do <<-EOF
 APP_SUBDOMAIN=#{url_safe_name}
-APP_URL=ngrok.io
+APP_URL=atomicjolt.xyz
 APP_PORT=#{rails_port}
 ASSETS_SUBDOMAIN=#{url_safe_name}assets
 ASSETS_PORT=#{assets_port}
-ASSETS_URL=https://#{url_safe_name}assets.ngrok.io
+ASSETS_URL=https://#{url_safe_name}assets.atomicjolt.xyz
 APP_DEFAULT_CANVAS_URL=https://atomicjolt.instructure.com
+
+# Get developer id and key from canvas
+DEVELOPER_ID=1234
+DEVELOPER_KEY=1234
 EOF
 end
 
@@ -121,23 +127,23 @@ modify_files << ".ruby-gemset"
 
 modify_files.each do |f|
 
-  gsub_file(f, "react_rails_starter_app") do |match|
+  gsub_file(f, "lti_starter_app") do |match|
     app_name.underscore
   end
 
-  gsub_file(f, "reactrailsstarterapp") do |match|
+  gsub_file(f, "ltistarterapp") do |match|
     app_name.titleize.gsub(' ', '')
   end
 
-  gsub_file(f, "ReactRailsStarterApp") do |match|
+  gsub_file(f, "LtiStarterApp") do |match|
     app_name.titleize.gsub(' ', '')
   end
 
-  gsub_file(f, "reactrailsstarterapp") do |match|
+  gsub_file(f, "ltistarterapp") do |match|
     url_safe_name
   end
 
-  gsub_file(f, "React Starter App") do |match|
+  gsub_file(f, "LTI Starter App") do |match|
     app_name.titleize
   end
 
@@ -211,6 +217,10 @@ if !git_repo_specified?
   puts "To set your git remote repository run:"
   puts "git remote set-url origin [URL_OF_YOUR_GIT_REPOSITORY]"
 end
+
+puts "If you need API access you will need to get a Canvas ID and Secret from your Canvs instance."
+puts "Get keys from here: https://atomicjolt.instructure.com/accounts/1/developer_keys"
+puts "** Replace atomicjolt with your Canvas subdomain"
 
 puts "*                                             *"
 puts "***********************************************"

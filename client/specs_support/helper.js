@@ -44,6 +44,24 @@ export default class Helper{
       }]);
 
       jasmine.Ajax.stubRequest(
+        RegExp('.*/?type=.+')
+      ).andReturn({
+        "status": 200,
+        "contentType": "json",
+        "statusText": "OK",
+        "responseText": accounts_payload
+      });
+
+      jasmine.Ajax.stubRequest(
+        RegExp('.*/api/accounts/')
+      ).andReturn({
+        "status": 200,
+        "contentType": "json",
+        "statusText": "OK",
+        "responseText": accounts_payload
+      });
+
+      jasmine.Ajax.stubRequest(
           RegExp('.*/api/accounts/')
         ).andReturn({
           "status": 200,

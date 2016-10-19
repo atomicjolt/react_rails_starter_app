@@ -167,7 +167,7 @@ describe User, type: :model do
     #   it "should add an authentication for an existing user account" do
     #     user = FactoryGirl.create(:user, :email => 'test@example.com')
     #     auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @new_email})
-    #     user.associate_account(auth)
+    #     user.associate_oauth_account(auth)
     #     expect(user.authentications.length).to eq(1)
     #     expect(user.authentications.first.uid).to eq(@uid)
     #   end

@@ -1,0 +1,7 @@
+const <%=@model['id']%> = new GraphQLObjectType({
+  name: "<%=@model['id']%>",
+  description: "<%=@description%>. API Docs: https://canvas.instructure.com/doc/api/<%=@name%>.html",
+  fields: function(){
+    <%=fields(@model, @resource_name).join(",\n    ")%>
+  }
+});

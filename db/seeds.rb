@@ -1,5 +1,4 @@
 # add an admin to the default account
-admin = CreateAdminService.new.call
+admin = CreateAdminService.create_admin(account)
 puts 'CREATED ADMIN USER: ' << admin.email
-admin.save!
 

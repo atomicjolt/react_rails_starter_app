@@ -28,8 +28,7 @@ class SessionsController < Devise::SessionsController
   end
 
   def destroy
-    # Destroy all authentications when the user logs out:
-    #current_user.authentications.where(provider: 'facebook').destroy_all
+    #current_user.authentications.where(provider: 'canvas').destroy_all
     super
   end
 end
