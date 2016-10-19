@@ -9,7 +9,7 @@ describe ApplicationController, type: :controller do
     respond_to :json
 
     def index
-
+      render text: "User: #{@user.display_name}"
     end
   end
 

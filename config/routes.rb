@@ -8,13 +8,13 @@ end
 Rails.application.routes.draw do
 
   root to: "home#index"
-  
+
   devise_for :users, controllers: {
     sessions: "sessions",
     registrations: "registrations",
     omniauth_callbacks: "omniauth_callbacks"
   }
-  
+
   as :user do
     get   '/auth/failure'         => 'sessions#new'
     get     'users/auth/:provider'  => 'users/omniauth_callbacks#passthru'
@@ -25,14 +25,14 @@ Rails.application.routes.draw do
   end
 
   resources :users
-  
+
   resources :admin, only: [:index]
 
   namespace :api do
     resources :accounts do
       resources :users
     end
-    resources :sessions
+    resources :jwts
   end
 
   mount MailPreview => 'mail_view' if Rails.env.development?
