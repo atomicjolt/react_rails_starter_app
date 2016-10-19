@@ -97,8 +97,8 @@ Rename `config/secrets.example.yml` to `config/secrets.yml`. Open the file and c
 
 *This file should not be committed to your repository.*
 
-You will need to [obtain a Developer ID and Key from an Account Admin for the instance of Canvas the tool will be installed in](#developer_key). You will also
-need to setup a default account and provide that account's "code" for the "application_code" entry in secrets.yml. See the [seeds](#seeds) section below for information on setting up the default account.
+You will need to [obtain a Developer ID and Key from an Account Admin for the instance of Canvas the tool will be installed in](#developer_key).
+You will also need to setup a default account and provide that account's "code" for the "application_code" entry in secrets.yml. See the [seeds](#seeds) section below for information on setting up the default account.
 
 ### Project Dependencies
 
