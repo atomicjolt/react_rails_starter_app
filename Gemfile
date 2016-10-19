@@ -12,19 +12,15 @@ gem 'rails', '4.2.4'
 gem "pg"
 
 # UI
-gem 'sass-rails', '~> 4.0.3'
-gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
-gem 'bootstrap-sass'
-gem 'font_assets', github: 'atomicjolt/font_assets'
+gem 'sass-rails'
+gem 'uglifier'
 gem 'autoprefixer-rails'
 gem 'non-stupid-digest-assets' # also compile assets without digest (fixes font problem)
-gem "bower-rails"
 
 # authentication, authorization, integrations
 gem 'devise'
-gem 'omniauth', '~> 1.2.2'
-gem 'oauth', '~> 0.4.7'
+gem 'omniauth'
+gem 'oauth', '~> 0.5.0'
 gem 'cancancan'
 gem 'attr_encrypted'
 gem 'jwt', '~> 1.5.0' # json web token
@@ -47,7 +43,7 @@ gem 'httparty'
 gem 'rack-cors', :require => 'rack/cors'
 
 # Paging
-gem 'will_paginate', '~> 3.0.6'
+gem 'will_paginate'
 
 group :development do
   gem 'spring'
