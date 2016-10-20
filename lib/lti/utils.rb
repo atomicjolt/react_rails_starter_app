@@ -8,7 +8,7 @@ module Lti
           title: app.name,
           launch_url: "https://#{Rails.application.secrets.application_url}/lti_launches",
           domain: "#{Rails.application.secrets.application_url}",
-          icon: "#{Rails.application.secrets.application_url}/images/oauth_icon.png",
+          icon: "https://#{Rails.application.secrets.application_url}/images/oauth_icon.png",
           description: app.description
         }
         puts "****************************************************************************************************************"
