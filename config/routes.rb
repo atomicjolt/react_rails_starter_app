@@ -29,9 +29,6 @@ Rails.application.routes.draw do
   resources :admin, only: [:index]
 
   namespace :api do
-    resources :accounts do
-      resources :users
-    end
     resources :jwts
   end
 
