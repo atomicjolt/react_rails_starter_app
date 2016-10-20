@@ -1,5 +1,8 @@
 class Api::CanvasProxyController < ApplicationController
 
+  include Concerns::CanvasSupport
+  include Concerns::JwtToken
+
   before_action :validate_token
 
   respond_to :json
@@ -8,10 +11,8 @@ class Api::CanvasProxyController < ApplicationController
   end
 
   def proxy
-    api = current_user.canvas_api
-    #api = current_account.canvas_api
 
-    result = api.proxy(params[:type], params, request.body.read)
+    result = canvas_api.proxy(params[:type], params, request.body.read)
     response.status = result.code
 
     allowed_headers = [ "content-type", "link", "p3p", "x-canvas-meta", "x-canvas-user-id",

@@ -29,14 +29,15 @@ def lti_params(options = {})
  tc.generate_launch_data
 end
 
-# Generate an account that uses the key and secret that are used to encode the LTI request.
-# This account can then be used when making a test LTI request.
-def setup_lti_account
-  account = FactoryGirl.create(:account, domain: "test.example.org", code: oauth_consumer_key)
-  # Don't save these values to the db or the validations will barf
-  account.lti_key = oauth_consumer_key
-  account.lti_secret = oauth_consumer_secret
-  account
+# Generate an lti application that uses the key and secret that are used to encode the LTI request.
+# This lti application can then be used when making a test LTI request.
+def setup_lti_application
+  FactoryGirl.create(:lti_application,
+    lti_key: oauth_consumer_key,
+    lti_secret: oauth_consumer_secret,
+    canvas_token: "asdf",
+    canvas_uri: "atomicjolt.instructure.com"
+  )
 end
 
 def oauth_consumer_key

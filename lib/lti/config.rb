@@ -2,36 +2,15 @@
 # LTI gem docs: https://github.com/instructure/ims-lti
 module Lti
 
-  class Canvas
+  class Config
 
-    def self.tool_mode(env)
-      "(#{env})" if env.present? && env != 'production'
-    end
-
-    def self.tool_name(env)
-      "#{Rails.application.secrets.application_name} #{self.tool_mode(env)}"
-    end
-
-    def self.config_xml(args = {})
+    def self.xml(args = {})
       self.config(args).to_xml(:indent => 2)
     end
 
-    def self.basic_config(code)
-      domain = "https://#{code}.#{Rails.application.secrets.lti_launch_domain}"
-      {
-        launch_url: "#{domain}/lti_launches",
-        env: Rails.env,
-        title: Rails.application.secrets.lti_tool_name,
-        description: Rails.application.secrets.lti_tool_description,
-        icon: "#{domain}/images/oauth_icon.png",
-        domain: "#{code}.#{Rails.application.secrets.lti_launch_domain}"
-      }
-    end
-
-    def self.course_navigation_config(code, visibility)
-      config = self.basic_config(code)
+    def self.course_navigation(config, visibility = "admins")
       config[:course_navigation] = {
-          text: Rails.application.secrets.lti_tool_name,
+          text: config[:title],
           default: "enabled",
           enabled: true
         }
@@ -39,10 +18,9 @@ module Lti
       config
     end
 
-    def self.account_navigation_config(code, visibility = "admins")
-      config = self.basic_config(code)
+    def self.account_navigation(config, visibility = "admins")
       config[:account_navigation] = {
-          text: Rails.application.secrets.lti_tool_name,
+          text: config[:title],
           visibility: visibility,
           default: "enabled",
           enabled: true
@@ -51,12 +29,12 @@ module Lti
     end
 
     def self.config(args = {})
-      title = args[:title] || self.tool_name(args[:env])
+      title = args[:title]
 
       tc = IMS::LTI::ToolConfig.new(
-        title: title, 
+        title: title,
         launch_url: args[:launch_url],
-        description: args[:description] || "#{Rails.application.secrets.application_name}",
+        description: args[:description],
         icon: args[:icon]
       )
 
@@ -93,7 +71,7 @@ module Lti
           'enabled' => args[:account_navigation][:enabled]
         }
       end
-      
+
       if args[:button_url].present?
         config['editor_button'] = {
           'url' => args[:launch_url],

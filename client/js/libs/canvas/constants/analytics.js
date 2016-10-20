@@ -63,7 +63,7 @@ export const get_department_level_participation_data_terms = { type: "GET_DEPART
 //
 // Example:
 // return canvasRequest(get_department_level_participation_data_current, {account_id});
-export const get_department_level_participation_data_current = { type: "GET_DEPARTMENT_LEVEL_PARTICIPATION_DATA_CURRENT", method: "get", key: "get_department_level_participation_data_currentget_department_level_participation_data_current_account_id", required: ["account_id"] };
+export const get_department_level_participation_data_current = { type: "GET_DEPARTMENT_LEVEL_PARTICIPATION_DATA_CURRENT", method: "get", key: "get_department_level_participation_data_currentget_department_level_participation_data_current_lti_application_id", required: ["account_id"] };
 
 // Get department-level participation data
 // Returns page view hits summed across all courses in the department. Two
@@ -135,7 +135,7 @@ export const get_department_level_grade_data_terms = { type: "GET_DEPARTMENT_LEV
 //
 // Example:
 // return canvasRequest(get_department_level_grade_data_current, {account_id});
-export const get_department_level_grade_data_current = { type: "GET_DEPARTMENT_LEVEL_GRADE_DATA_CURRENT", method: "get", key: "get_department_level_grade_data_currentget_department_level_grade_data_current_account_id", required: ["account_id"] };
+export const get_department_level_grade_data_current = { type: "GET_DEPARTMENT_LEVEL_GRADE_DATA_CURRENT", method: "get", key: "get_department_level_grade_data_currentget_department_level_grade_data_current_lti_application_id", required: ["account_id"] };
 
 // Get department-level grade data
 // Returns the distribution of grades for students in courses in the
@@ -179,7 +179,7 @@ export const get_department_level_statistics_terms = { type: "GET_DEPARTMENT_LEV
 //
 // Example:
 // return canvasRequest(get_department_level_statistics_current, {account_id});
-export const get_department_level_statistics_current = { type: "GET_DEPARTMENT_LEVEL_STATISTICS_CURRENT", method: "get", key: "get_department_level_statistics_currentget_department_level_statistics_current_account_id", required: ["account_id"] };
+export const get_department_level_statistics_current = { type: "GET_DEPARTMENT_LEVEL_STATISTICS_CURRENT", method: "get", key: "get_department_level_statistics_currentget_department_level_statistics_current_lti_application_id", required: ["account_id"] };
 
 // Get department-level statistics
 // Returns numeric statistics about the department and term (or filter).

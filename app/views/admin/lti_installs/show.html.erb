@@ -1,0 +1,26 @@
+<h3>Option 2 - Manual</h3>
+<p>Manually Install the <%= Rails.application.secrets.application_name %> LTI App</p>
+<ol>
+  <li>Go to a course</li>
+  <li>Settings</li>
+  <li>Apps</li>
+  <li>View App Configurations</li>
+  <li>Add App</li>
+  <li>Configuration Type: Paste XML</li>
+  <li>Give it a name, eg: <%= Rails.application.secrets.application_name %></li>
+  <li>Paste in this Consumer Key: <strong><%= current_lti_application.lti_key %></strong></li>
+  <li>Paste in this Shared Secret: <strong><%= current_lti_application.lti_secret %></strong></li>
+  <li>Paste in the following XML:</li>
+</ol>
+<textarea style="width:100%;height:500px;">
+  <%= current_lti_application.course_nav_lti_xml(nil) %>
+</textarea>
+<p>See <a href="https://canvas.instructure.com/doc/api/file.tools_xml.html">Instructure's Tool Configuration documentation</a> for details about Canvas External Tool Configuration XML options.</p>
+
+<div class="container">
+  <h3>XML Configuration</h3>
+  <p>Copy paste XML into Canvas settings to setup the LTI tool</p>
+  <textarea style="width:100%;height:500px;">
+    <%= @config_xml %>
+  </textarea>
+</div>

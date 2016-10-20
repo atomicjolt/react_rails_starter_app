@@ -1,30 +1,47 @@
 require 'rails_helper'
 
-describe Lti::Canvas do
-  
+RSpec.describe Lti::Config do
+
   before do
     @launch_url = "http://www.example.com/launch"
-    @env = "test"
+    @domain = "www.example.com"
+    @basic_config = {
+      launch_url: "#{@domain}/lti_launches",
+      title: "Atomic LTI test",
+      description: "This is the test application for the Atomic LTI engine",
+      icon: "#{@domain}/images/oauth_icon.png",
+      domain: @domain
+    }
   end
 
-  describe "config_xml" do
+  describe "course_navigation" do
+    it "generates xml to install the lti tool as course navigation" do
+      xml = described_class.course_navigation(@basic_config)
+    end
+  end
+
+  describe "account_navigation" do
+    it "generates xml to install the lti tool as account navigation" do
+      xml = described_class.account_navigation(@basic_config)
+    end
+  end
+
+  describe "xml" do
     it "generates basic configuration xml for an LTI tool" do
       args = {
         launch_url: @launch_url,
-        env: @env
       }
-      xml = Lti::Canvas.config_xml(args)
+      xml = described_class.xml(args)
     end
     it "generates extended configuration xml for an LTI tool with an editor button" do
       button_url = "http://www.example.com/button_image.png"
       button_text = "Custom Button"
       args = {
-        launch_url: @launch_url, 
-        button_url: button_url, 
-        button_text: button_text, 
-        env: @env
+        launch_url: @launch_url,
+        button_url: button_url,
+        button_text: button_text
       }
-      xml = Lti::Canvas.config_xml(args)
+      xml = described_class.xml(args)
       expect(xml).to be_present
       expect(xml).to include(@launch_url)
     end
@@ -34,13 +51,12 @@ describe Lti::Canvas do
         visibility: "admins",
         default: "enabled",
         enabled: true
-      } 
+      }
       args = {
         launch_url: @launch_url,
-        env: @env,
         course_navigation: course_navigation
       }
-      xml = Lti::Canvas.config_xml(args)
+      xml = described_class.xml(args)
       expect(xml).to be_present
       expect(xml).to include(course_navigation[:text])
     end
@@ -53,10 +69,9 @@ describe Lti::Canvas do
       }
       args = {
         launch_url: @launch_url,
-        env: @env,
         account_navigation: account_navigation
       }
-      xml = Lti::Canvas.config_xml(args)
+      xml = described_class.xml(args)
       expect(xml).to be_present
 
       expect(xml).to include(account_navigation[:text])
@@ -67,7 +82,7 @@ describe Lti::Canvas do
         launch_url: @launch_url,
         title: title
       }
-      xml = Lti::Canvas.config_xml(args)
+      xml = described_class.xml(args)
       expect(xml).to be_present
       expect(xml).to include(title)
     end
@@ -77,7 +92,7 @@ describe Lti::Canvas do
         launch_url: @launch_url,
         description: description
       }
-      xml = Lti::Canvas.config_xml(args)
+      xml = described_class.xml(args)
       expect(xml).to be_present
       expect(xml).to include(description)
     end

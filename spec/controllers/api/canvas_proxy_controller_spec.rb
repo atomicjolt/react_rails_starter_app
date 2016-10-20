@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Api::CanvasProxyController, type: :controller do
-  
+
   before do
-    @account = FactoryGirl.create(:account, canvas_uri: "www.example.com", canvas_token: "asdfasdf")
-    @user = FactoryGirl.create(:user, account: @account)
+    @app = setup_lti_application
+    @user = FactoryGirl.create(:user)
     @user.confirm
     @user_token = AuthToken.issue_token({ user_id: @user.id })
   end
@@ -21,24 +21,26 @@ RSpec.describe Api::CanvasProxyController, type: :controller do
   describe "proxy" do
 
     before do
+      allow(controller).to receive(:current_lti_application).and_return(@app)
+      allow(LtiApplication).to receive(:find_by).with(:lti_key).and_return(@app)
       request.headers['Authorization'] = @user_token
-      allow(controller.request).to receive(:host).and_return(@account.domain)
+      allow(controller.request).to receive(:host).and_return("example.com")
     end
 
     describe "GET" do
       it "should successfully call the canvas api" do
         type = "LIST_ACCOUNTS"
-        get :proxy, type: type, format: :json
+        get :proxy, type: type, lti_key: @app.lti_key, format: :json
         expect(response).to have_http_status(:success)
       end
       it "should successfully call the canvas api to generate a url to get courses" do
         type = "LIST_YOUR_COURSES"
-        get :proxy, type: type, account_id: 1, format: :json
+        get :proxy, type: type, lti_key: @app.lti_key, account_id: 1, format: :json
         expect(response).to have_http_status(:success)
       end
       it "should successfully call the canvas api to generate a url to get courses with extra params" do
         type = "LIST_YOUR_COURSES"
-        get "proxy", type: type, account_id: 1, include: [1, 2], per_page: 100, format: :json
+        get "proxy", type: type, lti_key: @app.lti_key, account_id: 1, include: [1, 2], per_page: 100, format: :json
         expect(response).to have_http_status(:success)
       end
     end
@@ -46,7 +48,7 @@ RSpec.describe Api::CanvasProxyController, type: :controller do
     describe "POST" do
       it "successfully posts to the canvas api" do
         type = "CREATE_NEW_SUB_ACCOUNT"
-        post :proxy, { account: { name: "Canvas Demo Courses" }, type: type, account_id: 1 }, format: :json
+        post :proxy, { account: { name: "Canvas Demo Courses" }, type: type, lti_key: @app.lti_key, account_id: 1 }, format: :json
         expect(JSON.parse(response.body)['name']).to eq("Canvas Demo Courses")
       end
     end
@@ -54,7 +56,7 @@ RSpec.describe Api::CanvasProxyController, type: :controller do
     describe "PUT" do
       it "successfully puts to the canvas api" do
         type = "UPDATE_ACCOUNT"
-        put :proxy, type: type, id: 1, name: "Canvas Demo Courses", format: :json
+        put :proxy, type: type, lti_key: @app.lti_key, id: 1, name: "Canvas Demo Courses", format: :json
         expect(JSON.parse(response.body)['name']).to eq("Canvas Demo Courses")
       end
     end

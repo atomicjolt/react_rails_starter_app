@@ -19,12 +19,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :lti_installs do
-    collection do
-      get :xml
-    end
-  end
-
   devise_for :users, controllers: {
     sessions: "sessions",
     registrations: "registrations",
@@ -41,9 +35,11 @@ Rails.application.routes.draw do
   end
 
   resources :users
-  resources :canvas_authentications
 
-  resources :admin, only: [:index]
+  namespace :admin do
+    resources :canvas_authentications
+    resources :lti_installs
+  end
 
   namespace :api do
     resources :accounts do

@@ -6,7 +6,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.7'
 
 # Database
 gem "pg"
@@ -21,7 +21,7 @@ gem 'non-stupid-digest-assets' # also compile assets without digest (fixes font 
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-canvas'
-gem 'oauth', '~> 0.5.0'
+gem 'oauth', '~> 0.4.7'
 gem 'ims-lti', '~> 1.1.12' # IMS LTI tool consumers and providers
 gem 'cancancan'
 gem 'rolify'

@@ -24,6 +24,31 @@ class Initial < ActiveRecord::Migration
   add_index "authentications", ["provider", "uid"], name: "index_authentications_on_provider_and_uid", using: :btree
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
+  create_table "lti_applications", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "lti_key"
+    t.string   "lti_secret"
+    t.integer  "lti_type", default: 0
+    t.string   "canvas_uri"
+    t.string   "client_application_name"
+    t.string   "encrypted_canvas_token"
+    t.string   "encrypted_canvas_token_salt"
+    t.string   "encrypted_canvas_token_iv"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "lti_applications", ["lti_key"], name: "index_lti_applications_on_lti_key", unique: true, using: :btree
+
+  create_table "nonces", force: :cascade do |t|
+    t.string   "nonce"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "nonces", ["nonce"], name: "index_nonces_on_nonce", unique: true, using: :btree
+
   create_table "permissions", force: :cascade do |t|
     t.integer  "role_id"
     t.integer  "user_id"
@@ -66,6 +91,9 @@ class Initial < ActiveRecord::Migration
     t.string   "profile_privacy",        default: "private"
     t.string   "profile_privacy_token"
     t.string   "active_avatar",          default: "none"
+    t.string   "lti_user_id"
+    t.string   "lti_provider"
+    t.string   "lms_user_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

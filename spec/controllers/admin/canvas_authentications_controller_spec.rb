@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe CanvasAuthenticationsController, :type => :controller do
-  
+RSpec.describe Admin::CanvasAuthenticationsController, :type => :controller do
+
   describe "GET new" do
     it "displays a form for the user to enter their Canvas url" do
       get :new
