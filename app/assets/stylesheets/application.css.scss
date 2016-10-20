@@ -6,11 +6,3 @@ html {
 body{
   padding-top: 60px;
 }
-
-.waiting{
-  display: none;
-}
-
-.field_with_errors {
-  @extend .has-error;
-}
