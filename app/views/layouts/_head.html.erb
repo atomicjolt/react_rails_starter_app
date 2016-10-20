@@ -1,9 +1,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><%= content_for?(:title) ? yield(:title) : Rails.application.secrets.application_name %></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="<%= content_for?(:description) ? yield(:description) : Rails.application.secrets.application_name %>">
 <meta name="author" content="">
 <link rel="icon" href="/favicon.ico">
-<title><%= content_for?(:title) ? yield(:title) : Rails.application.secrets.application_name %></title>
 <%= csrf_meta_tags %>
 <%= yield(:head) %>
