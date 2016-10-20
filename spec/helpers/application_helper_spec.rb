@@ -2,10 +2,18 @@ require "rails_helper"
 
 describe ApplicationHelper do
 
-  describe "#client_images" do
-    it "generates a string that can be passed to a js client containing the requested images" do
-      result = helper.client_images("dogs.png", "other/cats.svg")
-      expect(result).to eq('{ dogs_png : "/images/dogs.png", other_cats_svg : "/images/other/cats.svg" }')
+  describe "application_base_url" do
+    it "adds a trailing / onto the request's base url" do
+      expect(helper.application_base_url).to be
+    end
+  end
+
+  describe "jwt_token" do
+    it "generates a new jwt token" do
+      expect(helper).to receive("signed_in?").and_return(true)
+      expect(helper).to receive(:current_user).and_return(double(id: 1))
+      result = helper.jwt_token
+      expect(result).to be
     end
   end
 
