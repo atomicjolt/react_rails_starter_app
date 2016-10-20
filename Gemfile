@@ -20,7 +20,9 @@ gem 'non-stupid-digest-assets' # also compile assets without digest (fixes font 
 # authentication, authorization, integrations
 gem 'devise'
 gem 'omniauth'
+gem 'omniauth-canvas'
 gem 'oauth', '~> 0.5.0'
+gem 'ims-lti', '~> 1.1.13' # IMS LTI tool consumers and providers
 gem 'cancancan'
 gem 'rolify'
 gem 'attr_encrypted'

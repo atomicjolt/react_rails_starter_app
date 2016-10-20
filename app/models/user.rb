@@ -20,24 +20,6 @@ class User < ApplicationRecord
     self.name || self.email
   end
 
-  def canvas_api
-    if auth = self.canvas_auth
-      options = {
-        client_id: Rails.application.secrets.developer_id,
-        client_secret: Rails.application.secrets.developer_key,
-        redirect_uri: "https://#{self.account.domain}/auth/canvas/callback",
-        refresh_token: auth.refresh_token
-      }
-      Canvas.new(self.account.canvas_uri, auth, options)
-    else
-      return nil
-    end
-  end
-
-  def canvas_auth
-    self.authentications.find_by(provider_url: self.account.canvas_uri)
-  end
-
   ####################################################
   #
   # Omniauth related methods
