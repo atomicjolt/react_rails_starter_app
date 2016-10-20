@@ -57,15 +57,8 @@ class Initial < ActiveRecord::Migration
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "role"
-    t.string   "username"
-    t.string   "avatar"
     t.string   "time_zone",              default: "UTC"
     t.string   "password_salt"
-    t.string   "provider_avatar"
-    t.string   "profile_privacy",        default: "private"
-    t.string   "profile_privacy_token"
-    t.string   "active_avatar",          default: "none"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
