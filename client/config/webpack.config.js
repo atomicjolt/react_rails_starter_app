@@ -31,7 +31,7 @@ module.exports = function(stage){
                 ',presets[]=stage-0'; // Enables experimental ES features.
 
   if(development){
-    presets = presets + ',presets[]=react-hmre'; // Adds react hot module reload
+    plugins = plugins + ',plugins[]=react-hot-loader/babel';
   } else if (production) {
     plugins = plugins + ',plugins[]=transform-react-constant-elements'; // Hoists static React components to reduce calls to createElement
     plugins = plugins + ',plugins[]=transform-react-remove-prop-types'; // Removes prop types from code
