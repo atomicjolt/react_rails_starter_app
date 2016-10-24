@@ -7,15 +7,24 @@ const API = store => next => action => {
     const state = store.getState();
     const promise = api.execRequest(method, url, state.settings.apiUrl, state.jwt, state.settings.csrfToken, params, body);
     if(promise){
-      promise.then((response, error) => {
-        store.dispatch({
-          type:     action.type + DONE,
-          payload:  response.body,
-          original: action,
-          response,
-          error
-        }); // Dispatch the new data
-      });
+      promise.then(
+        (response) => {
+          store.dispatch({
+            type:     action.type + DONE,
+            payload:  response.body,
+            original: action,
+            response
+          }); // Dispatch the new data
+        },
+        (error) => {
+          store.dispatch({
+            type:     action.type + DONE,
+            payload:  {},
+            original: action,
+            error
+          }); // Dispatch the new error
+        }
+      );
     }
   };
 
