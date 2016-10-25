@@ -6,18 +6,18 @@ describe('jwt reducer', () => {
   describe("initial state", () => {
 
     it("has a jwt token", () => {
-      const initial = { jwtValue: 'asdf' };
+      const initial = { jwt: 'asdf' };
       const initialState = initial;
       const state = jwt(initialState, {});
       expect(state).toEqual(initial);
 
-      const newJwt = { jwtValue: '1234' };
+      const newJwt = { jwt: '1234' };
       const newState = jwt(state, {
         type: JwtConstants.REFRESH_JWT,
         payload: newJwt
       });
 
-      expect(newState).toEqual(newJwt);
+      expect(newState).toEqual(newJwt.jwt);
     });
 
   });
