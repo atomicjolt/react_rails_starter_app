@@ -17,6 +17,6 @@ export function refreshJwt(userId){
   return {
     type:   Constants.REFRESH_JWT,
     method: Network.GET,
-    url:    `api/sessions/${userId}`
+    url:    `api/jwts/${userId}`
   };
 }
