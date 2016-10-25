@@ -11,5 +11,5 @@
 %>
 <script type="text/javascript">
   window.DEFAULT_SETTINGS = <%= settings.to_json.html_safe %>;
-  window.DEFAULT_JWT = <%= signed_in? ? jwt_token : "" %>;
+  window.DEFAULT_JWT = '<%= signed_in? ? jwt_token : "" %>';
 </script>
