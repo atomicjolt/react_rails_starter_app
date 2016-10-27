@@ -9,6 +9,7 @@
     "postinstall": "cd ./client && npm install",
     "build": "cd ./client && npm run build",
     "build_dev": "cd ./client && npm run build_dev",
+    "create": "cd ./client && npm run create",
     "release": "cd ./client && npm run release",
     "hot": "cd ./client && npm run hot",
     "live": "cd ./client && node server.js",

@@ -74,58 +74,32 @@ Inside the client directory run:
   `npm-check-updates`
 
 
-#Setup Deploy:
+#Deploy to S3:
 -----------------------
 
-  1. Install the s3_website gem:
+  1. Setup credentials. If you've already setup your Amazon credentials in ~/.aws/credentials you will be able to do something similar to the
+  following where atomiclti is one of the AWS profiles found in ~/.aws/credentials:
 
-    `gem install s3_website`
+    export AWS_DEFAULT_PROFILE=atomiclti
+    export AWS_PROFILE=atomiclti
 
-  2. Create s3_website.yml:
+  You can also use a .env file. See the [s3-website](https://github.com/klaemo/s3-website) documentation for more options.
 
-    `s3_website cfg create`
+  2. Install the s3-website node package globally:
 
-  3. Setup and AWS user:
+    `npm install -g s3-website`
 
-    1. Login to your AWS console
-    2. Find Identity & Access Management (IAM)
-    3. Click 'Users'
-    4. Click 'Create New Users'
-    5. Save the user's credentials
-    6. Click on the user
-    7. Click the permissions tab.
-    8. Under 'Inline Policies' create a new custom policy and paste in the policy below. Be sure to change the domains:
+  3. Edit configuration.
 
-    For more details see the [s3_website gem instructions](https://github.com/laurilehmijoki/s3_website).
+    Open up .s3-website.json and set the desired bucket name
 
-    ###IAM Policy:
-    ```json
+  4. Configure the bucket as a website
 
-      {
-        "Statement": [
-            {
-                "Action": [
-                    "s3:ListBucket"
-                ],
-                "Effect": "Allow",
-                "Resource": "arn:aws:s3:::www.reactclientstarterapp.com"
-            },
-            {
-                "Action": "s3:*",
-                "Effect": "Allow",
-                "Resource": [
-                    "arn:aws:s3:::www.reactclientstarterapp.com",
-                    "arn:aws:s3:::www.reactclientstarterapp.com/*"
-                ]
-            }
-        ]
-      }
-    ```
+    `npm run create`
 
-  4. Configure bucket as website:
+  5. Deploy.
 
-    `s3_website cfg apply`
-
+    `npm run release`
 
 #Production
 -----------------------

@@ -13,7 +13,8 @@
     "live": "node server.js",
     "build_dev": "node ./build.js",
     "build": "node ./build.js --release",
-    "release": "node ./build.js --release && cd .. && s3_website push",
+    "create": "node ./build.js --release && cd .. && s3-website create",
+    "release": "node ./build.js --release && cd .. && s3-website deploy",
     "lint": "eslint js"
   },
   "author": "atomicjolt, jbasdf",
