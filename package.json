@@ -3,12 +3,13 @@
   "version": "0.0.3",
   "description": "React Starter App with Rails.",
   "engines": {
-    "node": "5.10.1"
+    "node": "6.9.1"
   },
   "scripts": {
     "postinstall": "cd ./client && npm install",
     "build": "cd ./client && npm run build",
     "build_dev": "cd ./client && npm run build_dev",
+    "create": "cd ./client && npm run create",
     "release": "cd ./client && npm run release",
     "hot": "cd ./client && npm run hot",
     "live": "cd ./client && node server.js",

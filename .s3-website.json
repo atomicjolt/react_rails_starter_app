@@ -1,0 +1,5 @@
+{
+  "uploadDir"  : "build/prod",
+  "upload-dir" : "build/prod",
+  "domain"     : "reactclientstarterapp.com"
+}
