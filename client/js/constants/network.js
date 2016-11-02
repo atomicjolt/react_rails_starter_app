@@ -3,7 +3,7 @@ export default {
   GET                       : 'get',
   POST                      : 'post',
   PUT                       : 'put',
-  DEL                       : 'del',
+  DEL                       : 'delete',
 
   TIMEOUT                   : 20000,
 
