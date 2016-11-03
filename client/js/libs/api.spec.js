@@ -1,21 +1,111 @@
 import api                from "./api";
 import Network            from "../constants/network";
-import Helper             from '../../specs_support/helper';
+import Helper             from "../../specs_support/helper";
 
-describe('api', function() {
+describe("api", function() {
 
-  var jwt;
-  var apiUrl;
-  var csrf;
-  var params;
-  var body
+  const jwt = "jwt_token";
+  const apiUrl = "http://www.example.com";
+  const csrf = "csrf_value";
+  const params = {};
+  const body = {};
+  const headers = {};
 
   Helper.stubAjax();
-  
-  it('calls Get', () => {
-    var url = "http://www.example.com";
-    var promise = api.get(url);
-    
+
+  it("calls Get", () => {
+    const url = "/api/test/1";
+    api.get(url, apiUrl, jwt, csrf, params, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+      expect(result.text).toEqual(Helper.testPayload());
+    });
+    const request = jasmine.Ajax.requests.mostRecent();
+    expect(request.url).toEqual(`${apiUrl}${url}`);
+    expect(request.method.toLowerCase()).toEqual(Network.GET);
+    expect(request.requestHeaders["Accept"]).toEqual("application/json");
+    expect(request.requestHeaders["Authorization"]).toEqual(`Bearer ${jwt}`);
+    expect(request.requestHeaders["X-CSRF-Token"]).toEqual(csrf);
+  });
+
+  it("calls Get without a jwt", () => {
+    const url = "/api/test/2";
+    api.get(url, apiUrl, null, csrf, params, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+    });
+    const request = jasmine.Ajax.requests.mostRecent();
+    expect(request.url).toEqual(`${apiUrl}${url}`);
+    expect(request.requestHeaders["Authorization"]).toBeUndefined();
+    expect(request.requestHeaders["X-CSRF-Token"]).toEqual(csrf);
+  });
+
+  it("calls Get without a csrf", () => {
+    const url = "/api/test/3";
+    api.get(url, apiUrl, jwt, null, params, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+    });
+    const request = jasmine.Ajax.requests.mostRecent();
+    expect(request.url).toEqual(`${apiUrl}${url}`);
+    expect(request.requestHeaders["Authorization"]).toEqual(`Bearer ${jwt}`);
+    expect(request.requestHeaders["X-CSRF-Token"]).toBeUndefined();
+  });
+
+  it("calls Get with a full url", () => {
+    const url = "http://www.example.com/api/test/full";
+    api.get(url, apiUrl, jwt, null, params, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+    });
+    const request = jasmine.Ajax.requests.mostRecent();
+    expect(request.url).toEqual(url);
+  });
+
+  it("calls Post", () => {
+    const url = "/api/test";
+    api.post(url, apiUrl, jwt, csrf, params, body, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+    });
+  });
+
+  it("calls Post with a full url", () => {
+    const url = "http://www.example.com/api/test/full";
+    api.post(url, apiUrl, jwt, csrf, params, body, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+    });
+    const request = jasmine.Ajax.requests.mostRecent();
+    expect(request.url).toEqual(url);
+    expect(request.method.toLowerCase()).toEqual(Network.POST);
+  });
+
+  it("calls Put", () => {
+    const url = "/api/test/4";
+    api.put(url, apiUrl, jwt, csrf, params, body, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+      const request = result.req;
+      expect(request.method.toLowerCase()).toEqual(Network.PUT);
+    });
+  });
+
+  it("calls Delete", () => {
+    const url = "/api/test/5";
+    api.del(url, apiUrl, jwt, csrf, params, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+    });
+    const request = jasmine.Ajax.requests.mostRecent();
+    expect(request.url).toEqual(`${apiUrl}${url}`);
+    expect(request.method.toLowerCase()).toEqual(Network.DEL);
+  });
+
+  it("calls execRequest directly", () => {
+    const url = "/api/test/6";
+    api.execRequest(Network.GET, url, apiUrl, null, null).then((result) => {
+      expect(result.statusCode).toBe(200);
+      expect(result.text).toEqual(Helper.testPayload());
+    });
+    const request = jasmine.Ajax.requests.mostRecent();
+    expect(request.url).toEqual(`${apiUrl}${url}`);
+    expect(request.method.toLowerCase()).toEqual(Network.GET);
+    expect(request.requestHeaders["Accept"]).toEqual("application/json");
+    expect(request.requestHeaders["Authorization"]).toBeUndefined();
+    expect(request.requestHeaders["X-CSRF-Token"]).toBeUndefined();
   });
 
 });

@@ -29,27 +29,36 @@ export default class Helper{
     return configureStore(initialState);
   }
 
+  static testPayload(){
+    return JSON.stringify([{
+      "id":1,
+      "name":"Starter App"
+    }]);
+  }
+
   static stubAjax(){
 
     beforeEach(function(){
       jasmine.Ajax.install();
 
-      // Stub request to load problems
-      var accounts_payload = JSON.stringify([{
-        "id":1,
-        "name":"Starter App",
-        "domain":"bfcoderServer.ngrok.io",
-        "code":"bfcoderServer"
-      }]);
-
       jasmine.Ajax.stubRequest(
-          RegExp('.*/api/accounts/')
+          RegExp('.*/api/test')
         ).andReturn({
           "status": 200,
           "contentType": "json",
           "statusText": "OK",
-          "responseText": accounts_payload
+          "responseText": Helper.testPayload()
         });
+
+      jasmine.Ajax.stubRequest(
+          RegExp('.*/api/test/.+')
+        ).andReturn({
+          "status": 200,
+          "contentType": "json",
+          "statusText": "OK",
+          "responseText": Helper.testPayload()
+        });
+
     });
 
     afterEach(function(){

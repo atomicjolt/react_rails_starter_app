@@ -45,12 +45,12 @@ export default class Api{
           break;
       }
 
-      request.set('Accept', 'application/json')
-            .timeout(NetworkConstants.TIMEOUT)
-            .set('Authorization', 'Bearer ' + jwt)
-            .set('X-CSRF-Token', csrf);
+      request.set('Accept', 'application/json').timeout(NetworkConstants.TIMEOUT);
 
-      if(!_.isUndefined(headers)){
+      if(!_.isNil(jwt)){ request.set('Authorization', `Bearer ${jwt}`); }
+      if(!_.isNil(csrf)){ request.set('X-CSRF-Token', csrf); }
+
+      if(!_.isNil(headers)){
         _.each(headers, (headerValue, headerKey) => {
           request.set(headerKey, headerValue);
         });

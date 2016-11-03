@@ -1,25 +1,4 @@
 {
-  "name": "react_rails_starter_app",
-  "version": "0.0.4",
-  "description": "React Starter App with Rails.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/atomicjolt/react_rails_starter_app"
-  },
-  "scripts": {
-    "test": "./node_modules/karma/bin/karma start",
-    "coveralls": "cat coverage/lcov.info | coveralls",
-    "hot": "node webpack.hot.js",
-    "live": "node server.js",
-    "build_dev": "node ./build.js",
-    "build": "node ./build.js --release",
-    "create": "node ./build.js --release && cd .. && s3-website create",
-    "release": "node ./build.js --release && cd .. && s3-website deploy",
-    "lint": "eslint js"
-  },
-  "author": "atomicjolt, jbasdf",
-  "license": "MIT",
-  "homepage": "https://github.com/atomicjolt/react_rails_starter_app",
   "dependencies": {
     "babel": "6.5.2",
     "babel-polyfill": "^6.9.1",
