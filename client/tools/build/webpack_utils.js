@@ -22,9 +22,13 @@ function apply(html, webpackConfig, webpackStats, entries, cssEntries, buildSuff
   var result = html;
   _.each(webpackConfig.entry, function(path, entry){
     if(_.has(entries, entry)){
-      result = result.replace(entry + buildSuffix, getHashed(webpackStats, entry, 'js'));
+      var newPath = webpackConfig.output.publicPath + getHashed(webpackStats, entry, 'js');
+      result = result.replace(entry + buildSuffix, newPath);
     } else if(_.has(cssEntries, entry)){
-      result = result.replace(entry + '.css', getHashed(webpackStats, entry, 'css'));
+      var newPath = webpackConfig.output.publicPath + getHashed(webpackStats, entry, 'css');
+      result = result.replace(entry + '.css', newPath);
+    } else {
+      console.log("Error, could not find entry: " + entry);
     }
   });
   return result;

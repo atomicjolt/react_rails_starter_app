@@ -14,7 +14,7 @@ module.exports = function(stage){
   // Public path indicates where the assets will be served from. In dev this will likely be localhost or a local domain.
   // In production this could be a CDN. In developerment this will point to whatever public url is serving
   // dev assets.
-  var publicPath = production ? settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput;
+  var publicPath = production ? settings.prodAssetsUrl + settings.prodRelativeOutput : settings.devAssetsUrl + settings.devRelativeOutput;
 
   var excludeFromStats = [
     /node_modules[\\\/]react(-router)?[\\\/]/
