@@ -1,20 +1,21 @@
 {
   "name": "react_client_starter_app",
-  "version": "0.0.2",
-  "description": "Client only React Starter App.",
-  "engines": {
-    "node": "6.9.1"
-  },
+  "version": "0.1.0",
+  "description": "Client only React Starter App",
+  "author": "atomicjolt",
+  "license": "MIT",
+  "homepage": "https://github.com/atomicjolt/react_client_starter_app",
   "scripts": {
-    "postinstall": "cd ./client && npm install",
-    "build": "cd ./client && npm run build",
-    "build_dev": "cd ./client && npm run build_dev",
-    "create": "cd ./client && npm run create",
-    "release": "cd ./client && npm run release",
-    "hot": "cd ./client && npm run hot",
+    "postinstall": "cd ./client && yarn",
+    "test": "cd ./client && ./node_modules/karma/bin/karma start",
+    "coveralls": "cd ./client && cat coverage/lcov.info | coveralls",
+    "hot": "cd ./client && node webpack.hot.js",
     "live": "cd ./client && node server.js",
-    "test": "cd ./client && npm run test",
-    "coveralls": "cd ./client && npm run coveralls"
+    "build_dev": "cd ./client && node ./build.js",
+    "build": "cd ./client && node ./build.js --release",
+    "create": "cd ./client && node ./build.js --release && cd .. && s3-website create",
+    "release": "cd ./client && node ./build.js --release && cd .. && s3-website deploy",
+    "lint": "cd ./client && eslint js"
   },
   "repository": {
     "type": "git",
@@ -23,9 +24,6 @@
   "keywords": [
     "react"
   ],
-  "author": "atomicjolt",
-  "license": "MIT",
-  "homepage": "https://github.com/atomicjolt/react_client_starter_app",
   "dependencies": {
     "del": "^2.2.2"
   },
