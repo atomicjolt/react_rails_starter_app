@@ -51,7 +51,7 @@ Rails.application.configure do
   # }
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => "localhost:#{<%= ENV["APP_PORT"]}" }
+  config.action_mailer.default_url_options = { :host => "localhost:#{ENV["APP_PORT"]}" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
 
