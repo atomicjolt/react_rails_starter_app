@@ -91,7 +91,9 @@ export default class Api{
     // Dispose of the request when the call is complete
     wrapper.promise.then((result) => {
       Api._disposeRequest(url);
-    });
+    }, ()=>{
+      Api._disposeRequest(url);
+    } );
 
     return wrapper.promise;
   }
