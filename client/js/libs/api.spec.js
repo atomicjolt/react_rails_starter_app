@@ -108,4 +108,39 @@ describe("api", function() {
     expect(request.requestHeaders["X-CSRF-Token"]).toBeUndefined();
   });
 
+  describe("Pending Requests", () => {
+
+    const url = "http://www.example.com";
+    const requestMethod = () => {};
+
+    it("Reuses an existing GET request", () => {
+      const requestType = Network.GET;
+      const request1 = api._wrapRequest(url, requestMethod, requestType);
+      const request2 = api._wrapRequest(url, requestMethod, requestType);
+      expect(request1).toBe(request2);
+    });
+
+    it("Does not reuse Posts requests", () => {
+      const requestType = Network.POST;
+      const request1 = api._wrapRequest(url, requestMethod, requestType);
+      const request2 = api._wrapRequest(url, requestMethod, requestType);
+      expect(request1).not.toBe(request2);
+    });
+
+    it("Does not reuse Put requests", () => {
+      const requestType = Network.PUT;
+      const request1 = api._wrapRequest(url, requestMethod, requestType);
+      const request2 = api._wrapRequest(url, requestMethod, requestType);
+      expect(request1).not.toBe(request2);
+    });
+
+    it("Does not reuse Del requests", () => {
+      const requestType = Network.DELETE;
+      const request1 = api._wrapRequest(url, requestMethod, requestType);
+      const request2 = api._wrapRequest(url, requestMethod, requestType);
+      expect(request1).not.toBe(request2);
+    });
+
+  });
+
 });
