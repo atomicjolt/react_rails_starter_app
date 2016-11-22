@@ -99,16 +99,18 @@ export default class Api{
   }
 
   static _wrapRequest(url, requestMethod, requestType){
-    if (requestType === NetworkConstants.POST) {
+    if (requestType === NetworkConstants.GET){
+      if (!_pendingRequests[url]){
+        _pendingRequests[url] = {
+          request: requestMethod(url)
+        };
+      }
+      return _pendingRequests[url];
+    } else {
       return {
         request: requestMethod(url)
       };
-    } else if (!_pendingRequests[url]) {
-      _pendingRequests[url] = {
-        request: requestMethod(url)
-      };
     }
-    return _pendingRequests[url];
   }
 
   static _disposeRequest(url){
