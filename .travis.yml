@@ -1,7 +1,20 @@
+language: ruby
 sudo: required
 dist: trusty
 
+env:
+  - CXX=g++-4.8
+
+addons:
+  postgresql: "9.5"
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+
 cache:
+  bundler: true
   directories:
     - client/node_modules
 
@@ -11,7 +24,12 @@ branches:
   - staging
   - stable
 
+services:
+  - postgresql
+
 before_install:
+  - cp config/secrets.example.yml config/secrets.yml
+  - cp config/ci.database.yml config/database.yml
   - cp .env.example .env
   - cp client/ci.karma.conf.js client/karma.conf.js
   - nvm install 6.9.1
@@ -19,12 +37,16 @@ before_install:
   - npm install -g yarn
 
 install:
+  - bundle install --path vendor/bundle
   - yarn
 
 before_script:
   - export CHROME_BIN=chromium-browser
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+  - bundle exec rake db:create
+  - bundle exec rake db:schema:load
 
 script:
-  - ./ci_karma
+  - ./bin/ci
+  - ./bin/ci_karma
