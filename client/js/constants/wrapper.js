@@ -1,8 +1,6 @@
-"use strict";
+import _ from 'lodash';
 
-import _ from "lodash";
-
-export const DONE = "_DONE";
+export const DONE = '_DONE';
 
 export default function(actionTypes, asyncActionTypes){
 

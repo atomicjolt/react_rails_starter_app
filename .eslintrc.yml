@@ -1,0 +1,28 @@
+---
+ecmaFeatures:
+  jsx: true
+  modules: true
+env:
+  browser: true
+  es6: true
+extends: airbnb
+parser: babel-eslint
+plugins:
+  - react
+  - jsx-a11y
+  - import
+globals:
+  describe: false
+  beforeEach: false
+  afterEach: false
+  it: false
+  expect: false
+  xit: false
+  spyOn: false
+  jasmine: false
+  module: false
+rules:
+  linebreak-style:
+    - error
+    - unix
+  import/no-unresolved: 0

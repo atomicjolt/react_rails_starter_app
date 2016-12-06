@@ -1,5 +1,22 @@
 {
-  "uploadDir"  : "build/prod",
-  "upload-dir" : "build/prod",
-  "domain"     : "reactclientstarterapp.com"
+   "index": "index.html",
+   "region": "us-east-1",
+   "uploadDir": "build/prod",
+   "prefix": "",
+   "corsConfiguration": [
+      {
+         "AllowedMethods": [
+            "POST", "PUT", "DELETE"
+         ],
+         "AllowedOrigins": [
+            "*"
+         ],
+         "AllowedHeaders": [
+            "*"
+         ],
+         "MaxAgeSeconds": 0
+      }
+   ],
+   "enableCloudfront": true,
+   "domain": "reactclientstarterapp.com"
 }
