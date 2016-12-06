@@ -1,9 +1,11 @@
-import _  from "lodash";
+import _ from 'lodash';
 
-export default (state = {}, action) => {
-  return state; // Just return state. Don't let settings from the server mutate.
-};
+// Just return state. Don't let settings from the server mutate.
+export default (state = {}) => state;
 
-export function getInitialSettings(){
-  return _.merge({}, ...arguments); // Add default settings that can be overriden by values in serverSettings
-};
+export function getInitialSettings(...args) {
+  // Add default settings that can be overridden by values in serverSettings
+  let settings = {};
+  _.forEach(args, arg => (settings = { ...settings, ...arg }));
+  return settings;
+}
