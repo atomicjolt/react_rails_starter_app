@@ -1,4 +1,4 @@
-# React Rails Starter App
+# React Rails Starter App [![Build Status](https://travis-ci.org/atomicjolt/react_rails_starter_app.svg?branch=master)](https://travis-ci.org/atomicjolt/react_rails_starter_app)
 -----------------------
 This project provides a starting point for building a React or OAuth application using Ruby on Rails as a backend.
 There are many starter kits that will help you get started with React and Redux. This is the one created by, maintained by and used by [Atomic Jolt](http://www.atomicjolt.com).
