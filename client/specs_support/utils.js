@@ -1,13 +1,12 @@
-import TestUtils          from 'react/lib/ReactTestUtils';
-import _                  from "lodash";
+import TestUtils from 'react-addons-test-utils';
+import _ from 'lodash';
 
 export default {
 
-  findTextField(textFields, labelText){
-    return _.find(textFields, function(field){
-      var label = TestUtils.findRenderedDOMComponentWithTag(field, 'label');
-      return label.getDOMNode().textContent.toLowerCase() == labelText;
+  findTextField(textFields, labelText) {
+    return _.find(textFields, (field) => {
+      const label = TestUtils.findRenderedDOMComponentWithTag(field, 'label');
+      return label.getDOMNode().textContent.toLowerCase() === labelText;
     });
-  }
-
+  },
 };

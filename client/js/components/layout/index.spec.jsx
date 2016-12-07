@@ -1,5 +1,5 @@
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import TestUtils from 'react-addons-test-utils';
 import { Provider } from 'react-redux';
 import Helper from '../../../specs_support/helper';
 import Index from './index';
