@@ -1,21 +1,9 @@
 // karma config info: http://karma-runner.github.io/0.12/config/configuration-file.html
 var webpack           = require('webpack');
-var webpackConfig     = require('./webpack.config')("test");
+const webpackConfig = require('./webpack.config')('test');
 
-module.exports = function(){
-
-  function isCoverage(argument) {
-    return argument === '--coverage';
-  }
-
-  // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-  var reporters = ['spec'];
-
-  if(process.argv.some(isCoverage)){
-    reporters.push('coverage');
-  }
-
-  var testConfig = {
+module.exports = () => {
+  const testConfig = {
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
@@ -32,14 +20,17 @@ module.exports = function(){
     files: [
       './specs_support/mocks/*.js',
       './specs_support/spec_helper.js',
-      //'./js/**/*.spec.js'         // Use webpack to build each test individually. If changed here, match the change in preprocessors
-      './webpack.tests.js'          // More performant but tests cannot be run individually
+      // Use webpack to build each test individually. If changed here, change in preprocessors
+      // './js/**/*.spec.js'
+      './webpack.tests.js',          // More performant but tests cannot be run individually
     ],
 
     // Transpile tests with the karma-webpack plugin
     preprocessors: {
-      //'./js/**/*.spec.js': ['webpack', 'sourcemap']      // Use webpack to build each test individually. If changed here, match the change in files
-      './webpack.tests.js': ['webpack', 'sourcemap'],      // More performant but tests cannot be run individually
+      // Use webpack to build each test individually. If changed here, match the change in files
+      // './js/**/*.spec.js': ['webpack', 'sourcemap']
+      './webpack.tests.js': ['webpack', 'sourcemap', 'coverage'],      // More performant but tests cannot be run individually
+      // './js/**/*.js*': 'coverage',
     },
 
     // Run the tests using any of the following browsers
@@ -61,7 +52,8 @@ module.exports = function(){
     // Use jasmine as the test framework
     frameworks: ['jasmine-ajax', 'jasmine'],
 
-    reporters: reporters,
+    // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage', 'spec'
+    reporters: ['dots', 'coverage'],
 
     // karma-webpack configuration. Load and transpile js and jsx files.
     // Use istanbul-transformer post loader to generate code coverage report.
@@ -69,38 +61,22 @@ module.exports = function(){
       devtool: 'eval',
       plugins: webpackConfig.plugins,
       module: webpackConfig.module,
-      resolve: webpackConfig.resolve
+      resolve: webpackConfig.resolve,
     },
 
     // Reduce the noise to the console
     webpackMiddleware: {
       noInfo: true,
       stats: {
-        colors: true
-      }
-    }
+        colors: true,
+      },
+    },
 
+    coverageReporter: {
+      type: 'lcovonly',
+      dir: '../coverage/',
+      file: 'coverage.info',
+    },
   };
-
-
-  // Generate code coverage report if --coverage is specified
-  if(process.argv.some(isCoverage)) {
-    // Generate a code coverage report using `lcov` format. Result will be output to coverage/lcov.info
-    // run using `npm coveralls`
-    testConfig['webpack']['module']['postLoaders'] = [{
-      test: /\.jsx?$/,
-      exclude: /(test|node_modules)\//,
-      loader: 'istanbul-instrumenter'
-    }];
-
-    testConfig['coverageReporter'] = {
-      dir: 'coverage/',
-      reporters: [
-        { type: 'lcovonly', subdir: '.', file: 'lcov.info' },
-        { type: 'html', subdir: 'html' }
-      ]
-    };
-  }
-
   return testConfig;
 };

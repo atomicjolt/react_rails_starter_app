@@ -49,4 +49,5 @@ before_script:
 
 script:
   - ./bin/ci
-  - ./bin/ci_karma
+  - yarn test
+  - yarn coverage
