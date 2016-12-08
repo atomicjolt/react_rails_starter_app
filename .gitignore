@@ -60,3 +60,6 @@ public/assets
 rerun.txt
 /coverage/
 /spec/tmp
+
+# Becasue ben is weird
+/.idea/

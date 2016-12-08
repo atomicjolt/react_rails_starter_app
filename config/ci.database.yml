@@ -1,0 +1,23 @@
+staging:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  pool: 10
+  username: <%= ENV['PG_USER'] %>
+  template: template1
+  password: <%= ENV['PG_PASSWORD'] %>
+  database: development<%= ENV['TEST_ENV_NUMBER'] %>
+  sslmode: disable
+development:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  pool: 10
+  username: <%= ENV['PG_USER'] %>
+  template: template1
+  password: <%= ENV['PG_PASSWORD'] %>
+  database: development<%= ENV['TEST_ENV_NUMBER'] %>
+  sslmode: disable
+test:
+  adapter: postgresql
+  database: travis_ci_test
