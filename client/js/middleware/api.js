@@ -37,7 +37,7 @@ const API = store => next => (action) => {
   }
 
   if (action.method) {
-    request(action.method, action.url, action.params, action.body, action.headers);
+    request(action.method, action.url, action.params, action.body, action.headers, action.timeout);
   }
 
   // call the next middleWare
