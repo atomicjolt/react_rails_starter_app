@@ -27,3 +27,4 @@ rules:
     - unix
   import/no-unresolved: 0
   no-multi-spaces: 0
+  comma-dangle: "only-multiline"
