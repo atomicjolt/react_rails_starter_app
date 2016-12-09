@@ -7,23 +7,73 @@ const pendingRequests = {};
 
 export default class Api {
 
-  static get(url, apiUrl, jwt, csrf, params, headers) {
-    return Api.execRequest(NetworkConstants.GET, url, apiUrl, jwt, csrf, params, null, headers);
+  static get(url, apiUrl, jwt, csrf, params, headers, timeout = NetworkConstants.TIMEOUT) {
+    return Api.execRequest(
+      NetworkConstants.GET,
+      url,
+      apiUrl,
+      jwt,
+      csrf,
+      params,
+      null,
+      headers,
+      timeout,
+    );
   }
 
-  static post(url, apiUrl, jwt, csrf, params, body, headers) {
-    return Api.execRequest(NetworkConstants.POST, url, apiUrl, jwt, csrf, params, body, headers);
+  static post(url, apiUrl, jwt, csrf, params, body, headers, timeout = NetworkConstants.TIMEOUT) {
+    return Api.execRequest(
+      NetworkConstants.POST,
+      url,
+      apiUrl,
+      jwt,
+      csrf,
+      params,
+      body,
+      headers,
+      timeout,
+    );
   }
 
-  static put(url, apiUrl, jwt, csrf, params, body, headers) {
-    return Api.execRequest(NetworkConstants.PUT, url, apiUrl, jwt, csrf, params, body, headers);
+  static put(url, apiUrl, jwt, csrf, params, body, headers, timeout = NetworkConstants.TIMEOUT) {
+    return Api.execRequest(
+      NetworkConstants.PUT,
+      url,
+      apiUrl,
+      jwt,
+      csrf,
+      params,
+      body,
+      headers,
+      timeout,
+    );
   }
 
-  static del(url, apiUrl, jwt, csrf, params, headers) {
-    return Api.execRequest(NetworkConstants.DEL, url, apiUrl, jwt, csrf, params, null, headers);
+  static del(url, apiUrl, jwt, csrf, params, headers, timeout = NetworkConstants.TIMEOUT) {
+    return Api.execRequest(
+      NetworkConstants.DEL,
+      url,
+      apiUrl,
+      jwt,
+      csrf,
+      params,
+      null,
+      headers,
+      timeout,
+    );
   }
 
-  static execRequest(method, url, apiUrl, jwt, csrf, params, body, headers) {
+  static execRequest(
+    method,
+    url,
+    apiUrl,
+    jwt,
+    csrf,
+    params,
+    body,
+    headers,
+    timeout = NetworkConstants.TIMEOUT,
+  ) {
     return Api.doRequest(Api.makeUrl(`${url}${Api.queryStringFrom(params)}`, apiUrl), (fullUrl) => {
       let request;
 
@@ -44,7 +94,8 @@ export default class Api {
           break;
       }
 
-      request.set('Accept', 'application/json').timeout(NetworkConstants.TIMEOUT);
+      request.set('Accept', 'application/json');
+      request.timeout(timeout);
 
       if (!_.isNil(jwt)) { request.set('Authorization', `Bearer ${jwt}`); }
       if (!_.isNil(csrf)) { request.set('X-CSRF-Token', csrf); }

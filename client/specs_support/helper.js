@@ -1,10 +1,7 @@
-"use strict";
+import _                  from 'lodash';
+import configureStore     from '../js/store/configure_store';
 
-import _                  from "lodash";
-
-import configureStore     from "../js/store/configure_store";
-
-export default class Helper{
+export default class Helper {
 
   // Create a fake store for testing
   static mockStore(state) {
@@ -18,7 +15,7 @@ export default class Helper{
   }
 
   // Create a real store that can be used for testing
-  static makeStore(settings){
+  static makeStore(settings) {
     const initialState = {
       jwt      : "fake_jwt_token",
       settings : _.assign({
@@ -29,16 +26,15 @@ export default class Helper{
     return configureStore(initialState);
   }
 
-  static testPayload(){
+  static testPayload() {
     return JSON.stringify([{
       "id":1,
       "name":"Starter App"
     }]);
   }
 
-  static stubAjax(){
-
-    beforeEach(function(){
+  static stubAjax() {
+    beforeEach(() => {
       jasmine.Ajax.install();
 
       jasmine.Ajax.stubRequest(
@@ -58,24 +54,21 @@ export default class Helper{
           "statusText": "OK",
           "responseText": Helper.testPayload()
         });
-
     });
 
-    afterEach(function(){
+    afterEach(() => {
       jasmine.Ajax.uninstall();
     });
   }
 
-  static mockClock(){
-
-    beforeEach(function(){
+  static mockClock() {
+    beforeEach(() => {
       jasmine.clock().install(); // Mock out the built in timers
     });
 
-    afterEach(function(){
+    afterEach(() => {
       jasmine.clock().uninstall();
     });
-
   }
 
 }

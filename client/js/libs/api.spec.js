@@ -107,6 +107,21 @@ describe('api', () => {
     expect(request.requestHeaders['X-CSRF-Token']).toBeUndefined();
   });
 
+  it('calls execRequest with optional timeout', () => {
+    const url = '/api/test/7';
+    const timeout = 1000;
+    api.execRequest(Network.GET, url, apiUrl, null, null, {}, {}, {}, timeout).then((result) => {
+      expect(result.statusCode).toBe(200);
+      expect(result.text).toEqual(Helper.testPayload());
+    });
+    const request = jasmine.Ajax.requests.mostRecent();
+    expect(request.url).toEqual(`${apiUrl}${url}`);
+    expect(request.method.toLowerCase()).toEqual(Network.GET);
+    expect(request.requestHeaders.Accept).toEqual('application/json');
+    expect(request.requestHeaders.Authorization).toBeUndefined();
+    expect(request.requestHeaders['X-CSRF-Token']).toBeUndefined();
+  });
+
   describe('Pending Requests', () => {
     const url = 'http://www.example.com';
     const requestMethod = () => {};
