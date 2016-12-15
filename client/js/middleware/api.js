@@ -2,7 +2,7 @@ import api from '../libs/api';
 import { DONE } from '../constants/wrapper';
 
 const API = store => next => (action) => {
-  function request(method, url, params, body, headers) {
+  function request(method, url, params, body, headers, timeout) {
     const state = store.getState();
     const promise = api.execRequest(
       method,
@@ -12,7 +12,8 @@ const API = store => next => (action) => {
       state.settings.csrfToken,
       params,
       body,
-      headers);
+      headers,
+      timeout);
 
     if (promise) {
       promise.then(
