@@ -41,7 +41,7 @@ export default class Helper {
           RegExp('.*/api/test')
         ).andReturn({
           "status": 200,
-          "contentType": "json",
+          "contentType": "application/json",
           "statusText": "OK",
           "responseText": Helper.testPayload()
         });
@@ -50,7 +50,7 @@ export default class Helper {
           RegExp('.*/api/test/.+')
         ).andReturn({
           "status": 200,
-          "contentType": "json",
+          "contentType": "application/json",
           "statusText": "OK",
           "responseText": Helper.testPayload()
         });
