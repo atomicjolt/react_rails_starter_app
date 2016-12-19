@@ -40,19 +40,19 @@ export default class Helper {
       jasmine.Ajax.stubRequest(
           RegExp('.*/api/test')
         ).andReturn({
-          "status": 200,
-          "contentType": "application/json",
-          "statusText": "OK",
-          "responseText": Helper.testPayload()
+          status: 200,
+          contentType: "application/json",
+          statusText: "OK",
+          responseText: Helper.testPayload()
         });
 
       jasmine.Ajax.stubRequest(
           RegExp('.*/api/test/.+')
         ).andReturn({
-          "status": 200,
-          "contentType": "application/json",
-          "statusText": "OK",
-          "responseText": Helper.testPayload()
+          status: 200,
+          contentType: "application/json",
+          statusText: "OK",
+          responseText: Helper.testPayload()
         });
     });
 
