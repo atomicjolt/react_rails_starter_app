@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _       from 'lodash';
 import Request from 'superagent';
 
 import NetworkConstants from '../constants/network';
