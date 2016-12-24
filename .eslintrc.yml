@@ -34,3 +34,5 @@ rules:
     - error
     - devDependencies: true
   padded-blocks: false
+  key-spacing:
+    mode: minimum
