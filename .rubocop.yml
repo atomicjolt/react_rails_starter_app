@@ -59,6 +59,10 @@ Metrics/ModuleLength:
   Description: 'Avoid modules longer than 100 lines of code.'
   Enabled: false
 
+Metrics/BlockLength:
+  Exclude:
+    - "**/*_spec.rb"
+
 Style/ClassVars:
   Description: 'Avoid the use of class variables.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-class-vars'
@@ -143,17 +147,6 @@ Style/ExtraSpacing:
   Description: 'Do not use unnecessary spacing.'
   Enabled: true
 
-Style/EmptyLinesAroundClassBody:
-  Description: 'Do not allow extra lines around class body.'
-  Enabled: false
-
-Style/EmptyLinesAroundModuleBody:
-  Description: 'Do not allow extra lines around module body.'
-  Enabled: false
-
-Style/BracesAroundHashParameters:
-  Enabled: false
-
 Style/FileName:
   Description: 'Use snake_case for source file names.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#snake-case-files'
@@ -219,9 +212,9 @@ Style/LineEndConcatenation:
   Enabled: false
 
 Metrics/LineLength:
-  Description: 'Limit lines to 100 characters.'
+  Description: 'Limit lines to 120 characters.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
-  Max: 100
+  Max: 120
   Enabled: true
 
 Metrics/MethodLength:
@@ -286,6 +279,16 @@ Style/NumericLiterals:
                  readability.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#underscores-in-numerics'
   Enabled: false
+
+Style/NumericPredicate:
+ Description: >-
+                This cop checks for usage of comparison operators
+                (`==`, `!=`, `>`, `<`) to test numbers as
+                zero, nonzero, positive, or negative.
+                These can be replaced by their respective predicate methods.
+                The cop can also be configured to do the reverse.
+ StyleGuide: 'http://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/NumericPredicate'
+ Enabled: false
 
 Style/OneLineConditional:
   Description: >-
