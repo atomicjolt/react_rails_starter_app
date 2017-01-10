@@ -21,6 +21,7 @@ globals:
   spyOn: false
   jasmine: false
   module: false
+  __DEV__: false
 rules:
   linebreak-style:
     - error
@@ -33,6 +34,7 @@ rules:
   import/no-extraneous-dependencies:
     - error
     - devDependencies: true
-  padded-blocks: false
+  padded-blocks: 0
   key-spacing:
-    mode: minimum
+    - 2
+    - mode: minimum
