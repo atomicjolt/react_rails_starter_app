@@ -1,9 +1,7 @@
-"use strict";
-
 // Test helper. Load libraries and polyfills
 
 // Function.prototype.bind polyfill used by PhantomJS
-if (typeof Function.prototype.bind != 'function') {
+if (typeof Function.prototype.bind !== 'function') {
   Function.prototype.bind = function bind(obj) {
     var args = Array.prototype.slice.call(arguments, 1),
       self = this,

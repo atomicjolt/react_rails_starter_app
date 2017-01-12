@@ -1,4 +1,4 @@
-import api from '../libs/api';
+import api      from '../libs/api';
 import { DONE } from '../constants/wrapper';
 
 const API = store => next => (action) => {
@@ -19,17 +19,17 @@ const API = store => next => (action) => {
       promise.then(
         (response) => {
           store.dispatch({
-            type: action.type + DONE,
-            payload: response.body,
-            original: action,
+            type     : action.type + DONE,
+            payload  : response.body,
+            original : action,
             response,
           }); // Dispatch the new data
         },
         (error) => {
           store.dispatch({
-            type: action.type + DONE,
-            payload: {},
-            original: action,
+            type     : action.type + DONE,
+            payload  : {},
+            original : action,
             error,
           }); // Dispatch the new error
         },

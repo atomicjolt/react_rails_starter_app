@@ -1,10 +1,10 @@
 import React        from 'react';
 import TestUtils    from 'react-addons-test-utils';
 import { Provider } from 'react-redux';
-import Helper       from '../../../specs_support/helper';
-import Index        from './index';
+import Helper       from '../../specs_support/helper';
+import Home         from './home';
 
-describe('index', () => {
+describe('home', () => {
   let result;
   let props;
 
@@ -12,12 +12,12 @@ describe('index', () => {
     props = {};
     result = TestUtils.renderIntoDocument(
       <Provider store={Helper.makeStore()}>
-        <Index {...props} />
+        <Home {...props} />
       </Provider>,
     );
   });
 
-  it('renders the index', () => {
+  it('renders the home component', () => {
     expect(result).toBeDefined();
   });
 });
