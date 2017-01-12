@@ -1,5 +1,5 @@
 import { Constants as JwtConstants } from '../actions/jwt';
-import jwt from './jwt';
+import jwt                           from './jwt';
 
 describe('jwt reducer', () => {
   describe('initial state', () => {
@@ -17,8 +17,8 @@ describe('jwt reducer', () => {
 
       const newJwt = { jwt: '1234' };
       const newState = jwt(state, {
-        type: JwtConstants.REFRESH_JWT_DONE,
-        payload: newJwt,
+        type    : JwtConstants.REFRESH_JWT_DONE,
+        payload : newJwt,
       });
 
       expect(newState).toEqual(newJwt.jwt);

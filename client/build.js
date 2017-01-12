@@ -1,2 +1,3 @@
-var build = require("./tools/build");
+const build = require('./tools/build');
+
 build.build(false);

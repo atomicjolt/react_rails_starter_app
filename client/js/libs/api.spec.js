@@ -1,6 +1,6 @@
-import api from './api';
+import api     from './api';
 import Network from '../constants/network';
-import Helper from '../../specs_support/helper';
+import Helper  from '../../specs_support/helper';
 
 describe('api', () => {
   const jwt = 'jwt_token';
