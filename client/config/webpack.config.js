@@ -35,7 +35,7 @@ module.exports = function webpackConfig(stage) {
 
   const jsLoaders = [babel];
 
-  const cssLoaders = ['style-loader', 'css-loader', 'postcss-loader'];
+  const cssLoaders = ['css-loader?importLoaders=1', 'postcss-loader'];
 
   const scssLoaders = cssLoaders.slice(0);
   scssLoaders.push(`sass-loader?outputStyle=expanded&includePaths[]=${(path.resolve(__dirname, './node_modules/bootstrap-sass'))}`);
