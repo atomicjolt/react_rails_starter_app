@@ -16,7 +16,7 @@ module.exports = function webpackConfig(stage) {
     settings.prodAssetsUrl + settings.prodRelativeOutput :
     settings.devAssetsUrl + settings.devRelativeOutput;
 
-  let babelPlugins = 'plugins[]=transform-runtime' +             // Externalise references to helpers and builtins, automatically polyfilling your code without polluting globals.
+  let babelPlugins = 'plugins[]=transform-runtime' +        // Externalise references to helpers and builtins, automatically polyfilling your code without polluting globals.
                 ',plugins[]=transform-decorators-legacy' +  // A plugin for Babel 6 that (mostly) replicates the old decorator behavior from Babel 5. Decorators aren't part of the standard yet. This gives us a good enough solution for now.
                 ',plugins[]=transform-class-properties';    // Allows class instance fields and class static properties.
 
@@ -73,8 +73,8 @@ module.exports = function webpackConfig(stage) {
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.AggressiveMergingPlugin(),
       new ChunkManifestPlugin({
-        filename: 'webpack-common-manifest.json',
-        manfiestVariable: 'webpackBundleManifest'
+        filename         : 'webpack-common-manifest.json',
+        manfiestVariable : 'webpackBundleManifest'
       }),
       extractCSS
 
@@ -96,47 +96,45 @@ module.exports = function webpackConfig(stage) {
   }
 
   const loaders = [
-    { test: /\.js$/,             loaders: jsLoaders, exclude: /node_modules/ },
-    { test: /\.jsx?$/,           loaders: jsLoaders, exclude: /node_modules/ },
-    { test: /\.scss$/i,          loader: extractCSS.extract(scssLoaders) },
-    { test: /\.css$/i,           loader: extractCSS.extract(cssLoaders) },
-    { test: /\.less$/i,          loader: extractCSS.extract(lessLoaders) },
-    { test: /.*\.(gif|png|jpg|jpeg|svg)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }, //'image-webpack-loader?optimizationLevel=7&interlaced=false'
+    { test: /\.js$/,    loaders: jsLoaders, exclude: /node_modules/ },
+    { test: /\.jsx?$/,  loaders: jsLoaders, exclude: /node_modules/ },
+    { test: /\.scss$/i, loader: extractCSS.extract(scssLoaders) },
+    { test: /\.css$/i,  loader: extractCSS.extract(cssLoaders) },
+    { test: /\.less$/i, loader: extractCSS.extract(lessLoaders) },
+    { test: /.*\.(gif|png|jpg|jpeg|svg)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
     { test: /.*\.(eot|woff2|woff|ttf)$/,   loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }
   ];
 
   return {
-    context: __dirname,
-    entry: entries,
-    output: {
-      path: production ? settings.prodOutput : settings.devOutput, // Location where generated files will be output
-      filename          : production ? '[name]-[chunkhash]' + settings.buildSuffix : '[name]' + settings.buildSuffix,
-      chunkFilename     : production ? '[id]-[chunkhash]' + settings.buildSuffix : '[id]' + settings.buildSuffix,
-      publicPath        : publicPath,
+    context : __dirname,
+    entry   : entries,
+    output  : {
+      publicPath,
+      // Location where generated files will be output
+      path              : production ? settings.prodOutput : settings.devOutput,
+      filename          : production ? `[name]-[chunkhash]${settings.buildSuffix}` : `[name]${settings.buildSuffix}`,
+      chunkFilename     : production ? `[id]-[chunkhash]${settings.buildSuffix}` : `[id]${settings.buildSuffix}`,
       sourceMapFilename : 'debugging/[file].map',
-      pathinfo          : !production // http://webpack.github.io/docs/configuration.html#output-pathinfo
+      // http://webpack.github.io/docs/configuration.html#output-pathinfo
+      pathinfo          : !production
     },
-    resolve            : {
-    extensions         : ['', '.js', '.json', '.jsx'],
-    modulesDirectories : ['node_modules', 'vendor']
+    resolve: {
+      extensions         : ['', '.js', '.json', '.jsx'],
+      modulesDirectories : ['node_modules', 'vendor']
     },
-    cache              : true,
-    quiet              : false,
-    noInfo             : false,
-    debug              : false,
-    outputPathinfo     : !production,
-    devtool            : production ? false : 'eval',  // http://webpack.github.io/docs/configuration.html#devtool
-    stats              : {
-    colors             : true
-    },
-    plugins            : plugins,
-    module             : {
-    loaders            : loaders
-    },
-    devServer          : {
-    stats              : {
-    cached             : false,
-    exclude            : [ /node_modules[\\\/]react(-router)?[\\\/]/ ]
+    cache          : true,
+    quiet          : false,
+    noInfo         : false,
+    debug          : false,
+    outputPathinfo : !production,
+    devtool        : production ? false : 'eval',  // http://webpack.github.io/docs/configuration.html#devtool
+    stats          : { colors: true },
+    plugins,
+    module         : { loaders },
+    devServer      : {
+      stats: {
+        cached  : false,
+        exclude : [/node_modules[\\\/]react(-router)?[\\\/]/]
       }
     }
   };
