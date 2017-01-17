@@ -1,5 +1,5 @@
 // karma config info: http://karma-runner.github.io/0.12/config/configuration-file.html
-var webpack           = require('webpack');
+const webpack       = require('webpack');
 const webpackConfig = require('./webpack.config')('test');
 
 module.exports = () => {
@@ -58,24 +58,24 @@ module.exports = () => {
     // karma-webpack configuration. Load and transpile js and jsx files.
     // Use istanbul-transformer post loader to generate code coverage report.
     webpack: {
-      devtool: 'eval',
-      plugins: webpackConfig.plugins,
-      module: webpackConfig.module,
-      resolve: webpackConfig.resolve,
+      devtool : 'eval',
+      plugins : webpackConfig.plugins,
+      module  : webpackConfig.module,
+      resolve : webpackConfig.resolve,
     },
 
     // Reduce the noise to the console
     webpackMiddleware: {
-      noInfo: true,
-      stats: {
+      noInfo : true,
+      stats  : {
         colors: true,
       },
     },
 
     coverageReporter: {
-      type: 'lcovonly',
-      dir: '../coverage/',
-      file: 'coverage.info',
+      type : 'lcovonly',
+      dir  : '../coverage/',
+      file : 'coverage.info',
     },
   };
   return testConfig;
