@@ -8,7 +8,6 @@
     "babel-runtime": "^6.20.0",
     "es6-promise": "^4.0.5",
     "lodash": "4.17.4",
-    "postcss-loader": "^1.2.1",
     "react": "15.4.2",
     "react-dom": "15.4.2",
     "react-proxy-loader": "0.3.4",
@@ -20,7 +19,7 @@
     "uuid": "3.0.1"
   },
   "devDependencies": {
-    "autoprefixer-loader": "3.2.0",
+    "autoprefixer": "^6.6.1",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
@@ -79,6 +78,9 @@
     "npm-shrinkwrap": "6.0.2",
     "null-loader": "0.1.1",
     "phantomjs-prebuilt": "^2.1.14",
+    "postcss-load-config": "^1.1.0",
+    "postcss-loader": "^1.2.1",
+    "postcss-smart-import": "^0.6.7",
     "protractor": "4.0.14",
     "psi": "2.0.4",
     "react-addons-test-utils": "^15.4.2",
