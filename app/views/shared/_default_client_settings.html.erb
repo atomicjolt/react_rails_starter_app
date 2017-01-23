@@ -1,12 +1,12 @@
 <%-
   settings = {
-    apiUrl: application_base_url,
-    csrfToken: form_authenticity_token
+    api_url: application_base_url,
+    csrf_token: form_authenticity_token
   }
   if signed_in?
-    settings[:userId] = current_user.id
+    settings[:user_id] = current_user.id
     settings[:email] = current_user.email
-    settings[:displayName] = current_user.display_name
+    settings[:display_name] = current_user.display_name
   end
 %>
 <script type="text/javascript">
