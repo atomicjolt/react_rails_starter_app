@@ -25,8 +25,8 @@
     "react"
   ],
   "dependencies": {
-    "del": "^2.2.2"
+    "del": "^2.2.2",
+    "s3-website": "^2.1.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
