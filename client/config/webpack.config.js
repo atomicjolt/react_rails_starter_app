@@ -29,6 +29,8 @@ module.exports = function webpackConfig(stage) {
     babelPlugins += ',plugins[]=transform-react-remove-prop-types'; // Removes prop types from code
   } else if (stage === 'hot') {
     babelPlugins += ',plugins[]=react-hot-loader/babel';
+  } else if (stage === 'test') {
+    babelPlugins += ',plugins[]=babel-plugin-rewire';
   }
 
   const babel = `babel?${babelPlugins}&${presets}`;
