@@ -30,7 +30,7 @@ module.exports = function webpackConfig(stage) {
   } else if (stage === 'hot') {
     babelPlugins += ',plugins[]=react-hot-loader/babel';
   } else if (stage === 'test') {
-    babelPlugins += ',plugins[]=babel-plugin-rewire';
+    // Add test plugins as needed
   }
 
   const babel = `babel?${babelPlugins}&${presets}`;
@@ -48,9 +48,9 @@ module.exports = function webpackConfig(stage) {
   let entries = _.cloneDeep(settings.entries);
 
   const cssEntries = settings.cssEntries;
-  for (let name in cssEntries) {
+  _.each(cssEntries, (name) => {
     entries[name] = cssEntries[name];
-  }
+  });
 
   if (stage === 'hot') {
     entries = _.reduce(entries, (result, entry, key) => {
