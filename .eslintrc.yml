@@ -27,13 +27,12 @@ rules:
     - error
     - unix
   import/no-unresolved: 0
-  no-multi-spaces: [1, {
-    "exceptions": {
-      "VariableDeclaration": true,
-      "ImportDeclaration": true,
-      "AssignmentExpression": true
-    }
-  }]
+  no-multi-spaces:
+    - 1
+    - exceptions:
+        VariableDeclarator: true
+        ImportDeclaration: true
+        AssignmentExpression: true
   comma-dangle:
     - error
     - only-multiline
@@ -41,11 +40,10 @@ rules:
     - error
     - devDependencies: true
   padded-blocks: 0
-  key-spacing: [2, {
-    align: {
-      "afterColon": true,
-      "beforeColon": true,
-      "on": "colon",
-      "mode": "minimum"
-    }
-  }]
+  key-spacing:
+    - 2
+    - align:
+        afterColon: true
+        beforeColon: true
+        "on": colon
+        mode: minimum
