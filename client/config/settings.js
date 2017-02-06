@@ -10,7 +10,7 @@ const prodRelativeOutput = '/assets/';
 const devOutput  = path.join(__dirname, '../../build/dev', devRelativeOutput);
 const prodOutput = path.join(__dirname, '../../public', prodRelativeOutput);
 
-//const prodAssetsUrl = ''; // Set this to the url where the assets will be deployed.
+// const prodAssetsUrl = ''; // Set this to the url where the assets will be deployed.
                           // If you want the paths to be relative to the deploy then leave this
                           // value as an empty string. This value could also be a CDN or
                           // it could be the ssl version of your S3 bucket ie:

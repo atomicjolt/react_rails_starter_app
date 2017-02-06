@@ -1,7 +1,9 @@
 # React Rails Starter App [![Build Status](https://travis-ci.org/atomicjolt/react_client_starter_app.svg?branch=master)](https://travis-ci.org/atomicjolt/react_client_starter_app) [![Coverage Status](https://coveralls.io/repos/github/atomicjolt/react_rails_starter_app/badge.svg?branch=master)](https://coveralls.io/github/atomicjolt/react_rails_starter_app?branch=master)
 -----------------------
-This project provides a starting point for building a React or OAuth application using Ruby on Rails as a backend.
-There are many starter kits that will help you get started with React and Redux. This is the one created by, maintained by and used by [Atomic Jolt](http://www.atomicjolt.com).
+There are many starter kits that will help you get started with React and Redux.
+This is the one created by, maintained by and used by [Atomic Jolt](http://www.atomicjolt.com).
+Atomic Jolt uses this as application as a starting place for Ruby on Rails applications that
+utilize React.
 
 
 ## Build a new application using the React Rails Starter App Rails application template:
@@ -100,32 +102,23 @@ $ npm install -g webpack
 $ cd client && webpack
 ```
 
-#### Install Javascript Libraries
-To get started run:
+  2. Edit configuration.
 
-```
-$ npm install
-```
+    Open up .s3-website.json and set the desired bucket name
 
-or if you have yarn installed:
+  3. Configure the bucket as a website
 
-```
-$ yarn
-```
+    `yarn create`
 
+  4. Deploy.
 
-To find outdated modules run:
-
-```
-$ npm-check-updates
-```
-
-Updated packages by passing -u
+    `yarn release`
 
 ```
 $ npm-check-updates -u
 ```
 
+  `yarn live`
 
 #### React
 The React Rails Starter App uses React.
@@ -135,10 +128,7 @@ The React Rails Starter App uses React.
 
 Open db/seeds.rb and configuration a default account for development and production. Here's a summary of the values and their purpose:
 
-- **code:** Uniquely identifies the account. This is used for the subdomain when running
-applications on a single domain.
-- **domain:** Custom domain name.
-- **name:** Name the account anything you'd like.
+  `yarn build_dev`
 
 Once you've setup your seeds file run it to setup database defaults:
 
@@ -147,20 +137,12 @@ $ rake db:setup
 ```
 or
 
-```
-$ rake db:create
-$ rake db:schema:load
-$ rake db:seed
-```
+  `yarn build`
 
 
 ### <a name="developer_key"></a>Setting up OAuth
 
-Visit the provider (Facebook, Twitter, Google, etc) to obtain an OAuth key and secret. Most of the fields will be specific to your organization.
-The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `reactrailsstarterapp.atomicjolt.xyz` with your domain.
-You will need an ID and secret for development and for production. The development URI will use a local domain while the production URI will use your domain.
-At AtomicJolt we use atomicjolt.xyz to point to a local computer. lvh.me also works. Ngrok can also be used to simplify tunneling a public
-address into your local computer.
+  `yarn release`
 
 **Oauth2 Redirect URI:**
 https://reactrailsstarterapp.atomicjolt.xyz/auth/[provider]/callback
