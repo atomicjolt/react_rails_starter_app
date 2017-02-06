@@ -41,9 +41,4 @@ rules:
     - devDependencies: true
   padded-blocks: 0
   key-spacing:
-    - 2
-    - align:
-        afterColon: true
-        beforeColon: true
-        "on": colon
-        mode: minimum
+    - 0

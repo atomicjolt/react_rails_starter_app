@@ -11,8 +11,8 @@ export default function (actionTypes, asyncActionTypes) {
 
   types = _.reduce(asyncActionTypes, (result, key) => ({
     ...result,
-    [key]             : key,
-    [`${key}${DONE}`] : `${key}${DONE}`
+    [key]: key,
+    [`${key}${DONE}`]: `${key}${DONE}`
   }), types);
 
   types.DONE = DONE;
