@@ -3,7 +3,7 @@
 There are many starter kits that will help you get started with React and Redux.
 This is the one created by, maintained by and used by [Atomic Jolt](http://www.atomicjolt.com).
 Atomic Jolt uses this as application as a starting place for our
-[Ruby on Rails React starter application](https://github.com/atomicjolt/react_starter_app)
+[Ruby on Rails and React starter application](https://github.com/atomicjolt/react_rails_starter_app)
 and our [Firebase React starter appliction](https://github.com/atomicjolt/react_firebase_starter_app).
 
 
