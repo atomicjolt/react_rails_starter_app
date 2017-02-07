@@ -21,7 +21,7 @@ if (__DEV__) {
   ];
 }
 
-export default function (initialState) {
+export default function(initialState) {
   const store = compose(...enhancers)(createStore)(rootReducer, initialState);
 
   if (__DEV__ && module.hot) {

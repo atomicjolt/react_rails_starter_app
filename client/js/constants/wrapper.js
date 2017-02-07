@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export const DONE = '_DONE';
 
-export default function (actionTypes, asyncActionTypes) {
+export default function(actionTypes, asyncActionTypes) {
 
   let types = _.reduce(actionTypes, (result, key) => ({
     ...result,

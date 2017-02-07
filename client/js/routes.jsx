@@ -9,9 +9,9 @@ import NotFound                       from './components/common/not_found';
 
 export default (
   <Router history={appHistory}>
-    <Route path='/' component={Index}>
+    <Route path="/" component={Index}>
       <IndexRoute component={Home} />
     </Route>
-    <Route path='*' component={NotFound} />
+    <Route path="*" component={NotFound} />
   </Router>
 );
