@@ -48,7 +48,7 @@ module.exports = function webpackConfig(stage) {
   let entries = _.cloneDeep(settings.entries);
 
   const cssEntries = settings.cssEntries;
-  _.each(cssEntries, (name) => {
+  _.each(cssEntries, (path, name) => {
     entries[name] = cssEntries[name];
   });
 
