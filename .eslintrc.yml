@@ -40,10 +40,18 @@ rules:
     - error
     - devDependencies: true
   padded-blocks: 0
-  key-spacing:
+  key-spacing: 0
+  space-before-function-paren:
     - 2
-    - align:
-        afterColon: true
-        beforeColon: true
-        "on": colon
-        mode: minimum
+    - never
+  func-names:
+    - 2
+    - as-needed
+  react/prefer-stateless-function:
+    - 2
+    - ignorePureComponents: true
+  react/forbid-prop-types:
+    - 2
+    - forbid:
+      - any
+      - array

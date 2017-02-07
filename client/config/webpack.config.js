@@ -30,7 +30,7 @@ module.exports = function webpackConfig(stage) {
   } else if (stage === 'hot') {
     babelPlugins += ',plugins[]=react-hot-loader/babel';
   } else if (stage === 'test') {
-    babelPlugins += ',plugins[]=babel-plugin-rewire';
+    // Add test plugins as needed
   }
 
   const babel = `babel?${babelPlugins}&${presets}`;
@@ -48,9 +48,9 @@ module.exports = function webpackConfig(stage) {
   let entries = _.cloneDeep(settings.entries);
 
   const cssEntries = settings.cssEntries;
-  for (let name in cssEntries) {
+  _.each(cssEntries, (_stylePath, name) => {
     entries[name] = cssEntries[name];
-  }
+  });
 
   if (stage === 'hot') {
     entries = _.reduce(entries, (result, entry, key) => {
@@ -75,13 +75,13 @@ module.exports = function webpackConfig(stage) {
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.AggressiveMergingPlugin(),
       new ChunkManifestPlugin({
-        filename         : 'webpack-common-manifest.json',
-        manfiestVariable : 'webpackBundleManifest'
+        filename: 'webpack-common-manifest.json',
+        manfiestVariable: 'webpackBundleManifest'
       }),
       extractCSS
 
       // Use to extract common code from multiple entry points into a single init.js
-      //new webpack.optimize.CommonsChunkPlugin('init.js');
+      // new webpack.optimize.CommonsChunkPlugin('init.js');
     ];
   } else if (stage === 'hot') {
     plugins = [
@@ -98,13 +98,13 @@ module.exports = function webpackConfig(stage) {
   }
 
   const loaders = [
-    { test: /\.js$/,    loaders: jsLoaders, exclude: /node_modules/ },
-    { test: /\.jsx?$/,  loaders: jsLoaders, exclude: /node_modules/ },
+    { test: /\.js$/, loaders: jsLoaders, exclude: /node_modules/ },
+    { test: /\.jsx?$/, loaders: jsLoaders, exclude: /node_modules/ },
     { test: /\.scss$/i, loader: extractCSS.extract(scssLoaders) },
-    { test: /\.css$/i,  loader: extractCSS.extract(cssLoaders) },
+    { test: /\.css$/i, loader: extractCSS.extract(cssLoaders) },
     { test: /\.less$/i, loader: extractCSS.extract(lessLoaders) },
     { test: /.*\.(gif|png|jpg|jpeg|svg)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
-    { test: /.*\.(eot|woff2|woff|ttf)$/,   loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }
+    { test: /.*\.(eot|woff2|woff|ttf)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }
   ];
 
   return {
@@ -136,7 +136,7 @@ module.exports = function webpackConfig(stage) {
     devServer      : {
       stats: {
         cached  : false,
-        exclude : [/node_modules[\\\/]react(-router)?[\\\/]/]
+        exclude : [/node_modules[\\/]react(-router)?[\\/]/]
       }
     }
   };

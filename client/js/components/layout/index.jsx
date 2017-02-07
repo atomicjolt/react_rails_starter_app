@@ -6,6 +6,10 @@ export default class Index extends React.Component {
     children: React.PropTypes.node,
   };
 
+  static defaultProps = {
+    children: '',
+  }
+
   constructor() {
     super();
     this.state = {};

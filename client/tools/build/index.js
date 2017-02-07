@@ -159,7 +159,8 @@ function watch(){
 
 module.exports = {
   watch               : watch,
-  build               : build
+  build               : build,
+  buildWebpackEntries
 };
 
 
