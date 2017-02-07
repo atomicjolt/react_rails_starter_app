@@ -28,7 +28,7 @@ module WebpackHelper
   end
 
   def webpack_manifest_script
-    return '' unless Rails.configuration.webpack[:use_manifest]
+    return "" unless Rails.configuration.webpack[:use_manifest]
     javascript_tag "window.webpackBundleManifest = #{Rails.configuration.webpack[:common_manifest].to_json}"
   end
 

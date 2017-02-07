@@ -52,8 +52,8 @@ group :development do
   gem "guard-rails"
   gem "guard-rspec"
   gem "hub", require: nil
-  gem "mail_view"
   gem "mailcatcher"
+  gem "mail_view"
   gem "quiet_assets"
   gem "rails_apps_pages"
   gem "rails_apps_testing"

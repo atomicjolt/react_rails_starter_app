@@ -1,11 +1,10 @@
 class SessionsController < Devise::SessionsController
   # Require our abstraction for encoding/deconding JWT.
-  require 'auth_token'
+  require "auth_token"
 
   respond_to :json
 
   def create
-
     # This is the default behavior from devise - view the sessions controller source:
     # https://github.com/plataformatec/devise/blob/master/app/controllers/devise/sessions_controller.rb
     self.resource = warden.authenticate!(auth_options)
@@ -17,18 +16,20 @@ class SessionsController < Devise::SessionsController
     # to any JS based client.
     token = AuthToken.issue_token({ user_id: resource.id })
     respond_with resource, location: after_sign_in_path_for(resource) do |format|
-      format.json { render json: {
-        userId: resource.id,
-        email: resource.email, 
-        displayName: resource.name, 
-        jwt_token: token
-      } }
+      format.json do
+        render json: {
+          userId: resource.id,
+          email: resource.email,
+          displayName: resource.name,
+          jwt_token: token,
+        }
+      end
     end
   end
 
   def destroy
     # Destroy all authentications when the user logs out:
-    #current_user.authentications.where(provider: 'facebook').destroy_all
+    # current_user.authentications.where(provider: 'facebook').destroy_all
     super
   end
 end

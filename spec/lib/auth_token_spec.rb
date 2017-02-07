@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe AuthToken do
   before do
@@ -9,7 +9,6 @@ describe AuthToken do
     token = AuthToken.issue_token({ user_id: @user.id })
     decoded = AuthToken.valid?(token)
     decoded_token = decoded[0]
-    expect(decoded_token['user_id']).to eq @user.id
+    expect(decoded_token["user_id"]).to eq @user.id
   end
-
 end
