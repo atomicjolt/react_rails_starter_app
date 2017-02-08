@@ -48,9 +48,6 @@ gem "will_paginate"
 group :development do
   gem "better_errors"
   gem "binding_of_caller", platforms: [:mri_21]
-  gem "guard-bundler"
-  gem "guard-rails"
-  gem "guard-rspec"
   gem "hub", require: nil
   gem "mail_view"
   gem "mailcatcher"

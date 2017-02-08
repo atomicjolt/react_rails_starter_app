@@ -99,11 +99,11 @@ end
 #
 create_file '.env' do <<-EOF
 APP_SUBDOMAIN=#{url_safe_name}
-APP_URL=ngrok.io
+APP_URL=atomicjolt.xyz
 APP_PORT=#{rails_port}
 ASSETS_SUBDOMAIN=#{url_safe_name}assets
 ASSETS_PORT=#{assets_port}
-ASSETS_URL=https://#{url_safe_name}assets.ngrok.io
+ASSETS_URL=https://#{url_safe_name}assets.atomicjolt.xyz
 APP_DEFAULT_CANVAS_URL=https://atomicjolt.instructure.com
 EOF
 end
@@ -204,8 +204,9 @@ puts "*"
 puts "*               Notes                          "
 puts "*"
 
-puts "Assuming you have ngrok installed and want to use foreman start the application by running:"
-puts "foreman start -f Procfile.dev"
+puts "Start application:"
+puts "rails server"
+puts "yarn hot"
 
 if !git_repo_specified?
   puts "To set your git remote repository run:"
