@@ -1,13 +1,12 @@
 Rails.application.configure do
-
   config.generators do |g|
     g.test_framework :rspec,
-      fixtures: true,
-      view_specs: false,
-      helper_specs: false,
-      routing_specs: false,
-      controller_specs: false,
-      request_specs: false
+                     fixtures: true,
+                     view_specs: false,
+                     helper_specs: false,
+                     routing_specs: false,
+                     controller_specs: false,
+                     request_specs: false
     g.fixture_replacement :factory_girl, dir: "spec/factories"
   end
 
@@ -51,7 +50,7 @@ Rails.application.configure do
   # }
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => "localhost:#{ENV["APP_PORT"]}" }
+  config.action_mailer.default_url_options = { host: "localhost:#{ENV['APP_PORT']}" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
 
@@ -65,5 +64,4 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
 end

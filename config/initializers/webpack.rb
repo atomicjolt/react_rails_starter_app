@@ -1,6 +1,6 @@
 if Rails.configuration.webpack[:use_manifest]
-  asset_manifest  = Rails.root.join('public', 'assets', 'webpack-asset-manifest.json')
-  common_manifest = Rails.root.join('public', 'assets', 'webpack-common-manifest.json')
+  asset_manifest  = Rails.root.join("public", "assets", "webpack-asset-manifest.json")
+  common_manifest = Rails.root.join("public", "assets", "webpack-common-manifest.json")
 
   if File.exist?(asset_manifest)
     Rails.configuration.webpack[:asset_manifest] = JSON.parse(

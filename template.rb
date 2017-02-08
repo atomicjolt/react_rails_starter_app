@@ -5,7 +5,7 @@
 require "fileutils"
 require "securerandom"
 
-#repo = "git@github.com:atomicjolt/react_rails_starter_app.git"
+# repo = "git@github.com:atomicjolt/react_rails_starter_app.git"
 repo = "https://github.com/atomicjolt/react_rails_starter_app.git"
 
 # keep track if the initial directory
@@ -36,7 +36,7 @@ end
 
 def gsub_file(path, regexp, *args, &block)
   content = File.read(path).gsub(regexp, *args, &block)
-  File.open(path, 'wb') { |file| file.write(content) }
+  File.open(path, "wb") { |file| file.write(content) }
 end
 
 def ask_with_default(question, color, default)
@@ -47,7 +47,7 @@ def ask_with_default(question, color, default)
 end
 
 def app_dir
-  @working_dir.split('/').last
+  @working_dir.split("/").last
 end
 
 ###########################################################
@@ -60,7 +60,6 @@ git_repo_url
 rails_port = ask_with_default("Port for Rails?", :blue, 3000)
 assets_port = ask_with_default("Port for assets server?", :blue, 8000)
 
-
 ###########################################################
 #
 # Clone and add remote
@@ -70,34 +69,32 @@ run "cd .. && git clone #{repo} #{@working_dir}"   # Replace it with our repo.
 git remote: "set-url origin #{git_repo_url}" if git_repo_specified?
 git remote: "add upstream #{repo}"
 
-
 ###########################################################
 #
 # Database.yml
 #
-inside 'config' do
+inside "config" do
   copy_file "database.example.yml", "database.yml"
 end
-
 
 ###########################################################
 #
 # secrets.yml
 #
-inside 'config' do
+inside "config" do
   copy_file "secrets.example.yml", "secrets.yml"
 
-  gsub_file("secrets.yml", "<Run rake secret to get a value to put here>") do |match|
+  gsub_file("secrets.yml", "<Run rake secret to get a value to put here>") do |_match|
     SecureRandom.hex(64)
   end
 end
-
 
 ###########################################################
 #
 # .env
 #
-create_file '.env' do <<-EOF
+create_file ".env" do
+  <<-EOF
 APP_SUBDOMAIN=#{url_safe_name}
 APP_URL=atomicjolt.xyz
 APP_PORT=#{rails_port}
@@ -107,7 +104,6 @@ ASSETS_URL=https://#{url_safe_name}assets.atomicjolt.xyz
 APP_DEFAULT_CANVAS_URL=https://atomicjolt.instructure.com
 EOF
 end
-
 
 ###########################################################
 #
@@ -120,29 +116,26 @@ modify_files << "Gemfile"
 modify_files << ".ruby-gemset"
 
 modify_files.each do |f|
-
-  gsub_file(f, "react_rails_starter_app") do |match|
+  gsub_file(f, "react_rails_starter_app") do |_match|
     app_name.underscore
   end
 
-  gsub_file(f, "reactrailsstarterapp") do |match|
-    app_name.titleize.gsub(' ', '')
+  gsub_file(f, "reactrailsstarterapp") do |_match|
+    app_name.titleize.gsub(" ", "")
   end
 
-  gsub_file(f, "ReactRailsStarterApp") do |match|
-    app_name.titleize.gsub(' ', '')
+  gsub_file(f, "ReactRailsStarterApp") do |_match|
+    app_name.titleize.gsub(" ", "")
   end
 
-  gsub_file(f, "reactrailsstarterapp") do |match|
+  gsub_file(f, "reactrailsstarterapp") do |_match|
     url_safe_name
   end
 
-  gsub_file(f, "React Starter App") do |match|
+  gsub_file(f, "React Starter App") do |_match|
     app_name.titleize
   end
-
 end
-
 
 ###########################################################
 #
@@ -169,13 +162,11 @@ rescue LoadError
   puts "RVM gem is currently unavailable."
 end
 
-
 ###########################################################
 #
 # npm install
 #
 run "cd client && npm install"
-
 
 ###########################################################
 #
@@ -185,15 +176,13 @@ rake("db:create")
 rake("db:schema:load")
 rake("db:seed")
 
-
 ###########################################################
 #
 # Commit changes to git
 #
-git add: '.'
+git add: "."
 git commit: "-a -m 'Initial Project Commit'"
 git push: "origin master" if git_repo_specified?
-
 
 ###########################################################
 #

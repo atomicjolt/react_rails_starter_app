@@ -1,7 +1,6 @@
 require "rails_helper"
 
 describe ApplicationController, type: :controller do
-
   controller do
     include Concerns::JwtToken
 
@@ -22,7 +21,7 @@ describe ApplicationController, type: :controller do
 
   context "invalid authorization header" do
     it "should not be authorized" do
-      request.headers['Authorization'] = "A fake header"
+      request.headers["Authorization"] = "A fake header"
       get :index, format: :json
       expect(response).to have_http_status(:unauthorized)
     end
@@ -33,10 +32,9 @@ describe ApplicationController, type: :controller do
       user = FactoryGirl.create(:user)
       user.confirm
       user_token = AuthToken.issue_token({ user_id: user.id })
-      request.headers['Authorization'] = user_token
+      request.headers["Authorization"] = user_token
       get :index, format: :json
       expect(response).to have_http_status(:success)
     end
   end
-
 end

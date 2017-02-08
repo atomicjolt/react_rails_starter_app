@@ -33,14 +33,13 @@ class Ability
 
     basic(user)
     admin(user) if user.admin?
-
   end
 
   def basic(user)
     can :manage, User, id: user.id
   end
 
-  def admin(user)
+  def admin(_user)
     can :manage, :all
   end
 

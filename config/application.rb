@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path("../boot", __FILE__)
 
 # Pick the frameworks you want:
 require "active_model/railtie"
@@ -30,20 +30,20 @@ module ReactRailsStarterApp
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
     config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'ALLOWALL'
+      "X-Frame-Options" => "ALLOWALL",
     }
 
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
+        origins "*"
+        resource "*", headers: :any, methods: [:get, :post, :options]
       end
     end
 
     config.webpack = {
-     use_manifest: false,
-     asset_manifest: {},
-     common_manifest: {}
+      use_manifest: false,
+      asset_manifest: {},
+      common_manifest: {},
     }
 
   end

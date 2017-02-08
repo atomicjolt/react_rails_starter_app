@@ -9,7 +9,7 @@ if Rails.env.development?
   end
 
   if catcher
-    ActionMailer::Base.smtp_settings = { :host => "localhost", :port => '1025', }
+    ActionMailer::Base.smtp_settings = { host: "localhost", port: "1025" }
     ActionMailer::Base.perform_deliveries = true
   end
 end
