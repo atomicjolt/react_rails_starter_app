@@ -41,6 +41,8 @@ rules:
     - devDependencies: true
   padded-blocks: 0
   key-spacing: 0
+  react/require-default-props: 0
+  jsx-a11y/no-static-element-interactions: 0
   space-before-function-paren:
     - 2
     - never
@@ -54,4 +56,3 @@ rules:
     - 2
     - forbid:
       - any
-      - array
