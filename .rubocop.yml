@@ -69,7 +69,7 @@ Metrics/ModuleLength:
 Metrics/BlockLength:
   Exclude:
     - spec/**/**
-    - config/routes.rb
+    - config/*
 
 Style/ClassVars:
   Description: 'Avoid the use of class variables.'
