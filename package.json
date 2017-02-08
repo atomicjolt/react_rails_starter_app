@@ -13,8 +13,8 @@
     "live": "cd ./client && node server.js",
     "build_dev": "cd ./client && node ./build.js",
     "build": "cd ./client && node ./build.js --release",
-    "create": "cd ./client && node ./build.js --release && cd .. && s3-website create",
-    "release": "cd ./client && node ./build.js --release && cd .. && s3-website deploy",
+    "create": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js create",
+    "release": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js deploy",
     "lint": "cd ./client && eslint js"
   },
   "repository": {
@@ -25,8 +25,7 @@
     "react"
   ],
   "dependencies": {
-    "del": "^2.2.2",
-    "s3-website": "^2.1.0"
+    "del": "^2.2.2"
   },
   "devDependencies": {}
 }
