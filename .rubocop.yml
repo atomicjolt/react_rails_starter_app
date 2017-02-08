@@ -237,6 +237,8 @@ Metrics/LineLength:
   Enabled: true
   Exclude:
     - Gemfile
+    - spec/support/webmock_requests.rb
+    - lib/tasks/*.rake
 
 Metrics/MethodLength:
   Description: 'Avoid methods longer than 10 lines of code.'
