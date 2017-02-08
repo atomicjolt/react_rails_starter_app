@@ -77,11 +77,7 @@ class User < ActiveRecord::Base
 
   def associate_account(auth)
     data = auth["info"] || {}
-    name = begin
-             data["name"]
-           rescue
-             nil
-           end
+    name = data["name"]
     name ||= "#{data['first_name']} #{data['last_name']}"
     self.name ||= name
     self.time_zone ||= begin
@@ -99,10 +95,6 @@ class User < ActiveRecord::Base
   #
   def set_default_role
     self.role ||= :user
-  end
-
-  def in_role?(_object, _roles)
-    raise "not implemented"
   end
 
   def role?(name)
