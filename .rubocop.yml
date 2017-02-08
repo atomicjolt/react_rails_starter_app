@@ -3,7 +3,6 @@ AllCops:
   Exclude:
     - db/schema.rb
     - config/initializers/devise.rb
-    - ngrok.rb
     - bin/*
     - config.ru
     - config/unicorn/*
@@ -237,7 +236,6 @@ Metrics/LineLength:
   Max: 120
   Enabled: true
   Exclude:
-    - Guardfile
     - Gemfile
 
 Metrics/MethodLength:
