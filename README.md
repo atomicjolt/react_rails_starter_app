@@ -11,31 +11,18 @@ rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_rails_sta
 
 ## Running React Rails Starter App
 
-### With Foreman
-Foreman makes it simple to startup all the services required to run the application in development mode. To start the application using foreman simply run:
-
-```
-$ foreman start -f Procfile.dev
-```
-
-Make sure you have the latest version of Foreman installed.
-
-#### Environment
-Foreman will automatically find and read the .env file.
-
-### Without Foreman
-If you need to run services individually or just don't like Foreman you can run each service seperately:
+Startup the Rails and webpack server:
 
 ```
 $ rails server
-$ npm run hot
+$ yarn hot
 ```
 
 ## Setting up React Rails Starter App
 
 ### File Modifications
 
-#### Change .env for Foreman
+#### Setup .env
 Rename `.env.example` to `.env` and configure it to your liking.
 
 Note: the App and Assets subdomains must be different.

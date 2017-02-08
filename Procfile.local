@@ -1,5 +1,0 @@
-# To run:
-# foreman start -f Procfile.local
-
-web: rails server -p $APP_PORT
-webpack: node client/webpack.hot.js

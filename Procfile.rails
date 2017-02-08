@@ -1,4 +1,0 @@
-# To run:
-# foreman start -f Procfile.rails
-
-web: bin/rails server -p $APP_PORT
