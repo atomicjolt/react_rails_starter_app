@@ -79,7 +79,7 @@ Karma and Jasmine are used for testing. To run tests run:
 -----------
 Inside the client directory run:
 
-  `npm-check-updates`
+  `yarn upgrade-interactive`
 
 
 #Deploy to S3:
