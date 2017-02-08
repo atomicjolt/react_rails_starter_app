@@ -56,3 +56,4 @@ rules:
     - 2
     - forbid:
       - any
+  import/extensions: 0
