@@ -1,13 +1,26 @@
-var path          = require("path");
-var fs            = require('fs-extra')
+const path = require('path');
+const fs   = require('fs-extra');
+
+// -----------------------------------------------------------------------------
+// main build
+// -----------------------------------------------------------------------------
+function makeOutputFilePath(inputPath, outputPath, fileName, options, cb) {
+  const relPath = inputPath.replace(options.rootInputPath, ''); // build relative path for output file
+  const out = path.join(outputPath, relPath, fileName);
+  const dir = path.dirname(out);
+  fs.mkdirs(dir, {}, () => {
+    cb(out);
+  });
+  return out;
+}
 
 // -----------------------------------------------------------------------------
 // write file
 // -----------------------------------------------------------------------------
-function write(inputPath, outputPath, fileName, content, options){
-  return makeOutputFilePath(inputPath, outputPath, fileName, options, function(out){
-    fs.writeFile(out, content, function(err){
-      if(err){ return console.log(err); }
+function write(inputPath, outputPath, fileName, content, options) {
+  return makeOutputFilePath(inputPath, outputPath, fileName, options, (out) => {
+    fs.writeFile(out, content, (err) => {
+      if (err) { console.log(err); }
     });
   });
 }
@@ -15,28 +28,15 @@ function write(inputPath, outputPath, fileName, content, options){
 // -----------------------------------------------------------------------------
 // copy file
 // -----------------------------------------------------------------------------
-function copy(inputPath, outputPath, fileName, options){
-  return makeOutputFilePath(inputPath, outputPath, fileName, options, function(out){
-    fs.copy(path.join(inputPath, fileName), out, function(err){
-      if(err){ return console.log(err); }
+function copy(inputPath, outputPath, fileName, options) {
+  return makeOutputFilePath(inputPath, outputPath, fileName, options, (out) => {
+    fs.copy(path.join(inputPath, fileName), out, (err) => {
+      if (err) { console.log(err); }
     });
   });
 }
 
-// -----------------------------------------------------------------------------
-// main build
-// -----------------------------------------------------------------------------
-function makeOutputFilePath(inputPath, outputPath, fileName, options, cb){
-  var relPath = inputPath.replace(options.rootInputPath, ""); // build relative path for output file
-  var out = path.join(outputPath, relPath, fileName);
-  var dir = path.dirname(out);
-  fs.mkdirs(dir, {}, function(){
-    cb(out);
-  });
-  return out;
-}
-
 module.exports = {
-  write : write,
-  copy  : copy
+  write,
+  copy
 };

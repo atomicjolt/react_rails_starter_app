@@ -1,67 +1,39 @@
-var fs            = require("fs");
-var path          = require("path");
-var _             = require("lodash");
-var ejs           = require("ejs");
+const fs    = require('fs');
+const path  = require('path');
+const _     = require('lodash');
+const ejs   = require('ejs');
 
-var utils         = require("./utils");
+const utils = require('./utils');
 
-// -----------------------------------------------------------------------------
-// Apply layouts to content
-// -----------------------------------------------------------------------------
-function apply(data, fullPath, templateMap, templateDirs){
 
-  // If the user has specified a layout in the front matter use that.
-  // Then try the layout map and finally default to application.html
-  var layoutFile = data.metadata.layout || templateMap[fullPath] || "application.html";
-  var template = loadTemplate(layoutFile, templateDirs);
-
-  var html = "";
-
-  try{
-    html = template(_.merge({
-      cleanTag   : utils.cleanTag,
-      "_"        : _
-    }, data));
-  } catch(err){
-    console.log(err);
-    console.log("Unable to build file: " + fullPath + " Data: " + data);
-    console.log("Stack Trace:");
-    console.log(err.trace);
-  }
-
-  return html;
-}
-
-function safeReadLayout(file){
-  try{
+function safeReadLayout(file) {
+  try {
     return fs.readFileSync(file, 'utf8');
-  } catch(e){
+  } catch (e) {
     return false;
   }
 }
 
-function firstValid(func, collection){
-  for(var i=0; i<collection.length; i++){
-    var val = func(collection[i]);
-    if(val){ return { value: val, item: collection[i]}; }
+function firstValid(func, collection) {
+  for (let i = 0; i < collection.length; i += 1) {
+    const val = func(collection[i]);
+    if (val) { return { value: val, item: collection[i] }; }
   }
   return false;
 }
 
-function loadTemplate(file, templateDirs){
-  file = path.extname(file) ? file : file + '.html';
+function loadTemplate(file, templateDirs) {
+  const fileName = path.extname(file) ? file : `${file}.html`;
 
-  var layouts = _(templateDirs)
-    .map(function(location){
-      return path.join(location, file);
-    })
+  const layouts = _(templateDirs)
+    .map(location => path.join(location, fileName))
     .uniq()
     .value();
 
-  var result = firstValid(safeReadLayout, layouts);
+  const result = firstValid(safeReadLayout, layouts);
 
-  if(!result){
-    throw "No template found matching " + file;
+  if (!result) {
+    throw new Error(`No template found matching ${fileName}`);
   }
 
   return ejs.compile(result.value, {
@@ -70,8 +42,35 @@ function loadTemplate(file, templateDirs){
   });
 }
 
+// -----------------------------------------------------------------------------
+// Apply layouts to content
+// -----------------------------------------------------------------------------
+function apply(data, fullPath, templateMap, templateDirs) {
+
+  // If the user has specified a layout in the front matter use that.
+  // Then try the layout map and finally default to application.html
+  const layoutFile = data.metadata.layout || templateMap[fullPath] || 'application.html';
+  const template = loadTemplate(layoutFile, templateDirs);
+
+  let html = '';
+
+  try {
+    html = template(_.merge({
+      cleanTag   : utils.cleanTag,
+      _
+    }, data));
+  } catch (err) {
+    console.log(err);
+    console.log(`Unable to build file: ${fullPath} Data: ${data}`);
+    console.log('Stack Trace:');
+    console.log(err.trace);
+  }
+
+  return html;
+}
+
 module.exports = {
-  apply: apply,
-  loadTemplate: loadTemplate
+  apply,
+  loadTemplate
 };
 

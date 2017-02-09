@@ -1,15 +1,27 @@
-var minify        = require('html-minifier').minify;
-var webpackUtils  = require("./webpack_utils");
+const minify        = require('html-minifier').minify;
+const webpackUtils  = require('./webpack_utils');
 
-module.exports = function(html, stage, webpackConfig, webpackStats, options){
-  if(stage == "production"){
-    html = webpackUtils.apply(html, webpackConfig, webpackStats, options.entries, options.cssEntries, options.buildSuffix);
-    return minify(html, {
+module.exports = function applyProduction(html, stage, webpackConfig, webpackStats, options) {
+
+  let productionHtml = html;
+
+  if (stage === 'production') {
+    productionHtml = webpackUtils.apply(
+      html,
+      webpackConfig,
+      webpackStats,
+      options.entries,
+      options.cssEntries,
+      options.buildSuffix
+    );
+
+    return minify(productionHtml, {
       removeComments: true,
       collapseWhitespace: true,
       minifyJS: true
     });
-  } else {
-    return html;
   }
+
+  return productionHtml;
+
 };
