@@ -1,41 +1,41 @@
-var path  = require("path");
-var _     = require("lodash");
+const path  = require('path');
+const _     = require('lodash');
+
+// Regex used to parse date from file name
+const dateRegEx = /(\d{4})-(\d{1,2})-(\d{1,2})-(.*)/;
 
 
 // -----------------------------------------------------------------------------
 // Make tags snake case
 // -----------------------------------------------------------------------------
-function cleanTag(tag){
+function cleanTag(tag) {
   return _.snakeCase(tag);
 }
-
-
-// Regex used to parse date from file name
-var dateRegEx = /(\d{4})-(\d{1,2})-(\d{1,2})-(.*)/;
 
 // -----------------------------------------------------------------------------
 // Use the filename to build a directory structure using the date
 // -----------------------------------------------------------------------------
-function filename2date(filePath){
-  var result = {};
-  var ext = path.extname(filePath);
-  var basename = path.basename(filePath, ext);
-  var match = dateRegEx.exec(basename);
-  if(match) {
-    var year = match[1];
-    var month = match[2];
-    var day = match[3];
-    var basename = match[4];
-    result.date = month + '-' + day + '-' + year, "MM-DD-YYYY";
-    result.url = '/' + year + '/' + month + '/' + day + '/' + basename + '.html';
-    if(!result.title){
-      result.title = basename.replace(/_/g, ' ');
+function filename2date(filePath) {
+  const result = {};
+  const ext = path.extname(filePath);
+  const basename = path.basename(filePath, ext);
+  const match = dateRegEx.exec(basename);
+  if (match) {
+    const year = match[1];
+    const month = match[2];
+    const day = match[3];
+    const name = match[4];
+    result.date = `${month}-${day}-${year}`;
+    result.dateFormat = 'MM-DD-YYYY';
+    result.url = `/${year}/${month}/${day}/${name}.html`;
+    if (!result.title) {
+      result.title = name.replace(/_/g, ' ');
     }
   }
   return result;
 }
 
 module.exports = {
-  cleanTag: cleanTag,
-  filename2date: filename2date
+  cleanTag,
+  filename2date
 };
