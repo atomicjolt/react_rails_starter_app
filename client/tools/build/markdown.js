@@ -1,6 +1,6 @@
-var marked        = require("marked");
+const marked        = require('marked');
 
-var markedOptions = {
+const markedOptions = {
   gfm: true,
   tables: true,
   breaks: false,
@@ -9,6 +9,7 @@ var markedOptions = {
   smartLists: true,
   smartypants: false
 };
+
 marked.setOptions(markedOptions);
 
 module.exports = marked;
