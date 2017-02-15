@@ -4,7 +4,7 @@ describe('configure store', () => {
   it('setups up initial state', () => {
     const settings = {
       csrf   : 'csrf_token',
-      apiUrl : 'http://www.example.com',
+      api_url : 'http://www.example.com',
     };
     const initialState = {
       jwt: 'jwt_token',
