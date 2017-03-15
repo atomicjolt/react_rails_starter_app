@@ -6,6 +6,9 @@ Atomic Jolt uses this as application as a starting place for our
 [Ruby on Rails and React starter application](https://github.com/atomicjolt/react_rails_starter_app)
 and our [Firebase React starter appliction](https://github.com/atomicjolt/react_firebase_starter_app).
 
+#Demo:
+-----------------------
+[React Client Starter App Demo](http://reactclientstarterapp.com.s3-website-us-east-1.amazonaws.com)
 
 #Getting Started:
 -----------------------

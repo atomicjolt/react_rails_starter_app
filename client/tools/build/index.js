@@ -45,7 +45,7 @@ function buildWebpackEntries(isHot) {
           console.log('webpack error', err);
           reject(err);
         }
-        // console.log("webpack", stats.toString({colors: true}));
+        // console.log('webpack', stats.toString({ colors: true }));
         resolve({
           webpackConfig,
           webpackStats: stats.toJson()
