@@ -33,9 +33,9 @@ module.exports = function webpackConfig(stage) {
     // Add test plugins as needed
   }
 
-  const babel = `babel?${babelPlugins}&${presets}`;
+  const babelLoader = `babel-loader?${babelPlugins}&${presets}`;
 
-  const jsLoaders = [babel];
+  const jsLoaders = [babelLoader];
 
   const cssLoaders = ['css-loader?importLoaders=1', 'postcss-loader'];
 
@@ -70,9 +70,9 @@ module.exports = function webpackConfig(stage) {
   if (production) {
     plugins = [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"', __DEV__: false }),
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin(),
-      new webpack.optimize.OccurrenceOrderPlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        sourceMap: 'cheap-source-map'
+      }),
       new webpack.optimize.AggressiveMergingPlugin(),
       new ChunkManifestPlugin({
         filename: 'webpack-common-manifest.json',
@@ -87,7 +87,7 @@ module.exports = function webpackConfig(stage) {
     plugins = [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
       extractCSS
     ];
   } else {
@@ -97,46 +97,42 @@ module.exports = function webpackConfig(stage) {
     ];
   }
 
-  const loaders = [
-    { test: /\.js$/, loaders: jsLoaders, exclude: /node_modules/ },
-    { test: /\.jsx?$/, loaders: jsLoaders, exclude: /node_modules/ },
-    { test: /\.scss$/i, loader: extractCSS.extract(scssLoaders) },
-    { test: /\.css$/i, loader: extractCSS.extract(cssLoaders) },
-    { test: /\.less$/i, loader: extractCSS.extract(lessLoaders) },
-    { test: /.*\.(gif|png|jpg|jpeg|svg)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
-    { test: /.*\.(eot|woff2|woff|ttf)$/, loaders: ['url?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }
+  const rules = [
+    { test: /\.js$/, use: jsLoaders, exclude: /node_modules/ },
+    { test: /\.jsx?$/, use: jsLoaders, exclude: /node_modules/ },
+    { test: /\.scss$/i, use: extractCSS.extract(scssLoaders) },
+    { test: /\.css$/i, use: extractCSS.extract(cssLoaders) },
+    { test: /\.less$/i, use: extractCSS.extract(lessLoaders) },
+    { test: /.*\.(gif|png|jpg|jpeg|svg)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
+    { test: /.*\.(eot|woff2|woff|ttf)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }
   ];
 
   return {
-    context : __dirname,
-    entry   : entries,
-    output  : {
+    context: path.resolve('../', __dirname),
+    entry: entries,
+    output: {
       publicPath,
       // Location where generated files will be output
-      path              : production ? settings.prodOutput : settings.devOutput,
-      filename          : production ? `[name]-[chunkhash]${settings.buildSuffix}` : `[name]${settings.buildSuffix}`,
-      chunkFilename     : production ? `[id]-[chunkhash]${settings.buildSuffix}` : `[id]${settings.buildSuffix}`,
-      sourceMapFilename : 'debugging/[file].map',
+      path: production ? settings.prodOutput : settings.devOutput,
+      filename: production ? `[name]-[chunkhash]${settings.buildSuffix}` : `[name]${settings.buildSuffix}`,
+      chunkFilename: production ? `[id]-[chunkhash]${settings.buildSuffix}` : `[id]${settings.buildSuffix}`,
+      sourceMapFilename: 'debugging/[file].map',
       // http://webpack.github.io/docs/configuration.html#output-pathinfo
-      pathinfo          : !production
+      pathinfo: !production
     },
     resolve: {
-      extensions         : ['', '.js', '.json', '.jsx'],
-      modulesDirectories : ['node_modules', 'vendor']
+      extensions: ['.js', '.json', '.jsx'],
+      modules: ['node_modules']
     },
-    cache          : true,
-    quiet          : false,
-    noInfo         : false,
-    debug          : false,
-    outputPathinfo : !production,
-    devtool        : production ? false : 'eval',  // http://webpack.github.io/docs/configuration.html#devtool
-    stats          : { colors: true },
+    cache: true,
+    devtool: production ? false : 'eval',  // http://webpack.github.io/docs/configuration.html#devtool
+    stats: { colors: true },
     plugins,
-    module         : { loaders },
-    devServer      : {
+    module: { rules },
+    devServer: {
       stats: {
-        cached  : false,
-        exclude : [/node_modules[\\/]react(-router)?[\\/]/]
+        cached: false,
+        exclude: [/node_modules[\\/]react(-router)?[\\/]/]
       }
     }
   };

@@ -5,6 +5,9 @@ This is the one created by, maintained by and used by [Atomic Jolt](http://www.a
 Atomic Jolt uses this as application as a starting place for Ruby on Rails applications that
 utilize React.
 
+#Demo:
+-----------------------
+[React Client Starter App Demo](http://reactclientstarterapp.com.s3-website-us-east-1.amazonaws.com)
 
 ## Build a new application using the React Rails Starter App Rails application template:
 -----------
