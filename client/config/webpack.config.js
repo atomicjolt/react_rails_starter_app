@@ -1,13 +1,16 @@
-const webpack             = require('webpack');
-const path                = require('path');
-const ExtractTextPlugin   = require('extract-text-webpack-plugin');
-const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-const _                   = require('lodash');
-const settings            = require('./settings');
+const webpack              = require('webpack');
+const path                 = require('path');
+const ExtractTextPlugin    = require('extract-text-webpack-plugin');
+const ChunkManifestPlugin  = require('chunk-manifest-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const AssetsPlugin         = require('assets-webpack-plugin');
+const _                    = require('lodash');
+const settings             = require('./settings');
 
 module.exports = function webpackConfig(stage) {
 
   const production = stage === 'production' || stage === 'staging';
+  const outputPath = production ? settings.prodOutput : settings.devOutput;
 
   // Public path indicates where the assets will be served from. In dev this will likely be
   // localhost or a local domain. In production this could be a CDN. In developerment this will
@@ -65,31 +68,45 @@ module.exports = function webpackConfig(stage) {
 
   const extractCSS = new ExtractTextPlugin(production ? '[name]-[chunkhash].css' : '[name].css');
 
-  let plugins = [];
+  let plugins = [
+    // Use to extract common code from multiple entry points into a single init.js
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: module => module.context && module.context.indexOf('node_modules') !== -1
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity
+    })
+  ];
 
   if (production) {
-    plugins = [
+    plugins = _.concat(plugins, [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"', __DEV__: false }),
       new webpack.optimize.UglifyJsPlugin({
-        sourceMap: 'cheap-source-map'
+        sourceMap: true
       }),
       new webpack.optimize.AggressiveMergingPlugin(),
       new ChunkManifestPlugin({
         filename: 'webpack-common-manifest.json',
         manfiestVariable: 'webpackBundleManifest'
       }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static'
+      }),
+      // Generate webpack-assets.json to map path to assets generated with hashed names
+      new AssetsPlugin({
+        path: outputPath
+      }),
       extractCSS
-
-      // Use to extract common code from multiple entry points into a single init.js
-      // new webpack.optimize.CommonsChunkPlugin('init.js');
-    ];
+    ]);
   } else if (stage === 'hot') {
-    plugins = [
+    plugins = _.concat(plugins, [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       extractCSS
-    ];
+    ]);
   } else {
     plugins = [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
@@ -113,10 +130,10 @@ module.exports = function webpackConfig(stage) {
     output: {
       publicPath,
       // Location where generated files will be output
-      path: production ? settings.prodOutput : settings.devOutput,
+      path: outputPath,
       filename: production ? `[name]-[chunkhash]${settings.buildSuffix}` : `[name]${settings.buildSuffix}`,
       chunkFilename: production ? `[id]-[chunkhash]${settings.buildSuffix}` : `[id]${settings.buildSuffix}`,
-      sourceMapFilename: 'debugging/[file].map',
+      sourceMapFilename: '[name].map',
       // http://webpack.github.io/docs/configuration.html#output-pathinfo
       pathinfo: !production
     },
@@ -125,7 +142,7 @@ module.exports = function webpackConfig(stage) {
       modules: ['node_modules']
     },
     cache: true,
-    devtool: production ? false : 'eval',  // http://webpack.github.io/docs/configuration.html#devtool
+    devtool: production ? 'source-map' : 'cheap-module-source-map', // https://webpack.js.org/configuration/devtool/
     stats: { colors: true },
     plugins,
     module: { rules },

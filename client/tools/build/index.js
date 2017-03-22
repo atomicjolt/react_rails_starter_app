@@ -24,8 +24,6 @@ const options              = {
   truncateSummaryAt : 1000,
   buildExtensions   : ['.html', '.htm', '.md', '.markdown'], // file types to build (others will just be copied)
   rootInputPath     : inputPath,            // Original input path
-  entries           : settings.entries,     // Webpack entry points
-  cssEntries        : settings.cssEntries,  // Webpack css entry points
   buildSuffix       : settings.buildSuffix, // Webpack build suffix. ie _bundle.js
   templateData      : {}, // Object that will be passed to every page as it is rendered
   templateMap       : {}, // Used to specify specific templates on a per file basis
@@ -80,11 +78,14 @@ function build(isHot) {
       // Build files
       console.log(`Building files in: ${inputPath}`);
       buildWebpackEntries(isHot).then((packResults) => {
+        let webpackAssets;
+        if (stage === 'production') {
+          webpackAssets = fs.readJsonSync(`${packResults.webpackConfig.output.path}/webpack-assets.json`);
+        }
         const pages = content.buildContents(
           inputPath,
           outputPath,
-          packResults.webpackConfig,
-          packResults.webpackStats,
+          webpackAssets,
           stage,
           options
         );
@@ -94,7 +95,7 @@ function build(isHot) {
           inputPath,
           outputPath,
           webpackConfig : packResults.webpackConfig,
-          webpackStats  : packResults.webpackStats,
+          webpackAssets,
           stage,
           options
         });
@@ -115,8 +116,7 @@ function watch() {
         // Build the page
         const page = content.buildContent(
           filePath,
-          buildResults.webpackConfig,
-          buildResults.webpackStats,
+          buildResults.webpackAssets,
           buildResults.stage,
           buildResults.options
         );

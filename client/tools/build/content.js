@@ -14,7 +14,7 @@ const ignoreFiles     = ['.DS_Store'];
 // -----------------------------------------------------------------------------
 // build a single file
 // -----------------------------------------------------------------------------
-function buildContent(fullPath, webpackConfig, webpackStats, stage, options) {
+function buildContent(fullPath, webpackAssets, stage, options) {
   const content     = fs.readFileSync(fullPath, 'utf8');
   const parsed      = frontMatter(content);
   const metadata    = parsed.attributes;
@@ -48,7 +48,7 @@ function buildContent(fullPath, webpackConfig, webpackStats, stage, options) {
   // Apply template
   data.content = html; // Pass in generated html
   html = templates.apply(data, fullPath, options.templateMap, options.templateDirs);
-  html = applyProduction(html, stage, webpackConfig, webpackStats, options);
+  html = applyProduction(html, stage, webpackAssets, options.buildSuffix);
 
   return {
     title,
@@ -64,7 +64,7 @@ function buildContent(fullPath, webpackConfig, webpackStats, stage, options) {
 // -----------------------------------------------------------------------------
 // build html and markdown files in a given directory
 // -----------------------------------------------------------------------------
-function buildContents(inputPath, outputPath, webpackConfig, webpackStats, stage, options) {
+function buildContents(inputPath, outputPath, webpackAssets, stage, options) {
   let results = [];
   const files = fs.readdirSync(inputPath);
   files.forEach((fileName) => {
@@ -76,15 +76,14 @@ function buildContents(inputPath, outputPath, webpackConfig, webpackStats, stage
         results = _.concat(results, buildContents(
           fullInputPath,
           outputPath,
-          webpackConfig,
-          webpackStats,
+          webpackAssets,
           stage,
           options
         ));
       } else {
         const ext = path.extname(fullInputPath);
         if (_.includes(options.buildExtensions, ext)) {
-          const page = buildContent(fullInputPath, webpackConfig, webpackStats, stage, options);
+          const page = buildContent(fullInputPath, webpackAssets, stage, options);
           let outFile = fileName;
           let outPath = outputPath;
           let inPath = inputPath;

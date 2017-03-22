@@ -1,18 +1,15 @@
 const minify        = require('html-minifier').minify;
 const webpackUtils  = require('./webpack_utils');
 
-module.exports = function applyProduction(html, stage, webpackConfig, webpackStats, options) {
+module.exports = function applyProduction(html, stage, webpackAssets, buildSuffix) {
 
   let productionHtml = html;
 
   if (stage === 'production') {
     productionHtml = webpackUtils.apply(
       html,
-      webpackConfig,
-      webpackStats,
-      options.entries,
-      options.cssEntries,
-      options.buildSuffix
+      webpackAssets,
+      buildSuffix
     );
 
     return minify(productionHtml, {
