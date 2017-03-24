@@ -5652,6 +5652,10 @@ phantomjs-prebuilt@^2.1.14, phantomjs-prebuilt@^2.1.7:
     request-progress "~2.0.1"
     which "~1.2.10"
 
+phoenix-socket@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/phoenix-socket/-/phoenix-socket-1.1.3.tgz#28f3f1e84cd4054b5e03b14e775ca7fc12b30e24"
+
 pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
