@@ -6,16 +6,16 @@ const apps = require('../libs/build/apps');
 
 module.exports = () => {
 
-  let plugins = [];
-  let module = {};
-  let resolve = {};
+  const webpackOptions = apps.buildWebpackOptions('fakeAppName', 'fakeAppPath', { stage: 'test', onlyPack: true });
+  const webpackConfig = webpackConfigBuilder(webpackOptions);
+  const plugins = webpackConfig.plugins;
+  const module = webpackConfig.module;
+  const resolve = webpackConfig.resolve;
 
   _.each(settings.apps, (appPath, appName) => {
-    const webpackOptions = apps.buildWebpackOptions(appName, appPath, { stage: 'test', onlyPack: true });
-    const webpackConfig = webpackConfigBuilder(webpackOptions);
-    plugins = _.union(plugins, webpackConfig.plugins);
-    module = _.merge({}, resolve, webpackConfig.module);
-    resolve = _.merge({}, resolve, webpackConfig.resolve);
+    const appWebpackOptions = apps.buildWebpackOptions(appName, appPath, { stage: 'test', onlyPack: true });
+    const appWebpackConfig = webpackConfigBuilder(appWebpackOptions);
+    resolve.modules = _.union(resolve.modules, appWebpackConfig.resolve.modules);
   });
 
   return {

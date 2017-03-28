@@ -11,6 +11,5 @@ module.exports = (config) => {
     },
   };
   testConfig.browsers = ['Chrome_travis_ci'];
-  console.log(testConfig)
   config.set(testConfig);
 };
