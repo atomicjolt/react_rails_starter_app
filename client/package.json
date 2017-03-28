@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "postinstall": "for dir in apps/*; do pushd \"$dir\" || continue; yarn; popd; done"
+    "postinstall": "for dir in apps/*; do pushd \"$dir\" || continue; yarn; popd; done && node node_modules/phantomjs-prebuilt/install.js"
   },
    "dependencies": {
      "superagent": "^3.5.0",
