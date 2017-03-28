@@ -12,7 +12,9 @@
     "hot": "cd ./client && node webpack.hot.js",
     "live": "cd ./client && node server.js",
     "build_dev": "cd ./client && node ./build.js",
+    "build_dev_pack": "cd ./client && node ./build.js --onlyPack",
     "build": "cd ./client && node ./build.js --release",
+    "build_pack": "cd ./client && node ./build.js --release --onlyPack",
     "create": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js create",
     "release": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js deploy",
     "lint": "cd ./client && eslint js"

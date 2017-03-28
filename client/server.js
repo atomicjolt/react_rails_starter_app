@@ -1,23 +1,32 @@
-var release              = false;
-var express              = require("express");
-var settings             = require("./config/settings.js");
-var path                 = require("path");
-var app                  = express();
+const path = require('path');
+const express = require('express');
 
+const settings = require('./config/settings');
 
+const app = express();
+const argv = require('minimist')(process.argv.slice(2));
 
-app.use(express.static(settings.prodOutput));
+const appName = argv._[0];
 
-app.get("*", function response(req, res) {
-  res.sendFile(path.join(settings.prodOutput, req.url));
-});
+function launch(servePath) {
+  app.use(express.static(servePath));
 
-app.listen(settings.hotPort, "0.0.0.0", function(err) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  console.log("Listening on: " + settings.hotPort);
-  console.log("Serving content from: " + settings.prodOutput);
-});
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(servePath, req.url));
+  });
 
+  app.listen(settings.hotPort, '0.0.0.0', (err) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(`Listening on: ${settings.hotPort}`);
+    console.log(`Serving content from: ${servePath}`);
+  });
+}
+
+if (appName) {
+  launch(path.join(settings.prodOutput, appName));
+} else {
+  launch(settings.prodOutput);
+}
