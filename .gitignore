@@ -18,6 +18,7 @@ secrets.js
 
 config/secrets.js
 s3_website.yml
+.coveralls.yml
 
 ## Environment normalisation:
 /.bundle
@@ -26,6 +27,3 @@ s3_website.yml
 node_modules
 npm-debug.log
 /build
-
-
-
