@@ -154,6 +154,51 @@ Inside the client directory run:
   `yarn upgrade-interactive`
 
 
+## Scripts:
+-----------------------
+The following scripts are available for testing, building and deploying applications
+
+Run all tests:
+  `yarn test`
+
+Generate coverage report:
+  `yarn coverage`
+
+Run webpack hot reload server:
+  `yarn hot`
+
+Run reload server for a specific application:
+  `yarn hot [app name]`
+
+Serve production assets. Must run `yarn build` first:
+  `yarn live`
+
+Build development version including html pages:
+  `yarn build_dev`
+
+Only run the webpack build without generating html pages or subdirectories. This will output all results
+directly into the build/dev directory
+  `yarn build_dev_pack`
+
+Build for production:
+  `yarn build`
+
+Only run the webpack build without generating html pages or subdirectories. This will output all results
+directly into the build/prod directory
+  `yarn build_pack`
+
+After setting up .s3-website.json this will create a S3 bucket and set it as a website:
+  `yarn create`
+
+Release a production build to the S3 website bucket created by `yarn create`
+  `yarn release`
+
+Run a linter over the project:
+  `yarn lint`
+
+
+#Deploy to S3:
+-----------------------
 ## Deployment
 -----------
 

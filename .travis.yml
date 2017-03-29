@@ -16,7 +16,9 @@ addons:
 cache:
   bundler: true
   directories:
+    - node_modules
     - client/node_modules
+    - client/apps/hello_world/node_modules
 
 branches:
   only:
@@ -32,8 +34,8 @@ before_install:
   - cp config/ci.database.yml config/database.yml
   - cp .env.example .env
   - cp client/ci.karma.conf.js client/karma.conf.js
-  - nvm install 6.9.1
-  - nvm use 6.9.1
+  - nvm install 7.5.0
+  - nvm use 7.5.0
   - npm install -g yarn
 
 install:

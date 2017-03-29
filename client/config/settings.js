@@ -1,8 +1,6 @@
 const info         = require('../../package.json');
 const path         = require('path');
 
-const clientAppPath = path.join(__dirname, '../');
-
 const devRelativeOutput  = '/';
 const prodRelativeOutput = '/assets/';
 
@@ -15,6 +13,8 @@ const prodAssetsUrl = ''; // Set this to the url where the assets will be deploy
                           // it could be the ssl version of your S3 bucket ie:
                           // https://s3.amazonaws.com/reactrailsstarterapp.com;
 
+// const prodAssetsUrl = `https://s3.amazonaws.com/${deployConfig.domain}`;
+
 // There is a warning if the .env file is missing
 // This is fine in a production setting, where settings
 // are loaded from the env and not from a file
@@ -22,12 +22,22 @@ require('dotenv').load({ path: path.join(__dirname, '../../.env') });
 
 const hotPort = process.env.ASSETS_PORT || 8080;
 
-module.exports = {
-  title              : info.title,
-  author             : info.author,
-  version            : info.versions,
-  build              : Date.now(),
+// Get a list of all directories in the apps directory.
+// These will be used to generate the entries for webpack
+const appsDir = path.join(__dirname, '../apps/');
 
+const names = fs.readdirSync(appsDir)
+  .filter(file => fs.statSync(path.join(appsDir, file)).isDirectory());
+
+const apps = names.reduce(
+  (result, file) => Object.assign({}, result, {
+    [file] : path.join(appsDir, file),
+  })
+, {});
+
+const rootAppsPath         = path.join(__dirname, '../../apps');
+
+module.exports = {
   devRelativeOutput,
   prodRelativeOutput,
 
@@ -42,14 +52,17 @@ module.exports = {
 
   buildSuffix: '_bundle.js',
 
-  staticDir: `${clientAppPath}static`,
+  apps,
 
-  entries: {
-    app: `${clientAppPath}js/app.jsx`
-  },
-
-  cssEntries: {
-    styles: `${clientAppPath}styles/styles.js`
+  // Options for building html files
+  htmlOptions: {
+    truncateSummaryAt:  1000,
+    buildExtensions:    ['.html', '.htm', '.md', '.markdown'], // file types to build (others will just be copied)
+    markdownExtensions: ['.md', '.markdown'], // file types to process markdown
+    templateDirs:       ['layouts'],
+    templateData:       {}, // Object that will be passed to every page as it is rendered
+    templateMap:        {}, // Used to specify specific templates on a per file basis
+    rootAppsPath
   }
 
 };

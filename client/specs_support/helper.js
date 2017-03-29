@@ -1,5 +1,9 @@
-import _                  from 'lodash';
-import configureStore     from '../js/store/configure_store';
+import _ from 'lodash';
+import { combineReducers } from 'redux';
+
+import API from '../libs/middleware/api';
+import settings from '../libs/reducers/settings';
+import configureStore from '../libs/store/configure_store';
 
 export default class Helper {
 
@@ -13,15 +17,18 @@ export default class Helper {
   }
 
   // Create a real store that can be used for testing
-  static makeStore(settings) {
+  static makeStore(initial) {
     const initialState = {
-      jwt: 'fake_jwt_token',
       settings: _.assign({
         csrf: 'csrf_token',
         apiUrl: 'http://www.example.com'
-      }, settings)
+      }, initial)
     };
-    return configureStore(initialState);
+    const rootReducer = combineReducers({
+      settings,
+    });
+    const middleware = [API];
+    return configureStore(initialState, rootReducer, middleware);
   }
 
   static testPayload() {

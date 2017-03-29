@@ -1,9 +1,24 @@
-// karma config info: http://karma-runner.github.io/0.12/config/configuration-file.html
-const webpack       = require('webpack');
-const webpackConfig = require('./webpack.config')('test');
+const _ = require('lodash');
+
+const settings = require('./settings');
+const webpackConfigBuilder = require('./webpack.config');
+const apps = require('../libs/build/apps');
 
 module.exports = () => {
-  const testConfig = {
+
+  const webpackOptions = apps.buildWebpackOptions('fakeAppName', 'fakeAppPath', { stage: 'test', onlyPack: true });
+  const webpackConfig = webpackConfigBuilder(webpackOptions);
+  const plugins = webpackConfig.plugins;
+  const module = webpackConfig.module;
+  const resolve = webpackConfig.resolve;
+
+  _.each(settings.apps, (appPath, appName) => {
+    const appWebpackOptions = apps.buildWebpackOptions(appName, appPath, { stage: 'test', onlyPack: true });
+    const appWebpackConfig = webpackConfigBuilder(appWebpackOptions);
+    resolve.modules = _.union(resolve.modules, appWebpackConfig.resolve.modules);
+  });
+
+  return {
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
@@ -57,9 +72,9 @@ module.exports = () => {
     // Use istanbul-transformer post loader to generate code coverage report.
     webpack: {
       devtool : 'eval',
-      plugins : webpackConfig.plugins,
-      module  : webpackConfig.module,
-      resolve : webpackConfig.resolve,
+      plugins,
+      module,
+      resolve,
     },
 
     // Reduce the noise to the console
@@ -76,5 +91,4 @@ module.exports = () => {
       file : 'coverage.info',
     },
   };
-  return testConfig;
 };

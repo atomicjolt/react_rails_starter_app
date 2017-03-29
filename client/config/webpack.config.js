@@ -1,20 +1,44 @@
-const webpack             = require('webpack');
-const path                = require('path');
-const ExtractTextPlugin   = require('extract-text-webpack-plugin');
-const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-const _                   = require('lodash');
-const settings            = require('./settings');
+const webpack              = require('webpack');
+const path                 = require('path');
+const ExtractTextPlugin    = require('extract-text-webpack-plugin');
+const ChunkManifestPlugin  = require('chunk-manifest-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const AssetsPlugin         = require('assets-webpack-plugin');
+const _                    = require('lodash');
 
-module.exports = function webpackConfig(stage) {
+//
+// Generates a webpack config file based on options.
+// Options:
+//    appName: The name of the application i.e. hello_world
+//    appPath: The path to the application. i.e. client/apps/hello_world
+//    buildSuffix: The suffix to append onto the end of the build. i.e. _bundle.js
+//    stage:
+//      'production'
+//      'staging' (Will result in same output as production but will output to /staging)
+//      'hot' (Development mode with hot reload)
+//      'test'
+//
+//  Production related values - applicable when stage is set to 'production' or 'staging'
+//    prodOutput
+//    prodAssetsUrl
+//    devRelativeOutput
+//
+//  Development
+//    devOutput
+//    devAssetsUrl
+//    devRelativeOutput
+//
+module.exports = function webpackConfig(options) {
 
-  const production = stage === 'production' || stage === 'staging';
+  const production = options.stage === 'production' || options.stage === 'staging';
+  const outputPath = production ? options.prodOutput : options.devOutput;
 
   // Public path indicates where the assets will be served from. In dev this will likely be
   // localhost or a local domain. In production this could be a CDN. In developerment this will
   // point to whatever public url is serving dev assets.
   const publicPath = production ?
-    settings.prodAssetsUrl + settings.prodRelativeOutput :
-    settings.devAssetsUrl + settings.devRelativeOutput;
+    options.prodAssetsUrl + options.prodRelativeOutput :
+    options.devAssetsUrl + options.devRelativeOutput;
 
   let babelPlugins = 'plugins[]=transform-runtime' +        // Externalise references to helpers and builtins, automatically polyfilling your code without polluting globals.
                 ',plugins[]=transform-decorators-legacy' +  // A plugin for Babel 6 that (mostly) replicates the old decorator behavior from Babel 5. Decorators aren't part of the standard yet. This gives us a good enough solution for now.
@@ -27,9 +51,9 @@ module.exports = function webpackConfig(stage) {
   if (production) {
     babelPlugins += ',plugins[]=transform-react-constant-elements'; // Hoists static React components to reduce calls to createElement
     babelPlugins += ',plugins[]=transform-react-remove-prop-types'; // Removes prop types from code
-  } else if (stage === 'hot') {
+  } else if (options.stage === 'hot') {
     babelPlugins += ',plugins[]=react-hot-loader/babel';
-  } else if (stage === 'test') {
+  } else if (options.stage === 'test') {
     // Add test plugins as needed
   }
 
@@ -45,51 +69,49 @@ module.exports = function webpackConfig(stage) {
   const lessLoaders = cssLoaders.slice(0);
   lessLoaders.push('less-loader');
 
-  let entries = _.cloneDeep(settings.entries);
-
-  const cssEntries = settings.cssEntries;
-  _.each(cssEntries, (_stylePath, name) => {
-    entries[name] = cssEntries[name];
-  });
-
-  if (stage === 'hot') {
-    entries = _.reduce(entries, (result, entry, key) => {
-      result[key] = [
-        'eventsource-polyfill',
-        `webpack-hot-middleware/client?path=${publicPath}__webpack_hmr&timeout=20000&reload=true`,
-        entry
-      ];
-      return result;
-    }, {});
-  }
-
   const extractCSS = new ExtractTextPlugin(production ? '[name]-[chunkhash].css' : '[name].css');
 
-  let plugins = [];
+  let plugins = [
+    // Use to extract common code from multiple entry points into a single init.js
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: module => module.context && module.context.indexOf('node_modules') !== -1
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity
+    })
+  ];
 
   if (production) {
-    plugins = [
+    plugins = _.concat(plugins, [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"', __DEV__: false }),
       new webpack.optimize.UglifyJsPlugin({
-        sourceMap: 'cheap-source-map'
+        sourceMap: true
       }),
       new webpack.optimize.AggressiveMergingPlugin(),
       new ChunkManifestPlugin({
         filename: 'webpack-common-manifest.json',
         manfiestVariable: 'webpackBundleManifest'
       }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        openAnalyzer: false
+      }),
+      // Generate webpack-assets.json to map path to assets generated with hashed names
+      new AssetsPlugin({
+        path: outputPath,
+        fullPath: false
+      }),
       extractCSS
-
-      // Use to extract common code from multiple entry points into a single init.js
-      // new webpack.optimize.CommonsChunkPlugin('init.js');
-    ];
-  } else if (stage === 'hot') {
-    plugins = [
+    ]);
+  } else if (options.stage === 'hot') {
+    plugins = _.concat(plugins, [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       extractCSS
-    ];
+    ]);
   } else {
     plugins = [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
@@ -107,25 +129,37 @@ module.exports = function webpackConfig(stage) {
     { test: /.*\.(eot|woff2|woff|ttf)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }
   ];
 
+  const entryPath = `${options.appPath}/app.jsx`;
+  const entry = { [options.appName]: entryPath };
+
+  if (options.stage === 'hot') {
+    // Add hot reload to entry
+    entry[options.appName] = [
+      'eventsource-polyfill',
+      `webpack-hot-middleware/client?path=${publicPath}__webpack_hmr&timeout=20000&reload=true`,
+      entryPath
+    ];
+  }
+
   return {
-    context: path.resolve('../', __dirname),
-    entry: entries,
+    context: path.resolve('../apps', __dirname),
+    entry,
     output: {
       publicPath,
       // Location where generated files will be output
-      path: production ? settings.prodOutput : settings.devOutput,
-      filename: production ? `[name]-[chunkhash]${settings.buildSuffix}` : `[name]${settings.buildSuffix}`,
-      chunkFilename: production ? `[id]-[chunkhash]${settings.buildSuffix}` : `[id]${settings.buildSuffix}`,
-      sourceMapFilename: 'debugging/[file].map',
+      path: outputPath,
+      filename: production ? `[name]-[chunkhash]${options.buildSuffix}` : `[name]${options.buildSuffix}`,
+      chunkFilename: production ? `[id]-[chunkhash]${options.buildSuffix}` : `[id]${options.buildSuffix}`,
+      sourceMapFilename: '[name].map',
       // http://webpack.github.io/docs/configuration.html#output-pathinfo
       pathinfo: !production
     },
     resolve: {
       extensions: ['.js', '.json', '.jsx'],
-      modules: ['node_modules']
+      modules: ['node_modules', `${options.appPath}/node_modules`]
     },
     cache: true,
-    devtool: production ? false : 'eval',  // http://webpack.github.io/docs/configuration.html#devtool
+    devtool: production ? 'source-map' : 'cheap-module-eval-source-map', // https://webpack.js.org/configuration/devtool/
     stats: { colors: true },
     plugins,
     module: { rules },
