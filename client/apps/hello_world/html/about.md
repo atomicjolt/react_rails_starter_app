@@ -11,4 +11,4 @@ tags:
 ---
 About Us
 ---------------
-<%= tags %>
+<%= metadata.tags %>
