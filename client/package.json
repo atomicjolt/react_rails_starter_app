@@ -1,22 +1,9 @@
 {
   "scripts": {
-    "postinstall": "for dir in apps/*; do pushd \"$dir\" || continue; yarn; popd; done && node node_modules/phantomjs-prebuilt/install.js"
+    "postinstall": "node node_modules/phantomjs-prebuilt/install.js && for dir in apps/*; do cd \"$dir\" || continue; yarn; cd ..; done"
   },
    "dependencies": {
-     "superagent": "^3.5.0",
-     "babel": "^6.23.0",
-    "babel-polyfill": "^6.23.0",
-    "babel-runtime": "^6.23.0",
-    "es6-promise": "^4.1.0",
-    "lodash": "4.17.4",
-    "react": "15.4.2",
-    "react-dom": "15.4.2",
-    "react-proxy-loader": "^0.3.5",
-    "react-redux": "^5.0.3",
-    "react-router": "^3.0.2",
-    "react-tap-event-plugin": "2.0.1",
-    "redux": "3.6.0",
-    "uuid": "3.0.1"
+     "superagent": "^3.5.0"
   },
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.1",
