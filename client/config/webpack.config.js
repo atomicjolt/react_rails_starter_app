@@ -91,7 +91,7 @@ module.exports = function webpackConfig(options) {
       }),
       new webpack.optimize.AggressiveMergingPlugin(),
       new ChunkManifestPlugin({
-        filename: 'webpack-common-manifest.json',
+        filename: `${options.appName}-webpack-common-manifest.json`,
         manfiestVariable: 'webpackBundleManifest'
       }),
       new BundleAnalyzerPlugin({
@@ -101,7 +101,8 @@ module.exports = function webpackConfig(options) {
       // Generate webpack-assets.json to map path to assets generated with hashed names
       new AssetsPlugin({
         path: outputPath,
-        fullPath: false
+        fullPath: false,
+        filename: `${options.appName}-webpack-assets.json`
       }),
       extractCSS
     ]);
