@@ -159,7 +159,7 @@ module.exports = function webpackConfig(options) {
       modules: ['node_modules', `${options.appPath}/node_modules`]
     },
     cache: true,
-    devtool: production ? 'source-map' : 'cheap-module-source-map', // https://webpack.js.org/configuration/devtool/
+    devtool: production ? 'source-map' : 'cheap-module-eval-source-map', // https://webpack.js.org/configuration/devtool/
     stats: { colors: true },
     plugins,
     module: { rules },
