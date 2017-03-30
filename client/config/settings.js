@@ -1,5 +1,5 @@
-const info         = require('../../package.json');
-const path         = require('path');
+const fs = require('fs-extra');
+const path = require('path');
 
 const devRelativeOutput  = '/';
 const prodRelativeOutput = '/assets/';

@@ -1,17 +1,16 @@
+
+def build_manifest(manifest_name, kind)
+  configs_dir = Rails.root.join("config", "assets")
+  Rails.configuration.webpack[manifest_name] = {}
+  Dir.glob("#{configs_dir}/*#{kind}") do |file|
+    app_name = File.basename(file).gsub("-#{kind}", "")
+    Rails.configuration.webpack[manifest_name][app_name] = JSON.parse(
+      File.read(file),
+    ).with_indifferent_access
+  end
+end
+
 if Rails.configuration.webpack[:use_manifest]
-
-  asset_manifest  = Rails.root.join("config", "assets", "webpack-asset-manifest.json")
-  common_manifest = Rails.root.join("config", "assets", "webpack-common-manifest.json")
-
-  if File.exist?(asset_manifest)
-    Rails.configuration.webpack[:asset_manifest] = JSON.parse(
-      File.read(asset_manifest),
-    ).with_indifferent_access
-  end
-
-  if File.exist?(common_manifest)
-    Rails.configuration.webpack[:common_manifest] = JSON.parse(
-      File.read(common_manifest),
-    ).with_indifferent_access
-  end
+  build_manifest(:asset_manifest, "webpack-assets.json")
+  build_manifest(:common_manifest, "webpack-common-manifest.json")
 end

@@ -28,6 +28,7 @@
 .env
 config/secrets.yml
 config/database.yml
+config/assets/
 bin/deploy
 s3_website.yml
 secrets.js
