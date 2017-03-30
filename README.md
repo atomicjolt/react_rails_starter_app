@@ -93,7 +93,15 @@ config.omniauth :github, Rails.application.secrets.github_developer_id, Rails.ap
 
 #### Webpack
 -----------
-Webpack is used to build the client side application. Configure the client application in client/config/settings.js
+Webpack is used to build the client side applications. Configure the client applications in client/config/settings.js
+
+#### Structure
+-----------
+An example 'hello_world' client application is provided in client/apps. Rename or copy and paste this directory
+to build additional client applications. The webpack build process will automatically pick up applications
+in this directory and generate an entry point for them. The resulting build will include a bundle that uses the
+directory name, a vendor and a manifest file. These are served by views/home/index.html.erb by default. If the
+application name is changed then be sure to also change the name in index.html.erb.
 
 #### React
 -----------
