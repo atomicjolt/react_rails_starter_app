@@ -42,18 +42,6 @@ function iterateApps(options, cb) {
 }
 
 // -----------------------------------------------------------------------------
-// build a home page that links to each application
-// -----------------------------------------------------------------------------
-function buildHome(outputPath) {
-  console.log('Building default home page with links to all apps');
-  const links = _.map(settings.apps, (appPath, appName) =>
-    `<a href="/${appName}">${appName}</a>`
-  );
-  const home = `<html><head></head><body>${links.join('')}</body></html>`;
-  file.write(path.join(outputPath, 'index.html'), home);
-}
-
-// -----------------------------------------------------------------------------
 // Wrapper to provide values for launching a webpack server
 // -----------------------------------------------------------------------------
 function launchHotWrapper(launchCallback, webpackOptions) {
@@ -104,10 +92,6 @@ function buildApps(stage, onlyPack, launchCallback) {
         launchHotWrapper(launchCallback, webpackOptions);
       }
     });
-
-    if (!onlyPack) {
-      buildHome(rootBuildPath(stage));
-    }
   });
 }
 

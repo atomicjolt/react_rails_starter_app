@@ -1,4 +1,5 @@
 const path = require('path');
+const _ = require('lodash');
 const express = require('express');
 
 const settings = require('./config/settings');
@@ -8,7 +9,7 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const appName = argv._[0];
 
-function launch(servePath) {
+function launch(servePath, port) {
   app.use(express.static(servePath));
 
   app.get('*', (req, res) => {
@@ -20,13 +21,17 @@ function launch(servePath) {
       console.log(err);
       return;
     }
-    console.log(`Listening on: ${settings.hotPort}`);
+    console.log(`Listening on: ${port}`);
     console.log(`Serving content from: ${servePath}`);
   });
 }
 
 if (appName) {
-  launch(path.join(settings.prodOutput, appName));
+  launch(path.join(settings.prodOutput, appName), settings.hotPort);
 } else {
-  launch(settings.prodOutput);
+  let startPort = settings.hotPort;
+  _.each(settings.apps, (p, name) => {
+    launch(path.join(settings.prodOutput, name), startPort);
+    startPort += 1;
+  });
 }
