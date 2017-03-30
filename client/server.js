@@ -16,7 +16,7 @@ function launch(servePath, port) {
     res.sendFile(path.join(servePath, req.url));
   });
 
-  app.listen(settings.hotPort, '0.0.0.0', (err) => {
+  app.listen(port, '0.0.0.0', (err) => {
     if (err) {
       console.log(err);
       return;
@@ -29,7 +29,7 @@ function launch(servePath, port) {
 if (appName) {
   launch(path.join(settings.prodOutput, appName), settings.hotPort);
 } else {
-  let startPort = settings.hotPort;
+  let startPort = parseInt(settings.hotPort, 10);
   _.each(settings.apps, (p, name) => {
     launch(path.join(settings.prodOutput, name), startPort);
     startPort += 1;
