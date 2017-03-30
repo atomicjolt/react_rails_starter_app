@@ -60,7 +60,7 @@ function build(rootBuildPath, webpackOptions, htmlOptions) {
 
     buildWebpackEntries(webpackOptions).then((packResults) => {
       let webpackAssets = null;
-      const webpackAssetsFilePath = `${packResults.webpackConfig.output.path}/webpack-assets.json`;
+      const webpackAssetsFilePath = `${packResults.webpackConfig.output.path}/${webpackOptions.appName}-webpack-assets.json`;
       if (fs.existsSync(webpackAssetsFilePath)) {
         webpackAssets = fs.readJsonSync(webpackAssetsFilePath);
       }

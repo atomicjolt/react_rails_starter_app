@@ -6,7 +6,7 @@ const settings = require('../../config/settings');
 const build = require('./index');
 const file = require('./file');
 
-let launchPort = settings.hotPort;
+let launchPort = parseInt(settings.hotPort, 10);
 
 // -----------------------------------------------------------------------------
 // Root of the build directory where apps will be written
