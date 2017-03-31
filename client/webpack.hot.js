@@ -13,7 +13,7 @@ const app = express();
 const localIp = '0.0.0.0';
 const appName = argv._[0];
 
-function launch(webpackOptions, port, servePath) {
+function launch(webpackOptions, servePath) {
 
   const webpackConfig = webpackConfigBuilder(webpackOptions);
 
@@ -35,12 +35,12 @@ function launch(webpackOptions, port, servePath) {
     res.sendFile(path.join(servePath, req.url));
   });
 
-  app.listen(port, localIp, (err) => {
+  app.listen(webpackOptions.port, localIp, (err) => {
     if (err) {
       console.log(err);
       return;
     }
-    console.log(`Listening on: http://${localIp}:${port}`);
+    console.log(`Listening on: http://${localIp}:${webpackOptions.port}`);
     console.log(`Serving content from: ${servePath}`);
   });
 }
@@ -51,3 +51,4 @@ if (appName) {
 } else {
   clientApps.buildApps(options, launch);
 }
+//const webpackConfigs = clientApps.buildApps(options, launch);

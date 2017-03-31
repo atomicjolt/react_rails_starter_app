@@ -47,7 +47,7 @@ module.exports = {
   prodOutput,
 
   // Dev urls
-  devAssetsUrl: process.env.ASSETS_URL || '',
+  devAssetsUrl: (process.env.ASSETS_URL || '').split(':')[0], // For legacy settings. ASSETS_URL used to contain port but going forward it shouldn't
   prodAssetsUrl,
 
   hotPort,

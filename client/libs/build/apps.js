@@ -5,7 +5,8 @@ const path = require('path');
 const settings = require('../../config/settings');
 const build = require('./index');
 
-let launchPort = parseInt(settings.hotPort, 10);
+// Start at one less than the desired port so we can increment and then return
+let port = parseInt(settings.hotPort, 10) - 1;
 
 // -----------------------------------------------------------------------------
 // Root of the build directory where apps will be written
@@ -18,6 +19,7 @@ function rootBuildPath(stage) {
 // Generates webpack options that can be provided to webpackConfigBuilder
 // -----------------------------------------------------------------------------
 function buildWebpackOptions(appName, appPath, options) {
+  port += 1;
   return {
     stage: options.stage,
     appName,
@@ -28,7 +30,8 @@ function buildWebpackOptions(appName, appPath, options) {
     prodRelativeOutput: settings.prodRelativeOutput,
     devOutput: options.onlyPack ? settings.devOutput : path.join(settings.devOutput, appName),
     devAssetsUrl: settings.devAssetsUrl,
-    devRelativeOutput: settings.devRelativeOutput
+    devRelativeOutput: settings.devRelativeOutput,
+    port
   };
 }
 
@@ -36,8 +39,10 @@ function buildWebpackOptions(appName, appPath, options) {
 // Iterate through all applications calling the callback with the webpackOptions
 // -----------------------------------------------------------------------------
 function iterateApps(options, cb) {
-  _.each(settings.apps, (appPath, appName) => {
-    cb(buildWebpackOptions(appName, appPath, options));
+  return _.map(settings.apps, (appPath, appName) => {
+    const webpackOptions = buildWebpackOptions(appName, appPath, options);
+    cb(webpackOptions);
+    return webpackOptions;
   });
 }
 
@@ -46,8 +51,7 @@ function iterateApps(options, cb) {
 // -----------------------------------------------------------------------------
 function launchHotWrapper(launchCallback, webpackOptions) {
   const servePath = path.join(settings.devOutput, webpackOptions.appName);
-  launchCallback(webpackOptions, launchPort, servePath);
-  launchPort += 1;
+  launchCallback(webpackOptions, servePath);
 }
 
 // -----------------------------------------------------------------------------
@@ -84,13 +88,12 @@ function buildApp(appName, options, launchCallback) {
 // -----------------------------------------------------------------------------
 function buildApps(options, launchCallback) {
   // Delete everything in the output path
-  fs.emptydir(rootBuildPath(options.stage), () => {
-    iterateApps(options, (webpackOptions) => {
-      buildAppParts(webpackOptions, options.onlyPack);
-      if (launchCallback) {
-        launchHotWrapper(launchCallback, webpackOptions);
-      }
-    });
+  fs.emptyDirSync(rootBuildPath(options.stage));
+  return iterateApps(options, (webpackOptions) => {
+    buildAppParts(webpackOptions, options.onlyPack);
+    if (launchCallback) {
+      launchHotWrapper(launchCallback, webpackOptions);
+    }
   });
 }
 
