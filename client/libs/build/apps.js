@@ -69,10 +69,10 @@ function buildAppParts(webpackOptions, onlyPack) {
 // -----------------------------------------------------------------------------
 // Build a single app
 // -----------------------------------------------------------------------------
-function buildApp(appName, stage, onlyPack, launchCallback) {
+function buildApp(appName, options, launchCallback) {
   const appPath = _.find(settings.apps, (p, name) => appName === name);
-  const webpackOptions = buildWebpackOptions(appName, appPath, { stage, onlyPack });
-  buildAppParts(webpackOptions, onlyPack);
+  const webpackOptions = buildWebpackOptions(appName, appPath, options);
+  buildAppParts(webpackOptions, options.onlyPack);
   if (launchCallback) {
     launchHotWrapper(launchCallback, webpackOptions);
   }
@@ -81,12 +81,11 @@ function buildApp(appName, stage, onlyPack, launchCallback) {
 // -----------------------------------------------------------------------------
 // Build all apps
 // -----------------------------------------------------------------------------
-function buildApps(stage, onlyPack, launchCallback) {
+function buildApps(options, launchCallback) {
   // Delete everything in the output path
-  fs.emptydir(rootBuildPath(stage), () => {
-
-    iterateApps({ stage, onlyPack }, (webpackOptions) => {
-      buildAppParts(webpackOptions, onlyPack, launchCallback);
+  fs.emptydir(rootBuildPath(options.stage), () => {
+    iterateApps(options, (webpackOptions) => {
+      buildAppParts(webpackOptions, options.onlyPack);
       if (launchCallback) {
         launchHotWrapper(launchCallback, webpackOptions);
       }
