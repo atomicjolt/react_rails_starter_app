@@ -40,6 +40,19 @@ function buildWebpackEntries(webpackOptions) {
 }
 
 // -----------------------------------------------------------------------------
+// copy over static files to build directory
+// -----------------------------------------------------------------------------
+function buildStatic(rootBuildPath, appPath) {
+  try {
+    const staticDir = `${appPath}/static`;
+    console.log(`Copying static files in ${staticDir}`);
+    fs.copySync(staticDir, rootBuildPath);
+  } catch (err) {
+    // No static dir. Do nothing
+  }
+}
+
+// -----------------------------------------------------------------------------
 // main build
 // -----------------------------------------------------------------------------
 function build(rootBuildPath, webpackOptions, htmlOptions) {
@@ -47,13 +60,7 @@ function build(rootBuildPath, webpackOptions, htmlOptions) {
   return new Promise((resolve) => {
 
     // Copy static files to build directory
-    try {
-      const staticDir = `${webpackOptions.appPath}/static`;
-      console.log(`Copying static files in ${staticDir}`);
-      fs.copySync(staticDir, rootBuildPath);
-    } catch (err) {
-      // No static dir. Do nothing
-    }
+    buildStatic(rootBuildPath, webpackOptions.appPath);
 
     // Webpack build
     console.log(`Webpacking ${webpackOptions.appName}`);
