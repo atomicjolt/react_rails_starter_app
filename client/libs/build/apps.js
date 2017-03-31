@@ -25,6 +25,7 @@ function buildWebpackOptions(appName, appPath, options) {
     buildSuffix: settings.buildSuffix,
     prodOutput: options.onlyPack ? settings.prodOutput : path.join(settings.prodOutput, appName),
     prodAssetsUrl: settings.prodAssetsUrl,
+    prodRelativeOutput: settings.prodRelativeOutput,
     devOutput: options.onlyPack ? settings.devOutput : path.join(settings.devOutput, appName),
     devAssetsUrl: settings.devAssetsUrl,
     devRelativeOutput: settings.devRelativeOutput
