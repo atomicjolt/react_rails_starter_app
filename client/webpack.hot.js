@@ -45,8 +45,9 @@ function launch(webpackOptions, port, servePath) {
   });
 }
 
+const options = { stage: 'hot', onlyPack: false };
 if (appName) {
-  clientApps.buildApp(appName, 'hot', false, launch);
+  clientApps.buildApp(appName, options, launch);
 } else {
-  clientApps.buildApps('hot', false, launch);
+  clientApps.buildApps(options, launch);
 }

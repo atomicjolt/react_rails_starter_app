@@ -37,8 +37,8 @@ module.exports = function webpackConfig(options) {
   // localhost or a local domain. In production this could be a CDN. In developerment this will
   // point to whatever public url is serving dev assets.
   const publicPath = production ?
-    options.prodAssetsUrl + options.prodRelativeOutput :
-    options.devAssetsUrl + options.devRelativeOutput;
+    path.join(options.prodAssetsUrl, options.prodRelativeOutput) :
+    path.join(options.devAssetsUrl, options.devRelativeOutput);
 
   let babelPlugins = 'plugins[]=transform-runtime' +        // Externalise references to helpers and builtins, automatically polyfilling your code without polluting globals.
                 ',plugins[]=transform-decorators-legacy' +  // A plugin for Babel 6 that (mostly) replicates the old decorator behavior from Babel 5. Decorators aren't part of the standard yet. This gives us a good enough solution for now.
