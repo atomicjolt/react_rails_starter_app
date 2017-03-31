@@ -4,7 +4,6 @@ const path = require('path');
 
 const settings = require('../../config/settings');
 const build = require('./index');
-const file = require('./file');
 
 let launchPort = parseInt(settings.hotPort, 10);
 
