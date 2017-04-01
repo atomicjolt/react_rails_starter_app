@@ -31,7 +31,8 @@ function buildWebpackOptions(appName, appPath, options) {
     devOutput: options.onlyPack ? settings.devOutput : path.join(settings.devOutput, appName),
     devAssetsUrl: settings.devAssetsUrl,
     devRelativeOutput: settings.devRelativeOutput,
-    port
+    port,
+    servePath: path.join(settings.devOutput, appName)
   };
 }
 
@@ -50,8 +51,9 @@ function iterateApps(options, cb) {
 // Wrapper to provide values for launching a webpack server
 // -----------------------------------------------------------------------------
 function launchHotWrapper(launchCallback, webpackOptions) {
-  const servePath = path.join(settings.devOutput, webpackOptions.appName);
-  launchCallback(webpackOptions, servePath);
+  if (launchCallback) {
+    launchCallback(webpackOptions);
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -78,9 +80,7 @@ function buildApp(appName, options, launchCallback) {
   const appPath = _.find(settings.apps, (p, name) => appName === name);
   const webpackOptions = buildWebpackOptions(appName, appPath, options);
   buildAppParts(webpackOptions, options.onlyPack);
-  if (launchCallback) {
-    launchHotWrapper(launchCallback, webpackOptions);
-  }
+  launchHotWrapper(launchCallback, webpackOptions);
 }
 
 // -----------------------------------------------------------------------------
@@ -91,9 +91,7 @@ function buildApps(options, launchCallback) {
   fs.emptyDirSync(rootBuildPath(options.stage));
   return iterateApps(options, (webpackOptions) => {
     buildAppParts(webpackOptions, options.onlyPack);
-    if (launchCallback) {
-      launchHotWrapper(launchCallback, webpackOptions);
-    }
+    launchHotWrapper(launchCallback, webpackOptions);
   });
 }
 

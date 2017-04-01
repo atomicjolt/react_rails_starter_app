@@ -37,8 +37,8 @@ module.exports = function webpackConfig(options) {
   // localhost or a local domain. In production this could be a CDN. In developerment this will
   // point to whatever public url is serving dev assets.
   const publicPath = production ?
-    path.join(options.prodAssetsUrl, options.prodRelativeOutput) :
-    path.join(options.devAssetsUrl, options.devRelativeOutput);
+    options.prodAssetsUrl + options.prodRelativeOutput :
+    `${options.devAssetsUrl}:${options.port}${options.devRelativeOutput}`;
 
   let babelPlugins = 'plugins[]=transform-runtime' +        // Externalise references to helpers and builtins, automatically polyfilling your code without polluting globals.
                 ',plugins[]=transform-decorators-legacy' +  // A plugin for Babel 6 that (mostly) replicates the old decorator behavior from Babel 5. Decorators aren't part of the standard yet. This gives us a good enough solution for now.
@@ -135,10 +135,9 @@ module.exports = function webpackConfig(options) {
 
   if (options.stage === 'hot') {
     // Add hot reload to entry
-    const hmrPath = `{publicPath}:${options.port}`;
     entry[options.appName] = [
       'eventsource-polyfill',
-      `webpack-hot-middleware/client?path=${hmrPath}__webpack_hmr&timeout=20000&reload=true`,
+      `webpack-hot-middleware/client?path=${publicPath}__webpack_hmr&timeout=20000&reload=true`,
       entryPath
     ];
   }
