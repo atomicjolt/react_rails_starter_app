@@ -6,7 +6,7 @@ module WebpackHelper
       "#{Rails.configuration.action_controller.asset_host}/assets/#{manifest[chunk_name][kind]}"
     else
       suffix = kind == "js" ? "_bundle.js" : ".css"
-      "#{Rails.application.secrets.assets_url}/#{chunk_name}#{suffix}"
+      "#{Rails.application.secrets.assets_url}/#{app_name}/#{chunk_name}#{suffix}"
     end
   end
 
