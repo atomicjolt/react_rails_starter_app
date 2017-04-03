@@ -30,7 +30,7 @@ if (appName) {
   launch(path.join(settings.prodOutput, appName), settings.hotPort);
 } else {
   let startPort = parseInt(settings.hotPort, 10);
-  _.each(settings.apps, (p, name) => {
+  _.each(settings.apps, (entry, name) => {
     launch(path.join(settings.prodOutput, name), startPort);
     startPort += 1;
   });

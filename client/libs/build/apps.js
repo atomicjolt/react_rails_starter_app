@@ -18,12 +18,12 @@ function rootBuildPath(stage) {
 // -----------------------------------------------------------------------------
 // Generates webpack options that can be provided to webpackConfigBuilder
 // -----------------------------------------------------------------------------
-function buildWebpackOptions(appName, appPath, options) {
+function buildWebpackOptions(appName, app, options) {
   port += 1;
   return {
     stage: options.stage,
     appName,
-    appPath,
+    app,
     buildSuffix: settings.buildSuffix,
     prodOutput: options.onlyPack ? settings.prodOutput : path.join(settings.prodOutput, appName),
     prodAssetsUrl: settings.prodAssetsUrl,
@@ -40,8 +40,8 @@ function buildWebpackOptions(appName, appPath, options) {
 // Iterate through all applications calling the callback with the webpackOptions
 // -----------------------------------------------------------------------------
 function iterateApps(options, cb) {
-  return _.map(settings.apps, (appPath, appName) => {
-    const webpackOptions = buildWebpackOptions(appName, appPath, options);
+  return _.map(settings.apps, (app, appName) => {
+    const webpackOptions = buildWebpackOptions(appName, app, options);
     cb(webpackOptions);
     return webpackOptions;
   });
@@ -77,8 +77,8 @@ function buildAppParts(webpackOptions, onlyPack) {
 // Build a single app
 // -----------------------------------------------------------------------------
 function buildApp(appName, options, launchCallback) {
-  const appPath = _.find(settings.apps, (p, name) => appName === name);
-  const webpackOptions = buildWebpackOptions(appName, appPath, options);
+  const app = _.find(settings.apps, (e, name) => appName === name);
+  const webpackOptions = buildWebpackOptions(appName, app, options);
   buildAppParts(webpackOptions, options.onlyPack);
   launchHotWrapper(launchCallback, webpackOptions);
 }

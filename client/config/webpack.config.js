@@ -10,7 +10,7 @@ const _                    = require('lodash');
 // Generates a webpack config file based on options.
 // Options:
 //    appName: The name of the application i.e. hello_world
-//    appPath: The path to the application. i.e. client/apps/hello_world
+//    app: An object containing the path and file name of the entry i.e. path: client/apps/hello_world, file: app.jsx
 //    buildSuffix: The suffix to append onto the end of the build. i.e. _bundle.js
 //    stage:
 //      'production'
@@ -130,7 +130,7 @@ module.exports = function webpackConfig(options) {
     { test: /.*\.(eot|woff2|woff|ttf)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }
   ];
 
-  const entryPath = `${options.appPath}/app.jsx`;
+  const entryPath = path.join(options.app.path, options.app.file);
   const entry = { [options.appName]: entryPath };
 
   if (options.stage === 'hot') {
@@ -157,7 +157,7 @@ module.exports = function webpackConfig(options) {
     },
     resolve: {
       extensions: ['.js', '.json', '.jsx'],
-      modules: ['node_modules', `${options.appPath}/node_modules`]
+      modules: ['node_modules', `${options.app.path}/node_modules`]
     },
     cache: true,
     devtool: production ? 'source-map' : 'cheap-module-eval-source-map', // https://webpack.js.org/configuration/devtool/
