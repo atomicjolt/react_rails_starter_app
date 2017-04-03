@@ -59,7 +59,12 @@ if (appName) {
   options.onlyPack = true;
   const webpackConfigs = clientApps.buildApps(options, null);
   _.each(webpackConfigs, (webpackOptions) => {
-    setupMiddleware(webpackOptions);
+    setupMiddleware(_.merge({},
+      webpackOptions,
+      {
+        devRelativeOutput: `/${webpackOptions.appName}`
+      }
+    ));
   });
   runServer(settings.hotPort, settings.devOutput);
 } else {
