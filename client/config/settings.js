@@ -29,9 +29,13 @@ const appsDir = path.join(__dirname, '../apps/');
 const names = fs.readdirSync(appsDir)
   .filter(file => fs.statSync(path.join(appsDir, file)).isDirectory());
 
+const entryFile = 'app.jsx';
 const apps = names.reduce(
   (result, file) => Object.assign({}, result, {
-    [file] : path.join(appsDir, file),
+    [file] : {
+      path: path.join(appsDir, file),
+      file: entryFile,
+    }
   })
 , {});
 
@@ -45,7 +49,7 @@ module.exports = {
   prodOutput,
 
   // Dev urls
-  devAssetsUrl: process.env.ASSETS_URL || '',
+  devAssetsUrl: process.env.ASSETS_URL,
   prodAssetsUrl,
 
   hotPort,

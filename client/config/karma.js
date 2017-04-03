@@ -6,14 +6,14 @@ const apps = require('../libs/build/apps');
 
 module.exports = () => {
 
-  const webpackOptions = apps.buildWebpackOptions('fakeAppName', 'fakeAppPath', { stage: 'test', onlyPack: true });
+  const webpackOptions = apps.buildWebpackOptions('fake', { file: 'fakeAppName', path: 'fakeAppPath' }, { stage: 'test', onlyPack: true });
   const webpackConfig = webpackConfigBuilder(webpackOptions);
   const plugins = webpackConfig.plugins;
   const module = webpackConfig.module;
   const resolve = webpackConfig.resolve;
 
-  _.each(settings.apps, (appPath, appName) => {
-    const appWebpackOptions = apps.buildWebpackOptions(appName, appPath, { stage: 'test', onlyPack: true });
+  _.each(settings.apps, (app, appName) => {
+    const appWebpackOptions = apps.buildWebpackOptions(appName, app, { stage: 'test', onlyPack: true });
     const appWebpackConfig = webpackConfigBuilder(appWebpackOptions);
     resolve.modules = _.union(resolve.modules, appWebpackConfig.resolve.modules);
   });
