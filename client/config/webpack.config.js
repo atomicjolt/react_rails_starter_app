@@ -10,35 +10,15 @@ const _                    = require('lodash');
 // Generates a webpack config file based on options.
 // Options:
 //    appName: The name of the application i.e. hello_world
-//    app: An object containing the path and file name of the entry i.e. path: client/apps/hello_world, file: app.jsx
+//    app: An object containing the path and file name of the entry
+//         i.e. path: client/apps/hello_world, file: app.jsx
 //    buildSuffix: The suffix to append onto the end of the build. i.e. _bundle.js
 //    stage:
 //      'production'
 //      'staging' (Will result in same output as production but will output to /staging)
 //      'hot' (Development mode with hot reload)
 //      'test'
-//
-//  Production related values - applicable when stage is set to 'production' or 'staging'
-//    prodOutput
-//    prodAssetsUrl
-//    devRelativeOutput
-//
-//  Development
-//    devOutput
-//    devAssetsUrl
-//    devRelativeOutput
-//
 module.exports = function webpackConfig(options) {
-
-  const production = options.stage === 'production' || options.stage === 'staging';
-  const outputPath = production ? options.prodOutput : options.devOutput;
-
-  // Public path indicates where the assets will be served from. In dev this will likely be
-  // localhost or a local domain. In production this could be a CDN. In developerment this will
-  // point to whatever public url is serving dev assets.
-  const publicPath = production ?
-    options.prodAssetsUrl + options.prodRelativeOutput :
-    `${options.devAssetsUrl}:${options.port}${options.devRelativeOutput}`;
 
   let babelPlugins = 'plugins[]=transform-runtime' +        // Externalise references to helpers and builtins, automatically polyfilling your code without polluting globals.
                 ',plugins[]=transform-decorators-legacy' +  // A plugin for Babel 6 that (mostly) replicates the old decorator behavior from Babel 5. Decorators aren't part of the standard yet. This gives us a good enough solution for now.
@@ -48,7 +28,7 @@ module.exports = function webpackConfig(options) {
                   ',presets[]=es2015' + // Include all plugins needed to handle es2015 syntax
                   ',presets[]=stage-0'; // Enables experimental ES features.
 
-  if (production) {
+  if (options.production) {
     babelPlugins += ',plugins[]=transform-react-constant-elements'; // Hoists static React components to reduce calls to createElement
     babelPlugins += ',plugins[]=transform-react-remove-prop-types'; // Removes prop types from code
   } else if (options.stage === 'hot') {
@@ -69,7 +49,7 @@ module.exports = function webpackConfig(options) {
   const lessLoaders = cssLoaders.slice(0);
   lessLoaders.push('less-loader');
 
-  const extractCSS = new ExtractTextPlugin(production ? '[name]-[chunkhash].css' : '[name].css');
+  const extractCSS = new ExtractTextPlugin(options.production ? '[name]-[chunkhash].css' : '[name].css');
 
   let plugins = [
     // Use to extract common code from multiple entry points into a single init.js
@@ -83,7 +63,7 @@ module.exports = function webpackConfig(options) {
     })
   ];
 
-  if (production) {
+  if (options.production) {
     plugins = _.concat(plugins, [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"', __DEV__: false }),
       new webpack.optimize.UglifyJsPlugin({
@@ -100,7 +80,7 @@ module.exports = function webpackConfig(options) {
       }),
       // Generate webpack-assets.json to map path to assets generated with hashed names
       new AssetsPlugin({
-        path: outputPath,
+        path: options.appOutputPath,
         fullPath: false,
         filename: `${options.appName}-webpack-assets.json`
       }),
@@ -137,7 +117,7 @@ module.exports = function webpackConfig(options) {
     // Add hot reload to entry
     entry[options.appName] = [
       'eventsource-polyfill',
-      `webpack-hot-middleware/client?path=${publicPath}__webpack_hmr&timeout=20000&reload=true`,
+      `webpack-hot-middleware/client?path=${options.publicPath}__webpack_hmr&timeout=20000&reload=true`,
       entryPath
     ];
   }
@@ -146,21 +126,21 @@ module.exports = function webpackConfig(options) {
     context: path.resolve('../apps', __dirname),
     entry,
     output: {
-      publicPath,
+      publicPath: options.publicPath,
       // Location where generated files will be output
-      path: outputPath,
-      filename: production ? `[name]-[chunkhash]${options.buildSuffix}` : `[name]${options.buildSuffix}`,
-      chunkFilename: production ? `[id]-[chunkhash]${options.buildSuffix}` : `[id]${options.buildSuffix}`,
+      path: options.appOutputPath,
+      filename: options.production ? `[name]-[chunkhash]${options.buildSuffix}` : `[name]${options.buildSuffix}`,
+      chunkFilename: options.production ? `[id]-[chunkhash]${options.buildSuffix}` : `[id]${options.buildSuffix}`,
       sourceMapFilename: '[name].map',
       // http://webpack.github.io/docs/configuration.html#output-pathinfo
-      pathinfo: !production
+      pathinfo: !options.production
     },
     resolve: {
       extensions: ['.js', '.json', '.jsx'],
       modules: ['node_modules', `${options.app.path}/node_modules`]
     },
     cache: true,
-    devtool: production ? 'source-map' : 'cheap-module-eval-source-map', // https://webpack.js.org/configuration/devtool/
+    devtool: options.production ? 'source-map' : 'cheap-module-eval-source-map', // https://webpack.js.org/configuration/devtool/
     stats: { colors: true },
     plugins,
     module: { rules },

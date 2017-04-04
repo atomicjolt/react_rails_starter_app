@@ -28,11 +28,11 @@ function setupMiddleware(webpackOptions) {
     headers: { 'Access-Control-Allow-Origin': '*' }
   });
 
-  app.use(express.static(webpackOptions.servePath));
+  app.use(express.static(webpackOptions.appOutputPath));
   app.use(webpackMiddlewareInstance);
   app.use(webpackHotMiddleware(compiler));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(webpackOptions.servePath, req.url));
+    res.sendFile(path.join(webpackOptions.appOutputPath, req.url));
   });
 }
 
@@ -49,7 +49,7 @@ function runServer(port, servePath) {
 
 function launch(webpackOptions) {
   setupMiddleware(webpackOptions);
-  runServer(webpackOptions.port, webpackOptions.servePath);
+  runServer(webpackOptions.port, webpackOptions.appOutputPath);
 }
 
 const options = { stage: 'hot', onlyPack: false };
@@ -62,7 +62,7 @@ if (appName) {
     setupMiddleware(_.merge({},
       webpackOptions,
       {
-        devRelativeOutput: `/${webpackOptions.appName}`
+        publicPath: `/${webpackOptions.appName}`
       }
     ));
   });

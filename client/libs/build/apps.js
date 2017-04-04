@@ -1,47 +1,18 @@
 const fs = require('fs-extra');
 const _ = require('lodash');
-const path = require('path');
 
 const settings = require('../../config/settings');
 const build = require('./index');
-
-// Start at one less than the desired port so we can increment and then return
-let port = parseInt(settings.hotPort, 10) - 1;
-
-// -----------------------------------------------------------------------------
-// Root of the build directory where apps will be written
-// -----------------------------------------------------------------------------
-function rootBuildPath(stage) {
-  return stage === 'production' ? settings.prodOutput : settings.devOutput;
-}
-
-// -----------------------------------------------------------------------------
-// Generates webpack options that can be provided to webpackConfigBuilder
-// -----------------------------------------------------------------------------
-function buildWebpackOptions(appName, app, options) {
-  port += 1;
-  return {
-    stage: options.stage,
-    appName,
-    app,
-    buildSuffix: settings.buildSuffix,
-    prodOutput: options.onlyPack ? settings.prodOutput : path.join(settings.prodOutput, appName),
-    prodAssetsUrl: settings.prodAssetsUrl,
-    prodRelativeOutput: settings.prodRelativeOutput,
-    devOutput: options.onlyPack ? settings.devOutput : path.join(settings.devOutput, appName),
-    devAssetsUrl: settings.devAssetsUrl,
-    devRelativeOutput: settings.devRelativeOutput,
-    port,
-    servePath: path.join(settings.devOutput, appName)
-  };
-}
+const buildWebpackOptions = require('./webpack_options');
 
 // -----------------------------------------------------------------------------
 // Iterate through all applications calling the callback with the webpackOptions
 // -----------------------------------------------------------------------------
 function iterateApps(options, cb) {
+  let port = parseInt(settings.hotPort, 10);
   return _.map(settings.apps, (app, appName) => {
-    const webpackOptions = buildWebpackOptions(appName, app, options);
+    const webpackOptions = buildWebpackOptions(appName, app, port, options);
+    port += 1;
     cb(webpackOptions);
     return webpackOptions;
   });
@@ -65,8 +36,7 @@ function buildAppParts(webpackOptions, onlyPack) {
       console.log(`Finished Javascript for ${webpackOptions.appName}`);
     });
   } else {
-    const outputPath = rootBuildPath(webpackOptions.stage);
-    build.build(outputPath, webpackOptions, settings.htmlOptions).then((result) => {
+    build.build(webpackOptions, settings.htmlOptions).then((result) => {
       console.log(`Finished Javascript for ${webpackOptions.appName}.`);
       console.log(`Built ${result.pages.length} pages.`);
     });
@@ -78,7 +48,7 @@ function buildAppParts(webpackOptions, onlyPack) {
 // -----------------------------------------------------------------------------
 function buildApp(appName, options, launchCallback) {
   const app = _.find(settings.apps, (e, name) => appName === name);
-  const webpackOptions = buildWebpackOptions(appName, app, options);
+  const webpackOptions = buildWebpackOptions(appName, app, settings.hotPort, options);
   buildAppParts(webpackOptions, options.onlyPack);
   launchHotWrapper(launchCallback, webpackOptions);
 }
@@ -87,9 +57,8 @@ function buildApp(appName, options, launchCallback) {
 // Build all apps
 // -----------------------------------------------------------------------------
 function buildApps(options, launchCallback) {
-  // Delete everything in the output path
-  fs.emptyDirSync(rootBuildPath(options.stage));
   return iterateApps(options, (webpackOptions) => {
+    fs.emptyDirSync(webpackOptions.appOutputPath);
     buildAppParts(webpackOptions, options.onlyPack);
     launchHotWrapper(launchCallback, webpackOptions);
   });
@@ -97,6 +66,5 @@ function buildApps(options, launchCallback) {
 
 module.exports = {
   buildApp,
-  buildApps,
-  buildWebpackOptions
+  buildApps
 };

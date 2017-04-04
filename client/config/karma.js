@@ -3,17 +3,18 @@ const _ = require('lodash');
 const settings = require('./settings');
 const webpackConfigBuilder = require('./webpack.config');
 const apps = require('../libs/build/apps');
+const buildWebpackOptions = require('../libs/build/webpack_options');
 
 module.exports = () => {
 
-  const webpackOptions = apps.buildWebpackOptions('fake', { file: 'fakeAppName', path: 'fakeAppPath' }, { stage: 'test', onlyPack: true });
+  const webpackOptions = buildWebpackOptions('fake', { file: 'fakeAppName', path: 'fakeAppPath' }, settings.hotPort, { stage: 'test', onlyPack: true });
   const webpackConfig = webpackConfigBuilder(webpackOptions);
   const plugins = webpackConfig.plugins;
   const module = webpackConfig.module;
   const resolve = webpackConfig.resolve;
 
   _.each(settings.apps, (app, appName) => {
-    const appWebpackOptions = apps.buildWebpackOptions(appName, app, { stage: 'test', onlyPack: true });
+    const appWebpackOptions = buildWebpackOptions(appName, app, settings.hotPort, { stage: 'test', onlyPack: true });
     const appWebpackConfig = webpackConfigBuilder(appWebpackOptions);
     resolve.modules = _.union(resolve.modules, appWebpackConfig.resolve.modules);
   });
