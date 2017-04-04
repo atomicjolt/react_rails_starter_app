@@ -41,8 +41,6 @@ const apps = names.reduce(
   })
 , {});
 
-const rootAppsPath         = path.join(__dirname, '../../apps');
-
 module.exports = {
   devRelativeOutput,
   prodRelativeOutput,
@@ -68,7 +66,7 @@ module.exports = {
     templateDirs:       ['layouts'],
     templateData:       {}, // Object that will be passed to every page as it is rendered
     templateMap:        {}, // Used to specify specific templates on a per file basis
-    rootAppsPath
+    appsDir
   }
 
 };
