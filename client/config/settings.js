@@ -42,6 +42,8 @@ const apps = fs.readdirSync(appsDir)
   , {});
 
 module.exports = {
+  apps,
+
   devRelativeOutput,
   prodRelativeOutput,
 
@@ -55,8 +57,6 @@ module.exports = {
   hotPort,
 
   buildSuffix: '_bundle.js',
-
-  apps,
 
   // Options for building html files
   htmlOptions: {
