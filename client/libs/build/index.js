@@ -132,11 +132,6 @@ function appWatch(rootBuildPath, webpackOptions, htmlOptions, buildResults) {
       page.html
     );
 
-    page.outputFilePath = file.write(
-      content.outFilePath(page, outputPath, filePath, originalInputPath),
-      page.html
-    );
-
   });
 }
 
