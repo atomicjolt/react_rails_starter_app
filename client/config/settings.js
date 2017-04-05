@@ -28,18 +28,18 @@ const hotPort = process.env.ASSETS_PORT || 8080;
 // These will be used to generate the entries for webpack
 const appsDir = path.join(__dirname, '../apps/');
 
-const names = fs.readdirSync(appsDir)
-  .filter(file => fs.statSync(path.join(appsDir, file)).isDirectory());
-
-const entryFile = 'app.jsx';
-const apps = names.reduce(
-  (result, file) => Object.assign({}, result, {
-    [file] : {
-      path: path.join(appsDir, file),
-      file: entryFile,
-    }
-  })
-, {});
+const apps = fs.readdirSync(appsDir)
+  .filter(file => fs.statSync(path.join(appsDir, file)).isDirectory())
+  .reduce(
+    (result, appName) => Object.assign({}, result, {
+      [appName] : {
+        path: path.join(appsDir, appName),
+        file: 'app.jsx',
+        htmlPath: 'html',
+        templateDirs: ['layouts']
+      }
+    })
+  , {});
 
 module.exports = {
   devRelativeOutput,
@@ -63,7 +63,6 @@ module.exports = {
     truncateSummaryAt:  1000,
     buildExtensions:    ['.html', '.htm', '.md', '.markdown'], // file types to build (others will just be copied)
     markdownExtensions: ['.md', '.markdown'], // file types to process markdown
-    templateDirs:       ['layouts'],
     templateData:       {}, // Object that will be passed to every page as it is rendered
     templateMap:        {}, // Used to specify specific templates on a per file basis
     appsDir

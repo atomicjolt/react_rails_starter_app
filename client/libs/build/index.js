@@ -11,6 +11,13 @@ const content   = require('./content');
 const webpackConfigBuilder = require('../../config/webpack.config');
 
 // -----------------------------------------------------------------------------
+// Helper function to generate full template paths for the given app
+// -----------------------------------------------------------------------------
+function templateDirs(app){
+  return _.map(app.templateDirs, templateDir => path.join(app.path, app.htmlPath, templateDir));
+}
+
+// -----------------------------------------------------------------------------
 // run webpack to build entries
 // -----------------------------------------------------------------------------
 function buildWebpackEntries(webpackOptions) {
@@ -75,9 +82,6 @@ function build(webpackOptions, htmlOptions) {
       // Build html
       console.log(`Building html for ${webpackOptions.appName}`);
       const inputPath = path.join(webpackOptions.app.path, 'html');
-      const templateDirs = _.map(htmlOptions.templateDirs,
-        templateDir => path.join(inputPath, templateDir)
-      );
 
       const pages = content.buildContents(
         inputPath,
@@ -86,7 +90,7 @@ function build(webpackOptions, htmlOptions) {
         webpackAssets,
         webpackOptions.stage,
         webpackOptions.buildSuffix,
-        templateDirs,
+        templateDirs(webpackOptions.app),
         htmlOptions
       );
 
@@ -108,17 +112,13 @@ function appWatch(rootBuildPath, webpackOptions, htmlOptions, buildResults) {
   // Watch for content to change
   nodeWatch(webpackOptions.app.path, { recursive: true }, (evt, filePath) => {
 
-    const templateDirs = _.map(htmlOptions.templateDirs,
-      templateDir => path.join(webpackOptions.app.path, 'html', templateDir)
-    );
-
     const outputPath = path.join(rootBuildPath, webpackOptions.appName);
-    const originalInputPath = path.join(webpackOptions.app.path, 'html');
+    const originalInputPath = path.join(webpackOptions.app.path, webpackOptions.app.htmlPath);
 
     // Build the page
     const page = content.buildContent(
       filePath,
-      templateDirs,
+      templateDirs(webpackOptions.app),
       buildResults.webpackAssets,
       webpackOptions.stage,
       htmlOptions
