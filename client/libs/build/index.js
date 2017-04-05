@@ -81,7 +81,7 @@ function build(webpackOptions, htmlOptions) {
 
       // Build html
       console.log(`Building html for ${webpackOptions.appName}`);
-      const inputPath = path.join(webpackOptions.app.path, 'html');
+      const inputPath = path.join(webpackOptions.app.path, webpackOptions.app.htmlPath);
 
       const pages = content.buildContents(
         inputPath,
@@ -112,7 +112,6 @@ function appWatch(rootBuildPath, webpackOptions, htmlOptions, buildResults) {
   // Watch for content to change
   nodeWatch(webpackOptions.app.path, { recursive: true }, (evt, filePath) => {
 
-    const outputPath = path.join(rootBuildPath, webpackOptions.appName);
     const originalInputPath = path.join(webpackOptions.app.path, webpackOptions.app.htmlPath);
 
     // Build the page
@@ -122,6 +121,15 @@ function appWatch(rootBuildPath, webpackOptions, htmlOptions, buildResults) {
       buildResults.webpackAssets,
       webpackOptions.stage,
       htmlOptions
+    );
+
+    page.outputFilePath = file.write(
+      content.outFilePath(
+        page,
+        webpackOptions.appOutputPath,
+        filePath,
+        originalInputPath),
+      page.html
     );
 
     page.outputFilePath = file.write(
