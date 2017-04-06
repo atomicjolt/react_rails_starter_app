@@ -14,8 +14,8 @@ const ignoreFiles     = ['.DS_Store'];
 // -----------------------------------------------------------------------------
 // Generate the output file name and path
 // -----------------------------------------------------------------------------
-function outFilePath(page, outputPath, fullInputPath, originalInputPath) {
-  let out = path.join(outputPath, fullInputPath.replace(originalInputPath, ''));
+function outFilePath(page, outputPath, inputFilePath, originalInputPath) {
+  let out = path.join(outputPath, inputFilePath.replace(originalInputPath, ''));
   if (page && page.destination && page.destination.length > 0) {
     if (_.endsWith(page.destination, '/')) {
       out = path.join(outputPath, page.destination, 'index.html');
@@ -29,7 +29,7 @@ function outFilePath(page, outputPath, fullInputPath, originalInputPath) {
 // -----------------------------------------------------------------------------
 // build a single file
 // -----------------------------------------------------------------------------
-function buildContent(fullPath, templateDirs, webpackAssets, stage, buildSuffix, ext, htmlOptions) {
+function buildContent(fullPath, webpackOptions, webpackAssets, ext, htmlOptions) {
   const content     = fs.readFileSync(fullPath, 'utf8');
   const parsed      = frontMatter(content);
   const metadata    = parsed.attributes;
@@ -64,8 +64,8 @@ function buildContent(fullPath, templateDirs, webpackAssets, stage, buildSuffix,
 
   // Apply template
   data.content = html; // Pass in generated html
-  html = templates.apply(data, fullPath, htmlOptions.templateMap, templateDirs);
-  html = applyProduction(html, stage, webpackAssets, buildSuffix);
+  html = templates.apply(data, fullPath, htmlOptions.templateMap, webpackOptions.templateDirs);
+  html = applyProduction(html, webpackOptions.stage, webpackAssets, webpackOptions.buildSuffix);
 
   return {
     title,
@@ -79,54 +79,69 @@ function buildContent(fullPath, templateDirs, webpackAssets, stage, buildSuffix,
 }
 
 // -----------------------------------------------------------------------------
+// responsible for writing out html content after it's built or copying static files
+// -----------------------------------------------------------------------------
+function writeContent(
+  originalInputPath,
+  inputFilePath,
+  webpackAssets,
+  webpackOptions,
+  htmlOptions) {
+  const ext = path.extname(inputFilePath);
+  if (_.includes(htmlOptions.buildExtensions, ext)) {
+    const page = buildContent(
+      inputFilePath,
+      webpackOptions,
+      webpackAssets,
+      ext,
+      htmlOptions);
+    const out = outFilePath(page, webpackOptions.appOutputPath, inputFilePath, originalInputPath);
+    page.outputFilePath = file.write(
+      out, page.html, htmlOptions);
+    return page;
+  }
+  const out = outFilePath(null, webpackOptions.appOutputPath, inputFilePath, originalInputPath);
+  file.copy(inputFilePath, out);
+  return null;
+}
+
+// -----------------------------------------------------------------------------
 // build html and markdown files in a given directory
 // -----------------------------------------------------------------------------
 function buildContents(
   originalInputPath,
   inputPath,
-  outputPath,
+  webpackOptions,
   webpackAssets,
-  stage,
-  buildSuffix,
-  templateDirs,
   htmlOptions) {
 
   let results = [];
   const files = fs.readdirSync(inputPath);
 
   files.forEach((fileName) => {
-    const fullInputPath = path.join(inputPath, fileName);
-    const doOutput = templateDirs.indexOf(fullInputPath) < 0 && // Ignore template dirs
+    const inputFilePath = path.join(inputPath, fileName);
+
+    // Ignore template dirs
+    const doOutput = webpackOptions.templateDirs.indexOf(inputFilePath) < 0 &&
                   !_.includes(ignoreFiles, fileName);
     if (doOutput) {
-      if (fs.statSync(fullInputPath).isDirectory()) {
+      if (fs.statSync(inputFilePath).isDirectory()) {
         results = _.concat(results, buildContents(
           originalInputPath,
-          fullInputPath,
-          outputPath,
+          inputFilePath,
+          webpackOptions,
           webpackAssets,
-          stage,
-          buildSuffix,
-          templateDirs,
           htmlOptions
         ));
       } else {
-
-        const ext = path.extname(fullInputPath);
-        if (_.includes(htmlOptions.buildExtensions, ext)) {
-          const page = buildContent(
-            fullInputPath,
-            templateDirs,
-            webpackAssets,
-            stage,
-            buildSuffix,
-            ext,
-            htmlOptions);
-          page.outputFilePath = file.write(
-            outFilePath(page, outputPath, fullInputPath, originalInputPath), page.html, htmlOptions);
+        const page = writeContent(
+          originalInputPath,
+          inputFilePath,
+          webpackAssets,
+          webpackOptions,
+          htmlOptions);
+        if (page) {
           results.push(page);
-        } else {
-          file.copy(fullInputPath, outFilePath(null, outputPath, fullInputPath, originalInputPath));
         }
       }
     }
@@ -137,5 +152,6 @@ function buildContents(
 module.exports = {
   buildContent,
   buildContents,
+  writeContent,
   outFilePath
 };

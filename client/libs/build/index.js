@@ -11,13 +11,6 @@ const content   = require('./content');
 const webpackConfigBuilder = require('../../config/webpack.config');
 
 // -----------------------------------------------------------------------------
-// Helper function to generate full template paths for the given app
-// -----------------------------------------------------------------------------
-function templateDirs(app){
-  return _.map(app.templateDirs, templateDir => path.join(app.path, app.htmlPath, templateDir));
-}
-
-// -----------------------------------------------------------------------------
 // run webpack to build entries
 // -----------------------------------------------------------------------------
 function buildWebpackEntries(webpackOptions) {
@@ -49,11 +42,10 @@ function buildWebpackEntries(webpackOptions) {
 // -----------------------------------------------------------------------------
 // copy over static files to build directory
 // -----------------------------------------------------------------------------
-function buildStatic(outputPath, appPath) {
+function buildStatic(staticInputPath, outputPath) {
   try {
-    const staticDir = `${appPath}/static`;
-    console.log(`Copying static files in ${staticDir}`);
-    fs.copySync(staticDir, outputPath);
+    console.log(`Copying static files in ${staticInputPath}`);
+    fs.copySync(staticInputPath, outputPath);
   } catch (err) {
     // No static dir. Do nothing
   }
@@ -67,7 +59,8 @@ function build(webpackOptions, htmlOptions) {
   return new Promise((resolve) => {
 
     // Copy static files to build directory
-    buildStatic(webpackOptions.appOutputPath, webpackOptions.app.path);
+    const staticInputPath = path.join(webpackOptions.app.path, webpackOptions.app.staticPath);
+    buildStatic(staticInputPath, webpackOptions.appOutputPath);
 
     // Webpack build
     console.log(`Webpacking ${webpackOptions.appName}`);
@@ -81,18 +74,18 @@ function build(webpackOptions, htmlOptions) {
 
       // Build html
       console.log(`Building html for ${webpackOptions.appName}`);
-      const inputPath = path.join(webpackOptions.app.path, webpackOptions.app.htmlPath);
+      const htmlInputPath = path.join(webpackOptions.app.path, webpackOptions.app.htmlPath);
 
       const pages = content.buildContents(
-        inputPath,
-        inputPath,
-        webpackOptions.appOutputPath,
+        htmlInputPath,
+        htmlInputPath,
+        webpackOptions,
         webpackAssets,
-        webpackOptions.stage,
-        webpackOptions.buildSuffix,
-        templateDirs(webpackOptions.app),
         htmlOptions
       );
+
+      //watchStatic(staticInputPath);
+      //watchHtml(htmlInputPath, webpackAssets, webpackOptions, htmlOptions);
 
       resolve({
         webpackConfig : packResults.webpackConfig,
@@ -105,47 +98,37 @@ function build(webpackOptions, htmlOptions) {
 }
 
 // -----------------------------------------------------------------------------
-// watch
+// watchStatic
+// Used to copy over static files if they change
 // -----------------------------------------------------------------------------
-function appWatch(rootBuildPath, webpackOptions, htmlOptions, buildResults) {
-
-  // Watch for content to change
-  nodeWatch(webpackOptions.app.path, { recursive: true }, (evt, filePath) => {
-
-    const originalInputPath = path.join(webpackOptions.app.path, webpackOptions.app.htmlPath);
-
-    // Build the page
-    const page = content.buildContent(
-      filePath,
-      templateDirs(webpackOptions.app),
-      buildResults.webpackAssets,
-      webpackOptions.stage,
-      htmlOptions
-    );
-
-    page.outputFilePath = file.write(
-      content.outFilePath(
-        page,
-        webpackOptions.appOutputPath,
-        filePath,
-        originalInputPath),
-      page.html
-    );
-
+function watchStatic(staticInputPath) {
+  nodeWatch(staticInputPath, { recursive: true }, (evt, filePath) => {
+    fs.copySync(filePath, webpackOptions.appOutputPath);
   });
 }
 
-function watch(rootBuildPath, webpackOptions, htmlOptions) {
-  return new Promise((resolve) => {
-    build(rootBuildPath, webpackOptions, htmlOptions).then((buildResults) => {
-      appWatch(rootBuildPath, webpackOptions, htmlOptions, buildResults);
-      resolve();
-    });
+// -----------------------------------------------------------------------------
+// watchHtml
+// Used to rebuild html or templates if files change.
+// -----------------------------------------------------------------------------
+function watchHtml(htmlInputPath, webpackAssets, webpackOptions, htmlOptions) {
+
+  // Watch for content to change
+  nodeWatch(htmlInputPath, { recursive: true }, (evt, fullInputPath) => {
+    content.writeContent(
+      htmlInputPath,
+      webpackOptions.appOutputPath,
+      fullInputPath,
+      webpackAssets,
+      webpackOptions.stage,
+      buildSuffix,
+      templateDirs,
+      htmlOptions);
+
   });
 }
 
 module.exports = {
-  watch,
   build,
   buildWebpackEntries
 };

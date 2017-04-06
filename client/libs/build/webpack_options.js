@@ -1,6 +1,14 @@
+const _ = require('lodash');
 const path = require('path');
 
 const settings = require('../../config/settings');
+
+// -----------------------------------------------------------------------------
+// Helper function to generate full template paths for the given app
+// -----------------------------------------------------------------------------
+function templateDirs(app){
+  return _.map(app.templateDirs, templateDir => path.join(app.path, app.htmlPath, templateDir));
+}
 
 // -----------------------------------------------------------------------------
 // Generates webpack options that can be provided to webpackConfigBuilder
@@ -32,6 +40,7 @@ module.exports = function buildWebpackOptions(appName, app, port, options) {
     production,
     appOutputPath,
     rootOutputPath,
-    publicPath
+    publicPath,
+    templateDirs: templateDirs(app)
   };
 };

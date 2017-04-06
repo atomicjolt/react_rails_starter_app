@@ -36,6 +36,7 @@ const apps = fs.readdirSync(appsDir)
         path: path.join(appsDir, appName),
         file: 'app.jsx',
         htmlPath: 'html',
+        staticPath: 'static',
         templateDirs: ['layouts']
       }
     })
