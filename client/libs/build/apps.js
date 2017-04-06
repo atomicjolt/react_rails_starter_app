@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 const settings = require('../../config/settings');
 const build = require('./index');
-const buildWebpackOptions = require('./webpack_options');
+const buildOptions = require('./build_options');
 
 // -----------------------------------------------------------------------------
 // Iterate through all applications calling the callback with the webpackOptions
@@ -11,7 +11,7 @@ const buildWebpackOptions = require('./webpack_options');
 function iterateApps(options, cb) {
   let port = parseInt(settings.hotPort, 10);
   return _.map(settings.apps, (app, appName) => {
-    const webpackOptions = buildWebpackOptions(appName, app, port, options);
+    const webpackOptions = buildOptions(appName, app, port, options);
     port += 1;
     cb(webpackOptions);
     return webpackOptions;
@@ -36,7 +36,7 @@ function buildAppParts(webpackOptions, onlyPack) {
       console.log(`Finished Javascript for ${webpackOptions.appName}`);
     });
   } else {
-    build.build(webpackOptions, settings.htmlOptions).then((result) => {
+    build.build(webpackOptions).then((result) => {
       console.log(`Finished Javascript for ${webpackOptions.appName}.`);
       console.log(`Built ${result.pages.length} pages.`);
     });
@@ -48,7 +48,7 @@ function buildAppParts(webpackOptions, onlyPack) {
 // -----------------------------------------------------------------------------
 function buildApp(appName, options, launchCallback) {
   const app = _.find(settings.apps, (e, name) => appName === name);
-  const webpackOptions = buildWebpackOptions(appName, app, settings.hotPort, options);
+  const webpackOptions = buildOptions(appName, app, settings.hotPort, options);
   buildAppParts(webpackOptions, options.onlyPack);
   launchHotWrapper(launchCallback, webpackOptions);
 }

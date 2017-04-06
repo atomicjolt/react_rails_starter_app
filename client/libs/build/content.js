@@ -29,7 +29,7 @@ function outFilePath(page, outputPath, inputFilePath, originalInputPath) {
 // -----------------------------------------------------------------------------
 // build a single file
 // -----------------------------------------------------------------------------
-function buildContent(fullPath, webpackOptions, webpackAssets, ext, htmlOptions) {
+function buildContent(fullPath, buildOptions, webpackAssets, ext) {
   const content     = fs.readFileSync(fullPath, 'utf8');
   const parsed      = frontMatter(content);
   const metadata    = parsed.attributes;
@@ -40,7 +40,7 @@ function buildContent(fullPath, webpackOptions, webpackAssets, ext, htmlOptions)
     title,
     metadata,
     url: destination
-  }, htmlOptions.templateData);
+  }, buildOptions.htmlOptions.templateData);
 
   let html = parsed.body;
 
@@ -52,7 +52,7 @@ function buildContent(fullPath, webpackOptions, webpackAssets, ext, htmlOptions)
     })(data);
 
     // Parse any markdown in the resulting html
-    if (_.includes(htmlOptions.markdownExtensions, ext)) {
+    if (_.includes(buildOptions.htmlOptions.markdownExtensions, ext)) {
       html = marked(html);
     }
   } catch (err) {
@@ -64,8 +64,11 @@ function buildContent(fullPath, webpackOptions, webpackAssets, ext, htmlOptions)
 
   // Apply template
   data.content = html; // Pass in generated html
-  html = templates.apply(data, fullPath, htmlOptions.templateMap, webpackOptions.templateDirs);
-  html = applyProduction(html, webpackOptions.stage, webpackAssets, webpackOptions.buildSuffix);
+  html = templates.apply(data,
+    fullPath,
+    buildOptions.htmlOptions.templateMap,
+    buildOptions.templateDirs);
+  html = applyProduction(html, buildOptions.stage, webpackAssets, buildOptions.buildSuffix);
 
   return {
     title,
@@ -85,22 +88,19 @@ function writeContent(
   originalInputPath,
   inputFilePath,
   webpackAssets,
-  webpackOptions,
-  htmlOptions) {
+  buildOptions) {
   const ext = path.extname(inputFilePath);
-  if (_.includes(htmlOptions.buildExtensions, ext)) {
+  if (_.includes(buildOptions.htmlOptions.buildExtensions, ext)) {
     const page = buildContent(
       inputFilePath,
-      webpackOptions,
+      buildOptions,
       webpackAssets,
-      ext,
-      htmlOptions);
-    const out = outFilePath(page, webpackOptions.appOutputPath, inputFilePath, originalInputPath);
-    page.outputFilePath = file.write(
-      out, page.html, htmlOptions);
+      ext);
+    const out = outFilePath(page, buildOptions.appOutputPath, inputFilePath, originalInputPath);
+    page.outputFilePath = file.write(out, page.html);
     return page;
   }
-  const out = outFilePath(null, webpackOptions.appOutputPath, inputFilePath, originalInputPath);
+  const out = outFilePath(null, buildOptions.appOutputPath, inputFilePath, originalInputPath);
   file.copy(inputFilePath, out);
   return null;
 }
@@ -111,9 +111,8 @@ function writeContent(
 function buildContents(
   originalInputPath,
   inputPath,
-  webpackOptions,
-  webpackAssets,
-  htmlOptions) {
+  buildOptions,
+  webpackAssets) {
 
   let results = [];
   const files = fs.readdirSync(inputPath);
@@ -122,24 +121,22 @@ function buildContents(
     const inputFilePath = path.join(inputPath, fileName);
 
     // Ignore template dirs
-    const doOutput = webpackOptions.templateDirs.indexOf(inputFilePath) < 0 &&
+    const doOutput = buildOptions.templateDirs.indexOf(inputFilePath) < 0 &&
                   !_.includes(ignoreFiles, fileName);
     if (doOutput) {
       if (fs.statSync(inputFilePath).isDirectory()) {
         results = _.concat(results, buildContents(
           originalInputPath,
           inputFilePath,
-          webpackOptions,
-          webpackAssets,
-          htmlOptions
+          buildOptions,
+          webpackAssets
         ));
       } else {
         const page = writeContent(
           originalInputPath,
           inputFilePath,
           webpackAssets,
-          webpackOptions,
-          htmlOptions);
+          buildOptions);
         if (page) {
           results.push(page);
         }

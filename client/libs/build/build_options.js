@@ -13,7 +13,7 @@ function templateDirs(app){
 // -----------------------------------------------------------------------------
 // Generates webpack options that can be provided to webpackConfigBuilder
 // -----------------------------------------------------------------------------
-module.exports = function buildWebpackOptions(appName, app, port, options) {
+module.exports = function buildOptions(appName, app, port, options) {
   const production = options.stage === 'production' || options.stage === 'staging';
 
   let rootOutputPath = settings.devOutput;
@@ -41,6 +41,7 @@ module.exports = function buildWebpackOptions(appName, app, port, options) {
     appOutputPath,
     rootOutputPath,
     publicPath,
-    templateDirs: templateDirs(app)
+    templateDirs: templateDirs(app),
+    htmlOptions: settings.htmlOptions
   };
 };

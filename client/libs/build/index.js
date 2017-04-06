@@ -13,10 +13,10 @@ const webpackConfigBuilder = require('../../config/webpack.config');
 // -----------------------------------------------------------------------------
 // run webpack to build entries
 // -----------------------------------------------------------------------------
-function buildWebpackEntries(webpackOptions) {
+function buildWebpackEntries(buildOptions) {
   return new Promise((resolve, reject) => {
-    const webpackConfig = webpackConfigBuilder(webpackOptions);
-    if (webpackOptions.stage !== 'hot') {
+    const webpackConfig = webpackConfigBuilder(buildOptions);
+    if (buildOptions.stage !== 'hot') {
       const bundler = webpack(webpackConfig);
       const bundle = (err, stats) => {
         if (err) {
@@ -54,38 +54,37 @@ function buildStatic(staticInputPath, outputPath) {
 // -----------------------------------------------------------------------------
 // main build
 // -----------------------------------------------------------------------------
-function build(webpackOptions, htmlOptions) {
+function build(buildOptions) {
 
   return new Promise((resolve) => {
 
     // Copy static files to build directory
-    const staticInputPath = path.join(webpackOptions.app.path, webpackOptions.app.staticPath);
-    buildStatic(staticInputPath, webpackOptions.appOutputPath);
+    const staticInputPath = path.join(buildOptions.app.path, buildOptions.app.staticPath);
+    buildStatic(staticInputPath, buildOptions.appOutputPath);
 
     // Webpack build
-    console.log(`Webpacking ${webpackOptions.appName}`);
+    console.log(`Webpacking ${buildOptions.appName}`);
 
-    buildWebpackEntries(webpackOptions).then((packResults) => {
+    buildWebpackEntries(buildOptions).then((packResults) => {
       let webpackAssets = null;
-      const webpackAssetsFilePath = `${packResults.webpackConfig.output.path}/${webpackOptions.appName}-webpack-assets.json`;
+      const webpackAssetsFilePath = `${packResults.webpackConfig.output.path}/${buildOptions.appName}-webpack-assets.json`;
       if (fs.existsSync(webpackAssetsFilePath)) {
         webpackAssets = fs.readJsonSync(webpackAssetsFilePath);
       }
 
       // Build html
-      console.log(`Building html for ${webpackOptions.appName}`);
-      const htmlInputPath = path.join(webpackOptions.app.path, webpackOptions.app.htmlPath);
+      console.log(`Building html for ${buildOptions.appName}`);
+      const htmlInputPath = path.join(buildOptions.app.path, buildOptions.app.htmlPath);
 
       const pages = content.buildContents(
         htmlInputPath,
         htmlInputPath,
-        webpackOptions,
-        webpackAssets,
-        htmlOptions
+        buildOptions,
+        webpackAssets
       );
 
       //watchStatic(staticInputPath);
-      //watchHtml(htmlInputPath, webpackAssets, webpackOptions, htmlOptions);
+      //watchHtml(htmlInputPath, webpackAssets, buildOptions, htmlOptions);
 
       resolve({
         webpackConfig : packResults.webpackConfig,
@@ -103,7 +102,7 @@ function build(webpackOptions, htmlOptions) {
 // -----------------------------------------------------------------------------
 function watchStatic(staticInputPath) {
   nodeWatch(staticInputPath, { recursive: true }, (evt, filePath) => {
-    fs.copySync(filePath, webpackOptions.appOutputPath);
+    fs.copySync(filePath, buildOptions.appOutputPath);
   });
 }
 
@@ -111,16 +110,16 @@ function watchStatic(staticInputPath) {
 // watchHtml
 // Used to rebuild html or templates if files change.
 // -----------------------------------------------------------------------------
-function watchHtml(htmlInputPath, webpackAssets, webpackOptions, htmlOptions) {
+function watchHtml(htmlInputPath, webpackAssets, buildOptions, htmlOptions) {
 
   // Watch for content to change
   nodeWatch(htmlInputPath, { recursive: true }, (evt, fullInputPath) => {
     content.writeContent(
       htmlInputPath,
-      webpackOptions.appOutputPath,
+      buildOptions.appOutputPath,
       fullInputPath,
       webpackAssets,
-      webpackOptions.stage,
+      buildOptions.stage,
       buildSuffix,
       templateDirs,
       htmlOptions);
