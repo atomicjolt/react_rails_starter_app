@@ -45,7 +45,7 @@ function buildWebpackEntries(buildOptions) {
 function buildStatic(staticInputPath, outputPath) {
   try {
     console.log(`Copying static files in ${staticInputPath}`);
-    fs.copySync(staticInputPath, outputPath);
+    fs.copy(staticInputPath, outputPath);
   } catch (err) {
     // No static dir. Do nothing
   }
@@ -83,8 +83,11 @@ function build(buildOptions) {
         webpackAssets
       );
 
-      //watchStatic(staticInputPath);
-      //watchHtml(htmlInputPath, webpackAssets, buildOptions, htmlOptions);
+      if (buildOptions.stage == 'hot') {
+        watchStatic(staticInputPath, buildOptions);
+        watchHtml(htmlInputPath, webpackAssets, buildOptions);
+        // TODO figure out how to watch template files - requires rebuild of all html
+      }
 
       resolve({
         webpackConfig : packResults.webpackConfig,
@@ -100,8 +103,10 @@ function build(buildOptions) {
 // watchStatic
 // Used to copy over static files if they change
 // -----------------------------------------------------------------------------
-function watchStatic(staticInputPath) {
+function watchStatic(staticInputPath, buildOptions) {
+  console.log(`Watching static files in ${staticInputPath}`);
   nodeWatch(staticInputPath, { recursive: true }, (evt, filePath) => {
+    console.log(`Change in static file ${filePath}`);
     fs.copySync(filePath, buildOptions.appOutputPath);
   });
 }
@@ -110,20 +115,15 @@ function watchStatic(staticInputPath) {
 // watchHtml
 // Used to rebuild html or templates if files change.
 // -----------------------------------------------------------------------------
-function watchHtml(htmlInputPath, webpackAssets, buildOptions, htmlOptions) {
-
-  // Watch for content to change
+function watchHtml(htmlInputPath, webpackAssets, buildOptions) {
+  console.log(`Watching html files in ${htmlInputPath}`);
   nodeWatch(htmlInputPath, { recursive: true }, (evt, fullInputPath) => {
+    console.log(`Change in html file ${fullInputPath}`);
     content.writeContent(
       htmlInputPath,
-      buildOptions.appOutputPath,
       fullInputPath,
       webpackAssets,
-      buildOptions.stage,
-      buildSuffix,
-      templateDirs,
-      htmlOptions);
-
+      buildOptions);
   });
 }
 

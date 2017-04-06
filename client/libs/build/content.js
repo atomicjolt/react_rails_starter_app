@@ -147,8 +147,6 @@ function buildContents(
 }
 
 module.exports = {
-  buildContent,
   buildContents,
-  writeContent,
-  outFilePath
+  writeContent
 };
