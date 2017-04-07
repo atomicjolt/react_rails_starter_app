@@ -3,41 +3,31 @@ const _ = require('lodash');
 
 const settings = require('../../config/settings');
 const build = require('./index');
-const buildOptions = require('./build_options');
+const buildOptionsGenerator = require('./build_options');
 
 // -----------------------------------------------------------------------------
-// Iterate through all applications calling the callback with the webpackOptions
+// Iterate through all applications calling the callback with the buildOptions
 // -----------------------------------------------------------------------------
-function iterateApps(options, cb) {
+function allAppBuildOptions(options) {
   let port = parseInt(settings.hotPort, 10);
   return _.map(settings.apps, (app, appName) => {
-    const webpackOptions = buildOptions(appName, app, port, options);
+    const buildOptions = buildOptionsGenerator(appName, app, port, options);
     port += 1;
-    cb(webpackOptions);
-    return webpackOptions;
+    return buildOptions;
   });
-}
-
-// -----------------------------------------------------------------------------
-// Wrapper to provide values for launching a webpack server
-// -----------------------------------------------------------------------------
-function launchHotWrapper(launchCallback, webpackOptions) {
-  if (launchCallback) {
-    launchCallback(webpackOptions);
-  }
 }
 
 // -----------------------------------------------------------------------------
 // Build a single app
 // -----------------------------------------------------------------------------
-function buildAppParts(webpackOptions, onlyPack) {
+function buildAppParts(buildOptions, onlyPack) {
   if (onlyPack) {
-    build.buildWebpackEntries(webpackOptions).then(() => {
-      console.log(`Finished Javascript for ${webpackOptions.appName}`);
+    return build.buildWebpackEntries(buildOptions).then(() => {
+      console.log(`Finished Javascript for ${buildOptions.appName}`);
     });
   } else {
-    build.build(webpackOptions).then((result) => {
-      console.log(`Finished Javascript for ${webpackOptions.appName}.`);
+    return build.build(buildOptions).then((result) => {
+      console.log(`Finished Javascript for ${buildOptions.appName}.`);
       console.log(`Built ${result.pages.length} pages.`);
     });
   }
@@ -46,21 +36,25 @@ function buildAppParts(webpackOptions, onlyPack) {
 // -----------------------------------------------------------------------------
 // Build a single app
 // -----------------------------------------------------------------------------
-function buildApp(appName, options, launchCallback) {
+function buildApp(appName, options) {
   const app = _.find(settings.apps, (e, name) => appName === name);
-  const webpackOptions = buildOptions(appName, app, settings.hotPort, options);
-  buildAppParts(webpackOptions, options.onlyPack);
-  launchHotWrapper(launchCallback, webpackOptions);
+  const buildOptions = buildOptionsGenerator(appName, app, settings.hotPort, options);
+  return {
+    buildOptions,
+    buildPromise: buildAppParts(buildOptions, options.onlyPack)
+  };
 }
 
 // -----------------------------------------------------------------------------
 // Build all apps
 // -----------------------------------------------------------------------------
-function buildApps(options, launchCallback) {
-  return iterateApps(options, (webpackOptions) => {
-    fs.emptyDirSync(webpackOptions.appOutputPath);
-    buildAppParts(webpackOptions, options.onlyPack);
-    launchHotWrapper(launchCallback, webpackOptions);
+function buildApps(options) {
+  return _.map(allAppBuildOptions(options), (buildOptions) => {
+    fs.emptyDirSync(buildOptions.appOutputPath);
+    return {
+      buildOptions,
+      buildPromise: buildAppParts(buildOptions, options.onlyPack)
+    };
   });
 }
 

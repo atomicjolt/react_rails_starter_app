@@ -16,9 +16,9 @@ const localIp = '0.0.0.0';
 const appName = argv._[0];
 const hotPack = argv.hotPack;
 
-function setupMiddleware(webpackOptions) {
+function setupMiddleware(buildOptions) {
 
-  const webpackConfig = webpackConfigBuilder(webpackOptions);
+  const webpackConfig = webpackConfigBuilder(buildOptions);
 
   const compiler = webpack(webpackConfig);
   const webpackMiddlewareInstance = webpackMiddleware(compiler, {
@@ -28,11 +28,11 @@ function setupMiddleware(webpackOptions) {
     headers: { 'Access-Control-Allow-Origin': '*' }
   });
 
-  app.use(express.static(webpackOptions.appOutputPath));
+  app.use(express.static(buildOptions.appOutputPath));
   app.use(webpackMiddlewareInstance);
   app.use(webpackHotMiddleware(compiler));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(webpackOptions.appOutputPath, req.url));
+    res.sendFile(path.join(buildOptions.appOutputPath, req.url));
   });
 }
 
@@ -47,26 +47,27 @@ function runServer(port, servePath) {
   });
 }
 
-function launch(webpackOptions) {
-  setupMiddleware(webpackOptions);
-  runServer(webpackOptions.port, webpackOptions.appOutputPath);
+function launch(buildOptions) {
+  setupMiddleware(buildOptions);
+  runServer(buildOptions.port, buildOptions.appOutputPath);
 }
 
 const options = { stage: 'hot', onlyPack: false };
 if (appName) {
-  clientApps.buildApp(appName, options, launch);
+  const result = clientApps.buildApp(appName, options);
+  launch(result.buildOptions);
 } else if (hotPack) {
   options.onlyPack = true;
-  const webpackConfigs = clientApps.buildApps(options, null);
-  _.each(webpackConfigs, (webpackOptions) => {
+  const results = clientApps.buildApps(options);
+  _.each(results, (result) => {
     setupMiddleware(_.merge({},
-      webpackOptions,
-      {
-        publicPath: `/${webpackOptions.appName}`
-      }
+      result.buildOptions,
+      { publicPath: `/${result.buildOptions.appName}` }
     ));
   });
   runServer(settings.hotPort, settings.devOutput);
 } else {
-  clientApps.buildApps(options, launch);
+  _.each(clientApps.buildApps(options), (result) => {
+    launch(result.buildOptions);
+  });
 }
