@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const _ = require('lodash');
 
 const settings = require('../../config/settings');
-const build = require('./index');
+const build = require('./build');
 const buildOptionsGenerator = require('./build_options');
 
 // -----------------------------------------------------------------------------
