@@ -96,11 +96,11 @@ function writeContent(
       buildOptions,
       webpackAssets,
       ext);
-    const out = outFilePath(page, buildOptions.appOutputPath, inputFilePath, originalInputPath);
+    const out = outFilePath(page, buildOptions.outputPath, inputFilePath, originalInputPath);
     page.outputFilePath = file.write(out, page.html);
     return page;
   }
-  const out = outFilePath(null, buildOptions.appOutputPath, inputFilePath, originalInputPath);
+  const out = outFilePath(null, buildOptions.outputPath, inputFilePath, originalInputPath);
   file.copy(inputFilePath, out);
   return null;
 }

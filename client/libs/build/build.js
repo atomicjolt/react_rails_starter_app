@@ -60,7 +60,7 @@ function build(buildOptions) {
 
     // Copy static files to build directory
     const staticInputPath = path.join(buildOptions.app.path, buildOptions.app.staticPath);
-    buildStatic(staticInputPath, buildOptions.appOutputPath);
+    buildStatic(staticInputPath, buildOptions.outputPath);
 
     // Webpack build
     console.log(`Webpacking ${buildOptions.appName}`);
@@ -107,7 +107,7 @@ function watchStatic(staticInputPath, buildOptions) {
   console.log(`Watching static files in ${staticInputPath}`);
   nodeWatch(staticInputPath, { recursive: true }, (evt, filePath) => {
     console.log(`Change in static file ${filePath}`);
-    fs.copySync(filePath, buildOptions.appOutputPath);
+    fs.copySync(filePath, buildOptions.outputPath);
   });
 }
 

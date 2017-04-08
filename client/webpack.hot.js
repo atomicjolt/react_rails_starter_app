@@ -28,11 +28,11 @@ function setupMiddleware(buildOptions) {
     headers: { 'Access-Control-Allow-Origin': '*' }
   });
 
-  app.use(express.static(buildOptions.appOutputPath));
+  app.use(express.static(buildOptions.outputPath));
   app.use(webpackMiddlewareInstance);
   app.use(webpackHotMiddleware(compiler));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(buildOptions.appOutputPath, req.url));
+    res.sendFile(path.join(buildOptions.outputPath, req.url));
   });
 }
 
@@ -49,7 +49,7 @@ function runServer(port, servePath) {
 
 function launch(buildOptions) {
   setupMiddleware(buildOptions);
-  runServer(buildOptions.port, buildOptions.appOutputPath);
+  runServer(buildOptions.port, buildOptions.outputPath);
 }
 
 const options = { stage: 'hot', onlyPack: false };

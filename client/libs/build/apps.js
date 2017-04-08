@@ -50,7 +50,7 @@ function buildApp(appName, options) {
 // -----------------------------------------------------------------------------
 function buildApps(options) {
   return _.map(allAppBuildOptions(options), (buildOptions) => {
-    fs.emptyDirSync(buildOptions.appOutputPath);
+    fs.emptyDirSync(buildOptions.outputPath);
     return {
       buildOptions,
       buildPromise: buildAppParts(buildOptions, options.onlyPack)
