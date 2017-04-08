@@ -1,10 +1,8 @@
 const path      = require('path');
 const fs        = require('fs-extra');
-const _         = require('lodash');
 const webpack   = require('webpack');
 const nodeWatch = require('node-watch');
 
-const file      = require('./file');
 const content   = require('./content');
 
 // Settings
@@ -52,6 +50,34 @@ function buildStatic(staticInputPath, outputPath) {
 }
 
 // -----------------------------------------------------------------------------
+// watchStatic
+// Used to copy over static files if they change
+// -----------------------------------------------------------------------------
+function watchStatic(staticInputPath, buildOptions) {
+  console.log(`Watching static files in ${staticInputPath}`);
+  nodeWatch(staticInputPath, { recursive: true }, (evt, filePath) => {
+    console.log(`Change in static file ${filePath}`);
+    fs.copySync(filePath, buildOptions.outputPath);
+  });
+}
+
+// -----------------------------------------------------------------------------
+// watchHtml
+// Used to rebuild html or templates if files change.
+// -----------------------------------------------------------------------------
+function watchHtml(htmlInputPath, webpackAssets, buildOptions) {
+  console.log(`Watching html files in ${htmlInputPath}`);
+  nodeWatch(htmlInputPath, { recursive: true }, (evt, fullInputPath) => {
+    console.log(`Change in html file ${fullInputPath}`);
+    content.writeContent(
+      htmlInputPath,
+      fullInputPath,
+      webpackAssets,
+      buildOptions);
+  });
+}
+
+// -----------------------------------------------------------------------------
 // main build
 // -----------------------------------------------------------------------------
 function build(buildOptions) {
@@ -83,7 +109,7 @@ function build(buildOptions) {
         webpackAssets
       );
 
-      if (buildOptions.stage == 'hot') {
+      if (buildOptions.stage === 'hot') {
         watchStatic(staticInputPath, buildOptions);
         watchHtml(htmlInputPath, webpackAssets, buildOptions);
         // TODO figure out how to watch template files - requires rebuild of all html
@@ -96,34 +122,6 @@ function build(buildOptions) {
       });
     });
 
-  });
-}
-
-// -----------------------------------------------------------------------------
-// watchStatic
-// Used to copy over static files if they change
-// -----------------------------------------------------------------------------
-function watchStatic(staticInputPath, buildOptions) {
-  console.log(`Watching static files in ${staticInputPath}`);
-  nodeWatch(staticInputPath, { recursive: true }, (evt, filePath) => {
-    console.log(`Change in static file ${filePath}`);
-    fs.copySync(filePath, buildOptions.outputPath);
-  });
-}
-
-// -----------------------------------------------------------------------------
-// watchHtml
-// Used to rebuild html or templates if files change.
-// -----------------------------------------------------------------------------
-function watchHtml(htmlInputPath, webpackAssets, buildOptions) {
-  console.log(`Watching html files in ${htmlInputPath}`);
-  nodeWatch(htmlInputPath, { recursive: true }, (evt, fullInputPath) => {
-    console.log(`Change in html file ${fullInputPath}`);
-    content.writeContent(
-      htmlInputPath,
-      fullInputPath,
-      webpackAssets,
-      buildOptions);
   });
 }
 

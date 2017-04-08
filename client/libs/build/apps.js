@@ -25,12 +25,11 @@ function buildAppParts(buildOptions, onlyPack) {
     return build.buildWebpackEntries(buildOptions).then(() => {
       console.log(`Finished Javascript for ${buildOptions.appName}`);
     });
-  } else {
-    return build.build(buildOptions).then((result) => {
-      console.log(`Finished Javascript for ${buildOptions.appName}.`);
-      console.log(`Built ${result.pages.length} pages.`);
-    });
   }
+  return build.build(buildOptions).then((result) => {
+    console.log(`Finished Javascript for ${buildOptions.appName}.`);
+    console.log(`Built ${result.pages.length} pages.`);
+  });
 }
 
 // -----------------------------------------------------------------------------
