@@ -80,7 +80,7 @@ module.exports = function webpackConfig(options) {
       }),
       // Generate webpack-assets.json to map path to assets generated with hashed names
       new AssetsPlugin({
-        path: options.appOutputPath,
+        path: options.outputPath,
         fullPath: false,
         filename: `${options.appName}-webpack-assets.json`
       }),
@@ -128,7 +128,7 @@ module.exports = function webpackConfig(options) {
     output: {
       publicPath: options.publicPath,
       // Location where generated files will be output
-      path: options.appOutputPath,
+      path: options.outputPath,
       filename: options.production ? `[name]-[chunkhash]${options.buildSuffix}` : `[name]${options.buildSuffix}`,
       chunkFilename: options.production ? `[id]-[chunkhash]${options.buildSuffix}` : `[id]${options.buildSuffix}`,
       sourceMapFilename: '[name].map',

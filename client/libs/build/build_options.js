@@ -17,7 +17,7 @@ module.exports = function buildOptions(appName, app, port, options) {
   const production = options.stage === 'production' || options.stage === 'staging';
 
   let rootOutputPath = settings.devOutput;
-  let appOutputPath = options.onlyPack ?
+  let outputPath = options.onlyPack ?
     settings.devOutput : path.join(settings.devOutput, appName);
   // Public path indicates where the assets will be served from. In dev this will likely be
   // localhost or a local domain. In production this could be a CDN. In developerment this will
@@ -26,7 +26,7 @@ module.exports = function buildOptions(appName, app, port, options) {
 
   if (production) {
     rootOutputPath = settings.prodOutput;
-    appOutputPath = options.onlyPack ?
+    outputPath = options.onlyPack ?
       settings.prodOutput : path.join(settings.prodOutput, appName);
     publicPath = settings.prodAssetsUrl + settings.prodRelativeOutput;
   }
@@ -38,7 +38,7 @@ module.exports = function buildOptions(appName, app, port, options) {
     buildSuffix: settings.buildSuffix,
     port,
     production,
-    appOutputPath,
+    outputPath,
     rootOutputPath,
     publicPath,
     templateDirs: templateDirs(app),
