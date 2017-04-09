@@ -22,14 +22,18 @@ function allAppBuildOptions(options) {
 // -----------------------------------------------------------------------------
 function buildAppParts(buildOptions, onlyPack) {
   if (onlyPack) {
-    return build.buildWebpackEntries(buildOptions).then(() => {
+    const buildPromise = build.buildWebpackEntries(buildOptions);
+    buildPromise.then(() => {
       console.log(`Finished Javascript for ${buildOptions.appName}`);
     });
+    return buildPromise;
   }
-  return build.build(buildOptions).then((result) => {
+  const buildPromise = build.build(buildOptions);
+  buildPromise.then((result) => {
     console.log(`Finished Javascript for ${buildOptions.appName}.`);
     console.log(`Built ${result.pages.length} pages.`);
   });
+  return buildPromise;
 }
 
 // -----------------------------------------------------------------------------
