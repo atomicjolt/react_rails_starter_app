@@ -77,6 +77,22 @@ function watchHtml(htmlInputPath, webpackAssets, buildOptions) {
   });
 }
 
+function buildHtml(htmlInputPath, buildOptions, webpackAssets) {
+
+  const pages = content.buildContents(
+    htmlInputPath,
+    htmlInputPath,
+    buildOptions,
+    webpackAssets
+  );
+
+  if (buildOptions.stage === 'hot') {
+    watchHtml(htmlInputPath, webpackAssets, buildOptions);
+  }
+
+  return pages;
+}
+
 // -----------------------------------------------------------------------------
 // main build
 // -----------------------------------------------------------------------------
@@ -87,6 +103,9 @@ function build(buildOptions) {
     // Copy static files to build directory
     const staticInputPath = path.join(buildOptions.app.path, buildOptions.app.staticPath);
     buildStatic(staticInputPath, buildOptions.outputPath);
+    if (buildOptions.stage === 'hot') {
+      watchStatic(staticInputPath, buildOptions);
+    }
 
     // Webpack build
     console.log(`Webpacking ${buildOptions.appName}`);
@@ -102,18 +121,7 @@ function build(buildOptions) {
       console.log(`Building html for ${buildOptions.appName}`);
       const htmlInputPath = path.join(buildOptions.app.path, buildOptions.app.htmlPath);
 
-      const pages = content.buildContents(
-        htmlInputPath,
-        htmlInputPath,
-        buildOptions,
-        webpackAssets
-      );
-
-      if (buildOptions.stage === 'hot') {
-        watchStatic(staticInputPath, buildOptions);
-        watchHtml(htmlInputPath, webpackAssets, buildOptions);
-        // TODO figure out how to watch template files - requires rebuild of all html
-      }
+      const pages = buildHtml(htmlInputPath, buildOptions, webpackAssets);
 
       resolve({
         webpackConfig : packResults.webpackConfig,
@@ -127,5 +135,6 @@ function build(buildOptions) {
 
 module.exports = {
   build,
+  buildHtml,
   buildWebpackEntries
 };
