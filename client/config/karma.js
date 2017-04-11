@@ -2,21 +2,21 @@ const _ = require('lodash');
 
 const settings = require('./settings');
 const webpackConfigBuilder = require('./webpack.config');
-const apps = require('../libs/build/apps');
-const buildOptionsGenerator = require('../libs/build/build_options');
 
 module.exports = () => {
+  let plugins = [];
+  let module = {};
+  let resolve = {};
 
-  const buildOptions = buildOptionsGenerator('fake', { file: 'fakeAppName', path: 'fakeAppPath' }, settings.hotPort, { stage: 'test', onlyPack: true });
-  const webpackConfig = webpackConfigBuilder(buildOptions);
-  const plugins = webpackConfig.plugins;
-  const module = webpackConfig.module;
-  const resolve = webpackConfig.resolve;
-
-  _.each(settings.apps, (app, appName) => {
-    const appbuildOptions = buildOptionsGenerator(appName, app, settings.hotPort, { stage: 'test', onlyPack: true });
-    const appWebpackConfig = webpackConfigBuilder(appbuildOptions);
-    resolve.modules = _.union(resolve.modules, appWebpackConfig.resolve.modules);
+  const options = {
+    port: settings.hotPort,
+    stage: 'test'
+  };
+  _.each(settings.apps(options), (app) => {
+    const webpackConfig = webpackConfigBuilder(app);
+    plugins = _.union(plugins, webpackConfig.plugins);
+    module = _.merge(module, webpackConfig.module);
+    resolve = _.merge(resolve, webpackConfig.resolve);
   });
 
   return {
