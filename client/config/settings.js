@@ -37,7 +37,9 @@ const apps = fs.readdirSync(appsDir)
         file: 'app.jsx',
         htmlPath: 'html',
         staticPath: 'static',
-        templateDirs: ['layouts']
+        templateDirs: ['layouts'],
+        templateData: {}, // Object that will be passed to every page as it is rendered
+        templateMap: {}, // Used to specify specific templates on a per file basis
       }
     })
   , {});
@@ -64,9 +66,6 @@ module.exports = {
     truncateSummaryAt: 1000,
     buildExtensions: ['.html', '.htm', '.md', '.markdown'], // file types to build (others will just be copied)
     markdownExtensions: ['.md', '.markdown'], // file types to process markdown
-    templateDirs: [],
-    templateData: {}, // Object that will be passed to every page as it is rendered
-    templateMap: {}, // Used to specify specific templates on a per file basis
     appsDir
   }
 

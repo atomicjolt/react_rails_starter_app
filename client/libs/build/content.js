@@ -40,7 +40,7 @@ function buildContent(fullPath, buildOptions, webpackAssets, ext) {
     title,
     metadata,
     url: destination
-  }, buildOptions.htmlOptions.templateData);
+  }, buildOptions.templateData);
 
   let html = parsed.body;
 
@@ -66,7 +66,7 @@ function buildContent(fullPath, buildOptions, webpackAssets, ext) {
   data.content = html; // Pass in generated html
   html = templates.apply(data,
     fullPath,
-    buildOptions.htmlOptions.templateMap,
+    buildOptions.templateMap,
     buildOptions.templateDirs);
   html = applyProduction(html, buildOptions.stage, webpackAssets, buildOptions.buildSuffix);
 

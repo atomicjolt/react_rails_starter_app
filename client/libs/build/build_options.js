@@ -41,6 +41,8 @@ module.exports = function buildOptions(appName, app, port, options) {
     outputPath,
     rootOutputPath,
     publicPath,
+    templateMap: app.templateMap,
+    templateData: app.templateData,
     templateDirs: templateDirs(app),
     htmlOptions: settings.htmlOptions
   };
