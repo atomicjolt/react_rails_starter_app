@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
+const _ = require('lodash');
 
 const deployConfig = require('../../.s3-website.json');
 
@@ -28,21 +29,30 @@ const hotPort = process.env.ASSETS_PORT || 8080;
 // These will be used to generate the entries for webpack
 const appsDir = path.join(__dirname, '../apps/');
 
+// -----------------------------------------------------------------------------
+// Helper function to generate full template paths for the given app
+// -----------------------------------------------------------------------------
+function templateDirs(app, dirs) {
+  return _.map(dirs, templateDir => path.join(app.path, app.htmlPath, templateDir));
+}
+
+function appSettings(appName) {
+  const app = {
+    path: path.join(appsDir, appName),
+    file: 'app.jsx',
+    htmlPath: 'html',
+    staticPath: 'static',
+    templateData: {}, // Object that will be passed to every page as it is rendered
+    templateMap: {}, // Used to specify specific templates on a per file basis
+  };
+  app.templateDirs = templateDirs(app, ['layouts']);
+  return {
+    [appName] : app
+  };
+}
 const apps = fs.readdirSync(appsDir)
   .filter(file => fs.statSync(path.join(appsDir, file)).isDirectory())
-  .reduce(
-    (result, appName) => Object.assign({}, result, {
-      [appName] : {
-        path: path.join(appsDir, appName),
-        file: 'app.jsx',
-        htmlPath: 'html',
-        staticPath: 'static',
-        templateDirs: ['layouts'],
-        templateData: {}, // Object that will be passed to every page as it is rendered
-        templateMap: {}, // Used to specify specific templates on a per file basis
-      }
-    })
-  , {});
+  .reduce((result, appName) => _.merge(result, appSettings(appName)), {});
 
 module.exports = {
   apps,
