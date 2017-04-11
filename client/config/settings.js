@@ -2,7 +2,13 @@ const fs = require('fs-extra');
 const path = require('path');
 const _ = require('lodash');
 
+// There is a warning if the .env file is missing
+// This is fine in a production setting, where settings
+// are loaded from the env and not from a file
+require('dotenv').load({ path: path.join(__dirname, '../../.env') });
+
 const deployConfig = require('../../.s3-website.json');
+
 
 const hotPort = parseInt(process.env.ASSETS_PORT, 10) || 8080;
 
@@ -20,11 +26,6 @@ const prodOutput = path.join(__dirname, '../../build/prod', prodRelativeOutput);
 
 const prodAssetsUrl = `https://s3.amazonaws.com/${deployConfig.domain}`;
 const devAssetsUrl = process.env.ASSETS_URL;
-
-// There is a warning if the .env file is missing
-// This is fine in a production setting, where settings
-// are loaded from the env and not from a file
-require('dotenv').load({ path: path.join(__dirname, '../../.env') });
 
 // Get a list of all directories in the apps directory.
 // These will be used to generate the entries for webpack
