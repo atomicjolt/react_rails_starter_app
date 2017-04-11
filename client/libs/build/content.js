@@ -29,7 +29,7 @@ function outFilePath(page, outputPath, inputFilePath, originalInputPath) {
 // -----------------------------------------------------------------------------
 // build a single file
 // -----------------------------------------------------------------------------
-function buildContent(fullPath, buildOptions, webpackAssets, ext) {
+function buildContent(fullPath, app, webpackAssets, ext) {
   const content     = fs.readFileSync(fullPath, 'utf8');
   const parsed      = frontMatter(content);
   const metadata    = parsed.attributes;
@@ -40,7 +40,7 @@ function buildContent(fullPath, buildOptions, webpackAssets, ext) {
     title,
     metadata,
     url: destination
-  }, buildOptions.templateData);
+  }, app.templateData);
 
   let html = parsed.body;
 
@@ -52,7 +52,7 @@ function buildContent(fullPath, buildOptions, webpackAssets, ext) {
     })(data);
 
     // Parse any markdown in the resulting html
-    if (_.includes(buildOptions.htmlOptions.markdownExtensions, ext)) {
+    if (_.includes(app.htmlOptions.markdownExtensions, ext)) {
       html = marked(html);
     }
   } catch (err) {
@@ -66,9 +66,9 @@ function buildContent(fullPath, buildOptions, webpackAssets, ext) {
   data.content = html; // Pass in generated html
   html = templates.apply(data,
     fullPath,
-    buildOptions.templateMap,
-    buildOptions.templateDirs);
-  html = applyProduction(html, buildOptions.stage, webpackAssets, buildOptions.buildSuffix);
+    app.templateMap,
+    app.templateDirs);
+  html = applyProduction(html, app.stage, webpackAssets, app.buildSuffix);
 
   return {
     title,
@@ -85,22 +85,21 @@ function buildContent(fullPath, buildOptions, webpackAssets, ext) {
 // responsible for writing out html content after it's built or copying static files
 // -----------------------------------------------------------------------------
 function writeContent(
-  originalInputPath,
   inputFilePath,
   webpackAssets,
-  buildOptions) {
+  app) {
   const ext = path.extname(inputFilePath);
-  if (_.includes(buildOptions.htmlOptions.buildExtensions, ext)) {
+  if (_.includes(app.htmlOptions.buildExtensions, ext)) {
     const page = buildContent(
       inputFilePath,
-      buildOptions,
+      app,
       webpackAssets,
       ext);
-    const out = outFilePath(page, buildOptions.outputPath, inputFilePath, originalInputPath);
+    const out = outFilePath(page, app.outputPath, inputFilePath, app.htmlPath);
     page.outputFilePath = file.write(out, page.html);
     return page;
   }
-  const out = outFilePath(null, buildOptions.outputPath, inputFilePath, originalInputPath);
+  const out = outFilePath(null, app.outputPath, inputFilePath, app.htmlPath);
   file.copy(inputFilePath, out);
   return null;
 }
@@ -109,9 +108,8 @@ function writeContent(
 // build html and markdown files in a given directory
 // -----------------------------------------------------------------------------
 function buildContents(
-  originalInputPath,
   inputPath,
-  buildOptions,
+  app,
   webpackAssets) {
 
   let results = [];
@@ -121,22 +119,21 @@ function buildContents(
     const inputFilePath = path.join(inputPath, fileName);
 
     // Ignore template dirs
-    const doOutput = buildOptions.templateDirs.indexOf(inputFilePath) < 0 &&
+    const doOutput = app.templateDirs.indexOf(inputFilePath) < 0 &&
                   !_.includes(ignoreFiles, fileName);
     if (doOutput) {
       if (fs.statSync(inputFilePath).isDirectory()) {
         results = _.concat(results, buildContents(
-          originalInputPath,
+          app.htmlPath,
           inputFilePath,
-          buildOptions,
+          app,
           webpackAssets
         ));
       } else {
         const page = writeContent(
-          originalInputPath,
           inputFilePath,
           webpackAssets,
-          buildOptions);
+          app);
         if (page) {
           results.push(page);
         }

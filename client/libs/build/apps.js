@@ -3,34 +3,21 @@ const _ = require('lodash');
 
 const settings = require('../../config/settings');
 const build = require('./build');
-const buildOptionsGenerator = require('./build_options');
-
-// -----------------------------------------------------------------------------
-// Iterate through all applications calling the callback with the buildOptions
-// -----------------------------------------------------------------------------
-function allAppBuildOptions(options) {
-  let port = parseInt(settings.hotPort, 10);
-  return _.map(settings.apps, (app, appName) => {
-    const buildOptions = buildOptionsGenerator(appName, app, port, options);
-    port += 1;
-    return buildOptions;
-  });
-}
 
 // -----------------------------------------------------------------------------
 // Build a single app
 // -----------------------------------------------------------------------------
-function buildAppParts(buildOptions, onlyPack) {
+function buildAppParts(app, onlyPack) {
   if (onlyPack) {
-    const buildPromise = build.buildWebpackEntries(buildOptions);
+    const buildPromise = build.buildWebpackEntries(app);
     buildPromise.then(() => {
-      console.log(`Finished Javascript for ${buildOptions.appName}`);
+      console.log(`Finished Javascript for ${app.name}`);
     });
     return buildPromise;
   }
-  const buildPromise = build.build(buildOptions);
+  const buildPromise = build.build(app);
   buildPromise.then((result) => {
-    console.log(`Finished Javascript for ${buildOptions.appName}.`);
+    console.log(`Finished Javascript for ${app.name}.`);
     console.log(`Built ${result.pages.length} pages.`);
   });
   return buildPromise;
@@ -40,11 +27,11 @@ function buildAppParts(buildOptions, onlyPack) {
 // Build a single app
 // -----------------------------------------------------------------------------
 function buildApp(appName, options) {
-  const app = _.find(settings.apps, (e, name) => appName === name);
-  const buildOptions = buildOptionsGenerator(appName, app, settings.hotPort, options);
+  const app = _.find(settings.apps(options).apps, (e, name) => appName === name);
+  fs.emptyDirSync(app.outputPath);
   return {
-    buildOptions,
-    buildPromise: buildAppParts(buildOptions, options.onlyPack)
+    app,
+    buildPromise: buildAppParts(app, options.onlyPack)
   };
 }
 
@@ -52,11 +39,11 @@ function buildApp(appName, options) {
 // Build all apps
 // -----------------------------------------------------------------------------
 function buildApps(options) {
-  return _.map(allAppBuildOptions(options), (buildOptions) => {
-    fs.emptyDirSync(buildOptions.outputPath);
+  return _.map(settings.apps(options), (app) => {
+    fs.emptyDirSync(app.outputPath);
     return {
-      buildOptions,
-      buildPromise: buildAppParts(buildOptions, options.onlyPack)
+      app,
+      buildPromise: buildAppParts(app, options.onlyPack)
     };
   });
 }
