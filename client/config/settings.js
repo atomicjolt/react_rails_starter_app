@@ -39,58 +39,8 @@ const htmlOptions = { // Options for building html files
 };
 
 // -----------------------------------------------------------------------------
-// Helper function to generate full template paths for the given app
+// Main paths for the application. Includes production and development paths.
 // -----------------------------------------------------------------------------
-function templateDirs(app, dirs) {
-  return _.map(dirs, templateDir => path.join(app.htmlPath, templateDir));
-}
-
-function appSettings(name, port, options) {
-
-  const production = options.stage === 'production' || options.stage === 'staging';
-  let rootOutputPath = devOutput;
-  let outputPath = options.onlyPack ?
-    devOutput : path.join(devOutput, name);
-  // Public path indicates where the assets will be served from. In dev this will likely be
-  // localhost or a local domain. In production this could be a CDN. In developerment this will
-  // point to whatever public url is serving dev assets.
-  let publicPath = `${devAssetsUrl}:${port}${devRelativeOutput}`;
-
-  if (production) {
-    rootOutputPath = prodOutput;
-    outputPath = options.onlyPack ?
-      prodOutput : path.join(prodOutput, name);
-    publicPath = prodAssetsUrl + prodRelativeOutput;
-  }
-
-  const appPath = path.join(appsDir, name);
-  const htmlPath = path.join(appPath, 'html');
-  const staticPath = path.join(appPath, 'static');
-
-  const app = {
-    name,
-    path: appPath,
-    file: 'app.jsx',
-    htmlPath,
-    staticPath,
-    templateData: {}, // Object that will be passed to every page as it is rendered
-    templateMap: {}, // Used to specify specific templates on a per file basis
-    stage: options.stage,
-    buildSuffix,
-    port,
-    production,
-    outputPath,
-    rootOutputPath,
-    publicPath,
-    htmlOptions,
-  };
-
-  app.templateDirs = templateDirs(app, ['layouts']);
-  return {
-    [name] : app
-  };
-}
-
 const paths = {
   devRelativeOutput,
   prodRelativeOutput,
@@ -101,6 +51,80 @@ const paths = {
   appsDir,
 };
 
+// -----------------------------------------------------------------------------
+// Helper function to generate full template paths for the given app
+// -----------------------------------------------------------------------------
+function templateDirs(app, dirs) {
+  return _.map(dirs, templateDir => path.join(app.htmlPath, templateDir));
+}
+
+// -----------------------------------------------------------------------------
+// Helper to determine if we should do a production build or not
+// -----------------------------------------------------------------------------
+function isProduction(stage) {
+  return stage === 'production' || stage === 'staging';
+}
+
+// -----------------------------------------------------------------------------
+// Generates the main paths used for output
+// -----------------------------------------------------------------------------
+function outputPaths(name, port, options) {
+
+  let rootOutputPath = devOutput;
+  let outputPath = options.onlyPack ?
+    devOutput : path.join(devOutput, name);
+  // Public path indicates where the assets will be served from. In dev this will likely be
+  // localhost or a local domain. In production this could be a CDN. In developerment this will
+  // point to whatever public url is serving dev assets.
+  let publicPath = `${devAssetsUrl}:${port}${devRelativeOutput}`;
+
+  if (isProduction(options.stage)) {
+    rootOutputPath = prodOutput;
+    outputPath = options.onlyPack ?
+      prodOutput : path.join(prodOutput, name);
+    publicPath = prodAssetsUrl + prodRelativeOutput;
+  }
+
+  return {
+    rootOutputPath,
+    outputPath,
+    publicPath
+  };
+}
+
+// -----------------------------------------------------------------------------
+// Generate all settings needed for a given application
+// -----------------------------------------------------------------------------
+function appSettings(name, port, options) {
+
+  const appPath = path.join(appsDir, name);
+  const htmlPath = path.join(appPath, 'html');
+  const staticPath = path.join(appPath, 'static');
+
+  const app = _.merge({
+    name,
+    path: appPath,
+    file: 'app.jsx',
+    htmlPath,
+    staticPath,
+    templateData: {}, // Object that will be passed to every page as it is rendered
+    templateMap: {}, // Used to specify specific templates on a per file basis
+    stage: options.stage,
+    buildSuffix,
+    port,
+    production: isProduction(options.stage),
+    htmlOptions,
+  }, outputPaths(name, port, options));
+
+  app.templateDirs = templateDirs(app, ['layouts']);
+  return {
+    [name] : app
+  };
+}
+
+// -----------------------------------------------------------------------------
+// Generates an app setting for all applications found in the client directory
+// -----------------------------------------------------------------------------
 function apps(options) {
   let port = options.port;
   return fs.readdirSync(appsDir)
@@ -115,5 +139,6 @@ function apps(options) {
 module.exports = {
   paths,
   hotPort,
+  outputPaths,
   apps
 };
