@@ -25,7 +25,7 @@ injectTapEventPlugin();
 
 class Root extends React.PureComponent {
   static propTypes = {
-    store: React.PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
   };
 
   render() {
