@@ -1,14 +1,15 @@
 import 'babel-polyfill';
-import es6Promise             from 'es6-promise';
-import React                  from 'react';
-import ReactDOM               from 'react-dom';
-import { Provider }           from 'react-redux';
-import injectTapEventPlugin   from 'react-tap-event-plugin';
-import DevTools               from '../../libs/dev/dev_tools';
+import es6Promise from 'es6-promise';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import DevTools from '../../libs/dev/dev_tools';
 import { getInitialSettings } from '../../libs/reducers/settings';
-import configureStore         from './store/configure_store';
-import jwt                    from './loaders/jwt';
-import routes                 from './routes';
+import configureStore from './store/configure_store';
+import jwt from './loaders/jwt';
+import routes from './routes';
 
 require('./styles/styles');
 
