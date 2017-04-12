@@ -10,15 +10,15 @@ const settings = require('./config/settings');
 const webpackConfigBuilder = require('./config/webpack.config');
 const clientApps = require('./libs/build/apps');
 
-const app = express();
+const serverApp = express();
 
 const localIp = '0.0.0.0';
-const appName = argv._[0];
+const appName = _.trim(argv._[0]);
 const hotPack = argv.hotPack;
 
-function setupMiddleware(webpackOptions) {
+function setupMiddleware(app) {
 
-  const webpackConfig = webpackConfigBuilder(webpackOptions);
+  const webpackConfig = webpackConfigBuilder(app);
 
   const compiler = webpack(webpackConfig);
   const webpackMiddlewareInstance = webpackMiddleware(compiler, {
@@ -28,16 +28,16 @@ function setupMiddleware(webpackOptions) {
     headers: { 'Access-Control-Allow-Origin': '*' }
   });
 
-  app.use(express.static(webpackOptions.servePath));
-  app.use(webpackMiddlewareInstance);
-  app.use(webpackHotMiddleware(compiler));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(webpackOptions.servePath, req.url));
+  serverApp.use(express.static(app.outputPath));
+  serverApp.use(webpackMiddlewareInstance);
+  serverApp.use(webpackHotMiddleware(compiler));
+  serverApp.get('*', (req, res) => {
+    res.sendFile(path.join(app.outputPath, req.url));
   });
 }
 
 function runServer(port, servePath) {
-  app.listen(port, localIp, (err) => {
+  serverApp.listen(port, localIp, (err) => {
     if (err) {
       console.log(err);
       return;
@@ -47,26 +47,27 @@ function runServer(port, servePath) {
   });
 }
 
-function launch(webpackOptions) {
-  setupMiddleware(webpackOptions);
-  runServer(webpackOptions.port, webpackOptions.servePath);
+function launch(app) {
+  setupMiddleware(app);
+  runServer(app.port, app.outputPath);
 }
 
-const options = { stage: 'hot', onlyPack: false };
+const options = { stage: 'hot', onlyPack: false, port: settings.hotPort };
 if (appName) {
-  clientApps.buildApp(appName, options, launch);
+  const result = clientApps.buildApp(appName, options);
+  launch(result.app);
 } else if (hotPack) {
   options.onlyPack = true;
-  const webpackConfigs = clientApps.buildApps(options, null);
-  _.each(webpackConfigs, (webpackOptions) => {
+  const results = clientApps.buildApps(options);
+  _.each(results, (result) => {
     setupMiddleware(_.merge({},
-      webpackOptions,
-      {
-        devRelativeOutput: `/${webpackOptions.appName}`
-      }
+      result.app,
+      { publicPath: `/${appName}` }
     ));
   });
-  runServer(settings.hotPort, settings.devOutput);
+  runServer(settings.hotPort, settings.path.devOutput);
 } else {
-  clientApps.buildApps(options, launch);
+  _.each(clientApps.buildApps(options), (result) => {
+    launch(result.app);
+  });
 }

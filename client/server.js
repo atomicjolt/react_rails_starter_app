@@ -4,19 +4,19 @@ const express = require('express');
 
 const settings = require('./config/settings');
 
-const app = express();
+const serverApp = express();
 const argv = require('minimist')(process.argv.slice(2));
 
-const appName = argv._[0];
+const appName = _.trim(argv._[0]);
 
 function launch(servePath, port) {
-  app.use(express.static(servePath));
+  serverApp.use(express.static(servePath));
 
-  app.get('*', (req, res) => {
+  serverApp.get('*', (req, res) => {
     res.sendFile(path.join(servePath, req.url));
   });
 
-  app.listen(port, '0.0.0.0', (err) => {
+  serverApp.listen(port, '0.0.0.0', (err) => {
     if (err) {
       console.log(err);
       return;
@@ -29,9 +29,8 @@ function launch(servePath, port) {
 if (appName) {
   launch(path.join(settings.prodOutput, appName), settings.hotPort);
 } else {
-  let startPort = parseInt(settings.hotPort, 10);
-  _.each(settings.apps, (entry, name) => {
-    launch(path.join(settings.prodOutput, name), startPort);
-    startPort += 1;
+  const options = { stage: 'production', onlyPack: false, port: settings.hotPort };
+  _.each(settings.apps(options), (app) => {
+    launch(app.outputPath, app.port);
   });
 }
