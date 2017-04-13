@@ -1,1 +1,0 @@
-    "<%=@nickname.upcase%>" => { uri: ->(<%=@args.map{|a| "#{a}:"}.join(', ')%>) { "<%=ruby_api_url(@api_url)%>" }, method: "<%=@method%>", parameters: <%=@parameters%> }

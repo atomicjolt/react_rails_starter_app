@@ -1,7 +1,0 @@
-<%=@nickname%>: {
-  type: new GraphQLList(Post),
-  description: "<%=@description%>",
-  resolve: function(context, args) {
-    return canvasRequest(context, args, urls.<%=@nickname.upcase%>);
-  }
-}
