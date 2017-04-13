@@ -58,8 +58,6 @@ public/assets
 # git artifacts
 **.orig
 
-canvas.manifest
-
 # Test artifacts
 rerun.txt
 /coverage/
