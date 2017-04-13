@@ -7,9 +7,6 @@ const _ = require('lodash');
 // are loaded from the env and not from a file
 require('dotenv').load({ path: path.join(__dirname, '../../.env') });
 
-const deployConfig = require('../../.s3-website.json');
-
-
 const hotPort = parseInt(process.env.ASSETS_PORT, 10) || 8080;
 
 const devRelativeOutput  = '/';
@@ -24,7 +21,6 @@ const prodAssetsUrl = ''; // Set this to the url where the assets will be deploy
                           // it could be the ssl version of your S3 bucket ie:
                           // https://s3.amazonaws.com/reactrailsstarterapp.com;
 
-// const prodAssetsUrl = `https://s3.amazonaws.com/${deployConfig.domain}`;
 const devAssetsUrl = process.env.ASSETS_URL;
 
 // Get a list of all directories in the apps directory.
