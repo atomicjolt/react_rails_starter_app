@@ -1,44 +1,73 @@
-var release              = false;
-var express              = require("express");
-var webpack              = require("webpack");
-var webpackMiddleware    = require("webpack-dev-middleware");
-var webpackHotMiddleware = require("webpack-hot-middleware");
-var settings             = require("./config/settings.js");
-var webpackConfig        = require("./config/webpack.config")("development");
-var path                 = require("path");
-var app                  = express();
+const _ = require('lodash');
+const express = require('express');
+const webpack = require('webpack');
+const webpackMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const path = require('path');
+const argv = require('minimist')(process.argv.slice(2));
+const settings = require('./config/settings');
 
-var build                = require("./tools/build");
+const webpackConfigBuilder = require('./config/webpack.config');
+const clientApps = require('./libs/build/apps');
 
-function launch(){
+const serverApp = express();
 
-  var compiler                  = webpack(webpackConfig);
-  var webpackMiddlewareInstance = webpackMiddleware(compiler, {
+const localIp = '0.0.0.0';
+const appName = _.trim(argv._[0]);
+const hotPack = argv.hotPack;
+
+function setupMiddleware(app) {
+
+  const webpackConfig = webpackConfigBuilder(app);
+
+  const compiler = webpack(webpackConfig);
+  const webpackMiddlewareInstance = webpackMiddleware(compiler, {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath,
     watch: true,
-    noInfo: true,
-    headers: { "Access-Control-Allow-Origin": "*" }
+    headers: { 'Access-Control-Allow-Origin': '*' }
   });
 
-  app.use(express.static(settings.devOutput));
-
-  app.use(webpackMiddlewareInstance);
-
-  app.use(webpackHotMiddleware(compiler));
-
-  app.get("*", function response(req, res) {
-    res.sendFile(path.join(settings.devOutput, req.url));
+  serverApp.use(express.static(app.outputPath));
+  serverApp.use(webpackMiddlewareInstance);
+  serverApp.use(webpackHotMiddleware(compiler));
+  serverApp.get('*', (req, res) => {
+    res.sendFile(path.join(app.outputPath, req.url));
   });
+}
 
-  app.listen(settings.hotPort, "0.0.0.0", function(err) {
+function runServer(port, servePath) {
+  serverApp.listen(port, localIp, (err) => {
     if (err) {
       console.log(err);
       return;
     }
-    console.log("Listening on: " + webpackConfig.output.publicPath);
-    console.log("Serving content from: " + settings.devOutput);
+    console.log(`Listening on: http://${localIp}:${port}`);
+    console.log(`Serving content from: ${servePath}`);
   });
 }
 
-build.watch().then(launch);
+function launch(app) {
+  setupMiddleware(app);
+  runServer(app.port, app.outputPath);
+}
+
+const options = { stage: 'hot', onlyPack: false, port: settings.hotPort };
+if (appName) {
+  const result = clientApps.buildApp(appName, options);
+  launch(result.app);
+} else if (hotPack) {
+  options.onlyPack = true;
+  const results = clientApps.buildApps(options);
+  _.each(results, (result) => {
+    setupMiddleware(_.merge({},
+      result.app,
+      { publicPath: `/${appName}` }
+    ));
+  });
+  runServer(settings.hotPort, settings.path.devOutput);
+} else {
+  _.each(clientApps.buildApps(options), (result) => {
+    launch(result.app);
+  });
+}

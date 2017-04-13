@@ -1,10 +1,12 @@
-"use strict";
-
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class Stub extends React.Component{
+export default class Stub extends React.PureComponent {
+  static propTypes = {
+    children: PropTypes.object.isRequired,
+  }
 
-  render(){
+  render() {
     return <div>{this.props.children}</div>;
   }
 }

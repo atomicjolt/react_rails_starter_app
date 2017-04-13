@@ -1,14 +1,12 @@
 # run with:
-# rails new my_app -m ./lti_starter_app/template.rb
-# rails new my_app -m https://raw.githubusercontent.com/atomicjolt/lti_starter_app/master/template.rb
+# rails new my_app -m ./react_rails_starter_app/template.rb
+# rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_rails_starter_app/master/template.rb
 
 require "fileutils"
 require "securerandom"
 
-
-#repo = "git@github.com:atomicjolt/lti_starter_app.git"
-repo = "https://github.com/atomicjolt/lti_starter_app.git"
-#repo = "git@bitbucket.com:atomicjolt/lti_starter_app.git"
+# repo = "git@github.com:atomicjolt/react_rails_starter_app.git"
+repo = "https://github.com/atomicjolt/react_rails_starter_app.git"
 
 # keep track if the initial directory
 @working_dir = destination_root
@@ -38,7 +36,7 @@ end
 
 def gsub_file(path, regexp, *args, &block)
   content = File.read(path).gsub(regexp, *args, &block)
-  File.open(path, 'wb') { |file| file.write(content) }
+  File.open(path, "wb") { |file| file.write(content) }
 end
 
 def ask_with_default(question, color, default)
@@ -49,7 +47,7 @@ def ask_with_default(question, color, default)
 end
 
 def app_dir
-  @working_dir.split('/').last
+  @working_dir.split("/").last
 end
 
 ###########################################################
@@ -62,7 +60,6 @@ git_repo_url
 rails_port = ask_with_default("Port for Rails?", :blue, 3000)
 assets_port = ask_with_default("Port for assets server?", :blue, 8000)
 
-
 ###########################################################
 #
 # Clone and add remote
@@ -72,34 +69,32 @@ run "cd .. && git clone #{repo} #{@working_dir}"   # Replace it with our repo.
 git remote: "set-url origin #{git_repo_url}" if git_repo_specified?
 git remote: "add upstream #{repo}"
 
-
 ###########################################################
 #
 # Database.yml
 #
-inside 'config' do
+inside "config" do
   copy_file "database.example.yml", "database.yml"
 end
-
 
 ###########################################################
 #
 # secrets.yml
 #
-inside 'config' do
+inside "config" do
   copy_file "secrets.example.yml", "secrets.yml"
 
-  gsub_file("secrets.yml", "<Run rake secret to get a value to put here>") do |match|
+  gsub_file("secrets.yml", "<Run rake secret to get a value to put here>") do |_match|
     SecureRandom.hex(64)
   end
 end
-
 
 ###########################################################
 #
 # .env
 #
-create_file '.env' do <<-EOF
+create_file ".env" do
+  <<-EOF
 APP_SUBDOMAIN=#{url_safe_name}
 APP_URL=atomicjolt.xyz
 APP_PORT=#{rails_port}
@@ -107,13 +102,8 @@ ASSETS_SUBDOMAIN=#{url_safe_name}assets
 ASSETS_PORT=#{assets_port}
 ASSETS_URL=https://#{url_safe_name}assets.atomicjolt.xyz
 APP_DEFAULT_CANVAS_URL=https://atomicjolt.instructure.com
-
-# Get developer id and key from canvas
-DEVELOPER_ID=1234
-DEVELOPER_KEY=1234
 EOF
 end
-
 
 ###########################################################
 #
@@ -126,29 +116,26 @@ modify_files << "Gemfile"
 modify_files << ".ruby-gemset"
 
 modify_files.each do |f|
-
-  gsub_file(f, "lti_starter_app") do |match|
+  gsub_file(f, "react_rails_starter_app") do |_match|
     app_name.underscore
   end
 
-  gsub_file(f, "ltistarterapp") do |match|
-    app_name.titleize.gsub(' ', '')
+  gsub_file(f, "reactrailsstarterapp") do |_match|
+    app_name.titleize.gsub(" ", "")
   end
 
-  gsub_file(f, "LtiStarterApp") do |match|
-    app_name.titleize.gsub(' ', '')
+  gsub_file(f, "ReactRailsStarterApp") do |_match|
+    app_name.titleize.gsub(" ", "")
   end
 
-  gsub_file(f, "ltistarterapp") do |match|
+  gsub_file(f, "reactrailsstarterapp") do |_match|
     url_safe_name
   end
 
-  gsub_file(f, "LTI Starter App") do |match|
+  gsub_file(f, "React Starter App") do |_match|
     app_name.titleize
   end
-
 end
-
 
 ###########################################################
 #
@@ -175,13 +162,11 @@ rescue LoadError
   puts "RVM gem is currently unavailable."
 end
 
-
 ###########################################################
 #
 # npm install
 #
 run "cd client && npm install"
-
 
 ###########################################################
 #
@@ -191,15 +176,13 @@ rake("db:create")
 rake("db:schema:load")
 rake("db:seed")
 
-
 ###########################################################
 #
 # Commit changes to git
 #
-git add: '.'
+git add: "."
 git commit: "-a -m 'Initial Project Commit'"
 git push: "origin master" if git_repo_specified?
-
 
 ###########################################################
 #
@@ -210,17 +193,14 @@ puts "*"
 puts "*               Notes                          "
 puts "*"
 
-puts "Assuming you have ngrok installed and want to use foreman start the application by running:"
-puts "foreman start -f Procfile.dev"
+puts "Start application:"
+puts "rails server"
+puts "yarn hot"
 
 if !git_repo_specified?
   puts "To set your git remote repository run:"
   puts "git remote set-url origin [URL_OF_YOUR_GIT_REPOSITORY]"
 end
-
-puts "If you need API access you will need to get a Canvas ID and Secret from your Canvs instance."
-puts "Get keys from here: https://atomicjolt.instructure.com/accounts/1/developer_keys"
-puts "** Replace atomicjolt with your Canvas subdomain"
 
 puts "*                                             *"
 puts "***********************************************"

@@ -23,12 +23,12 @@ class UrlHelper
   end
 
   def self.host_from_instance_guid(url)
-    url = URI.parse(self.ensure_scheme(url))
-    parts = url.host.split('.')
+    url = URI.parse(ensure_scheme(url))
+    parts = url.host.split(".")
     if parts.length > 2
-      parts[1, parts.length].join('.')
+      parts[1, parts.length].join(".")
     else
-      parts.join('.')
+      parts.join(".")
     end
   end
 

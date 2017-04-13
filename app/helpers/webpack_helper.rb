@@ -1,35 +1,27 @@
 module WebpackHelper
 
-  def webpack_bundle_tag(bundle)
-    src =
-      if Rails.configuration.webpack[:use_manifest]
-        manifest = Rails.configuration.webpack[:asset_manifest][bundle]
-        bundle = manifest.instance_of?(Array) ? manifest[0] : manifest
+  def get_src(app_name, chunk_name, kind)
+    if Rails.configuration.webpack[:use_manifest]
+      manifest = Rails.configuration.webpack[:asset_manifest][app_name]
+      "#{Rails.configuration.action_controller.asset_host}/assets/#{manifest[chunk_name][kind]}"
+    else
+      suffix = kind == "js" ? "_bundle.js" : ".css"
+      "#{Rails.application.secrets.assets_url}/#{app_name}/#{chunk_name}#{suffix}"
+    end
+  end
 
-        "#{Rails.configuration.action_controller.asset_host}/assets/#{bundle}"
-      else
-        "#{Rails.application.secrets.assets_url}/#{bundle}_bundle.js"
-      end
-
+  def webpack_bundle_tag(app_name, chunk_name)
+    src = get_src(app_name, chunk_name, "js")
     "<script src='#{src}' type='text/javascript'></script>".html_safe
   end
 
-  def webpack_styles_tag(bundle)
-    src =
-      if Rails.configuration.webpack[:use_manifest]
-        manifest = Rails.configuration.webpack[:asset_manifest][bundle]
-        bundle = manifest.instance_of?(Array) ? manifest[1] : manifest
-
-        "#{Rails.configuration.action_controller.asset_host}/assets/#{bundle}"
-      else
-        "#{Rails.application.secrets.assets_url}/#{bundle}.css"
-      end
+  def webpack_styles_tag(app_name, chunk_name)
+    src = get_src(app_name, chunk_name, "css")
     "<link rel='stylesheet' href='#{src}' type='text/css'>".html_safe
   end
 
-  def webpack_manifest_script
-    return '' unless Rails.configuration.webpack[:use_manifest]
-    javascript_tag "window.webpackBundleManifest = #{Rails.configuration.webpack[:common_manifest].to_json}"
+  def webpack_manifest_script(app_name)
+    javascript_tag "window.webpackBundleManifest = #{Rails.configuration.webpack[:common_manifest][app_name].to_json}"
   end
 
 end

@@ -1,9 +1,9 @@
 # If bundler starts to act up run these commands to start over and clean up:
 # rm -rf ~/.bundle/ ~/.gem/; rm -rf $GEM_HOME/bundler/ $GEM_HOME/cache/bundler/; rm -rf .bundle/; rm -rf vendor/cache/; rm -rf Gemfile.lock
-# rvm gemset empty ltistarterapp
+# rvm gemset empty reactrailsstarterapp
 # bundle install
 
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
@@ -12,27 +12,24 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem "pg"
 
 # UI
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'autoprefixer-rails'
-gem 'non-stupid-digest-assets' # also compile assets without digest (fixes font problem)
+gem "autoprefixer-rails"
+gem "non-stupid-digest-assets" # also compile assets without digest (fixes font problem)
+gem "sass-rails"
+gem "uglifier"
 
 # authentication, authorization, integrations
-gem 'devise'
-gem 'omniauth'
-gem 'omniauth-canvas'
-gem 'oauth', '~> 0.5.0'
-gem 'ims-lti', '~> 1.1.13' # IMS LTI tool consumers and providers
-gem 'cancancan'
-gem 'rolify'
-gem 'attr_encrypted'
-gem 'jwt', '~> 1.5.0' # json web token
+gem "attr_encrypted"
+gem "cancancan"
+gem "devise"
+gem "jwt", "~> 1.5.0" # json web token
+gem "oauth", "~> 0.5.0"
+gem "omniauth"
 
 # Email
-gem 'sendgrid'
+gem "sendgrid"
 
 # JSON parser
-gem 'yajl-ruby', require: 'yajl'
+gem "yajl-ruby", require: "yajl"
 
 # server
 gem 'puma', '~> 3.0'
@@ -40,16 +37,28 @@ gem 'puma', '~> 3.0'
 #gem 'unicorn-rails'
 
 # Used for deploying to Heroku. Can be removed if not deploying to Heroku.
-gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
+gem "heroku_secrets", git: "https://github.com/alexpeattie/heroku_secrets.git"
 
 # API Related
-gem 'httparty'
-gem 'rack-cors', :require => 'rack/cors'
+gem "httparty"
+gem "rack-cors", require: "rack/cors"
 
 # Paging
-gem 'will_paginate'
+gem "will_paginate"
 
 group :development do
+  gem "better_errors"
+  gem "binding_of_caller", platforms: [:mri_21]
+  gem "hub", require: nil
+  gem "mailcatcher"
+  gem "mail_view"
+  gem "quiet_assets"
+  gem "rails_apps_pages"
+  gem "rails_apps_testing"
+  gem "rails_layout"
+  gem "rb-fchange", require: false
+  gem "rb-fsevent", require: false
+  gem "rb-inotify", require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
@@ -65,23 +74,25 @@ end
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem "coveralls", require: false
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem "rubocop"
 end
 
 group :test do
-  gem 'capybara'
-  gem 'database_cleaner'
-  gem 'launchy'
-  gem 'selenium-webdriver'
-  gem 'shoulda-matchers'
-  gem 'webmock'
+  gem "capybara"
+  gem "database_cleaner"
+  gem "launchy"
+  gem "selenium-webdriver"
+  gem "shoulda-matchers"
+  gem "webmock"
 end
 
 group :production do
-  gem 'rails_12factor'
+  gem "rails_12factor"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

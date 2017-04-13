@@ -1,0 +1,59 @@
+---
+ecmaFeatures:
+  jsx: true
+  modules: true
+env:
+  browser: true
+  es6: true
+extends: airbnb
+parser: babel-eslint
+plugins:
+  - react
+  - jsx-a11y
+  - import
+globals:
+  describe: false
+  beforeEach: false
+  afterEach: false
+  it: false
+  expect: false
+  xit: false
+  spyOn: false
+  jasmine: false
+  module: false
+  __DEV__: false
+rules:
+  linebreak-style:
+    - error
+    - unix
+  import/no-unresolved: 0
+  no-multi-spaces:
+    - 1
+    - exceptions:
+        VariableDeclarator: true
+        ImportDeclaration: true
+        AssignmentExpression: true
+  comma-dangle:
+    - error
+    - only-multiline
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies: true
+  padded-blocks: 0
+  key-spacing: 0
+  react/require-default-props: 0
+  jsx-a11y/no-static-element-interactions: 0
+  space-before-function-paren:
+    - 2
+    - never
+  func-names:
+    - 2
+    - as-needed
+  react/prefer-stateless-function:
+    - 2
+    - ignorePureComponents: true
+  react/forbid-prop-types:
+    - 2
+    - forbid:
+      - any
+  import/extensions: 0

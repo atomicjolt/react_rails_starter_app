@@ -3,12 +3,12 @@ Rails.application.configure do
 
   config.generators do |g|
     g.test_framework :rspec,
-      fixtures: true,
-      view_specs: false,
-      helper_specs: false,
-      routing_specs: false,
-      controller_specs: false,
-      request_specs: false
+                     fixtures: true,
+                     view_specs: false,
+                     helper_specs: false,
+                     routing_specs: false,
+                     controller_specs: false,
+                     request_specs: false
     g.fixture_replacement :factory_girl, dir: "spec/factories"
   end
 
@@ -40,17 +40,19 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: Rails.application.secrets.domain_name,
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: Rails.application.secrets.email_provider_username,
-    password: Rails.application.secrets.email_provider_password
-  }
+  # Example action_mailer config
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   domain: Rails.application.secrets.domain_name,
+  #   authentication: "plain",
+  #   enable_starttls_auto: true,
+  #   user_name: Rails.application.secrets.email_provider_username,
+  #   password: Rails.application.secrets.email_provider_password
+  # }
+
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: "localhost:#{ENV['APP_PORT']}" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false

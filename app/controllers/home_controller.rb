@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
 
-  def index
-  end
+  layout "client"
+
+  def index; end
 
 end

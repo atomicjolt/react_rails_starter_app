@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module LtiStarterApp
+module ReactRailsStarterApp
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -23,20 +23,20 @@ module LtiStarterApp
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
     config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'ALLOWALL'
+      "X-Frame-Options" => "ALLOWALL",
     }
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
+        origins "*"
+        resource "*", headers: :any, methods: [:get, :post, :options]
       end
     end
 
     config.webpack = {
-     use_manifest: false,
-     asset_manifest: {},
-     common_manifest: {}
+      use_manifest: false,
+      asset_manifest: {},
+      common_manifest: {},
     }
 
   end

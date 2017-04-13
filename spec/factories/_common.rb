@@ -1,9 +1,4 @@
 FactoryGirl.define do
-
-  sequence :lti_key do |n|
-    "lti_key_#{n}"
-  end
-
   sequence :domain do |n|
     "www.example#{n}.com"
   end
@@ -47,5 +42,4 @@ FactoryGirl.define do
   sequence :address do |n|
     "#{n} West #{n} South"
   end
-
 end

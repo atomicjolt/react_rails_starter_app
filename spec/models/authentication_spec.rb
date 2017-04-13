@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Authentication, type: :model do
   it { should belong_to :user }

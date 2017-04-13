@@ -1,6 +1,0 @@
-# To run:
-# foreman start -f Procfile.ngrok
-
-# ngrok 2.0
-ngrok_start: ngrok start --none
-ngrok_init: ruby ./ngrok.rb

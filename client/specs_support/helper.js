@@ -1,91 +1,79 @@
-"use strict";
+import _ from 'lodash';
+import { combineReducers } from 'redux';
 
-import _                  from "lodash";
+import API from '../libs/middleware/api';
+import settings from '../libs/reducers/settings';
+import configureStore from '../libs/store/configure_store';
 
-import configureStore     from "../js/store/configure_store";
-
-export default class Helper{
+export default class Helper {
 
   // Create a fake store for testing
   static mockStore(state) {
     return {
       subscribe: () => {},
       dispatch: () => {},
-      getState: () => {
-        return {...state};
-      }
+      getState: () => ({ ...state })
     };
   }
 
   // Create a real store that can be used for testing
-  static makeStore(settings){
-    var initialSettings = _.assign({
-      jwt: "jwt_token",
-      csrf: "csrf_token",
-      apiUrl: "http://www.example.com"
-    }, settings);
-
-    return configureStore({
-      settings: initialSettings
+  static makeStore(initial) {
+    const initialState = {
+      settings: _.assign({
+        csrf: 'csrf_token',
+        apiUrl: 'http://www.example.com'
+      }, initial)
+    };
+    const rootReducer = combineReducers({
+      settings,
     });
+    const middleware = [API];
+    return configureStore(initialState, rootReducer, middleware);
   }
 
-  static stubAjax(){
+  static testPayload() {
+    return JSON.stringify([{
+      id: 1,
+      name: 'Starter App'
+    }]);
+  }
 
-    beforeEach(function(){
+  static stubAjax() {
+    beforeEach(() => {
       jasmine.Ajax.install();
 
-      // Stub request to load problems
-      var accounts_payload = JSON.stringify([{
-        "id":1,
-        "name":"Starter App",
-        "domain":"bfcoderServer.ngrok.io",
-        "code":"bfcoderServer"
-      }]);
-
       jasmine.Ajax.stubRequest(
-        RegExp('.*/?type=.+')
-      ).andReturn({
-        "status": 200,
-        "contentType": "json",
-        "statusText": "OK",
-        "responseText": accounts_payload
-      });
-
-      jasmine.Ajax.stubRequest(
-        RegExp('.*/api/accounts/')
-      ).andReturn({
-        "status": 200,
-        "contentType": "json",
-        "statusText": "OK",
-        "responseText": accounts_payload
-      });
-
-      jasmine.Ajax.stubRequest(
-          RegExp('.*/api/accounts/')
+          RegExp('.*/api/test')
         ).andReturn({
-          "status": 200,
-          "contentType": "json",
-          "statusText": "OK",
-          "responseText": accounts_payload
+          status: 200,
+          contentType: 'application/json',
+          statusText: 'OK',
+          responseText: Helper.testPayload()
+        });
+
+      jasmine.Ajax.stubRequest(
+          RegExp('.*/api/test/.+')
+        ).andReturn({
+          status: 200,
+          contentType: 'application/json',
+          statusText: 'OK',
+          responseText: Helper.testPayload()
         });
     });
 
-    afterEach(function(){
+    afterEach(() => {
       jasmine.Ajax.uninstall();
     });
   }
 
-  static mockClock(){
-
-    beforeEach(function(){
+  static mockClock() {
+    beforeEach(() => {
       jasmine.clock().install(); // Mock out the built in timers
     });
 
-    afterEach(function(){
+    afterEach(() => {
       jasmine.clock().uninstall();
     });
-
   }
 
 }

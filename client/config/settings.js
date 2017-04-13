@@ -1,48 +1,145 @@
-var info      = require('../package.json');
-var path      = require('path');
-
-var clientAppPath = path.join(__dirname, '../');
-
-var devRelativeOutput     = '/';
-var prodRelativeOutput    = '/assets/';
-
-var devOutput     = path.join(__dirname, '../../build/dev', devRelativeOutput);
-var prodOutput    = path.join(__dirname, '../../public', prodRelativeOutput);
+const fs = require('fs-extra');
+const path = require('path');
+const _ = require('lodash');
 
 // There is a warning if the .env file is missing
 // This is fine in a production setting, where settings
 // are loaded from the env and not from a file
-require('dotenv').load({path: path.join(__dirname, '../../.env')});
+require('dotenv').load({ path: path.join(__dirname, '../../.env') });
 
-var hotPort = process.env.ASSETS_PORT || 8080;
+const deployConfig = require('../../.s3-website.json');
 
-module.exports = {
-  title: info.title,
-  author: info.author,
-  version: info.versions,
-  build: Date.now(),
 
-  devRelativeOutput: devRelativeOutput,
-  prodRelativeOutput: prodRelativeOutput,
+const hotPort = parseInt(process.env.ASSETS_PORT, 10) || 8080;
 
-  devOutput: devOutput,
-  prodOutput: prodOutput,
+const devRelativeOutput  = '/';
+const prodRelativeOutput = '/assets/';
 
-  // Dev urls
-  devAssetsUrl: process.env.ASSETS_URL || '',
+const devOutput  = path.join(__dirname, '../../build/dev', devRelativeOutput);
+const prodOutput = path.join(__dirname, '../../public', prodRelativeOutput);
 
-  hotPort: hotPort,
+const prodAssetsUrl = ''; // Set this to the url where the assets will be deployed.
+                          // If you want the paths to be relative to the deploy then leave this
+                          // value as an empty string. This value could also be a CDN or
+                          // it could be the ssl version of your S3 bucket ie:
+                          // https://s3.amazonaws.com/reactrailsstarterapp.com;
 
-  buildSuffix: '_bundle.js',
+// const prodAssetsUrl = `https://s3.amazonaws.com/${deployConfig.domain}`;
+const devAssetsUrl = process.env.ASSETS_URL;
 
-  staticDir: clientAppPath + 'static',
+// Get a list of all directories in the apps directory.
+// These will be used to generate the entries for webpack
+const appsDir = path.join(__dirname, '../apps/');
 
-  entries: {
-    app: clientAppPath + 'js/app.jsx'
-  },
+const buildSuffix = '_bundle.js';
 
-  cssEntries: {
-    styles: clientAppPath + 'styles/styles.js'
+const htmlOptions = { // Options for building html files
+  truncateSummaryAt: 1000,
+  buildExtensions: ['.html', '.htm', '.md', '.markdown'], // file types to build (others will just be copied)
+  markdownExtensions: ['.md', '.markdown'], // file types to process markdown
+};
+
+// -----------------------------------------------------------------------------
+// Main paths for the application. Includes production and development paths.
+// -----------------------------------------------------------------------------
+const paths = {
+  devRelativeOutput,
+  prodRelativeOutput,
+  devOutput,
+  prodOutput,
+  prodAssetsUrl,
+  devAssetsUrl,
+  appsDir,
+};
+
+// -----------------------------------------------------------------------------
+// Helper function to generate full template paths for the given app
+// -----------------------------------------------------------------------------
+function templateDirs(app, dirs) {
+  return _.map(dirs, templateDir => path.join(app.htmlPath, templateDir));
+}
+
+// -----------------------------------------------------------------------------
+// Helper to determine if we should do a production build or not
+// -----------------------------------------------------------------------------
+function isProduction(stage) {
+  return stage === 'production' || stage === 'staging';
+}
+
+// -----------------------------------------------------------------------------
+// Generates the main paths used for output
+// -----------------------------------------------------------------------------
+function outputPaths(name, port, options) {
+
+  let rootOutputPath = devOutput;
+  let outputPath = options.onlyPack ?
+    devOutput : path.join(devOutput, name);
+  // Public path indicates where the assets will be served from. In dev this will likely be
+  // localhost or a local domain. In production this could be a CDN. In developerment this will
+  // point to whatever public url is serving dev assets.
+  let publicPath = `${devAssetsUrl}:${port}${devRelativeOutput}`;
+
+  if (isProduction(options.stage)) {
+    rootOutputPath = prodOutput;
+    outputPath = options.onlyPack ?
+      prodOutput : path.join(prodOutput, name);
+    publicPath = prodAssetsUrl + prodRelativeOutput;
   }
 
+  return {
+    rootOutputPath,
+    outputPath,
+    publicPath
+  };
+}
+
+// -----------------------------------------------------------------------------
+// Generate all settings needed for a given application
+// -----------------------------------------------------------------------------
+function appSettings(name, port, options) {
+
+  const appPath = path.join(appsDir, name);
+  const htmlPath = path.join(appPath, 'html');
+  const staticPath = path.join(appPath, 'static');
+
+  const app = _.merge({
+    name,
+    path: appPath,
+    file: 'app.jsx',
+    htmlPath,
+    staticPath,
+    templateData: {}, // Object that will be passed to every page as it is rendered
+    templateMap: {}, // Used to specify specific templates on a per file basis
+    stage: options.stage,
+    buildSuffix,
+    port,
+    production: isProduction(options.stage),
+    htmlOptions,
+  }, outputPaths(name, port, options));
+
+  app.templateDirs = templateDirs(app, ['layouts']);
+  return {
+    [name] : app
+  };
+}
+
+// -----------------------------------------------------------------------------
+// Generates an app setting for all applications found in the client directory
+// -----------------------------------------------------------------------------
+function apps(options) {
+  let port = options.port;
+  return fs.readdirSync(appsDir)
+    .filter(file => fs.statSync(path.join(appsDir, file)).isDirectory())
+    .reduce((result, appName) => {
+      const app = appSettings(appName, port, options);
+      port = options.appPerPort ? port + 1 : options.port;
+      return _.merge(result, app);
+    }, {});
+}
+
+module.exports = {
+  paths,
+  hotPort,
+  outputPaths,
+  apps
 };
