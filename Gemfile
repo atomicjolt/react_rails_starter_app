@@ -5,8 +5,8 @@
 
 source "https://rubygems.org"
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+# Bundle edge Rails instead: gem "rails", github: "rails/rails"
+gem "rails", "5.0.2"
 
 # Database
 gem "pg"
@@ -32,9 +32,9 @@ gem "sendgrid"
 gem "yajl-ruby", require: "yajl"
 
 # server
-gem 'puma', '~> 3.0'
-#gem 'unicorn'
-#gem 'unicorn-rails'
+gem "puma"
+# gem "unicorn"
+# gem "unicorn-rails"
 
 # Used for deploying to Heroku. Can be removed if not deploying to Heroku.
 gem "heroku_secrets", git: "https://github.com/alexpeattie/heroku_secrets.git"
@@ -50,9 +50,7 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller", platforms: [:mri_21]
   gem "hub", require: nil
-  gem "mailcatcher"
   gem "mail_view"
-  gem "quiet_assets"
   gem "rails_apps_pages"
   gem "rails_apps_testing"
   gem "rails_layout"
@@ -60,25 +58,20 @@ group :development do
   gem "rb-fsevent", require: false
   gem "rb-inotify", require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console'
-  gem 'listen', '~> 3.0.5'
+  gem "listen"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'better_errors'      # Modifies default Rails error page to be more useful
-  gem 'binding_of_caller'  # Used by better_errors gem
-  gem 'guard-bundler'
-  gem 'guard-rails'
-  gem 'guard-rspec'
+  gem "spring"
+  gem "spring-watcher-listen"
+  gem "web-console"
 end
 
 group :development, :test do
-  gem 'byebug', platform: :mri
+  gem "byebug", platform: :mri
   gem "coveralls", require: false
-  gem 'dotenv-rails'
-  gem 'factory_girl_rails'
-  gem 'faker'
-  gem 'rspec-rails'
+  gem "dotenv-rails"
+  gem "factory_girl_rails"
+  gem "faker"
+  gem "rspec-rails"
   gem "rubocop"
 end
 
@@ -94,6 +87,3 @@ end
 group :production do
   gem "rails_12factor"
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
