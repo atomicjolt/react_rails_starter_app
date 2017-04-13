@@ -38,8 +38,6 @@ gem "yajl-ruby", require: "yajl"
 
 # server
 gem "puma"
-# gem "unicorn"
-# gem "unicorn-rails"
 
 # Used for deploying to Heroku. Can be removed if not deploying to Heroku.
 gem "heroku_secrets", git: "https://github.com/alexpeattie/heroku_secrets.git"

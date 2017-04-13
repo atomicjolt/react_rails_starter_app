@@ -1,10 +1,3 @@
-class CustomDomain
-  def matches?(request)
-    return false if request.subdomain.length <= 0 || request.subdomain == "www"
-    true
-  end
-end
-
 Rails.application.routes.draw do
   root to: "home#index"
 
@@ -24,8 +17,6 @@ Rails.application.routes.draw do
   end
 
   resources :users
-
-  resources :admin, only: [:index]
 
   namespace :api do
     resources :jwts
