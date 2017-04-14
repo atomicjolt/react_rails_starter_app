@@ -54,11 +54,12 @@ class User < ApplicationRecord
   end
 
   def setup_authentication(auth)
+    provider_url = UrlHelper.scheme_host_port(auth["info"]["url"])
     attributes = {
       uid: auth["uid"].to_s,
       username: auth["info"]["nickname"],
       provider: auth["provider"],
-      provider_url: UrlHelper.scheme_host(auth["info"]["url"]),
+      provider_url: provider_url,
       json_response: auth.to_json,
     }
     if credentials = auth["credentials"]
@@ -68,7 +69,7 @@ class User < ApplicationRecord
       attributes[:refresh_token] = credentials["refresh_token"] if credentials["refresh_token"]
     end
     if persisted? &&
-        authentication = authentications.where({ provider: auth["provider"], provider_url: auth["info"]["url"] }).first
+        authentication = authentications.where({ provider: auth["provider"], provider_url: provider_url }).first
       authentication.update_attributes!(attributes)
     else
       authentications.build(attributes)
