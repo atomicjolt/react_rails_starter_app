@@ -1,5 +1,5 @@
-import wrapper from '../../../libs/constants/wrapper';
-import Network from '../../../libs/constants/network';
+import wrapper from '../constants/wrapper';
+import Network from '../constants/network';
 
 // Local actions
 const actions = [];
