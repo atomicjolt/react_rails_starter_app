@@ -62,7 +62,7 @@ if (appName) {
   _.each(results, (result) => {
     setupMiddleware(_.merge({},
       result.app,
-      { publicPath: `/${appName}` }
+      { publicPath: `/${result.app.name}` }
     ));
   });
   runServer(settings.hotPort, settings.path.devOutput);
