@@ -5,10 +5,6 @@ This is the one created by, maintained by and used by [Atomic Jolt](http://www.a
 Atomic Jolt uses this as application as a starting place for Ruby on Rails applications that
 utilize React.
 
-#Demo:
------------------------
-[React Client Starter App Demo](http://reactclientstarterapp.com.s3-website-us-east-1.amazonaws.com)
-
 ## Build a new application using the React Rails Starter App Rails application template:
 -----------
 rails new my_app -m https://raw.githubusercontent.com/atomicjolt/react_rails_starter_app/master/template.rb
@@ -150,10 +146,7 @@ Files added to the static directory will be copied directly into the build. Thes
 #### Tests
 -----------
 Karma and Jasmine are used for testing. To run tests run:
-
-
   `yarn test`
-
 
 #### Check for updates
 -----------
@@ -162,9 +155,9 @@ Inside the client directory run:
   `yarn upgrade-interactive`
 
 
-## Scripts:
+#### Scripts:
 -----------------------
-The following scripts are available for testing, building and deploying applications
+The following scripts are available for testing and building client applications
 
 Run all tests:
   `yarn test`
@@ -204,9 +197,6 @@ Release a production build to the S3 website bucket created by `yarn create`
 Run a linter over the project:
   `yarn lint`
 
-
-#Deploy to S3:
------------------------
 ## Deployment
 -----------
 
@@ -224,15 +214,6 @@ Deploy to Heroku:
 ```
 $ git push heroku master
 ```
-
-### Other Services
------------
-By default `config/unicorn.rb` is setup to deploy to Heroku. Open that file, comment out the Heroku section and uncomment the other configuration to setup unicorn for deployment to another service like AWS.
-
-## Examples
-
-Atomic Jolt has built a number of applications based on this source.
-
 
 ## Database
 -----------
