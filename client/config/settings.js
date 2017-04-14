@@ -86,6 +86,10 @@ function outputPaths(name, port, options) {
     publicPath = prodAssetsUrl + prodRelativeOutput;
   }
 
+  if (options.hotPack) {
+    publicPath = `${publicPath}/${name}`;
+  }
+
   return {
     rootOutputPath,
     outputPath,
