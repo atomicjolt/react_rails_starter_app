@@ -1,4 +1,3 @@
-const path      = require('path');
 const fs        = require('fs-extra');
 const webpack   = require('webpack');
 const nodeWatch = require('node-watch');
