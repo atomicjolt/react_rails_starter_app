@@ -132,17 +132,24 @@ function appSettings(name, port, options) {
 }
 
 // -----------------------------------------------------------------------------
-// Generates an app setting for all applications found in the client directory
+// Iterate a given directory to generate app or webpack settings
 // -----------------------------------------------------------------------------
-function apps(options) {
+function iterateDirAndPorts(dir, options, cb) {
   let port = options.port;
-  return fs.readdirSync(appsDir)
-    .filter(file => fs.statSync(path.join(appsDir, file)).isDirectory())
+  return fs.readdirSync(dir)
+    .filter(file => fs.statSync(path.join(dir, file)).isDirectory())
     .reduce((result, appName) => {
-      const app = appSettings(appName, port, options);
+      const app = cb(appName, port, options);
       port = options.appPerPort ? port + 1 : options.port;
       return _.merge(result, app);
     }, {});
+}
+
+// -----------------------------------------------------------------------------
+// Generates an app setting for all applications found in the client directory
+// -----------------------------------------------------------------------------
+function apps(options) {
+  return iterateDirAndPorts(appsDir, options, appSettings);
 }
 
 module.exports = {
