@@ -96,7 +96,7 @@ function outputPaths(name, port, options) {
 // -----------------------------------------------------------------------------
 // Generate settings needed for webpack
 // -----------------------------------------------------------------------------
-function webpackSettings(file, appPath, port, options) {
+function webpackSettings(name, file, appPath, port, options) {
   return _.merge({
     name,
     file,
@@ -123,7 +123,7 @@ function appSettings(name, port, options) {
     templateData: {}, // Object that will be passed to every page as it is rendered
     templateMap: {}, // Used to specify specific templates on a per file basis
     htmlOptions,
-  }, webpackSettings('app.jsx', appPath, port, options));
+  }, webpackSettings(name, 'app.jsx', appPath, port, options));
 
   app.templateDirs = templateDirs(app, ['layouts']);
   return {
