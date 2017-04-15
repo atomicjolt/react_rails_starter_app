@@ -104,6 +104,7 @@ function webpackSettings(file, appPath, port, options) {
     stage: options.stage,
     production: isProduction(options.stage),
     buildSuffix,
+    port,
   }, outputPaths(name, port, options));
 }
 
@@ -121,7 +122,6 @@ function appSettings(name, port, options) {
     staticPath,
     templateData: {}, // Object that will be passed to every page as it is rendered
     templateMap: {}, // Used to specify specific templates on a per file basis
-    port,
     htmlOptions,
   }, webpackSettings('app.jsx', appPath, port, options));
 
