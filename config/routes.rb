@@ -22,5 +22,4 @@ Rails.application.routes.draw do
     resources :jwts
   end
 
-  mount MailPreview => "mail_view" if Rails.env.development?
 end
