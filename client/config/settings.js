@@ -102,6 +102,7 @@ function webpackSettings(name, file, appPath, port, options) {
     name,
     file,
     path: appPath,
+    shouldLint: options.shouldLint,
     stage: options.stage,
     production: isProduction(options.stage),
     buildSuffix,
