@@ -43,8 +43,7 @@ Rename `config/secrets.example.yml` to `config/secrets.yml`. Open the file and c
 
 *This file should not be committed to your repository.*
 
-You will need to [request a Key ID and Secret from the desired provider](#developer_key). You will also
-need to setup a default account and provide that account's "code" for the "application_code" entry in secrets.yml. See the [seeds](#seeds) section below for information on setting up the default account.
+You will need to [request a Key ID and Secret from the desired provider](#developer_key).
 
 ### Project Dependencies
 -----------
