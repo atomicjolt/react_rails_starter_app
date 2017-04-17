@@ -40,6 +40,9 @@ module.exports = function webpackConfig(app) {
   const babelLoader = `babel-loader?${babelPlugins}&${presets}`;
 
   const jsLoaders = [babelLoader];
+  if (app.shouldLint) {
+    jsLoaders.push('atomic-lint-loader');
+  }
 
   const cssLoaders = ['css-loader?importLoaders=1', 'postcss-loader'];
 
