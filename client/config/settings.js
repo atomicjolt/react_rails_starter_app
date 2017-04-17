@@ -25,7 +25,8 @@ const prodOutput = path.join(__dirname, '../../build/prod', prodRelativeOutput);
                           // https://s3.amazonaws.com/' + deployConfig.domain;
 
 const prodAssetsUrl = `https://s3.amazonaws.com/${deployConfig.domain}`;
-const devAssetsUrl = process.env.ASSETS_URL;
+
+const devAssetsUrl = `${process.env.ASSETS_URL}:${hotPort}`;
 
 // Get a list of all directories in the apps directory.
 // These will be used to generate the entries for webpack
@@ -77,7 +78,7 @@ function outputPaths(name, port, options) {
   // Public path indicates where the assets will be served from. In dev this will likely be
   // localhost or a local domain. In production this could be a CDN. In developerment this will
   // point to whatever public url is serving dev assets.
-  let publicPath = `${devAssetsUrl}:${port}${options.hotPack ? `/${name}` : ''}${devRelativeOutput}`;
+  let publicPath = `${devAssetsUrl}${devRelativeOutput}`;
 
   if (isProduction(options.stage)) {
     rootOutputPath = prodOutput;
