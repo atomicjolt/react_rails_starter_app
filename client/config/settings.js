@@ -23,7 +23,7 @@ const prodAssetsUrl = ''; // Set this to the url where the assets will be deploy
 
 // const prodAssetsUrl = `https://s3.amazonaws.com/${deployConfig.domain}`;
 
-const devAssetsUrl = `${process.env.ASSETS_URL}:${hotPort}`;
+const devAssetsUrl = process.env.ASSETS_URL;
 
 // Get a list of all directories in the apps directory.
 // These will be used to generate the entries for webpack
