@@ -172,7 +172,7 @@ run "yarn"
 # Initialize the database
 #
 rake("db:create")
-rake("db:schema:load")
+rake("db:setup")
 rake("db:seed")
 
 ###########################################################
