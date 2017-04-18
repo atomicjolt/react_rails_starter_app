@@ -151,7 +151,6 @@ begin
     RVM.gemset_use! url_safe_name
 
     run "gem install bundler"
-    run "gem install foreman"
     run "bundle install"
 
   rescue => ex
