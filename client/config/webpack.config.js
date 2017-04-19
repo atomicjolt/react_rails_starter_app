@@ -96,11 +96,16 @@ module.exports = function webpackConfig(app) {
       new webpack.NoEmitOnErrorsPlugin(),
       extractCSS
     ]);
-  } else {
+  } else if (app.stage === 'development') {
     plugins = _.concat(plugins, [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
       extractCSS
     ]);
+  } else {
+    plugins = [
+      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
+      extractCSS
+    ];
   }
 
   const rules = [
