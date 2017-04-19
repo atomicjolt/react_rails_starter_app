@@ -118,6 +118,7 @@ function build(app) {
       const pages = buildHtml(app, webpackAssets);
 
       resolve({
+        app,
         webpackConfig : packResults.webpackConfig,
         webpackAssets,
         pages,
