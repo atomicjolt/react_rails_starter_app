@@ -97,10 +97,10 @@ module.exports = function webpackConfig(app) {
       extractCSS
     ]);
   } else {
-    plugins = [
+    plugins = _.concat(plugins, [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
       extractCSS
-    ];
+    ]);
   }
 
   const rules = [
