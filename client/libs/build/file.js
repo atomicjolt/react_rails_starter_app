@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs-extra');
 
+const log = require('./log');
+
 // -----------------------------------------------------------------------------
 // main build
 // -----------------------------------------------------------------------------
@@ -18,7 +20,7 @@ function makeOutputFilePath(filePath, cb) {
 function write(outFilePath, content) {
   return makeOutputFilePath(outFilePath, () => {
     fs.writeFile(outFilePath, content, (err) => {
-      if (err) { console.error(err); }
+      if (err) { log.error(err); }
     });
   });
 }
@@ -29,7 +31,7 @@ function write(outFilePath, content) {
 function copy(src, dest) {
   return makeOutputFilePath(dest, () => {
     fs.copy(src, dest, (err) => {
-      if (err) { console.error(err); }
+      if (err) { log.error(err); }
     });
   });
 }

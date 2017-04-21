@@ -4,6 +4,7 @@ const nodeWatch = require('node-watch');
 
 const content = require('./content');
 const webpackUtils = require('./webpack_utils');
+const log = require('./log');
 
 // Settings
 const webpackConfigBuilder = require('../../config/webpack.config');
@@ -17,10 +18,10 @@ function buildWebpackEntries(app) {
     const bundler = webpack(webpackConfig);
     const bundle = (err, stats) => {
       if (err) {
-        console.error('webpack error', err);
+        log.error('webpack error', err);
         reject(err);
       }
-      // console.log('webpack', stats.toString({ colors: true }));
+      // log.out('webpack', stats.toString({ colors: true }));
       resolve({
         webpackConfig,
         webpackStats: stats.toJson()
@@ -35,7 +36,7 @@ function buildWebpackEntries(app) {
 // -----------------------------------------------------------------------------
 function buildStatic(app) {
   try {
-    console.log(`Copying static files in ${app.staticPath}`);
+    log.out(`Copying static files in ${app.staticPath}`);
     fs.copy(app.staticPath, app.outputPath);
   } catch (err) {
     // No static dir. Do nothing
@@ -47,9 +48,9 @@ function buildStatic(app) {
 // Used to copy over static files if they change
 // -----------------------------------------------------------------------------
 function watchStatic(app) {
-  console.log(`Watching static files in ${app.staticPath}`);
+  log.out(`Watching static files in ${app.staticPath}`);
   nodeWatch(app.staticPath, { recursive: true }, (evt, filePath) => {
-    console.log(`Change in static file ${filePath}`);
+    log.out(`Change in static file ${filePath}`);
     fs.copySync(filePath, app.outputPath);
   });
 }
@@ -59,9 +60,9 @@ function watchStatic(app) {
 // Used to rebuild html or templates if files change.
 // -----------------------------------------------------------------------------
 function watchHtml(webpackAssets, app) {
-  console.log(`Watching html files in ${app.htmlPath}`);
+  log.out(`Watching html files in ${app.htmlPath}`);
   nodeWatch(app.htmlPath, { recursive: true }, (evt, fullInputPath) => {
-    console.log(`Change in html file ${fullInputPath}`);
+    log.out(`Change in html file ${fullInputPath}`);
     content.writeContent(
       app.htmlPath,
       fullInputPath,
@@ -98,13 +99,13 @@ function build(app) {
     }
 
     // Webpack build
-    console.log(`Webpacking ${app.name}`);
+    log.out(`Webpacking ${app.name}`);
 
     buildWebpackEntries(app).then((packResults) => {
       const webpackAssets = webpackUtils.loadWebpackAssets(app, packResults);
 
       // Build html
-      console.log(`Building html for ${app.name}`);
+      log.out(`Building html for ${app.name}`);
       const pages = buildHtml(app, webpackAssets);
 
       resolve({
