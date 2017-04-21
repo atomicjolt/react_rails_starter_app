@@ -69,7 +69,7 @@ if (appName) {
   const results = clientApps.buildApps(options);
   const apps = _.map(results, result => result.app);
   const promises = _.map(results, result => result.buildPromise);
-  Promise.all(promises, () => {
+  Promise.all(promises).then(() => {
     setupMiddleware(apps);
     runServer(settings.hotPort, settings.paths.devOutput);
   });
