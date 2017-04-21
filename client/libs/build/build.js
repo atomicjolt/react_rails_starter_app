@@ -17,7 +17,7 @@ function buildWebpackEntries(app) {
     const bundler = webpack(webpackConfig);
     const bundle = (err, stats) => {
       if (err) {
-        console.log('webpack error', err);
+        console.error('webpack error', err);
         reject(err);
       }
       // console.log('webpack', stats.toString({ colors: true }));

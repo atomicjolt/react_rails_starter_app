@@ -18,7 +18,7 @@ function makeOutputFilePath(filePath, cb) {
 function write(outFilePath, content) {
   return makeOutputFilePath(outFilePath, () => {
     fs.writeFile(outFilePath, content, (err) => {
-      if (err) { console.log(err); }
+      if (err) { console.error(err); }
     });
   });
 }
@@ -29,7 +29,7 @@ function write(outFilePath, content) {
 function copy(src, dest) {
   return makeOutputFilePath(dest, () => {
     fs.copy(src, dest, (err) => {
-      if (err) { console.log(err); }
+      if (err) { console.error(err); }
     });
   });
 }
