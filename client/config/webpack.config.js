@@ -63,7 +63,14 @@ module.exports = function webpackConfig(app) {
     new webpack.optimize.CommonsChunkPlugin({
       name: `${app.name}_manifest`,
       minChunks: Infinity
-    })
+    }),
+    // Generate webpack-assets.json to map path to assets generated with hashed names
+    new AssetsPlugin({
+      path: app.outputPath,
+      fullPath: false,
+      filename: `${app.name}-webpack-assets.json`
+    }),
+    extractCSS
   ];
 
   if (app.production) {
@@ -80,26 +87,17 @@ module.exports = function webpackConfig(app) {
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         openAnalyzer: false
-      }),
-      // Generate webpack-assets.json to map path to assets generated with hashed names
-      new AssetsPlugin({
-        path: app.outputPath,
-        fullPath: false,
-        filename: `${app.name}-webpack-assets.json`
-      }),
-      extractCSS
+      })
     ]);
   } else if (app.stage === 'hot') {
     plugins = _.concat(plugins, [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoEmitOnErrorsPlugin(),
-      extractCSS
+      new webpack.NoEmitOnErrorsPlugin()
     ]);
   } else if (app.stage === 'development') {
     plugins = _.concat(plugins, [
-      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
-      extractCSS
+      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true })
     ]);
   } else {
     plugins = [

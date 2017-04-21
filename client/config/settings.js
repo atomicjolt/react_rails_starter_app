@@ -159,5 +159,6 @@ module.exports = {
   paths,
   hotPort,
   outputPaths,
-  apps
+  apps,
+  isProduction
 };
