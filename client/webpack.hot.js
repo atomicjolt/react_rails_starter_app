@@ -29,7 +29,13 @@ function setupMiddleware(apps) {
     headers: { 'Access-Control-Allow-Origin': '*' }
   });
   serverApp.use(webpackMiddlewareInstance);
-  serverApp.use(webpackHotMiddleware(compiler));
+  serverApp.use(webpackHotMiddleware(compiler, {
+    log: false,
+    heartbeat: 2000,
+    timeout: 20000,
+    reload: true
+  }));
+
 }
 
 function runServer(port, servePath) {
@@ -56,16 +62,19 @@ const options = { hotPack, shouldLint, stage: 'hot', onlyPack: false, port: sett
 
 if (appName) {
   const result = clientApps.buildApp(appName, options);
-  launch(result.app);
+  result.buildPromise.then(() => launch(result.app));
 } else if (hotPack) {
   options.onlyPack = true;
   options.appPerPort = false;
   const results = clientApps.buildApps(options);
   const apps = _.map(results, result => result.app);
-  setupMiddleware(apps);
-  runServer(settings.hotPort, settings.paths.devOutput);
+  const promises = _.map(results, result => result.buildPromise);
+  Promise.all(promises, () => {
+    setupMiddleware(apps);
+    runServer(settings.hotPort, settings.paths.devOutput);
+  });
 } else {
   _.each(clientApps.buildApps(options), (result) => {
-    launch(result.app);
+    result.buildPromise.then(() => launch(result.app));
   });
 }

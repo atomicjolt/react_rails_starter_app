@@ -1,8 +1,9 @@
-const fs        = require('fs-extra');
-const webpack   = require('webpack');
+const fs = require('fs-extra');
+const webpack = require('webpack');
 const nodeWatch = require('node-watch');
 
-const content   = require('./content');
+const content = require('./content');
+const webpackUtils = require('./webpack_utils');
 
 // Settings
 const webpackConfigBuilder = require('../../config/webpack.config');
@@ -13,26 +14,19 @@ const webpackConfigBuilder = require('../../config/webpack.config');
 function buildWebpackEntries(app) {
   return new Promise((resolve, reject) => {
     const webpackConfig = webpackConfigBuilder(app);
-    if (app.stage !== 'hot') {
-      const bundler = webpack(webpackConfig);
-      const bundle = (err, stats) => {
-        if (err) {
-          console.log('webpack error', err);
-          reject(err);
-        }
-        // console.log('webpack', stats.toString({ colors: true }));
-        resolve({
-          webpackConfig,
-          webpackStats: stats.toJson()
-        });
-      };
-      bundler.run(bundle);
-    } else {
+    const bundler = webpack(webpackConfig);
+    const bundle = (err, stats) => {
+      if (err) {
+        console.log('webpack error', err);
+        reject(err);
+      }
+      // console.log('webpack', stats.toString({ colors: true }));
       resolve({
         webpackConfig,
-        webpackStats: null
+        webpackStats: stats.toJson()
       });
-    }
+    };
+    bundler.run(bundle);
   });
 }
 
@@ -107,11 +101,7 @@ function build(app) {
     console.log(`Webpacking ${app.name}`);
 
     buildWebpackEntries(app).then((packResults) => {
-      let webpackAssets = null;
-      const webpackAssetsFilePath = `${packResults.webpackConfig.output.path}/${app.name}-webpack-assets.json`;
-      if (fs.existsSync(webpackAssetsFilePath)) {
-        webpackAssets = fs.readJsonSync(webpackAssetsFilePath);
-      }
+      const webpackAssets = webpackUtils.loadWebpackAssets(app, packResults);
 
       // Build html
       console.log(`Building html for ${app.name}`);

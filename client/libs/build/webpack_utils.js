@@ -1,4 +1,17 @@
-const _    = require('lodash');
+const fs = require('fs-extra');
+const _ = require('lodash');
+
+// -----------------------------------------------------------------------------
+// Loads webpack assets file
+// -----------------------------------------------------------------------------
+function loadWebpackAssets(app, packResults) {
+  let webpackAssets = null;
+  const webpackAssetsFilePath = `${packResults.webpackConfig.output.path}/${app.name}-webpack-assets.json`;
+  if (fs.existsSync(webpackAssetsFilePath)) {
+    webpackAssets = fs.readJsonSync(webpackAssetsFilePath);
+  }
+  return webpackAssets;
+}
 
 // -----------------------------------------------------------------------------
 // Changes webpack paths as needed.
@@ -6,7 +19,7 @@ const _    = require('lodash');
 function apply(html, webpackAssets, buildSuffix) {
   let result = html;
   if (!webpackAssets) {
-    throw new Error('Invalid webpack assets. Unable to build production.');
+    throw new Error('Invalid webpack assets.');
   }
   _.each(webpackAssets, (assets, name) => {
     _.each(assets, (hashedName, ext) => {
@@ -21,5 +34,6 @@ function apply(html, webpackAssets, buildSuffix) {
 }
 
 module.exports = {
-  apply
+  apply,
+  loadWebpackAssets
 };
