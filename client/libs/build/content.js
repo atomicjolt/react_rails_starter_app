@@ -31,12 +31,12 @@ function outFilePath(page, outputPath, inputFilePath, originalInputPath) {
 // build a single file
 // -----------------------------------------------------------------------------
 function buildContent(fullPath, app, webpackAssets, ext) {
-  const content     = fs.readFileSync(fullPath, 'utf8');
-  const parsed      = frontMatter(content);
-  const metadata    = parsed.attributes;
-  const title       = metadata.title;
+  const content = fs.readFileSync(fullPath, 'utf8');
+  const parsed = frontMatter(content);
+  const metadata = parsed.attributes;
+  const title = metadata.title;
   const destination = metadata.permalink;
-  const data        = _.merge({
+  const data = _.merge({
     _,
     title,
     metadata,
@@ -48,8 +48,8 @@ function buildContent(fullPath, app, webpackAssets, ext) {
   try {
     // Allow ejs code in content
     html = ejs.compile(html, {
-      cache    : false,
-      filename : fullPath
+      cache: false,
+      filename: fullPath
     })(data);
 
     // Parse any markdown in the resulting html
@@ -96,8 +96,8 @@ function writeContent(
       app,
       webpackAssets,
       ext);
-    log.replace(`Writing content to: ${app.outputPath}`);
     const out = outFilePath(page, app.outputPath, inputFilePath, app.htmlPath);
+    log.replace(`Writing content to: ${outFilePath}`);
     page.outputFilePath = file.write(out, page.html);
     return page;
   }
