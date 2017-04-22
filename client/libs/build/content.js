@@ -97,11 +97,12 @@ function writeContent(
       webpackAssets,
       ext);
     const out = outFilePath(page, app.outputPath, inputFilePath, app.htmlPath);
-    log.replace(`Writing content to: ${outFilePath}`);
+    log.replace(`Writing ${inputFilePath} to: ${out}`);
     page.outputFilePath = file.write(out, page.html);
     return page;
   }
   const out = outFilePath(null, app.outputPath, inputFilePath, app.htmlPath);
+  log.replace(`Copying ${inputFilePath} to: ${out}`);
   file.copy(inputFilePath, out);
   return null;
 }
