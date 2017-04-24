@@ -8,7 +8,9 @@ function loadWebpackAssets(app) {
   let webpackAssets = null;
   const webpackAssetsFilePath = `${app.outputPath}/${app.name}-webpack-assets.json`;
   if (fs.existsSync(webpackAssetsFilePath)) {
-    webpackAssets = fs.readJsonSync(webpackAssetsFilePath);
+    webpackAssets = _.mapValues(fs.readJsonSync(webpackAssetsFilePath), asset =>
+      _.mapValues(asset, assetFilename => `${app.publicPath}${assetFilename}`)
+    );
   }
   return webpackAssets;
 }
