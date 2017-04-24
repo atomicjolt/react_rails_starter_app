@@ -4,9 +4,9 @@ const _ = require('lodash');
 // -----------------------------------------------------------------------------
 // Loads webpack assets file
 // -----------------------------------------------------------------------------
-function loadWebpackAssets(app, packResults) {
+function loadWebpackAssets(app) {
   let webpackAssets = null;
-  const webpackAssetsFilePath = `${packResults.webpackConfig.output.path}/${app.name}-webpack-assets.json`;
+  const webpackAssetsFilePath = `${app.outputPath}/${app.name}-webpack-assets.json`;
   if (fs.existsSync(webpackAssetsFilePath)) {
     webpackAssets = fs.readJsonSync(webpackAssetsFilePath);
   }
