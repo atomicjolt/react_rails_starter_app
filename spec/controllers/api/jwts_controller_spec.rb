@@ -10,12 +10,12 @@ RSpec.describe Api::JwtsController, type: :controller do
   context "as user" do
     describe "GET show" do
       it "should not be authorized" do
-        get :show, id: @user.id, format: :json
+        get :show, params: { id: @user.id }, format: :json
         expect(response).to have_http_status(:unauthorized)
       end
       it "should get a new jwt" do
         request.headers["Authorization"] = @user_token
-        get :show, id: @user.id, format: :json
+        get :show, params: { id: @user.id }, format: :json
         expect(response).to have_http_status(:success)
         result = JSON.parse(response.body)
         expect(result["jwt"]).to be_present
