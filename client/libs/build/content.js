@@ -58,9 +58,10 @@ function buildContent(fullPath, app, webpackAssets, ext) {
     }
   } catch (err) {
     log.error(`Unable to compile html from ${fullPath}`);
-    log.error(err);
-    log.error('Call stack');
-    log.error(err.stack);
+    // Uncomment the following for more details
+    // log.error(err);
+    // log.error('Call stack');
+    // log.error(err.stack);
   }
 
   // Apply template
