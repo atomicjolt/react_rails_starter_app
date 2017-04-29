@@ -8,7 +8,8 @@ const log = require('./log');
 // -----------------------------------------------------------------------------
 function makeOutputFilePath(filePath, cb) {
   const dir = path.dirname(filePath);
-  fs.mkdirs(dir, {}, () => {
+  fs.ensureDir(dir, (err) => {
+    log.error(err);
     cb(filePath);
   });
   return filePath;
