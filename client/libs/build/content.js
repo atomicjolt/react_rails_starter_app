@@ -21,7 +21,7 @@ function outFilePath(page, outputPath, inputFilePath, originalInputPath) {
     if (_.endsWith(page.destination, '/')) {
       out = path.join(outputPath, page.destination, 'index.html');
     } else {
-      out = page.destination;
+      out = path.join(outputPath, page.destination);
     }
   }
   return out;

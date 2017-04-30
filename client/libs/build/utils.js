@@ -27,7 +27,7 @@ function filename2date(filePath) {
     const name = match[4];
     result.date = `${month}-${day}-${year}`;
     result.dateFormat = 'MM-DD-YYYY';
-    result.url = `/${year}/${month}/${day}/${name}.html`;
+    result.path = `/${year}/${month}/${day}/${name}.html`;
     if (!result.title) {
       result.title = name.replace(/_/g, ' ');
     }
