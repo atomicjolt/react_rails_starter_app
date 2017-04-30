@@ -9,8 +9,12 @@ const log = require('./log');
 function makeOutputFilePath(filePath, cb) {
   const dir = path.dirname(filePath);
   fs.ensureDir(dir, (err) => {
-    log.error(err);
-    cb(filePath);
+    if (err) {
+      log.error(`Unable to setup directory for ${filePath}. File will not be written.`);
+      log.error(err);
+    } else {
+      cb(filePath);
+    }
   });
   return filePath;
 }
