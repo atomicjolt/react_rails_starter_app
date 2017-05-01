@@ -3,6 +3,7 @@ const _ = require('lodash');
 
 const settings = require('../../config/settings');
 const build = require('./build');
+const log = require('./log');
 
 // -----------------------------------------------------------------------------
 // Build a single app
@@ -11,14 +12,14 @@ function buildAppParts(app, onlyPack) {
   if (onlyPack) {
     const buildPromise = build.buildWebpackEntries(app);
     buildPromise.then(() => {
-      console.log(`Finished Javascript for ${app.name}`);
+      log.out(`Finished Javascript for ${app.name}`);
     });
     return buildPromise;
   }
   const buildPromise = build.build(app);
   buildPromise.then((result) => {
-    console.log(`Finished Javascript for ${app.name}.`);
-    console.log(`Built ${result.pages.length} pages.`);
+    log.out(`Finished Javascript for ${app.name}.`);
+    log.out(`Built ${result.pages.length} pages.`);
   });
   return buildPromise;
 }

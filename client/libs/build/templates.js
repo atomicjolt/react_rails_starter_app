@@ -4,6 +4,7 @@ const _  = require('lodash');
 const ejs = require('ejs');
 
 const utils = require('./utils');
+const log = require('./log');
 
 
 function safeReadLayout(file) {
@@ -60,10 +61,10 @@ function apply(data, fullPath, templateMap, templateDirs) {
       _
     }, data));
   } catch (err) {
-    console.log(err);
-    console.log(`Unable to build file: ${fullPath} Data: ${data}`);
-    console.log('Stack Trace:');
-    console.log(err.trace);
+    log.out(err);
+    log.out(`Unable to build file: ${fullPath} Data: ${data}`);
+    log.out('Stack Trace:');
+    log.out(err.trace);
   }
 
   return html;

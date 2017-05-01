@@ -1,13 +1,14 @@
-const path          = require('path');
-const _             = require('lodash');
-const fs            = require('fs');
-const frontMatter   = require('front-matter');
-const ejs           = require('ejs');
+const path = require('path');
+const _ = require('lodash');
+const fs = require('fs');
+const frontMatter = require('front-matter');
+const ejs = require('ejs');
 
-const marked          = require('./markdown');
-const templates       = require('./templates');
-const applyProduction = require('./production');
-const file            = require('./file');
+const marked = require('./markdown');
+const templates = require('./templates');
+const applyHtmlPaths = require('./html_paths');
+const file = require('./file');
+const log = require('./log');
 
 const ignoreFiles     = ['.DS_Store'];
 
@@ -20,7 +21,7 @@ function outFilePath(page, outputPath, inputFilePath, originalInputPath) {
     if (_.endsWith(page.destination, '/')) {
       out = path.join(outputPath, page.destination, 'index.html');
     } else {
-      out = page.destination;
+      out = path.join(outputPath, page.destination);
     }
   }
   return out;
@@ -30,12 +31,12 @@ function outFilePath(page, outputPath, inputFilePath, originalInputPath) {
 // build a single file
 // -----------------------------------------------------------------------------
 function buildContent(fullPath, app, webpackAssets, ext) {
-  const content     = fs.readFileSync(fullPath, 'utf8');
-  const parsed      = frontMatter(content);
-  const metadata    = parsed.attributes;
-  const title       = metadata.title;
+  const content = fs.readFileSync(fullPath, 'utf8');
+  const parsed = frontMatter(content);
+  const metadata = parsed.attributes;
+  const title = metadata.title;
   const destination = metadata.permalink;
-  const data        = _.merge({
+  const data = _.merge({
     _,
     title,
     metadata,
@@ -47,8 +48,8 @@ function buildContent(fullPath, app, webpackAssets, ext) {
   try {
     // Allow ejs code in content
     html = ejs.compile(html, {
-      cache    : false,
-      filename : fullPath
+      cache: false,
+      filename: fullPath
     })(data);
 
     // Parse any markdown in the resulting html
@@ -56,10 +57,11 @@ function buildContent(fullPath, app, webpackAssets, ext) {
       html = marked(html);
     }
   } catch (err) {
-    console.log(`Unable to compile html from ${fullPath}`);
-    console.log(err);
-    console.log('Call stack');
-    console.log(err.stack);
+    log.error(`Unable to compile html from ${fullPath}`);
+    // Uncomment the following for more details
+    // log.error(err);
+    // log.error('Call stack');
+    // log.error(err.stack);
   }
 
   // Apply template
@@ -68,7 +70,7 @@ function buildContent(fullPath, app, webpackAssets, ext) {
     fullPath,
     app.templateMap,
     app.templateDirs);
-  html = applyProduction(html, app.stage, webpackAssets, app.buildSuffix);
+  html = applyHtmlPaths(fullPath, html, app.production, webpackAssets, app.buildSuffix);
 
   return {
     title,
@@ -96,10 +98,12 @@ function writeContent(
       webpackAssets,
       ext);
     const out = outFilePath(page, app.outputPath, inputFilePath, app.htmlPath);
+    log.replace(`Writing ${inputFilePath} to: ${out}`);
     page.outputFilePath = file.write(out, page.html);
     return page;
   }
   const out = outFilePath(null, app.outputPath, inputFilePath, app.htmlPath);
+  log.replace(`Copying ${inputFilePath} to: ${out}`);
   file.copy(inputFilePath, out);
   return null;
 }
@@ -144,6 +148,7 @@ function buildContents(
       }
     }
   });
+  log.out('');
   return results;
 }
 
