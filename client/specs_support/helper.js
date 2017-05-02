@@ -21,7 +21,7 @@ export default class Helper {
     const initialState = {
       settings: _.assign({
         csrf: 'csrf_token',
-        apiUrl: 'http://www.example.com'
+        api_url: 'http://www.example.com'
       }, initial)
     };
     const rootReducer = combineReducers({
