@@ -17,7 +17,9 @@ export default class Helper {
   }
 
   // Create a real store that can be used for testing
-  static makeStore(initialSettings, additionalState) {
+  // For any additional state provided you must also provide the corresponding
+  // reducers.
+  static makeStore(initialSettings, additionalState, additionalReducers) {
     const initialState = _.merge({
       settings: _.merge({
         csrf: 'csrf_token',
@@ -26,6 +28,7 @@ export default class Helper {
     }, additionalState);
     const rootReducer = combineReducers({
       settings,
+      ...additionalReducers
     });
     const middleware = [API];
     return configureStore(initialState, rootReducer, middleware);
