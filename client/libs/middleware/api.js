@@ -1,4 +1,4 @@
-import api      from '../api/api';
+import api from '../api/api';
 import { DONE } from '../constants/wrapper';
 
 export function apiRequest(store, action) {
@@ -18,17 +18,17 @@ export function apiRequest(store, action) {
     promise.then(
       (response) => {
         store.dispatch({
-          type     : action.type + DONE,
-          payload  : response.body,
-          original : action,
+          type: action.type + DONE,
+          payload: response.body,
+          original: action,
           response,
         }); // Dispatch the new data
       },
       (error) => {
         store.dispatch({
-          type     : action.type + DONE,
-          payload  : {},
-          original : action,
+          type: action.type + DONE,
+          payload: {},
+          original: action,
           error,
         }); // Dispatch the new error
       },

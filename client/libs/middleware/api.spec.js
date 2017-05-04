@@ -1,6 +1,6 @@
-import api     from './api';
+import api, { apiRequest } from './api';
 import Network from '../constants/network';
-import Helper  from '../../specs_support/helper';
+import Helper from '../../specs_support/helper';
 
 describe('api middleware', () => {
   Helper.stubAjax();
@@ -47,4 +47,16 @@ describe('api middleware', () => {
     const actionHandler = middleware(nextHandler);
     actionHandler(action);
   });
+});
+
+describe('apiRequest', () => {
+  Helper.stubAjax();
+
+  it('returns a promise', () => {
+    const store = { getState: () => {} };
+    const action = {};
+    const promise = apiRequest(store, action);
+    expect(promise.then).toBe();
+  });
+
 });
