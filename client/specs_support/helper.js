@@ -21,7 +21,7 @@ export default class Helper {
     const initialState = _.merge({
       settings: _.merge({
         csrf: 'csrf_token',
-        apiUrl: 'http://www.example.com'
+        api_url: 'http://www.example.com'
       }, initialSettings)
     }, additionalState);
     const rootReducer = combineReducers({
