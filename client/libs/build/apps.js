@@ -29,7 +29,9 @@ function buildAppParts(app, onlyPack) {
 // -----------------------------------------------------------------------------
 function buildApp(appName, options) {
   const app = _.find(settings.apps(options).apps, (e, name) => appName === name);
-  fs.emptyDirSync(app.outputPath);
+  if (!options.noClean) {
+    fs.emptyDirSync(app.outputPath);
+  }
   return {
     app,
     buildPromise: buildAppParts(app, options.onlyPack)
@@ -41,7 +43,9 @@ function buildApp(appName, options) {
 // -----------------------------------------------------------------------------
 function buildApps(options) {
   return _.map(settings.apps(options), (app) => {
-    fs.emptyDirSync(app.outputPath);
+    if (!options.noClean) {
+      fs.emptyDirSync(app.outputPath);
+    }
     return {
       app,
       buildPromise: buildAppParts(app, options.onlyPack)
