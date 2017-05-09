@@ -4,6 +4,6 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const stage = argv.release ? 'production' : 'development';
 const port = parseInt(process.env.ASSETS_PORT, 10) || 8080;
-const options = { port, stage, onlyPack: argv.onlyPack };
+const options = { port, stage, onlyPack: argv.onlyPack, noClean: argv.noClean };
 
 apps.buildApps(options);
