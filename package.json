@@ -15,7 +15,7 @@
     "build_dev": "cd ./client && node ./build.js",
     "build_dev_pack": "cd ./client && node ./build.js --onlyPack",
     "build": "cd ./client && node ./build.js --release",
-    "build_pack": "cd ./client && node ./build.js --release --onlyPack",
+    "build_pack": "cd ./client && node ./build.js --release --onlyPack --noClean",
     "create": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js create",
     "release": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js deploy",
     "lint": "cd ./client && eslint js"
