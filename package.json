@@ -20,6 +20,7 @@
     "create": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js create",
     "release": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js deploy",
     "lint": "cd ./client && eslint js"
+    "nuke": "rm -rf node_modules && cd ./client && yarn nuke"
   },
   "repository": {
     "type": "git",
