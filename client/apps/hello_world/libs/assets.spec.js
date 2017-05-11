@@ -1,6 +1,8 @@
 import _      from 'lodash';
 import assets from './assets';
 
+jest.mock('./assets.js');
+
 describe('assets', () => {
   describe('default functionality', () => {
     it('Provides the url for an asset', () => {

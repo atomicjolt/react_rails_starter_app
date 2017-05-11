@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "./node_modules/jest/bin/jest.js --config=config/jest_config.json"
+  },
   "dependencies": {
     "babel": "^6.23.0",
     "babel-polyfill": "^6.23.0",
@@ -14,5 +17,8 @@
     "react-tap-event-plugin": "2.0.1",
     "redux": "3.6.0",
     "uuid": "3.0.1"
+  },
+  "devDependencies": {
+    "jest": "^20.0.1"
   }
 }

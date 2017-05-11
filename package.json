@@ -7,7 +7,7 @@
   "homepage": "https://github.com/atomicjolt/react_client_starter_app",
   "scripts": {
     "postinstall": "cd ./client && yarn",
-    "test": "cd ./client && ./node_modules/karma/bin/karma start",
+    "test": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; yarn test; cd ..; cd ..; done",
     "coverage": "cat ./coverage/**/coverage.info | ./client/node_modules/coveralls/bin/coveralls.js",
     "hot": "cd ./client && node webpack.hot.js",
     "hot_pack": "cd ./client && node webpack.hot.js --hotPack",
@@ -19,7 +19,7 @@
     "build_pack": "cd ./client && node ./build.js --release --onlyPack",
     "create": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js create",
     "release": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js deploy",
-    "lint": "cd ./client && eslint js"
+    "lint": "cd ./client && eslint js",
     "nuke": "rm -rf node_modules && cd ./client && yarn nuke"
   },
   "repository": {
