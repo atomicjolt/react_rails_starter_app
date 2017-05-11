@@ -23,7 +23,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "chunk-manifest-webpack-plugin": "^1.1.0",
-    "coveralls": "^2.13.1",
     "css-loader": "^0.28.1",
     "dotenv": "4.0.0",
     "ecstatic": "2.1.0",

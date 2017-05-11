@@ -29,4 +29,3 @@ before_script:
 
 script:
   - yarn test
-  - yarn coverage
