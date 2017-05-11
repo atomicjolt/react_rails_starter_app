@@ -8,7 +8,7 @@
     "babel-runtime": "^6.23.0",
     "es6-promise": "^4.1.0",
     "lodash": "4.17.4",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.5.9",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-proxy-loader": "^0.3.5",
