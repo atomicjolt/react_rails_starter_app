@@ -27,3 +27,5 @@ s3_website.yml
 node_modules
 npm-debug.log
 /build
+
+coverage/
