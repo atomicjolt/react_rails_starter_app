@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import Helper       from '../../../specs_support/helper';
 import Home         from './home';
 
+jest.mock('../libs/assets.js');
+
 describe('home', () => {
   let result;
   let props;

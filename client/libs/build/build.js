@@ -18,10 +18,10 @@ function buildWebpackEntries(app) {
     const bundler = webpack(webpackConfig);
     const bundle = (err, stats) => {
       if (err) {
-        log.error('webpack error', err);
+        log.error(`webpack error: ${err}`);
         reject(err);
       }
-      // log.out('webpack', stats.toString({ colors: true }));
+      // log.out(`webpack: ${stats.toString({ colors: true })}`);
       resolve({
         webpackConfig,
         webpackStats: stats.toJson()
@@ -102,7 +102,7 @@ function build(app) {
     log.out(`Webpacking ${app.name}`);
 
     buildWebpackEntries(app).then((packResults) => {
-      const webpackAssets = webpackUtils.loadWebpackAssets(app, packResults);
+      const webpackAssets = webpackUtils.loadWebpackAssets(app);
 
       // Build html
       log.out(`Building html for ${app.name}`);

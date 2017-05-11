@@ -196,6 +196,9 @@ Release a production build to the S3 website bucket created by `yarn create`
 Run a linter over the project:
   `yarn lint`
 
+Wipe out all node modules:
+  `yarn nuke`
+
 ## Deployment
 -----------
 
