@@ -32,7 +32,6 @@ config/assets/
 bin/deploy
 s3_website.yml
 secrets.js
-.coveralls.yml
 
 # these should all be checked in to normalise the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset

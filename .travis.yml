@@ -33,9 +33,8 @@ before_install:
   - cp config/secrets.example.yml config/secrets.yml
   - cp config/ci.database.yml config/database.yml
   - cp .env.example .env
-  - cp client/ci.karma.conf.js client/karma.conf.js
-  - nvm install 6.9.1
-  - nvm use 6.9.1
+  - nvm install 7.5.0
+  - nvm use 7.5.0
   - npm install -g yarn
 
 install:
@@ -52,4 +51,3 @@ before_script:
 script:
   - ./bin/ci
   - yarn test
-  - yarn coverage

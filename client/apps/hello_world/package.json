@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "./node_modules/jest/bin/jest.js --config=config/jest_config.json"
+    "test": "./node_modules/jest/bin/jest.js --config=config/jest_config.json --coverage",
+    "watch": "./node_modules/jest/bin/jest.js --config=config/jest_config.json --watch"
   },
   "dependencies": {
     "babel": "^6.23.0",
