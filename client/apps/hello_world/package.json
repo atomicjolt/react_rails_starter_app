@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "./node_modules/jest/bin/jest.js --config=config/jest_config.json --coverage",
+    "test": "./node_modules/jest/bin/jest.js --config=config/jest_config.json",
     "watch": "./node_modules/jest/bin/jest.js --config=config/jest_config.json --watch"
   },
   "dependencies": {
