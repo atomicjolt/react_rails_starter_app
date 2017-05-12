@@ -13,6 +13,7 @@ plugins:
   - import
 globals:
   describe: false
+  beforeAll: false
   beforeEach: false
   afterEach: false
   it: false
