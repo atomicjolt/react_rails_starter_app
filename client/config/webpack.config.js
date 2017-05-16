@@ -44,13 +44,48 @@ module.exports = function webpackConfig(app) {
     jsLoaders.push('atomic-lint-loader');
   }
 
-  const cssLoaders = ['css-loader?importLoaders=1', 'postcss-loader'];
+  const isDevelopment = app.state === 'development' || app.state === 'hot';
+  const cssLoaders = [
+    {
+      loader: 'css-loader',
+      options: {
+        sourceMap: isDevelopment,
+        includePaths: [
+          `${app.path}/node_modules`
+        ],
+        import: true,
+        importLoaders: 1
+      }
+    }, {
+      loader: 'postcss-loader',
+      options: { sourceMap: isDevelopment }
+    }
+  ];
 
   const scssLoaders = cssLoaders.slice(0);
-  scssLoaders.push(`sass-loader?outputStyle=expanded&includePaths[]=${(path.resolve(__dirname, './node_modules/bootstrap-sass'))}`);
+  scssLoaders.push({
+    loader: 'sass-loader',
+    options: {
+      sourceMap: isDevelopment,
+      includePaths: [
+        `${app.path}/node_modules`
+      ],
+      outputStyle: (app.production ? 'compressed' : 'expanded'),
+    }
+  });
+  scssLoaders[0].options.importLoaders = 2;
 
   const lessLoaders = cssLoaders.slice(0);
-  lessLoaders.push('less-loader');
+  lessLoaders.push({
+    loader: 'less-loader',
+    options: {
+      sourceMap: isDevelopment,
+      includePaths: [
+        `${app.path}/node_modules`
+      ]
+    }
+  });
+  lessLoaders[0].options.importLoaders = 2;
 
   const extractCSS = new ExtractTextPlugin(app.production ? '[name]-[chunkhash].css' : '[name].css');
 
@@ -109,7 +144,7 @@ module.exports = function webpackConfig(app) {
   const rules = [
     { test: /\.js$/, use: jsLoaders, exclude: /node_modules/ },
     { test: /\.jsx?$/, use: jsLoaders, exclude: /node_modules/ },
-    { test: /\.scss$/i, use: extractCSS.extract(scssLoaders) },
+    { test: /\.s[ac]ss$/i, use: extractCSS.extract(scssLoaders) },
     { test: /\.css$/i, use: extractCSS.extract(cssLoaders) },
     { test: /\.less$/i, use: extractCSS.extract(lessLoaders) },
     { test: /.*\.(gif|png|jpg|jpeg|svg)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },

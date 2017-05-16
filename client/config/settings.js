@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const _ = require('lodash');
+const urljoin = require('url-join');
 
 // There is a warning if the .env file is missing
 // This is fine in a production setting, where settings
@@ -65,6 +66,16 @@ function isProduction(stage) {
 }
 
 // -----------------------------------------------------------------------------
+// Generates a path with the app name if needed
+// -----------------------------------------------------------------------------
+function withNameIfRequired(name, relativeOutput, options) {
+  if (!options.onlyPack && !options.appPerPort) {
+    return path.join(relativeOutput, name);
+  }
+  return relativeOutput;
+}
+
+// -----------------------------------------------------------------------------
 // Generates the main paths used for output
 // -----------------------------------------------------------------------------
 function outputPaths(name, port, options) {
@@ -74,12 +85,12 @@ function outputPaths(name, port, options) {
   // Public path indicates where the assets will be served from. In dev this will likely be
   // localhost or a local domain. In production this could be a CDN. In development this will
   // point to whatever public url is serving dev assets.
-  let publicPath = `${devAssetsUrl}${devRelativeOutput}`;
+  let publicPath = path.join(devAssetsUrl, withNameIfRequired(name, devRelativeOutput, options));
 
   if (isProduction(options.stage)) {
     rootOutputPath = prodOutput;
     outputPath = options.onlyPack ? prodOutput : path.join(prodOutput, name);
-    publicPath = prodAssetsUrl + prodRelativeOutput;
+    publicPath = urljoin(prodAssetsUrl, withNameIfRequired(name, prodRelativeOutput, options));
   }
 
   return {
