@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const _ = require('lodash');
+const urljoin = require('url-join');
 
 // There is a warning if the .env file is missing
 // This is fine in a production setting, where settings
@@ -92,7 +93,7 @@ function outputPaths(name, port, options) {
   if (isProduction(options.stage)) {
     rootOutputPath = prodOutput;
     outputPath = options.onlyPack ? prodOutput : path.join(prodOutput, name);
-    publicPath = path.join(prodAssetsUrl, withNameIfRequired(name, prodRelativeOutput, options));
+    publicPath = urljoin(prodAssetsUrl, withNameIfRequired(name, prodRelativeOutput, options));
   }
 
   return {
