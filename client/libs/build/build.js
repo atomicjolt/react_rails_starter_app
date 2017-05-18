@@ -38,7 +38,7 @@ function buildWebpackEntries(app) {
 function buildStatic(app) {
   if (fs.existsSync(app.staticPath)) {
     log.out(`Copying static files in ${app.staticPath}`);
-    exec(`cp -r ${app.staticPath} ${app.outputPath}`);
+    exec(`cp -r ${app.staticPath}/. ${app.outputPath}`);
   }
 }
 
