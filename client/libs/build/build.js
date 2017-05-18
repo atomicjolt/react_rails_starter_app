@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const nodeWatch = require('node-watch');
+const exec = require('child_process').exec;
 
 const content = require('./content');
 const webpackUtils = require('./webpack_utils');
@@ -35,11 +36,9 @@ function buildWebpackEntries(app) {
 // copy over static files to build directory
 // -----------------------------------------------------------------------------
 function buildStatic(app) {
-  try {
+  if (fs.existsSync(app.staticPath)) {
     log.out(`Copying static files in ${app.staticPath}`);
-    fs.copy(app.staticPath, app.outputPath);
-  } catch (err) {
-    // No static dir. Do nothing
+    exec(`cp -r ${app.staticPath}/. ${app.outputPath}`);
   }
 }
 

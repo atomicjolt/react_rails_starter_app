@@ -85,7 +85,7 @@ function outputPaths(name, port, options) {
   // Public path indicates where the assets will be served from. In dev this will likely be
   // localhost or a local domain. In production this could be a CDN. In development this will
   // point to whatever public url is serving dev assets.
-  let publicPath = path.join(devAssetsUrl, withNameIfRequired(name, devRelativeOutput, options));
+  let publicPath = urljoin(devAssetsUrl, withNameIfRequired(name, devRelativeOutput, options));
 
   if (isProduction(options.stage)) {
     rootOutputPath = prodOutput;
