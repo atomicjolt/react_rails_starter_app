@@ -70,7 +70,6 @@ end
 
 group :development, :test do
   gem "byebug", platform: :mri
-  gem "coveralls", require: false
   gem "dotenv-rails"
   gem "factory_girl_rails"
   gem "faker"
