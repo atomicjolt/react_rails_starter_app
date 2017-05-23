@@ -98,7 +98,7 @@ function outputPaths(name, port, options) {
   } else {
     let devUrl = devAssetsUrl;
     // Include the port if we are running on localhost
-    if (_.includes(['localhost', '0.0.0.0', '127.0.0.1'], devAssetsUrl)) {
+    if (_.find(['localhost', '0.0.0.0', '127.0.0.1'], d => _.includes(devAssetsUrl, d))) {
       devUrl = `${devAssetsUrl}:${port}`;
     }
     publicPath = urljoin(devUrl, withNameIfRequired(name, devRelativeOutput, options));
