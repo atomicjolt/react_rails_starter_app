@@ -36,10 +36,8 @@ function buildWebpackEntries(app) {
 // copy over static files to build directory
 // -----------------------------------------------------------------------------
 function buildStatic(app) {
-  if (fs.existsSync(app.staticPath)) {
-    log.out(`Copying static files in ${app.staticPath}`);
-    exec(`cp -r ${app.staticPath}/. ${app.outputPath}`);
-  }
+  log.out(`Copying static files in ${app.staticPath}`);
+  exec(`cp -r ${app.staticPath}/. ${app.outputPath}`);
 }
 
 // -----------------------------------------------------------------------------
@@ -91,10 +89,12 @@ function build(app) {
 
   return new Promise((resolve) => {
 
-    // Copy static files to build directory
-    buildStatic(app);
-    if (app.stage === 'hot') {
-      watchStatic(app);
+    if (fs.existsSync(app.staticPath)) {
+      // Copy static files to build directory
+      buildStatic(app);
+      if (app.stage === 'hot') {
+        watchStatic(app);
+      }
     }
 
     // Webpack build
