@@ -75,7 +75,7 @@ function buildHtml(app, webpackAssets) {
     webpackAssets
   );
 
-  if (app.stage === 'hot') {
+  if (app.stage === 'hot' && fs.existsSync(app.htmlPath)) {
     watchHtml(webpackAssets, app);
   }
 
