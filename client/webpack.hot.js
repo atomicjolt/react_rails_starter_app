@@ -68,9 +68,10 @@ if (appName) {
   const results = clientApps.buildApps(options);
   const apps = _.map(results, result => result.app);
   const promises = _.map(results, result => result.buildPromise);
+  const serverApp = express();
   Promise.all(promises).then(() => {
-    setupMiddleware(apps);
-    runServer(settings.hotPort, settings.paths.devOutput);
+    setupMiddleware(serverApp, apps);
+    runServer(serverApp, settings.hotPort, settings.paths.devOutput);
   });
 } else {
   _.each(clientApps.buildApps(options), (result) => {
