@@ -35,7 +35,7 @@ If you have multiple applications you can run them one at a time with the applic
 
   `yarn hot hello_world`
 
-then `visit http://localhost:8080`
+then visit `http://localhost:8080`
 
 
 # Using the React Client Starter App
