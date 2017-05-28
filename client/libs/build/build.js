@@ -103,9 +103,9 @@ function build(app) {
 
     buildWebpackEntries(app).then((packResults) => {
 
-      if (!_.isEmpty(packResults.webpackStats.errors)) {
-        throw packResults.webpackStats.errors.join(',');
-      }
+      _.each(packResults.webpackStats.errors, (error) => {
+        log.error(error);
+      });
 
       const webpackAssets = webpackUtils.loadWebpackAssets(app);
 
