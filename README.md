@@ -45,6 +45,34 @@ an example "hello world" application in client/apps/hello_world
 Modify html and js files in that directory to build your application or copy paste that directory to build additional
 applications. The build process will automatically add a new webpack entry point for each folder in that directory.
 
+## Custom Build Settings
+-----------
+Default build settings can be overridden by adding the following json files to the application directory:
+
+Change the output directory for an application by specifying "outName" which will override the default name
+used when generating a path:
+
+In output_paths.json
+`
+{
+  "outName": "hello_world"
+}
+`
+
+By default app.jsx is used as the webpack entry point. This can be overriden in webpack.json. Change the buildSuffix,
+filename, chunkFilename and other settings:
+
+In webpack.json
+`
+{
+  "file": "app.js",         // The webpack entry. Default is app.jsx
+  "buildSuffix": ".js",     // Change the build suffix. Default is _bundle.js
+  "filename": "[name]",     // Change the output file name. Default is based on production/development
+  "chunkFilename": "[id]",  // Change the chunkFilename. Default is based on production/development
+  "codeSplittingOff": true, // Turn off code splitting
+  "extractCssOff": true     // Turn off css extraction
+}
+`
 
 ## React.js
 -----------

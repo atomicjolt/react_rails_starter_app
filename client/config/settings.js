@@ -81,10 +81,18 @@ function withNameIfRequired(name, relativeOutput, options) {
 // -----------------------------------------------------------------------------
 // Generates the main paths used for output
 // -----------------------------------------------------------------------------
-function outputPaths(name, port, options) {
+function outputPaths(name, port, appPath, options) {
+
+  let outName = name;
+
+  const customOutputPaths = `${appPath}/output_paths.json`;
+  if (fs.existsSync(customOutputPaths)) {
+    const custom = JSON.parse(fs.readFileSync(customOutputPaths, 'utf8'));
+    outName = custom.outName;
+  }
 
   let rootOutputPath = devOutput;
-  let outputPath = options.onlyPack ? devOutput : path.join(devOutput, name);
+  let outputPath = options.onlyPack ? devOutput : path.join(devOutput, outName);
   // Public path indicates where the assets will be served from. In dev this will likely be
   // localhost or a local domain. In production this could be a CDN. In development this will
   // point to whatever public url is serving dev assets.
@@ -93,15 +101,15 @@ function outputPaths(name, port, options) {
 
   if (isProduction(options.stage)) {
     rootOutputPath = prodOutput;
-    outputPath = options.onlyPack ? prodOutput : path.join(prodOutput, name);
-    publicPath = urljoin(prodAssetsUrl, withNameIfRequired(name, prodRelativeOutput, options));
+    outputPath = options.onlyPack ? prodOutput : path.join(prodOutput, outName);
+    publicPath = urljoin(prodAssetsUrl, withNameIfRequired(outName, prodRelativeOutput, options));
   } else {
     let devUrl = devAssetsUrl;
     // Include the port if we are running on localhost
     if (_.find(['localhost', '0.0.0.0', '127.0.0.1'], d => _.includes(devAssetsUrl, d))) {
       devUrl = `${devAssetsUrl}:${port}`;
     }
-    publicPath = urljoin(devUrl, withNameIfRequired(name, devRelativeOutput, options));
+    publicPath = urljoin(devUrl, withNameIfRequired(outName, devRelativeOutput, options));
   }
 
   return {
@@ -113,18 +121,31 @@ function outputPaths(name, port, options) {
 
 // -----------------------------------------------------------------------------
 // Generate settings needed for webpack
+// Allow for custom overrides to be placed in webpack.json
 // -----------------------------------------------------------------------------
 function webpackSettings(name, file, appPath, port, options) {
-  return {
+
+  let custom = {};
+  const customWebpack = `${appPath}/webpack.json`;
+
+  if (fs.existsSync(customWebpack)) {
+    custom = JSON.parse(fs.readFileSync(customWebpack, 'utf8'));
+  }
+
+  const production = isProduction(options.stage);
+
+  return _.merge({
     name,
     file,
     path: appPath,
     shouldLint: options.shouldLint,
     stage: options.stage,
-    production: isProduction(options.stage),
+    production,
     buildSuffix,
     port,
-  };
+    filename: production ? '[name]-[chunkhash]' : '[name]',
+    chunkFilename: production ? '[id]-[chunkhash]' : '[id]',
+  }, custom);
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +164,7 @@ function appSettings(name, port, options) {
     templateMap: {}, // Used to specify specific templates on a per file basis
     htmlOptions,
   }, webpackSettings(name, 'app.jsx', appPath, port, options),
-     outputPaths(name, port, options));
+     outputPaths(name, port, appPath, options));
 
   app.templateDirs = templateDirs(app, ['layouts']);
   return {
