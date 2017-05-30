@@ -62,7 +62,6 @@ function watchHtml(webpackAssets, app) {
   nodeWatch(app.htmlPath, { recursive: true }, (evt, fullInputPath) => {
     log.out(`Change in html file ${fullInputPath}`);
     content.writeContent(
-      app.htmlPath,
       fullInputPath,
       webpackAssets,
       app);
