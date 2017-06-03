@@ -62,6 +62,15 @@ module.exports = function webpackConfig(app) {
     }
   ];
 
+  if (app.extractCssOff) {
+    cssLoaders.unshift({
+      loader: 'style-loader',
+      options: {
+        sourceMap: isDevelopment,
+      }
+    });
+  }
+
   const scssLoaders = cssLoaders.slice(0);
   scssLoaders.push({
     loader: 'sass-loader',
