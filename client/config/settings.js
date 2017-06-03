@@ -112,6 +112,11 @@ function outputPaths(name, port, appPath, options) {
     publicPath = urljoin(devUrl, withNameIfRequired(outName, devRelativeOutput, options));
   }
 
+  // Make sure the public path ends with a / or fonts will not have the correct path
+  if (!_.endsWith(publicPath)) {
+    publicPath = `${publicPath}/`;
+  }
+
   return {
     rootOutputPath,
     outputPath,
