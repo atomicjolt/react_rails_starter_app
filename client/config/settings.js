@@ -72,7 +72,7 @@ function isProduction(stage) {
 // Generates a path with the app name if needed
 // -----------------------------------------------------------------------------
 function withNameIfRequired(name, relativeOutput, options) {
-  if (!options.onlyPack && !options.appPerPort) {
+  if (!options.onlyPack && !options.appPerPort && !options.rootOutput) {
     return path.join(relativeOutput, name);
   }
   return relativeOutput;
