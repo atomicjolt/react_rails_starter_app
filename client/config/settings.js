@@ -68,12 +68,16 @@ function isProduction(stage) {
   return stage === 'production' || stage === 'staging';
 }
 
+function isNameRequired(options) {
+  return !options.onlyPack && !options.appPerPort && !options.rootOutput;
+}
+
 // -----------------------------------------------------------------------------
 // Generates a path with the app name if needed
 // -----------------------------------------------------------------------------
 function withNameIfRequired(name, relativeOutput, options) {
-  if (!options.onlyPack && !options.appPerPort && !options.rootOutput) {
-    return path.join(relativeOutput, name);
+  if (isNameRequired(options)) {
+    return urljoin(relativeOutput, name);
   }
   return relativeOutput;
 }
@@ -92,7 +96,7 @@ function outputPaths(name, port, appPath, options) {
   }
 
   let rootOutputPath = devOutput;
-  let outputPath = options.onlyPack ? devOutput : path.join(devOutput, outName);
+  let outputPath = isNameRequired(options) ? path.join(devOutput, outName) : devOutput;
   // Public path indicates where the assets will be served from. In dev this will likely be
   // localhost or a local domain. In production this could be a CDN. In development this will
   // point to whatever public url is serving dev assets.
@@ -101,7 +105,7 @@ function outputPaths(name, port, appPath, options) {
 
   if (isProduction(options.stage)) {
     rootOutputPath = prodOutput;
-    outputPath = options.onlyPack ? prodOutput : path.join(prodOutput, outName);
+    outputPath = isNameRequired(options) ? path.join(prodOutput, outName) : prodOutput;
     publicPath = urljoin(prodAssetsUrl, withNameIfRequired(outName, prodRelativeOutput, options));
   } else {
     let devUrl = devAssetsUrl;
