@@ -1,4 +1,5 @@
 const fs = require('fs-extra');
+const _ = require('lodash');
 const webpack = require('webpack');
 const nodeWatch = require('node-watch');
 const exec = require('child_process').exec;
@@ -61,7 +62,6 @@ function watchHtml(webpackAssets, app) {
   nodeWatch(app.htmlPath, { recursive: true }, (evt, fullInputPath) => {
     log.out(`Change in html file ${fullInputPath}`);
     content.writeContent(
-      app.htmlPath,
       fullInputPath,
       webpackAssets,
       app);
@@ -101,6 +101,11 @@ function build(app) {
     log.out(`Webpacking ${app.name}`);
 
     buildWebpackEntries(app).then((packResults) => {
+
+      _.each(packResults.webpackStats.errors, (error) => {
+        log.error(error);
+      });
+
       const webpackAssets = webpackUtils.loadWebpackAssets(app);
 
       // Build html

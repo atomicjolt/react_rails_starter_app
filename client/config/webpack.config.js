@@ -62,6 +62,15 @@ module.exports = function webpackConfig(app) {
     }
   ];
 
+  if (app.extractCssOff) {
+    cssLoaders.unshift({
+      loader: 'style-loader',
+      options: {
+        sourceMap: isDevelopment,
+      }
+    });
+  }
+
   const scssLoaders = cssLoaders.slice(0);
   scssLoaders.push({
     loader: 'sass-loader',
@@ -89,24 +98,31 @@ module.exports = function webpackConfig(app) {
 
   const extractCSS = new ExtractTextPlugin(app.production ? '[name]-[chunkhash].css' : '[name].css');
 
-  let plugins = [
-    // Use to extract common code from multiple entry points into a single init.js
-    new webpack.optimize.CommonsChunkPlugin({
-      name: `${app.name}_vendor`,
-      minChunks: module => module.context && module.context.indexOf('node_modules') !== -1
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: `${app.name}_manifest`,
-      minChunks: Infinity
-    }),
-    // Generate webpack-assets.json to map path to assets generated with hashed names
-    new AssetsPlugin({
-      path: app.outputPath,
-      fullPath: false,
-      filename: `${app.name}-webpack-assets.json`
-    }),
-    extractCSS
-  ];
+  let plugins = [];
+
+  if (!app.codeSplittingOff) {
+    plugins = [
+      // Use to extract common code from multiple entry points into a single init.js
+      new webpack.optimize.CommonsChunkPlugin({
+        name: `${app.name}_vendor`,
+        minChunks: module => module.context && module.context.indexOf('node_modules') !== -1
+      }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: `${app.name}_manifest`,
+        minChunks: Infinity
+      }),
+      // Generate webpack-assets.json to map path to assets generated with hashed names
+      new AssetsPlugin({
+        path: app.outputPath,
+        fullPath: false,
+        filename: `${app.name}-webpack-assets.json`
+      })
+    ];
+  }
+
+  if (!app.extractCssOff) {
+    plugins.push(extractCSS);
+  }
 
   if (app.production) {
     plugins = _.concat(plugins, [
@@ -144,9 +160,9 @@ module.exports = function webpackConfig(app) {
   const rules = [
     { test: /\.js$/, use: jsLoaders, exclude: /node_modules/ },
     { test: /\.jsx?$/, use: jsLoaders, exclude: /node_modules/ },
-    { test: /\.s[ac]ss$/i, use: extractCSS.extract(scssLoaders) },
-    { test: /\.css$/i, use: extractCSS.extract(cssLoaders) },
-    { test: /\.less$/i, use: extractCSS.extract(lessLoaders) },
+    { test: /\.s[ac]ss$/i, use: app.extractCssOff ? scssLoaders : extractCSS.extract(scssLoaders) },
+    { test: /\.css$/i, use: app.extractCssOff ? cssLoaders : extractCSS.extract(cssLoaders) },
+    { test: /\.less$/i, use: app.extractCssOff ? lessLoaders : extractCSS.extract(lessLoaders) },
     { test: /.*\.(gif|png|jpg|jpeg|svg)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
     { test: /.*\.(eot|woff2|woff|ttf)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }
   ];
@@ -169,8 +185,8 @@ module.exports = function webpackConfig(app) {
       publicPath: app.publicPath,
       // Location where generated files will be output
       path: app.outputPath,
-      filename: app.production ? `[name]-[chunkhash]${app.buildSuffix}` : `[name]${app.buildSuffix}`,
-      chunkFilename: app.production ? `[id]-[chunkhash]${app.buildSuffix}` : `[id]${app.buildSuffix}`,
+      filename: `${app.filename}${app.buildSuffix}`,
+      chunkFilename: `${app.chunkFilename}${app.buildSuffix}`,
       sourceMapFilename: '[name].map',
       // http://webpack.github.io/docs/configuration.html#output-pathinfo
       pathinfo: !app.production
