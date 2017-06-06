@@ -56,7 +56,7 @@ describe('apiRequest', () => {
         return (
         {
           settings: {
-            apiUrl: 'http://www.something.com/asdfaoer'
+            api_url: 'http://www.something.com/asdfaoer'
           }
         }
         );
