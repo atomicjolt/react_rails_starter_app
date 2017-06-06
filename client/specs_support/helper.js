@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { combineReducers } from 'redux';
+import nock from 'nock';
 
 import API from '../libs/middleware/api';
 import settings from '../libs/reducers/settings';
@@ -66,6 +67,41 @@ export default class Helper {
 
     afterEach(() => {
       jasmine.Ajax.uninstall();
+    });
+  }
+
+  static mockRequest(method, apiUrl, url, expectedHeaders) {
+    return nock(apiUrl, expectedHeaders)
+    .intercept(url, method)
+    .reply(
+      200,
+      Helper.testPayload(),
+      { 'content-type': 'application/json' }
+    );
+  }
+
+  static mockAllAjax() {
+    beforeEach(() => {
+      nock('http://www.example.com')
+        .persist()
+        .get(RegExp('.*'))
+        .reply(200, Helper.testPayload(), { 'content-type': 'application/json' });
+      nock('http://www.example.com')
+        .persist()
+        .post(RegExp('.*'))
+        .reply(200, Helper.testPayload(), { 'content-type': 'application/json' });
+      nock('http://www.example.com')
+        .persist()
+        .put(RegExp('.*'))
+        .reply(200, Helper.testPayload(), { 'content-type': 'application/json' });
+      nock('http://www.example.com')
+        .persist()
+        .delete(RegExp('.*'))
+        .reply(200, Helper.testPayload(), { 'content-type': 'application/json' });
+    });
+
+    afterEach(() => {
+      nock.cleanAll();
     });
   }
 

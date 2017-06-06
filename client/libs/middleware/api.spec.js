@@ -3,7 +3,7 @@ import Network from '../constants/network';
 import Helper from '../../specs_support/helper';
 
 describe('api middleware', () => {
-  Helper.stubAjax();
+  Helper.mockAllAjax();
 
   it('implements Redux middleware interface', () => {
     const store = { getState: () => {} };
@@ -50,13 +50,25 @@ describe('api middleware', () => {
 });
 
 describe('apiRequest', () => {
-  Helper.stubAjax();
-
   it('returns a promise', () => {
-    const store = { getState: () => {} };
-    const action = {};
+    class Store {
+      getState() {
+        return (
+        {
+          settings: {
+            apiUrl: 'http://www.something.com/asdfaoer'
+          }
+        }
+        );
+      }
+      dispatch() {}
+    }
+    const store = new Store();
+    const action = {
+      method: Network.GET,
+    };
     const promise = apiRequest(store, action);
-    expect(promise.then).toBe();
+    expect(promise.then).toBeDefined();
   });
 
 });
