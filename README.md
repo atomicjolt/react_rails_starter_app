@@ -18,6 +18,8 @@ Make sure to install git, npm and yarn before you start then:
 1. git clone https://github.com/atomicjolt/react_client_starter_app.git my_project_name
 2. Rename .env.example to .env. This file contains the port the server will use.
    The default 8080 should be fine, but you can also use a local domain or ngrok if you wish.
+   Be sure that the ASSETS_URL is not commented out for the domain that you plan on using. The
+   ASSETS_URL=http://0.0.0.0 or localhost is set as default.
 3. Install packages with
 
     `yarn`
