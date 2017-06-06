@@ -10,7 +10,9 @@ describe('configure store', () => {
       jwt: 'jwt_token',
       settings,
     };
-    const store = configureStore(initialState);
+    const rootReducer = state => (state);
+    const middleware = [];
+    const store = configureStore(initialState, rootReducer, middleware);
     expect(store.getState().settings).toBe(settings);
     expect(store.getState().jwt).toBe('jwt_token');
   });

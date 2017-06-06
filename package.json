@@ -7,7 +7,7 @@
   "homepage": "https://github.com/atomicjolt/react_rails_starter_app",
   "scripts": {
     "postinstall": "cd ./client && yarn",
-    "test": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; yarn test; cd ..; cd ..; done",
+    "test": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; yarn test; cd ..; cd ..; done && yarn test",
     "test_debug": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; node debug ./node_modules/jest/bin/jest --runInBand --config=config/jest_config.json; cd ..; cd ..; done",
     "watch": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; yarn watch; cd ..; cd ..; done",
     "hot": "cd ./client && node webpack.hot.js --hotPack",
@@ -33,5 +33,8 @@
   "dependencies": {
     "del": "^2.2.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^20.0.4",
+    "nock": "^9.0.13"
+  }
 }
