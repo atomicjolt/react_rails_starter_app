@@ -15,14 +15,6 @@ class User < ApplicationRecord
     name || email
   end
 
-  def context_roles(context_id = nil)
-    roles.where(permissions: { context_id: context_id }).distinct
-  end
-
-  def nil_or_context_roles(context_id = nil)
-    roles.where(permissions: { context_id: [context_id, nil] }).distinct
-  end
-
   ####################################################
   #
   # Omniauth related methods
@@ -104,6 +96,14 @@ class User < ApplicationRecord
   #
   def set_default_role
     self.role ||= :user
+  end
+
+  def context_roles(context_id = nil)
+    roles.where(permissions: { context_id: context_id }).distinct
+  end
+
+  def nil_or_context_roles(context_id = nil)
+    roles.where(permissions: { context_id: [context_id, nil] }).distinct
   end
 
   def role?(name, context_id = nil)
