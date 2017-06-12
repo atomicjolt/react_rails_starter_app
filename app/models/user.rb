@@ -15,6 +15,14 @@ class User < ApplicationRecord
     name || email
   end
 
+  def context_roles(context_id = nil)
+    roles.where(permissions: { context_id: context_id }).distinct
+  end
+
+  def nil_or_context_roles(context_id = nil)
+    roles.where(permissions: { context_id: [context_id, nil] }).distinct
+  end
+
   ####################################################
   #
   # Omniauth related methods
@@ -98,23 +106,29 @@ class User < ApplicationRecord
     self.role ||= :user
   end
 
-  def role?(name)
-    any_role?(name)
+  def role?(name, context_id = nil)
+    has_role?(context_id, name)
   end
 
-  def any_role?(*test_names)
+  def has_role?(context_id, *test_names)
     test_names = [test_names] unless test_names.is_a?(Array)
-    test_names.flatten!
-    @role_names = roles.map(&:name) if @role_names.blank?
+    test_names = test_names.map(&:downcase).flatten
+    @role_names = nil_or_context_roles(context_id).map(&:name).map(&:downcase) if @role_names.blank?
     return false if @role_names.blank?
     !(@role_names & test_names).empty?
   end
 
+  def any_role?(*test_names)
+    has_role?(nil, *test_names)
+  end
+
   # Add the user to a new role
-  def add_to_role(name)
-    @role_names = nil
-    role = Role.find_or_create_by(name: name)
-    roles << role if !roles.include?(role) # Make sure that the user can only be put into a role once
+  def add_to_role(name, context_id = nil)
+    role = Role.where(name: name).first_or_create
+    # Make sure that the user can only be put into a role once
+    if context_roles(context_id).exclude?(role)
+      Permission.create(user: self, role: role, context_id: context_id)
+    end
   end
 
   def admin?
