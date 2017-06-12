@@ -218,6 +218,23 @@ describe User, type: :model do
         user.add_to_role("thefoo")
         expect(user.role?("thefoo")).to be true
       end
+      it "adds the user to given role with a context" do
+        context_id = "asdf"
+        user = FactoryGirl.create(:user)
+        user.add_to_role("thefoo", context_id)
+        expect(user.role?("thefoo", context_id)).to be true
+      end
+    end
+    describe "has_role?" do
+      it "checks to see if the user is any of the specified roles with context" do
+        context_id = "asdf"
+        user = FactoryGirl.create(:user)
+        user.add_to_role("thefoo", context_id)
+        user.add_to_role("thewall")
+        expect(user.has_role?(context_id, "thefoo", "brick")).to be true
+        expect(user.has_role?(nil, "thewall", "brick")).to be true
+        expect(user.has_role?(nil, "brick", "foo")).to be false
+      end
     end
     describe "any_role?" do
       it "checks to see if the user is any of the specified roles" do
