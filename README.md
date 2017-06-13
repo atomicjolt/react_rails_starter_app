@@ -83,7 +83,7 @@ config.omniauth :github, Rails.application.secrets.github_developer_id, Rails.ap
 ## Development
 -----------
 
-###Versions
+### Versions
 -----------
 We follow some conservative rules:
 
