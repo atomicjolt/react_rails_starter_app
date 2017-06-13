@@ -83,6 +83,15 @@ config.omniauth :github, Rails.application.secrets.github_developer_id, Rails.ap
 ## Development
 -----------
 
+###Versions
+-----------
+We follow some conservative rules:
+
+  1. Use what’s packaged by Debian/Ubuntu, whenever possible, except for Gems and NPM packages.
+  2. For software not packaged by Debian/Ubuntu, use the oldest version that still receives security updates.
+  3. Gems and NPM packages may use the newest version, as long as doing so does
+  not conflict with other software adhering to the previous two rules.
+
 ### Client
 -----------
 
