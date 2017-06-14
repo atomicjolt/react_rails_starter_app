@@ -15,8 +15,8 @@ branches:
 
 before_install:
   - cp .env.example .env
-  - nvm install 7.5.0
-  - nvm use 7.5.0
+  - nvm install 8.1.0
+  - nvm use 8.1.0
   - npm install -g yarn
 
 install:
