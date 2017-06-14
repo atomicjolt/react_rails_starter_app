@@ -33,8 +33,8 @@ before_install:
   - cp config/secrets.example.yml config/secrets.yml
   - cp config/ci.database.yml config/database.yml
   - cp .env.example .env
-  - nvm install 7.5.0
-  - nvm use 7.5.0
+  - nvm install 8.1.0
+  - nvm use 8.1.0
   - npm install -g yarn
 
 install:
