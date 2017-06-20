@@ -116,6 +116,21 @@ describe('api', () => {
     });
   });
 
+  describe('makeUrl', () => {
+    it('adds on the api url', () => {
+      const result = api.makeUrl('/api/stuff', 'http://www.example.com');
+      expect(result).toBe('http://www.example.com/api/stuff');
+    });
+    it('does not add an extra slash on the api url', () => {
+      const result = api.makeUrl('/api/stuff', 'http://www.example.com/');
+      expect(result).toBe('http://www.example.com/api/stuff');
+    });
+    it('adds on the api url even when the query has http', () => {
+      const result = api.makeUrl('/api/stuff?return=https://www.example.com/return', 'http://www.example.com/');
+      expect(result).toBe('http://www.example.com/api/stuff?return=https://www.example.com/return');
+    });
+  });
+
   describe('Pending Requests', () => {
     const url = 'http://www.example.com';
     const requestMethod = () => {};

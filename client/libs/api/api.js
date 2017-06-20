@@ -115,7 +115,7 @@ export default class Api {
    * `apiUrl`.  If `path` already contains "http", it is returned as-is.
    */
   static makeUrl(part, apiUrl) {
-    if (part.indexOf('http') >= 0) {
+    if (_.startsWith(part, 'http')) {
       return part;
     }
 
