@@ -28,7 +28,8 @@ function buildAppParts(app, onlyPack) {
 // Build a single app
 // -----------------------------------------------------------------------------
 function buildApp(appName, options) {
-  const app = _.find(settings.apps(options).apps, (e, name) => appName === name);
+  const apps = settings.apps(options);
+  const app = _.find(apps, (e, name) => appName === name);
   if (!options.noClean) {
     fs.emptyDirSync(app.outputPath);
   }
@@ -39,18 +40,46 @@ function buildApp(appName, options) {
 }
 
 // -----------------------------------------------------------------------------
+// Build apps in order one at a time
+// -----------------------------------------------------------------------------
+function buildAppWait(app, options) {
+  return new Promise(resolve => {
+    const buildPromise = buildAppParts(app, options.onlyPack);
+    buildPromise.then(() => {
+      resolve({
+        app,
+        buildPromise
+      });
+    });
+  });
+}
+
+// -----------------------------------------------------------------------------
 // Build all apps
 // -----------------------------------------------------------------------------
-function buildApps(options) {
-  return _.map(settings.apps(options), (app) => {
-    if (!options.noClean) {
+async function buildApps(options) {
+  const apps = settings.apps(options);
+
+  // Clean dirs
+  if (!options.noClean) {
+    _.each(apps, (app) => {
       fs.emptyDirSync(app.outputPath);
+    });
+  }
+
+  if (options.order) {
+    const results = [];
+    for (let i = 0; i < options.order.length; i += 1) {
+      const appName = options.order[i];
+      results.push(await buildAppWait(apps[appName], options));
     }
-    return {
-      app,
-      buildPromise: buildAppParts(app, options.onlyPack)
-    };
-  });
+    return results;
+  }
+
+  return _.map(apps, app => ({
+    app,
+    buildPromise: buildAppParts(app, options.onlyPack)
+  }));
 }
 
 module.exports = {

@@ -20,26 +20,7 @@ const _                    = require('lodash');
 //      'test'
 module.exports = function webpackConfig(app) {
 
-  let babelPlugins = 'plugins[]=transform-runtime' +        // Externalise references to helpers and builtins, automatically polyfilling your code without polluting globals.
-                ',plugins[]=transform-decorators-legacy' +  // A plugin for Babel 6 that (mostly) replicates the old decorator behavior from Babel 5. Decorators aren't part of the standard yet. This gives us a good enough solution for now.
-                ',plugins[]=transform-class-properties';    // Allows class instance fields and class static properties.
-
-  const presets = 'presets[]=react' +  // Include all plugins needed for React
-                  ',presets[]=es2015' + // Include all plugins needed to handle es2015 syntax
-                  ',presets[]=stage-0'; // Enables experimental ES features.
-
-  if (app.production) {
-    babelPlugins += ',plugins[]=transform-react-constant-elements'; // Hoists static React components to reduce calls to createElement
-    babelPlugins += ',plugins[]=transform-react-remove-prop-types'; // Removes prop types from code
-  } else if (app.stage === 'hot') {
-    babelPlugins += ',plugins[]=react-hot-loader/babel';
-  } else if (app.stage === 'test') {
-    // Add test plugins as needed
-  }
-
-  const babelLoader = `babel-loader?${babelPlugins}&${presets}`;
-
-  const jsLoaders = [babelLoader];
+  const jsLoaders = ['babel-loader'];
   if (app.shouldLint) {
     jsLoaders.push('atomic-lint-loader');
   }
@@ -164,7 +145,8 @@ module.exports = function webpackConfig(app) {
     { test: /\.css$/i, use: app.extractCssOff ? cssLoaders : extractCSS.extract(cssLoaders) },
     { test: /\.less$/i, use: app.extractCssOff ? lessLoaders : extractCSS.extract(lessLoaders) },
     { test: /.*\.(gif|png|jpg|jpeg|svg)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
-    { test: /.*\.(eot|woff2|woff|ttf)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] }
+    { test: /.*\.(eot|woff2|woff|ttf)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
+    { test: /\.tpl$/, loader: 'lodash-template-webpack-loader' }
   ];
 
   const entryPath = path.join(app.path, app.file);
@@ -176,6 +158,19 @@ module.exports = function webpackConfig(app) {
       'eventsource-polyfill',
       entryPath
     ];
+  }
+
+  const resolve = {
+    extensions: ['.js', '.json', '.jsx', '.scss', '.less', '.css'],
+    modules: ['node_modules', `${app.path}/node_modules`]
+  };
+
+  if (app.preact) {
+    resolve.alias = {
+      react: 'preact-compat',
+      'react-dom': 'preact-compat',
+      'create-react-class': 'preact-compat/lib/create-react-class'
+    };
   }
 
   return {
@@ -191,10 +186,7 @@ module.exports = function webpackConfig(app) {
       // http://webpack.github.io/docs/configuration.html#output-pathinfo
       pathinfo: !app.production
     },
-    resolve: {
-      extensions: ['.js', '.json', '.jsx', '.scss', '.less', '.css'],
-      modules: ['node_modules', `${app.path}/node_modules`]
-    },
+    resolve,
     cache: true,
     devtool: app.production ? 'source-map' : 'cheap-module-eval-source-map', // https://webpack.js.org/configuration/devtool/
     stats: { colors: true },
