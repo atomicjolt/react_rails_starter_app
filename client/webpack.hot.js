@@ -11,7 +11,7 @@ const webpackConfigBuilder = require('./config/webpack.config');
 const clientApps = require('./libs/build/apps');
 
 const localIp = '0.0.0.0';
-const appName = _.trim(argv._[0]);
+const appName = argv.app;
 const hotPack = argv.hotPack;
 const shouldLint = argv.lint;
 

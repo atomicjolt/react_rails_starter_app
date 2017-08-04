@@ -35,7 +35,7 @@ each new application that is started.
 
 If you have multiple applications you can run them one at a time with the application name:
 
-  `yarn hot hello_world`
+  `yarn hot -- --app hello_world`
 
 then visit `http://localhost:8080`
 

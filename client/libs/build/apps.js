@@ -28,7 +28,8 @@ function buildAppParts(app, onlyPack) {
 // Build a single app
 // -----------------------------------------------------------------------------
 function buildApp(appName, options) {
-  const app = _.find(settings.apps(options).apps, (e, name) => appName === name);
+  const apps = settings.apps(options);
+  const app = _.find(apps, (e, name) => appName === name);
   if (!options.noClean) {
     fs.emptyDirSync(app.outputPath);
   }
