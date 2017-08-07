@@ -65,16 +65,19 @@ if (appName) {
 } else if (hotPack) {
   options.onlyPack = true;
   options.appPerPort = false;
-  const results = clientApps.buildApps(options);
-  const apps = _.map(results, result => result.app);
-  const promises = _.map(results, result => result.buildPromise);
-  const serverApp = express();
-  Promise.all(promises).then(() => {
-    setupMiddleware(serverApp, apps);
-    runServer(serverApp, settings.hotPort, settings.paths.devOutput);
+  clientApps.buildApps(options).then((results) => {
+    const apps = _.map(results, result => result.app);
+    const promises = _.map(results, result => result.buildPromise);
+    const serverApp = express();
+    Promise.all(promises).then(() => {
+      setupMiddleware(serverApp, apps);
+      runServer(serverApp, settings.hotPort, settings.paths.devOutput);
+    });
   });
 } else {
-  _.each(clientApps.buildApps(options), (result) => {
-    result.buildPromise.then(() => launch(result.app));
+  clientApps.buildApps(options).then((results) => {
+    _.each(results, (result) => {
+      result.buildPromise.then(() => launch(result.app));
+    });
   });
 }
