@@ -1,4 +1,5 @@
 const fs = require('fs-extra');
+const path = require('path');
 const _ = require('lodash');
 const urljoin = require('url-join');
 
@@ -10,7 +11,7 @@ function loadWebpackAssets(app) {
   ).filter(filename =>
     _.endsWith(filename, '-webpack-assets.json')
   ).reduce((result, filename) => {
-    const webpackAssetsFilePath = `${app.outputPath}${filename}`;
+    const webpackAssetsFilePath = path.join(app.outputPath, filename);
     if (fs.existsSync(webpackAssetsFilePath)) {
       return _.merge(result, _.mapValues(fs.readJsonSync(webpackAssetsFilePath), asset =>
         _.mapValues(asset, assetFilename => urljoin(app.publicPath, assetFilename))
