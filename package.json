@@ -18,7 +18,7 @@
     "build_dev_pack": "cd ./client && node ./build.js --onlyPack",
     "build": "cd ./client && node ./build.js --release",
     "build_pack": "cd ./client && node ./build.js --release --onlyPack",
-    "create": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js create",
+    "ball": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js create",
     "release": "cd ./client && node ./build.js --release && cd .. && ./client/node_modules/s3-website/s3-website.js deploy",
     "lint": "cd ./client && eslint js",
     "nuke": "rm -rf node_modules && cd ./client && yarn nuke"

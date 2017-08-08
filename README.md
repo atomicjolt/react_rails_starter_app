@@ -8,7 +8,8 @@ and our [Firebase React starter appliction](https://github.com/atomicjolt/react_
 
 #Demo:
 -----------------------
-[React Client Starter App Demo](http://reactclientstarterapp.com.s3-website-us-east-1.amazonaws.com)
+[React Client Starter App Demo](https://reactclientstarterapp.s3-website-us-east-1.amazonaws.com/hello_world)
+
 
 #Getting Started:
 -----------------------
@@ -49,15 +50,26 @@ applications. The build process will automatically add a new webpack entry point
 
 ## Custom Build Settings
 -----------
-Default build settings can be overridden by adding the following json files to the application directory:
+Default build settings can be overridden by adding an options.json file to the application directory.
 
-Change the output directory for an application by specifying "outName" which will override the default name
-used when generating a path:
+### Options:
+-----------
+* outName - Change the output directory for an application by specifying "outName" which will override the default name
+used when generating a path.
+* port - Hard code a port for the application to run. Typically, you won't need to set this value as the build process
+will calculate one for you.
+* onlyPack - If true don't generate html files. Instead, only run the webpack process and output the resulting files.
+* noClean - If true then don't delete files before starting a new build.
+* rootOutput - Dump the application directly into the root directory.
 
-In output_paths.json
+Example options.json
 `
 {
-  "outName": "hello_world"
+  "outName": "hello_world",
+  "port": 8080,
+  "onlyPack": true,
+  "noClean": false,
+  "rootOutput": false
 }
 `
 
@@ -164,9 +176,9 @@ directly into the build/prod directory
   `yarn build_pack`
 
 After setting up .s3-website.json this will create a S3 bucket and set it as a website:
-  `yarn create`
+  `yarn ball`
 
-Release a production build to the S3 website bucket created by `yarn create`
+Release a production build to the S3 website bucket created by `yarn ball`
   `yarn release`
 
 Run a linter over the project:

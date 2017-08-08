@@ -19,7 +19,7 @@
          "MaxAgeSeconds": 0
       }
    ],
-   "enableCloudfront": true,
+   "enableCloudfront": false,
    "retries": 20,
    "domain": "reactclientstarterapp.com",
    "configFile": ".s3-website.json"
