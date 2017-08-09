@@ -1,13 +1,11 @@
 const path = require('path');
-const _ = require('lodash');
 const express = require('express');
 
 const settings = require('./config/settings');
 
 const serverApp = express();
-const argv = require('minimist')(process.argv.slice(2));
 
-const appName = _.trim(argv._[0]);
+const localIp = '0.0.0.0';
 
 function launch(servePath, port) {
   serverApp.use(express.static(servePath));
@@ -16,21 +14,19 @@ function launch(servePath, port) {
     res.sendFile(path.join(servePath, req.url));
   });
 
-  serverApp.listen(port, '0.0.0.0', (err) => {
+  serverApp.listen(port, localIp, (err) => {
     if (err) {
       console.log(err);
       return;
     }
-    console.log(`Listening on: ${port}`);
+    console.log('*****************************************************************************************');
+    console.log('Note that you must run "yarn build" before running "yarn live" to build production files.');
+    console.log('Also note that if you have set "prodAssetsUrl" in settings.js to a CDN or other public ');
+    console.log('server value you will need to change it to an empty string to serve files from your ');
+    console.log('local computer.');
+    console.log(`Listening on: http://${localIp}:${port}`);
     console.log(`Serving content from: ${servePath}`);
   });
 }
 
-if (appName) {
-  launch(path.join(settings.prodOutput, appName), settings.hotPort);
-} else {
-  const options = { stage: 'production', onlyPack: false, port: settings.hotPort };
-  _.each(settings.apps(options), (app) => {
-    launch(app.outputPath, app.port);
-  });
-}
+launch(settings.prodOutput, settings.hotPort);
