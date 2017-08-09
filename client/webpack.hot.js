@@ -60,10 +60,14 @@ function launch(app) {
 const options = { hotPack, shouldLint, stage: 'hot', onlyPack: false, port: settings.hotPort, appPerPort: true };
 
 if (appName) {
+  // Run a single app. Note that when using yarn hot in order to run a single
+  // application you will need to type 'yarn hot -- --app=my-app'
   const result = clientApps.buildApp(appName, options);
   result.buildPromise.then(() => launch(result.app));
 } else if (hotPack) {
+  // Only run webpack. Do not run the rest of the build process
   options.onlyPack = true;
+  options.rootOutput = true;
   options.appPerPort = false;
   clientApps.buildApps(options).then((results) => {
     const apps = _.map(results, result => result.app);
@@ -75,6 +79,7 @@ if (appName) {
     });
   });
 } else {
+  // Run and serve all applications
   clientApps.buildApps(options).then((results) => {
     _.each(results, (result) => {
       result.buildPromise.then(() => launch(result.app));
