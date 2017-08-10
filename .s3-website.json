@@ -6,6 +6,8 @@
    "corsConfiguration": [
       {
          "AllowedMethods": [
+            "GET",
+            "HEAD",
             "POST",
             "PUT",
             "DELETE"
