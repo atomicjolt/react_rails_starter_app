@@ -1,7 +1,7 @@
 import configureStore from './configure_store';
 
 describe('configure store', () => {
-  it('setups up initial state', () => {
+  it('sets up initial state', () => {
     const settings = {
       csrf   : 'csrf_token',
       apiUrl : 'http://www.example.com',
