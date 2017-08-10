@@ -21,6 +21,6 @@
    ],
    "enableCloudfront": false,
    "retries": 20,
-   "domain": "reactclientstarterapp.com",
+   "domain": "reactclientstarterapp",
    "configFile": ".s3-website.json"
 }
