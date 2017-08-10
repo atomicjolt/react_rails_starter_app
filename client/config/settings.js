@@ -1,7 +1,8 @@
 const fs = require('fs-extra');
 const path = require('path');
 const _ = require('lodash');
-const urljoin = require('url-join');
+
+const utils = require('../libs/build/utils');
 
 // There is a warning if the .env file is missing
 // This is fine in a production setting, where settings
@@ -24,7 +25,8 @@ const prodOutput = path.join(__dirname, '../../build/prod', prodRelativeOutput);
                           // value as an empty string. This value could also be a CDN or
                           // it could be the ssl version of your S3 bucket ie:
                           // https://s3.amazonaws.com/' + deployConfig.domain;
-
+// For local testing set prodAssetsUrl to process.env.ASSETS_URL
+// const prodAssetsUrl = `${process.env.ASSETS_URL}:${process.env.ASSETS_PORT}`;
 const prodAssetsUrl = `https://s3.amazonaws.com/${deployConfig.domain}`;
 
 const devAssetsUrl = process.env.ASSETS_URL;
@@ -69,15 +71,15 @@ function isProduction(stage) {
 }
 
 function isNameRequired(options) {
-  return !options.onlyPack && !options.appPerPort && !options.rootOutput;
+  return !options.onlyPack && !options.rootOutput;
 }
 
 // -----------------------------------------------------------------------------
 // Generates a path with the app name if needed
 // -----------------------------------------------------------------------------
 function withNameIfRequired(name, relativeOutput, options) {
-  if (isNameRequired(options)) {
-    return urljoin(relativeOutput, name);
+  if (isNameRequired(options) && !options.appPerPort) {
+    return utils.joinUrlOrPath(relativeOutput, name);
   }
   return relativeOutput;
 }
@@ -100,7 +102,7 @@ function outputPaths(name, port, appPath, options) {
   if (isProduction(options.stage)) {
     rootOutputPath = prodOutput;
     outputPath = isNameRequired(options) ? path.join(prodOutput, outName) : prodOutput;
-    publicPath = urljoin(
+    publicPath = utils.joinUrlOrPath(
       prodAssetsUrl,
       withNameIfRequired(outName, prodRelativeOutput, options)
     );
@@ -110,11 +112,14 @@ function outputPaths(name, port, appPath, options) {
     if (_.find(['localhost', '0.0.0.0', '127.0.0.1'], d => _.includes(devAssetsUrl, d))) {
       devUrl = `${devAssetsUrl}:${port}`;
     }
-    publicPath = urljoin(devUrl, withNameIfRequired(outName, devRelativeOutput, options));
+    publicPath = utils.joinUrlOrPath(
+      devUrl,
+      withNameIfRequired(outName, devRelativeOutput, options)
+    );
   }
 
   // Make sure the public path ends with a / or fonts will not have the correct path
-  if (!_.endsWith(publicPath)) {
+  if (!_.endsWith(publicPath, '/')) {
     publicPath = `${publicPath}/`;
   }
 
@@ -166,7 +171,7 @@ function appSettings(name, port, options) {
   const customOptionsPath = `${appPath}/options.json`;
   let combinedOptions = options;
   if (fs.existsSync(customOptionsPath)) {
-    customOptions = JSON.parse(fs.readFileSync(customOptionsPath, 'utf8'));
+    const customOptions = JSON.parse(fs.readFileSync(customOptionsPath, 'utf8'));
     combinedOptions = _.merge(options, customOptions);
   }
 
@@ -211,5 +216,7 @@ module.exports = {
   hotPort,
   outputPaths,
   apps,
-  isProduction
+  isProduction,
+  devOutput,
+  prodOutput,
 };
