@@ -144,8 +144,8 @@ module.exports = function webpackConfig(app) {
     { test: /\.s[ac]ss$/i, use: app.extractCssOff ? scssLoaders : extractCSS.extract(scssLoaders) },
     { test: /\.css$/i, use: app.extractCssOff ? cssLoaders : extractCSS.extract(cssLoaders) },
     { test: /\.less$/i, use: app.extractCssOff ? lessLoaders : extractCSS.extract(lessLoaders) },
-    { test: /.*\.(gif|png|jpg|jpeg|svg)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
-    { test: /.*\.(eot|woff2|woff|ttf)$/, use: ['url-loader?limit=5000&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
+    { test: /.*\.(gif|png|jpg|jpeg|svg)$/, use: ['url-loader?limit=500&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
+    { test: /.*\.(eot|woff2|woff|ttf)$/, use: ['url-loader?limit=500&hash=sha512&digest=hex&size=16&name=[name]-[hash].[ext]'] },
     { test: /\.tpl$/, loader: 'lodash-template-webpack-loader' }
   ];
 

@@ -1,5 +1,6 @@
-const path  = require('path');
-const _     = require('lodash');
+const path = require('path');
+const _ = require('lodash');
+const urljoin = require('url-join');
 
 // Regex used to parse date from file name
 const dateRegEx = /(\d{4})-(\d{1,2})-(\d{1,2})-(.*)/;
@@ -35,7 +36,18 @@ function filename2date(filePath) {
   return result;
 }
 
+// -----------------------------------------------------------------------------
+// Figures out whether to use url join or path join based on inputs
+// -----------------------------------------------------------------------------
+function joinUrlOrPath(...args) {
+  if (_.startsWith(args[0], 'http')) {
+    return urljoin(...args);
+  }
+  return path.join(...args);
+}
+
 module.exports = {
   cleanTag,
-  filename2date
+  filename2date,
+  joinUrlOrPath,
 };
