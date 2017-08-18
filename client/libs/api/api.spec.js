@@ -1,134 +1,144 @@
-import superAgentMock from 'superagent-mock';
-import Request from 'superagent';
+import nock    from 'nock';
 import api     from './api';
 import Network from '../constants/network';
-import config from './superagent-mock-config';
-import Helper from '../../specs_support/helper';
+import Helper  from '../../specs_support/helper';
 
 describe('api', () => {
-  let superagentMock;
-  const url = '/api/test/12';
   const jwt = 'jwt_token';
   const apiUrl = 'http://www.example.com';
   const csrf = 'csrf_value';
   const params = {};
   const body = {};
   const headers = {};
+  let expectedHeaders;
 
   beforeEach(() => {
-    superagentMock = superAgentMock(Request, config);
+    expectedHeaders = {
+      Accept: 'application/json',
+    };
   });
 
   afterEach(() => {
-    superagentMock.unset();
+    nock.cleanAll();
   });
 
   it('calls Get', () => {
-    expect.assertions(3);
-    api.get(
-      url,
-      apiUrl,
-      jwt,
-      csrf,
-      params,
-      headers
-    ).then((data) => {
-      expect(data.body.status).toBe(200);
-      expect(data.body.contentType).toContain('application/json');
-      expect(data.body.responseText).toContain('Starter App');
+    const url = '/api/test/1';
+    expectedHeaders.Authorization = `Bearer ${jwt}`;
+    expectedHeaders['X-CSRF-Token'] = csrf;
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
+    api.get(url, apiUrl, jwt, csrf, params, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+      expect(result.text).toEqual(Helper.testPayload());
     });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Get without a jwt', () => {
-    api.get(
-      url,
-      apiUrl,
-      null,
-      csrf,
-      params,
-      headers
-    ).then(data => expect(data.body.statusText).toContain('Unauthorized'));
+    const url = '/api/test/2';
+    expectedHeaders['X-CSRF-Token'] = csrf;
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
+    api.get(url, apiUrl, null, csrf, params, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+    });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Get without a csrf', () => {
-    api.get(
-      url,
-      apiUrl,
-      jwt,
-      null,
-      params,
-      headers
-    ).then(result =>
-      expect(result.body.status).toBe(401));
+    const url = '/api/test/3';
+    expectedHeaders.Authorization = `Bearer ${jwt}`;
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
+    api.get(url, apiUrl, jwt, null, params, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+    });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Get with a full url', () => {
-    const url = 'http://www.example.com/api/test/full';
-    api.get(url, apiUrl, jwt, csrf, params, headers).then(data =>
-      expect(data.body.status).toBe(200));
+    const url = '/api/test/full';
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
+    api.get(`${apiUrl}${url}`, apiUrl, jwt, null, params, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
+    });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Post', () => {
     const url = '/api/test';
+    const nockRequest = Helper.mockRequest('post', apiUrl, url, expectedHeaders);
+
     api.post(url, apiUrl, jwt, csrf, params, body, headers).then((result) => {
-      expect(result.code).toBe(201);
+      expect(result.statusCode).toBe(200);
     });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Post with a full url', () => {
-    const url = 'http://www.example.com/api/test/full';
-    api.post(url, apiUrl, jwt, csrf, params, body, headers).then((result) => {
-      expect(result.code).toBe(201);
+    const url = '/api/test/full';
+    const nockRequest = Helper.mockRequest('post', apiUrl, url, expectedHeaders);
+
+    api.post(`${apiUrl}${url}`, apiUrl, jwt, csrf, params, body, headers).then((result) => {
+      expect(result.statusCode).toBe(200);
     });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Put', () => {
+    const url = '/api/test/4';
+    const nockRequest = Helper.mockRequest('put', apiUrl, url, expectedHeaders);
+
     api.put(url, apiUrl, jwt, csrf, params, body, headers).then((result) => {
-      expect(result.code).toBe(202);
+      expect(result.statusCode).toBe(200);
+      const request = result.req;
+      expect(request.method.toLowerCase()).toEqual(Network.PUT);
     });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Delete', () => {
+    const url = '/api/test/5';
+    const nockRequest = Helper.mockRequest('delete', apiUrl, url, expectedHeaders);
+
     api.del(url, apiUrl, jwt, csrf, params, headers).then((result) => {
-      expect(result.code).toBe(204);
+      expect(result.statusCode).toBe(200);
     });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls execRequest directly', () => {
-    api.execRequest(Network.GET, url, apiUrl, jwt, csrf, params, headers).then((result) => {
-      expect(result.body.status).toBe(200);
-      expect(result.body.responseText).toEqual(Helper.testPayload());
-    });
-  });
+    const url = '/api/test/6';
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
 
-  it('calls execRequest directly', () => {
-    api.execRequest(Network.GET, url, apiUrl, null, null).then((data) => {
-      expect(data.body.status).toBe(401);
-      expect(data.body.responseText).toBeUndefined();
+    api.execRequest(Network.GET, url, apiUrl, null, null).then((result) => {
+      expect(result.statusCode).toBe(200);
+      expect(result.text).toEqual(Helper.testPayload());
     });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls execRequest with optional timeout', () => {
+    const url = '/api/test/7';
     const timeout = 1000;
-    api.execRequest(Network.GET, url, apiUrl, jwt, csrf, {}, {}, {}, timeout).then((result) => {
-      expect(result.body.status).toBe(200);
-      expect(result.body.responseText).toEqual(Helper.testPayload());
-    });
-  });
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
 
-  describe('makeUrl', () => {
-    it('adds on the api url', () => {
-      const result = api.makeUrl('/api/stuff', 'http://www.example.com');
-      expect(result).toBe('http://www.example.com/api/stuff');
+    api.execRequest(Network.GET, url, apiUrl, null, null, {}, {}, {}, timeout).then((result) => {
+      expect(result.statusCode).toBe(200);
+      expect(result.text).toEqual(Helper.testPayload());
     });
-    it('does not add an extra slash on the api url', () => {
-      const result = api.makeUrl('/api/stuff', 'http://www.example.com/');
-      expect(result).toBe('http://www.example.com/api/stuff');
-    });
-    it('adds on the api url even when the query has http', () => {
-      const result = api.makeUrl('/api/stuff?return=https://www.example.com/return', 'http://www.example.com/');
-      expect(result).toBe('http://www.example.com/api/stuff?return=https://www.example.com/return');
-    });
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   describe('Pending Requests', () => {
