@@ -191,13 +191,19 @@ function appSettings(name, port, options) {
 // -----------------------------------------------------------------------------
 function iterateDirAndPorts(dir, options, cb) {
   let port = options.port;
-  return fs.readdirSync(dir)
+  const iteratedApps = fs.readdirSync(dir)
     .filter(file => fs.statSync(path.join(dir, file)).isDirectory())
     .reduce((result, appName) => {
       const app = cb(appName, port, options);
       port = options.appPerPort ? port + 1 : options.port;
       return _.merge(result, app);
     }, {});
+  if (options.order && options.order.length > 0) {
+    return iteratedApps.sort((a, b) =>
+      (options.order.indexOf(a.name) > options.order.indexOf(b.name))
+    );
+  }
+  return iteratedApps;
 }
 
 // -----------------------------------------------------------------------------

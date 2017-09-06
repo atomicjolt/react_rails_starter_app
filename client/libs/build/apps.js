@@ -1,27 +1,17 @@
 const fs = require('fs-extra');
 const _ = require('lodash');
-
+const webpack = require('webpack');
 const settings = require('../../config/settings');
-const build = require('./build');
-const log = require('./log');
+const webpackConfigBuilder = require('../../config/webpack.config');
 
-// -----------------------------------------------------------------------------
-// Build a single app
-// -----------------------------------------------------------------------------
-function buildAppParts(app, onlyPack) {
-  if (onlyPack) {
-    const buildPromise = build.buildWebpackEntries(app);
-    buildPromise.then(() => {
-      log.out(`Finished Javascript for ${app.name}`);
+// clean up old build
+function clean(apps, options) {
+  // Clean dirs
+  if (!options.noClean) {
+    _.each(apps, (app) => {
+      fs.emptyDirSync(app.outputPath);
     });
-    return buildPromise;
   }
-  const buildPromise = build.build(app);
-  buildPromise.then((result) => {
-    log.out(`Finished Javascript for ${app.name}.`);
-    log.out(`Built ${result.pages.length} pages.`);
-  });
-  return buildPromise;
 }
 
 // -----------------------------------------------------------------------------
@@ -30,59 +20,42 @@ function buildAppParts(app, onlyPack) {
 function buildApp(appName, options) {
   const apps = settings.apps(options);
   const app = _.find(apps, (e, name) => appName === name);
-  if (!options.noClean) {
-    fs.emptyDirSync(app.outputPath);
-  }
+  const webpackCompiler = webpack(webpackConfigBuilder(app, options));
+
+  clean([app], options);
+
   return {
     app,
-    buildPromise: buildAppParts(app, options.onlyPack)
+    webpackCompiler,
   };
 }
 
-// -----------------------------------------------------------------------------
-// Build apps in order one at a time
-// -----------------------------------------------------------------------------
-function buildAppWait(app, options) {
-  return new Promise(resolve => {
-    const buildPromise = buildAppParts(app, options.onlyPack);
-    buildPromise.then(() => {
-      resolve({
-        app,
-        buildPromise
-      });
-    });
-  });
+function buildAppsForMultipleServers(options) {
+  const apps = settings.apps(options);
+  clean(apps, options);
+  return _.map(apps, app => ({
+    app,
+    webpackCompiler: webpack(webpackConfigBuilder(app, options)),
+  }));
 }
 
 // -----------------------------------------------------------------------------
 // Build all apps
 // -----------------------------------------------------------------------------
-async function buildApps(options) {
+function buildAppsForOneServer(options) {
   const apps = settings.apps(options);
+  clean(apps, options);
+  const webpackConfigs = _.map(apps, app => webpackConfigBuilder(app, options));
+  const webpackCompiler = webpack(webpackConfigs);
 
-  // Clean dirs
-  if (!options.noClean) {
-    _.each(apps, (app) => {
-      fs.emptyDirSync(app.outputPath);
-    });
-  }
-
-  if (options.order) {
-    const results = [];
-    for (let i = 0; i < options.order.length; i += 1) {
-      const appName = options.order[i];
-      results.push(await buildAppWait(apps[appName], options));
-    }
-    return results;
-  }
-
-  return _.map(apps, app => ({
-    app,
-    buildPromise: buildAppParts(app, options.onlyPack)
-  }));
+  return {
+    apps,
+    webpackCompiler,
+  };
 }
 
 module.exports = {
   buildApp,
-  buildApps
+  buildAppsForMultipleServers,
+  buildAppsForOneServer
 };
