@@ -1,15 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from 'react';
 
-export default class Index extends React.Component {
+type Props = {
+  children?: React.Node
+}
 
-  static propTypes = {
-    children: PropTypes.node,
-  };
-
-  static defaultProps = {
-    children: '',
-  }
+export default class Index extends React.Component<Props, {}> {
 
   constructor() {
     super();
@@ -19,9 +15,8 @@ export default class Index extends React.Component {
   render() {
     return (
       <div>
-        {this.props.children}
+        {this.props.children || ''}
       </div>
     );
   }
-
 }

@@ -4,6 +4,9 @@ const ExtractTextPlugin    = require('extract-text-webpack-plugin');
 const ChunkManifestPlugin  = require('chunk-manifest-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const AssetsPlugin         = require('assets-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const HtmlBuilderPlugin    = require('../libs/plugins/html_builder');
+const FlowCompilerPlugin   = require('../libs/plugins/flow_compiler');
 const _                    = require('lodash');
 
 //
@@ -18,19 +21,20 @@ const _                    = require('lodash');
 //      'staging' (Will result in same output as production but will output to /staging)
 //      'hot' (Development mode with hot reload)
 //      'test'
-module.exports = function webpackConfig(app) {
+const outputSourceMaps = true;
+
+module.exports = function webpackConfig(app, options = {}) {
 
   const jsLoaders = ['babel-loader'];
   if (app.shouldLint) {
     jsLoaders.push('atomic-lint-loader');
   }
 
-  const isDevelopment = app.state === 'development' || app.state === 'hot';
   const cssLoaders = [
     {
       loader: 'css-loader',
       options: {
-        sourceMap: isDevelopment,
+        sourceMap: outputSourceMaps,
         includePaths: [
           `${app.path}/node_modules`
         ],
@@ -39,7 +43,7 @@ module.exports = function webpackConfig(app) {
       }
     }, {
       loader: 'postcss-loader',
-      options: { sourceMap: isDevelopment }
+      options: { sourceMap: outputSourceMaps }
     }
   ];
 
@@ -47,7 +51,7 @@ module.exports = function webpackConfig(app) {
     cssLoaders.unshift({
       loader: 'style-loader',
       options: {
-        sourceMap: isDevelopment,
+        sourceMap: outputSourceMaps,
       }
     });
   }
@@ -56,7 +60,7 @@ module.exports = function webpackConfig(app) {
   scssLoaders.push({
     loader: 'sass-loader',
     options: {
-      sourceMap: isDevelopment,
+      sourceMap: outputSourceMaps,
       includePaths: [
         `${app.path}/node_modules`
       ],
@@ -69,7 +73,7 @@ module.exports = function webpackConfig(app) {
   lessLoaders.push({
     loader: 'less-loader',
     options: {
-      sourceMap: isDevelopment,
+      sourceMap: outputSourceMaps,
       includePaths: [
         `${app.path}/node_modules`
       ]
@@ -79,10 +83,12 @@ module.exports = function webpackConfig(app) {
 
   const extractCSS = new ExtractTextPlugin(app.production ? '[name]-[chunkhash].css' : '[name].css');
 
-  let plugins = [];
+  let plugins = [
+    new HtmlBuilderPlugin(app, options),
+  ];
 
   if (!app.codeSplittingOff) {
-    plugins = [
+    plugins = _.concat(plugins, [
       // Use to extract common code from multiple entry points into a single init.js
       new webpack.optimize.CommonsChunkPlugin({
         name: `${app.name}_vendor`,
@@ -98,11 +104,19 @@ module.exports = function webpackConfig(app) {
         fullPath: false,
         filename: `${app.name}-webpack-assets.json`
       })
-    ];
+    ]);
   }
 
   if (!app.extractCssOff) {
     plugins.push(extractCSS);
+  }
+
+  if (!app.production) {
+    plugins = _.concat(plugins, [
+      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
+      new FriendlyErrorsPlugin({ clearConsole: false }),
+      new FlowCompilerPlugin(app),
+    ]);
   }
 
   if (app.production) {
@@ -119,23 +133,14 @@ module.exports = function webpackConfig(app) {
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         openAnalyzer: false
-      })
+      }),
     ]);
   } else if (app.stage === 'hot') {
     plugins = _.concat(plugins, [
       new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoEmitOnErrorsPlugin()
+      // new webpack.HotModuleReplacementPlugin(),
+      // new webpack.NoEmitOnErrorsPlugin(),
     ]);
-  } else if (app.stage === 'development') {
-    plugins = _.concat(plugins, [
-      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true })
-    ]);
-  } else {
-    plugins = [
-      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
-      extractCSS
-    ];
   }
 
   const rules = [
@@ -156,6 +161,7 @@ module.exports = function webpackConfig(app) {
     // Add hot reload to entry
     entry[app.name] = [
       'eventsource-polyfill',
+      // `webpack-hot-middleware/client?name=${app.name}`,
       entryPath
     ];
   }
@@ -175,6 +181,7 @@ module.exports = function webpackConfig(app) {
 
   return {
     context: path.resolve('../apps', __dirname),
+    name: app.name,
     entry,
     output: {
       publicPath: app.publicPath,
@@ -189,14 +196,8 @@ module.exports = function webpackConfig(app) {
     resolve,
     cache: true,
     devtool: app.production ? 'source-map' : 'cheap-module-eval-source-map', // https://webpack.js.org/configuration/devtool/
-    stats: { colors: true },
+    stats: 'minimal',
     plugins,
     module: { rules },
-    devServer: {
-      stats: {
-        cached: false,
-        exclude: [/node_modules[\\/]react(-router)?[\\/]/]
-      }
-    }
   };
 };
