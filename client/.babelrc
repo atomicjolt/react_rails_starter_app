@@ -7,6 +7,9 @@
         ["transform-decorators-legacy"],
         ["transform-class-properties"],
         ["babel-plugin-rewire"],
+      ],
+      "ignore": [
+        "node_modules",
       ]
     },
     "development": {
@@ -14,6 +17,9 @@
         ["transform-runtime"],
         ["transform-decorators-legacy"],
         ["transform-class-properties"],
+      ],
+      "ignore": [
+        "node_modules",
       ]
     },
     "hot": {
@@ -22,6 +28,9 @@
         ["transform-decorators-legacy"],
         ["transform-class-properties"],
         ["react-hot-loader/babel"],
+      ],
+      "ignore": [
+        "node_modules",
       ]
     },
     "production": {
@@ -31,6 +40,9 @@
         ["transform-class-properties"],
         ["transform-react-constant-elements"],
         ["transform-react-remove-prop-types"],
+      ],
+      "ignore": [
+        "node_modules",
       ]
     }
   }

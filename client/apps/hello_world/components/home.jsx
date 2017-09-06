@@ -1,7 +1,9 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import assets from '../libs/assets';
 
-export default function Home() {
+export default function Home() :React.Node {
   const img = assets('./images/atomicjolt.jpg');
 
   return (

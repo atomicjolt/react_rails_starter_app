@@ -31,10 +31,10 @@
     "react"
   ],
   "dependencies": {
-    "del": "^2.2.2"
+    "del": "^3.0.0"
   },
   "devDependencies": {
     "jest": "^20.0.4",
-    "nock": "^9.0.13"
+    "nock": "^9.0.14"
   }
 }

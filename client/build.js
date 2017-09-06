@@ -1,5 +1,5 @@
 const apps = require('./libs/build/apps');
-
+const log = require('./libs/build/log');
 const argv = require('minimist')(process.argv.slice(2));
 
 const stage = argv.release ? 'production' : 'development';
@@ -12,4 +12,8 @@ const options = {
   rootOutput: argv.rootOutput
 };
 
-apps.buildApps(options);
+apps.buildAppsForOneServer(options).webpackCompiler.run((err) => {
+  if (err) {
+    log.error(err);
+  }
+});
