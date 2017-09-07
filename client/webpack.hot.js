@@ -21,12 +21,6 @@ function setupMiddleware(serverApp, compiler) {
     headers: { 'Access-Control-Allow-Origin': '*' }
   });
   serverApp.use(webpackMiddlewareInstance);
-  // serverApp.use(webpackHotMiddleware(compiler, {
-  //   log: (data) => { log.out(data); },
-  //   heartbeat: 2000,
-  //   timeout: 20000,
-  //   reload: true
-  // }));
 }
 
 function runServer(serverApp, port, servePath) {
@@ -69,9 +63,7 @@ if (appName) {
 } else {
   // Run and serve all applications
   const results = clientApps.buildAppsForMultipleServers(options);
-  // results.webpackCompiler.run(() => {
   _.each(results, (result) => {
     launch(result.app, result.webpackCompiler);
   });
-  // });
 }

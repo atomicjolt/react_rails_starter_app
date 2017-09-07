@@ -135,13 +135,14 @@ module.exports = function webpackConfig(app, options = {}) {
         openAnalyzer: false
       }),
     ]);
-  } else if (app.stage === 'hot') {
-    plugins = _.concat(plugins, [
-      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', __DEV__: true }),
-      // new webpack.HotModuleReplacementPlugin(),
-      // new webpack.NoEmitOnErrorsPlugin(),
-    ]);
   }
+  // TODO fix the hot reload
+  //  else if (app.stage === 'hot') {
+  //   plugins = _.concat(plugins, [
+  //     // new webpack.HotModuleReplacementPlugin(),
+  //     // new webpack.NoEmitOnErrorsPlugin(),
+  //   ]);
+  // }
 
   const rules = [
     { test: /\.js$/, use: jsLoaders, exclude: /node_modules/ },

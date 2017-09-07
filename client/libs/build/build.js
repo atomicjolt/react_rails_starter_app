@@ -1,5 +1,4 @@
 const fs = require('fs-extra');
-const _ = require('lodash');
 const nodeWatch = require('node-watch');
 const exec = require('child_process').exec;
 
@@ -61,7 +60,11 @@ function buildHtml(app, webpackAssets, logger = () => {}) {
 // -----------------------------------------------------------------------------
 function build(app, logger = () => {}) {
 
-  logger('info', 'COPYING', `Copying static files for ${app.name}`);
+  logger('info', 'COPYING', `Copying static files for ${app.name} to ${app.outputPath}`);
+
+  // Ensure directory exists
+  fs.ensureDirSync(app.outputPath);
+
   if (fs.existsSync(app.staticPath)) {
     // Copy static files to build directory
     buildStatic(app, logger);
