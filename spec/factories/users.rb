@@ -3,7 +3,7 @@ FactoryGirl.define do
     name { FactoryGirl.generate(:name) }
     email { FactoryGirl.generate(:email) }
     password { FactoryGirl.generate(:password) }
-    after(:build) { |user| user.confirm }
+    after(:build) { |user| user.confirm if user.present? }
 
     factory :user_facebook do
       active_avatar "facebook"
