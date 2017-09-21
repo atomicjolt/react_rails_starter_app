@@ -34,10 +34,15 @@ class User < ApplicationRecord
     setup_authentication(auth)
   end
 
-  def self.oauth_name(auth)
+  def self.oauth_info(auth)
     info = auth["info"] || {}
-    raw_info = auth["extra"]["raw_info"] || {}
+    raw_info = auth["extra"]["raw_info"] if auth["extra"].present?
+    raw_info ||= {}
+    [info, raw_info]
+  end
 
+  def self.oauth_name(auth)
+    info, raw_info = oauth_info(auth)
     info["name"] ||
       "#{info['first_name']} #{info['last_name']}" ||
       info["nickname"] ||
@@ -47,9 +52,7 @@ class User < ApplicationRecord
   end
 
   def self.oauth_email(auth)
-    info = auth["info"] || {}
-    raw_info = auth["extra"]["raw_info"] || {}
-
+    info, raw_info = oauth_info(auth)
     email = info["email"] ||
       raw_info["primary_email"] ||
       raw_info["login_id"]
@@ -66,9 +69,7 @@ class User < ApplicationRecord
   end
 
   def self.oauth_timezone(auth)
-    info = auth["info"] || {}
-    raw_info = auth["extra"]["raw_info"] || {}
-
+    info, raw_info = oauth_info(auth)
     timezone = ActiveSupport::TimeZone.new(raw_info["time_zone"]) unless raw_info["time_zone"].blank?
     timezone ||= ActiveSupport::TimeZone[info["timezone"].try(:to_i)].name unless info["timezone"].blank?
     timezone
@@ -96,10 +97,8 @@ class User < ApplicationRecord
   end
 
   def associate_account(auth)
-    info = auth["info"] || {}
-    raw_info = auth["extra"]["raw_info"] || {}
-    self.name ||= User.oauth_name(info, raw_info)
-    self.time_zone ||= User.oauth_timezone(info)
+    self.name ||= User.oauth_name(auth)
+    self.time_zone ||= User.oauth_timezone(auth)
     save!
     setup_authentication(auth)
   end
