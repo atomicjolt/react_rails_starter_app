@@ -98,8 +98,8 @@ class User < ApplicationRecord
   def associate_account(auth)
     info = auth["info"] || {}
     raw_info = auth["extra"]["raw_info"] || {}
-    self.name ||= oauth_name(info, raw_info)
-    self.time_zone ||= oauth_timezone(info)
+    self.name ||= User.oauth_name(info, raw_info)
+    self.time_zone ||= User.oauth_timezone(info)
     save!
     setup_authentication(auth)
   end
