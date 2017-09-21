@@ -20,7 +20,6 @@ class Authentication < ApplicationRecord
 
   # Build an authentication using an auth object provided by omniauth
   def self.authentication_attrs_from_auth(auth)
-    raw_info = auth["extra"]["raw_info"] || {}
     info = auth["info"] || {}
     provider_url = UrlHelper.scheme_host_port(info["url"])
     attributes = {

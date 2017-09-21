@@ -5,9 +5,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :find_using_oauth, except: [:passthru]
   before_action :create_using_oauth, except: [:passthru]
 
-  def facebook
-  end
-
   def passthru
     render file: "#{Rails.root}/public/404.html", status: 404, layout: false
   end
