@@ -51,7 +51,100 @@ end
 def get_invalid_omniauth(opts = {})
   credentials = { "provider" => "facebook",
                   "invalid"  => "invalid_crendentials" }.merge(opts)
-
   OmniAuth.config.test_mode = true
   OmniAuth.config.mock_auth[credentials["provider"]] = credentials["invalid"]
+end
+
+def get_canvas_omniauth(opts = {})
+  auth = get_canvas_auth(opts)
+  OmniAuth.config.mock_auth[:canvas] = OmniAuth::AuthHash.new(auth)
+end
+
+def get_canvas_auth(opts = {})
+  {
+    "provider" => "canvas",
+    "uid" => 1,
+    "info" => {
+      "name" => "Test Guy",
+      "email" => "testguy@example.com",
+      "bio" => "",
+      "title" => "",
+      "nickname" => "testguy@example.com",
+      "active_avatar" => "https://secure.gravatar.com/avatar/someone.png",
+      "url" => "https://atomicjolt.instructure.com",
+    },
+    "credentials" => {
+      "token" => "abcdefg",
+      "refresh_token" => "abcdefg",
+      "expires_at" => 1505946533,
+      "expires" => true,
+    },
+    "extra" => {
+      "raw_info" => {
+        "id" => 1,
+        "name" => "testguy@example.com",
+        "short_name" => "testguy@example.com",
+        "sortable_name" => "testguy@example.com",
+        "sis_user_id" => "1234",
+        "sis_login_id" => "testguy@example.com",
+        "login_id" => "testguy@example.com",
+        "avatar_url" => "https://secure.gravatar.com/avatar/someone.png",
+        "integration_id" => nil,
+        "title" => "",
+        "bio" => "",
+        "primary_email" => "testguy@example.com",
+        "time_zone" => "America/Denver",
+        "locale" => nil,
+        "calendar" => {
+          "ics" => "https://atomicjolt.instructure.com/feeds/calendars/user_abc.ics",
+        },
+      },
+    },
+  }.merge(opts)
+end
+
+def get_canvas_omniauth_no_email(opts = {})
+  auth = get_canvas_auth_no_email(opts)
+  OmniAuth.config.mock_auth[:canvas] = OmniAuth::AuthHash.new(auth)
+end
+
+def get_canvas_auth_no_email(opts = {})
+  {
+    "provider" => "canvas",
+    "uid" => 1,
+    "info" => {
+      "name" => "Test Guy",
+      "bio" => "",
+      "title" => "",
+      "nickname" => "testguy",
+      "active_avatar" => "https://secure.gravatar.com/avatar/someone.png",
+      "url" => "https://atomicjolt.instructure.com",
+    },
+    "credentials" => {
+      "token" => "abcdefg",
+      "refresh_token" => "abcdefg",
+      "expires_at" => 1505946533,
+      "expires" => true,
+    },
+    "extra" => {
+      "raw_info" => {
+        "id" => 1,
+        "name" => "Test Guy",
+        "short_name" => "Test",
+        "sortable_name" => "Guy",
+        "sis_user_id" => "1234",
+        "sis_login_id" => "testguy1234",
+        "login_id" => "testguy",
+        "avatar_url" => "https://secure.gravatar.com/avatar/someone.png",
+        "integration_id" => nil,
+        "title" => "",
+        "bio" => "",
+        "time_zone" => "America/Denver",
+        "locale" => nil,
+        "calendar" => {
+          "ics" => "https://atomicjolt.instructure.com/feeds/calendars/user_abc.ics",
+        },
+      },
+    },
+  }.merge(opts)
 end

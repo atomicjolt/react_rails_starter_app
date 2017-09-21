@@ -111,16 +111,24 @@ describe User, type: :model do
       @provider = "facebook"
       @existing_email = "test@example.com"
       @new_email = "newtest@example.com"
+      @provider_url = "https://www.facebook.com"
     end
-    describe "find_for_oauth" do
+    describe "for_auth" do
       before do
         @user = FactoryGirl.create(:user, email: @existing_email)
-        @user.authentications.create!(uid: @uid, provider: @provider)
+        @user.authentications.create!(uid: @uid, provider: @provider, provider_url: @provider_url)
       end
       describe "user already exists" do
         it "should find the existing user" do
-          auth = get_omniauth("uuid" => @uid, "provider" => @provider, "facebook" => { "email" => @existing_email })
-          user = User.find_for_oauth(auth)
+          auth = get_omniauth(
+            "uuid" => @uid,
+            "provider" => @provider,
+            "facebook" => {
+              "email" => @existing_email,
+              "url" => @provider_url,
+            },
+          )
+          user = User.for_auth(auth)
           expect(user.id).to eq(@user.id)
           expect(user.email).to eq(@existing_email)
         end
@@ -132,7 +140,7 @@ describe User, type: :model do
             "provider" => @provider,
             "facebook" => { "email" => "other@example.com" },
           )
-          user = User.find_for_oauth(auth)
+          user = User.for_auth(auth)
           expect(user).to be_nil
         end
       end
@@ -146,33 +154,59 @@ describe User, type: :model do
         expect(user.name).to eq("foo bar") # from default omniauth test data
       end
     end
-    # describe "update_oauth" do
-    #   it "should update the user using values from oauth" do
-    #     pending "Cam write these specs"
-    #   end
-    # end
-    # describe "params_for_create" do
-    #   it "should get the create parameters for the user" do
-    #   end
-    # end
-    # describe "setup_authentication" do
-    #   it "should create an authentication for the user using the provider" do
-    #   end
-    # end
-    # describe "associate_account" do
-    #   before do
-    #     @uid = 'test'
-    #     @provider = 'facebook'
-    #     @new_email = 'newtest@example.com'
-    #   end
-    #   it "should add an authentication for an existing user account" do
-    #     user = FactoryGirl.create(:user, :email => 'test@example.com')
-    #     auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @new_email})
-    #     user.associate_oauth_account(auth)
-    #     expect(user.authentications.length).to eq(1)
-    #     expect(user.authentications.first.uid).to eq(@uid)
-    #   end
-    # end
+    describe "oauth_name" do
+      it "should extract the correct name from the auth object" do
+        auth = get_canvas_omniauth
+        name = User.oauth_name(auth)
+        expect(name).to eq("Test Guy")
+      end
+    end
+    describe "oauth_email" do
+      it "should extract the correct email from the auth object" do
+        auth = get_canvas_omniauth
+        email = User.oauth_email(auth)
+        expect(email).to eq("testguy@example.com")
+      end
+      it "should handle a request that doesn't include an email" do
+        auth = get_canvas_omniauth_no_email
+        email = User.oauth_email(auth)
+        expect(email).to eq("1@atomicjolt.instructure.com")
+      end
+    end
+    describe "oauth_timezone" do
+      it "should extract the correct timezone from the auth object" do
+        auth = get_canvas_omniauth
+        timezone = User.oauth_timezone(auth)
+        expect(timezone.name).to eq("America/Denver")
+      end
+    end
+    describe "params_for_create" do
+      it "should get the create parameters for the user" do
+        auth = get_canvas_omniauth
+        attributes = User.params_for_create(auth)
+        expect(attributes[:email]).to eq(auth["extra"]["raw_info"]["primary_email"])
+        expect(attributes[:name]).to eq(auth["info"]["name"])
+      end
+    end
+    describe "associate_account" do
+      before do
+        @uid = "test"
+        @provider = "facebook"
+        @new_email = "newtest@example.com"
+      end
+      it "should add an authentication for an existing user account" do
+        user = FactoryGirl.create(:user, email: "test@example.com")
+        auth = get_omniauth(
+          "uuid" => @uid,
+          "provider" => @provider,
+          "facebook" => { "email" => @new_email },
+        )
+        count = user.authentications.length
+        user.associate_account(auth)
+        expect(user.authentications.length).to eq(count + 1)
+        expect(user.authentications.last.uid).to eq(@uid)
+      end
+    end
     describe "setup_authentication" do
       before do
         @uid = "anewuser"

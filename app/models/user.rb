@@ -21,9 +21,8 @@ class User < ApplicationRecord
   #
   # Omniauth related methods
   #
-  def self.find_for_oauth(auth)
-    authentication = Authentication.where(uid: auth["uid"].to_s, provider: auth["provider"]).first
-    authentication&.user
+  def self.for_auth(auth)
+    Authentication.for_auth(auth)&.user
   end
 
   def apply_oauth(auth)
@@ -35,43 +34,61 @@ class User < ApplicationRecord
     setup_authentication(auth)
   end
 
+  def self.oauth_name(auth)
+    info = auth["info"] || {}
+    raw_info = auth["extra"]["raw_info"] || {}
+
+    info["name"] ||
+      "#{info['first_name']} #{info['last_name']}" ||
+      info["nickname"] ||
+      raw_info["name"] ||
+      raw_info["short_name"] ||
+      raw_info["login_id"]
+  end
+
+  def self.oauth_email(auth)
+    info = auth["info"] || {}
+    raw_info = auth["extra"]["raw_info"] || {}
+
+    email = info["email"] ||
+      raw_info["primary_email"] ||
+      raw_info["login_id"]
+
+    # Try a basic validation on the email
+    if email =~ /\A[^@]+@[^@]+\Z/
+      email
+    else
+      # we have to make one up
+      domain = UrlHelper.safe_host(info["url"])
+      name = auth["uid"]
+      "#{name}@#{domain}"
+    end
+  end
+
+  def self.oauth_timezone(auth)
+    info = auth["info"] || {}
+    raw_info = auth["extra"]["raw_info"] || {}
+
+    timezone = ActiveSupport::TimeZone.new(raw_info["time_zone"]) unless raw_info["time_zone"].blank?
+    timezone ||= ActiveSupport::TimeZone[info["timezone"].try(:to_i)].name unless info["timezone"].blank?
+    timezone
+  end
+
   def self.params_for_create(auth)
-    data = auth["info"] || {}
-    name = begin
-             data["name"]
-           rescue
-             nil
-           end
-    name ||= "#{data['first_name']} #{data['last_name']}"
-    time_zone = begin
-                  ActiveSupport::TimeZone[data["timezone"].try(:to_i)].name unless data["timezone"].blank?
-                rescue
-                  nil
-                end
     {
-      email: data["email"],
-      name: name,
-      time_zone: time_zone,
+      email: oauth_email(auth),
+      name: oauth_name(auth),
+      time_zone: oauth_timezone(auth),
     }
   end
 
   def setup_authentication(auth)
-    provider_url = UrlHelper.scheme_host_port(auth["info"]["url"])
-    attributes = {
-      uid: auth["uid"].to_s,
-      username: auth["info"]["nickname"],
-      provider: auth["provider"],
-      provider_url: provider_url,
-      json_response: auth.to_json,
-    }
-    if credentials = auth["credentials"]
-      attributes[:token] = credentials["token"]
-      attributes[:secret] = credentials["secret"]
-      # Google sends a refresh token
-      attributes[:refresh_token] = credentials["refresh_token"] if credentials["refresh_token"]
-    end
+    attributes = Authentication.authentication_attrs_from_auth(auth)
     if persisted? &&
-        authentication = authentications.where({ provider: auth["provider"], provider_url: provider_url }).first
+        authentication = authentications.find_by(
+          provider: attributes[:provider],
+          provider_url: attributes[:provider_url],
+        )
       authentication.update_attributes!(attributes)
     else
       authentications.build(attributes)
@@ -79,15 +96,10 @@ class User < ApplicationRecord
   end
 
   def associate_account(auth)
-    data = auth["info"] || {}
-    name = data["name"]
-    name ||= "#{data['first_name']} #{data['last_name']}"
-    self.name ||= name
-    self.time_zone ||= begin
-                         ActiveSupport::TimeZone[data["timezone"].try(:to_i)].name unless data["timezone"].blank?
-                       rescue
-                         nil
-                       end
+    info = auth["info"] || {}
+    raw_info = auth["extra"]["raw_info"] || {}
+    self.name ||= oauth_name(info, raw_info)
+    self.time_zone ||= oauth_timezone(info)
     save!
     setup_authentication(auth)
   end
@@ -140,6 +152,15 @@ class User < ApplicationRecord
   def can_edit?(user)
     return false if user.nil?
     id == user.id || user.admin?
+  end
+
+  def self.convert_name_to_initials(sortable_name)
+    parts = sortable_name.split(",")
+    "#{parts[1].strip[0]}#{parts[0].strip[0]}".upcase
+  rescue
+    return "?" unless sortable_name && !sortable_name.empty?
+    return sortable_name[0..1].upcase if sortable_name.length > 1
+    sortable_name[0]
   end
 
 end

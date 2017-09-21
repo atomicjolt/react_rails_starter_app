@@ -1,9 +1,12 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
-  before_filter :verify_oauth_response, except: [:passthru]
-  before_filter :associated_using_oauth, except: [:passthru]
-  before_filter :find_using_oauth, except: [:passthru]
-  before_filter :create_using_oauth, except: [:passthru]
+  before_action :verify_oauth_response, except: [:passthru]
+  before_action :associated_using_oauth, except: [:passthru]
+  before_action :find_using_oauth, except: [:passthru]
+  before_action :create_using_oauth, except: [:passthru]
+
+  def facebook
+  end
 
   def passthru
     render file: "#{Rails.root}/public/404.html", status: 404, layout: false
@@ -11,16 +14,22 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   protected
 
+  def redirect_params
+    params.permit(:error)
+  end
+
   def verify_oauth_response
     # Check for OAuth errors
-    if request.env["omniauth.auth"].blank?
+    return if request.env["omniauth.auth"].present?
+
+    origin_url = request.env["omniauth.origin"]
+    if origin_url.present?
+      query_params = redirect_params.to_h.to_query
+      redirect_to query_params.empty? ? origin_url : "#{origin_url}?#{query_params}"
+    else
       error = oauth_error_message
       flash[:error] = format_oauth_error_message(error)
-      if request.env["omniauth.origin"].present?
-        redirect_to request.env["omniauth.origin"]
-      else
-        redirect_to new_user_registration_url
-      end
+      render "shared/_omniauth_error", status: 403
     end
   end
 
@@ -42,10 +51,14 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def format_oauth_error_message(error)
-    %{#{error} If this problem persists try signing up with a different service
-      or create an #{Rails.application.secrets.application_name} account with
-      just an email and password.
-    }.html_safe
+    if request.env["omniauth.strategy"].name == "canvas"
+      error
+    else
+      %{#{error} If this problem persists try signing up with a different service
+        or create an #{Rails.application.secrets.application_name} account with
+        just an email and password.
+      }.html_safe
+    end
   end
 
   def associated_using_oauth
@@ -93,7 +106,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def find_using_oauth
     return if @user # Previous filter was successful and we already have a user
-    if @user = User.find_for_oauth(request.env["omniauth.auth"])
+    if @user = User.for_auth(request.env["omniauth.auth"])
       @user.update_oauth(request.env["omniauth.auth"])
       @user.skip_confirmation!
       @user.save # do we want to log an error if save fails?
@@ -142,5 +155,4 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def should_redirect?
     true
   end
-
 end

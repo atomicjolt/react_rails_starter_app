@@ -76,3 +76,7 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+Devise.setup do |config|
+  config.omniauth :facebook, "1234", "1234", scope: "user"
+end
