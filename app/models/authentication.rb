@@ -11,11 +11,11 @@ class Authentication < ApplicationRecord
   # Find an authentication using an auth object provided by omniauth
   def self.for_auth(auth)
     provider_url = UrlHelper.scheme_host_port(auth["info"]["url"])
-    Authentication.find_by(
+    Authentication.where(
       uid: auth["uid"].to_s,
       provider: auth["provider"],
       provider_url: provider_url,
-    )
+    ).where.not(user_id: nil).first
   end
 
   # Build an authentication using an auth object provided by omniauth
