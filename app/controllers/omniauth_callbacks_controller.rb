@@ -104,10 +104,14 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def find_using_oauth
     return if @user # Previous filter was successful and we already have a user
     if @user = User.for_auth(request.env["omniauth.auth"])
+      kind = params[:action].titleize
       @user.update_oauth(request.env["omniauth.auth"])
       @user.skip_confirmation!
       @user.save # do we want to log an error if save fails?
-      sign_in_or_register(params[:action].titleize)
+      if kind == "Canvas"
+        @user.add_to_role("canvas_oauth_user")
+      end
+      sign_in_or_register(kind)
     end
   end
 
@@ -121,6 +125,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user.create_method = User.create_methods[:oauth]
     @user.apply_oauth(auth)
     @user.skip_confirmation!
+    if kind == "Canvas"
+      @user.add_to_role("canvas_oauth_user")
+    end
     @user.save!
     sign_in_or_register(kind)
   rescue ActiveRecord::RecordInvalid => ex
