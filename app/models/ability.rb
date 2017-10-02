@@ -32,6 +32,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
 
     basic(user)
+    canvas_oauth_user(user) if user.role?("canvas_oauth_user")
     admin(user) if user.admin?
   end
 
