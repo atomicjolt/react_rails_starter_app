@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
   Exclude:
     - db/schema.rb
     - config/initializers/devise.rb
@@ -9,7 +9,7 @@ AllCops:
     - db/migrate/*
     - spec/spec_helper.rb
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Description: Check the naming of accessor methods for get_/set_.
   Enabled: false
 
@@ -28,7 +28,7 @@ Style/AsciiComments:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#english-comments'
   Enabled: false
 
-Style/AsciiIdentifiers:
+Naming/AsciiIdentifiers:
   Description: 'Use only ascii symbols in identifiers.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#english-identifiers'
   Enabled: false
@@ -70,6 +70,7 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/**
     - config/*
+    - lib/tasks/*
 
 Style/ClassVars:
   Description: 'Avoid the use of class variables.'
@@ -121,7 +122,7 @@ Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
   Enabled: false
 
-Style/DotPosition:
+Layout/DotPosition:
   Description: 'Checks the position of the dot in multi-line method calls.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#consistent-multi-line-chains'
   EnforcedStyle: trailing
@@ -151,22 +152,22 @@ Style/EvenOdd:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#predicate-methods'
   Enabled: false
 
-Style/ExtraSpacing:
+Layout/ExtraSpacing:
   Description: 'Do not use unnecessary spacing.'
   Enabled: true
 
-Style/EmptyLinesAroundClassBody:
+Layout/EmptyLinesAroundClassBody:
   Description: 'Do not allow extra lines around class body.'
   Enabled: false
 
-Style/EmptyLinesAroundModuleBody:
+Layout/EmptyLinesAroundModuleBody:
   Description: 'Do not allow extra lines around module body.'
   Enabled: false
 
 Style/BracesAroundHashParameters:
   Enabled: false
 
-Style/FileName:
+Naming/FileName:
   Description: 'Use snake_case for source file names.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#snake-case-files'
   Enabled: false
@@ -250,7 +251,7 @@ Style/ModuleFunction:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#module-function'
   Enabled: false
 
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   Description: >-
                  Checks indentation of binary operations that span more than
                  one line.
@@ -262,7 +263,7 @@ Style/MultilineBlockChain:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'
   Enabled: false
 
-Style/MultilineMethodCallIndentation:
+Layout/MultilineMethodCallIndentation:
   Description: >-
                  Checks indentation of method calls with the dot operator
                  that span more than one line.
@@ -320,7 +321,7 @@ Style/OneLineConditional:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#ternary-operator'
   Enabled: false
 
-Style/OpMethod:
+Naming/BinaryOperatorParameterName:
   Description: 'When defining binary operators, name the argument other.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#other-arg'
   Enabled: false
@@ -340,7 +341,7 @@ Style/PerlBackrefs:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-perl-regexp-last-matchers'
   Enabled: false
 
-Style/PredicateName:
+Naming/PredicateName:
   Description: 'Check the names of predicate methods.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#bool-methods-qmark'
   NamePrefixBlacklist:
@@ -499,7 +500,7 @@ Lint/InvalidCharacterLiteral:
                  whitespace character.
   Enabled: false
 
-Style/InitialIndentation:
+Layout/InitialIndentation:
   Description: >-
     Checks the indentation of the first non-blank non-comment line in a file.
   Enabled: false
