@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import assets from '../libs/assets';
 

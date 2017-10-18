@@ -1,4 +1,5 @@
 {
+  "license": "MIT",
   "scripts": {
     "test": "./node_modules/jest/bin/jest.js --config=config/jest_config.json",
     "watch": "./node_modules/jest/bin/jest.js --config=config/jest_config.json --watch",
@@ -11,6 +12,7 @@
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.1",
     "atomic-lint-loader": "^1.0.1",
+    "atomic-reactor": "^1.0.1",
     "autoprefixer": "^7.1.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",

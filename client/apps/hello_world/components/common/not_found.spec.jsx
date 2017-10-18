@@ -1,9 +1,7 @@
 import React     from 'react';
 import TestUtils from 'react-dom/test-utils';
+import Stub      from 'atomic-fuel/libs/specs_support/stub';
 import NotFound  from './not_found';
-import Stub      from '../../../../specs_support/stub';
-
-jest.mock('../../libs/assets.js');
 
 describe('not found', () => {
   it('renders a "not found" message', () => {
