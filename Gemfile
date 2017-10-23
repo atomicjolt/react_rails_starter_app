@@ -74,6 +74,7 @@ group :development, :test do
   gem "dotenv-rails"
   gem "factory_girl_rails"
   gem "faker"
+  gem "guard-rspec", require: false
   gem "rspec-rails"
   gem "rubocop"
 end
