@@ -4,7 +4,7 @@
     "watch": "./node_modules/jest/bin/jest.js --config=config/jest_config.json --watch"
   },
   "dependencies": {
-    "atomic-fuel": "^1.0.2",
+    "atomic-fuel": "^1.0.3",
     "babel": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "^6.23.0",
@@ -21,6 +21,7 @@
     "uuid": "3.0.1"
   },
   "devDependencies": {
-    "jest": "^20.0.4"
+    "jest": "^21.2.1",
+    "redux-devtools": "^3.4.0"
   }
 }
