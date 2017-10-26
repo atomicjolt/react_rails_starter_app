@@ -1,9 +1,7 @@
-import React        from 'react';
-import TestUtils    from 'react-dom/test-utils';
-import { Provider } from 'react-redux';
-import Helper       from 'atomic-fuel/libs/specs_support/helper';
+import React from 'react';
+import { shallow } from 'enzyme';
 
-import Home         from './home';
+import Home from './home';
 
 jest.mock('../libs/assets.js');
 
@@ -13,14 +11,14 @@ describe('home', () => {
 
   beforeEach(() => {
     props = {};
-    result = TestUtils.renderIntoDocument(
-      <Provider store={Helper.makeStore()}>
-        <Home {...props} />
-      </Provider>,
-    );
+    result = shallow(<Home {...props} />);
   });
 
   it('renders the home component', () => {
     expect(result).toBeDefined();
+  });
+
+  it('matches the snapshot', () => {
+    expect(result).toMatchSnapshot();
   });
 });

@@ -1,7 +1,5 @@
 import React        from 'react';
-import TestUtils    from 'react-dom/test-utils';
-import { Provider } from 'react-redux';
-import Helper       from 'atomic-fuel/libs/specs_support/helper';
+import { shallow } from 'enzyme';
 
 import Index        from './index';
 
@@ -11,14 +9,14 @@ describe('index', () => {
 
   beforeEach(() => {
     props = {};
-    result = TestUtils.renderIntoDocument(
-      <Provider store={Helper.makeStore()}>
-        <Index {...props} />
-      </Provider>,
-    );
+    result = shallow(<Index {...props} />);
   });
 
   it('renders the index', () => {
     expect(result).toBeDefined();
+  });
+
+  it('matches the snapshot', () => {
+    expect(result).toMatchSnapshot();
   });
 });
