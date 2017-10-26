@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "eventsource-polyfill": "^0.9.6",
-    "superagent": "^3.5.0"
+    "superagent": "^3.8.0"
   },
   "devDependencies": {
     "atomic-reactor": "^1.0.1",
@@ -16,9 +16,9 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^7.0.1",
+    "eslint-plugin-react": "^7.4.0",
     "phantomjs-prebuilt": "^2.1.14"
   }
 }
