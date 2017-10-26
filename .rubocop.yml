@@ -494,19 +494,9 @@ Lint/HandleExceptions:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#dont-hide-exceptions'
   Enabled: false
 
-Lint/InvalidCharacterLiteral:
-  Description: >-
-                 Checks for invalid character literals with a non-escaped
-                 whitespace character.
-  Enabled: false
-
 Layout/InitialIndentation:
   Description: >-
     Checks the indentation of the first non-blank non-comment line in a file.
-  Enabled: false
-
-Lint/LiteralInCondition:
-  Description: 'Checks of literals used in conditions.'
   Enabled: false
 
 Lint/LiteralInInterpolation:
