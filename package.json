@@ -7,7 +7,7 @@
   "homepage": "https://github.com/atomicjolt/react_rails_starter_app",
   "scripts": {
     "postinstall": "cd ./client && yarn",
-    "test": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; yarn test; cd ..; cd ..; done && yarn test",
+    "test": "./tests.sh",
     "test_debug": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; node debug ./node_modules/jest/bin/jest --runInBand --config=config/jest_config.json; cd ..; cd ..; done",
     "watch": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; yarn watch; cd ..; cd ..; done",
     "hot": "node ./client/node_modules/atomic-reactor/webpack.hot.js",
@@ -33,12 +33,6 @@
     "react"
   ],
   "dependencies": {
-    "del": "^3.0.0",
-    "enzyme": "^3.1.0",
-    "enzyme-adapter-react-15": "^1.0.2"
-  },
-  "devDependencies": {
-    "jest": "^21.2.1",
-    "nock": "^9.0.25"
+    "del": "^3.0.0"
   }
 }

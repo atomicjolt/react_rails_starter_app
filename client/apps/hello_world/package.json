@@ -21,7 +21,6 @@
     "uuid": "3.0.1"
   },
   "devDependencies": {
-    "jest": "^21.2.1",
     "redux-devtools": "^3.4.0"
   }
 }
