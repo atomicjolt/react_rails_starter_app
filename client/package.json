@@ -13,12 +13,17 @@
   "devDependencies": {
     "atomic-reactor": "^1.0.1",
     "dotenv": "4.0.0",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-15": "^1.0.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^7.4.0",
-    "phantomjs-prebuilt": "^2.1.14"
+    "jest": "^21.2.1",
+    "nock": "^9.0.25",
+    "phantomjs-prebuilt": "^2.1.14",
+    "react-test-renderer": "^15.5.4"
   }
 }
