@@ -6,7 +6,8 @@
   "rootDir": "../",
   "modulePaths": [
     "<rootDir>/node_modules",
-    "<rootDir>/../../node_modules"
+    "<rootDir>/../../node_modules",
+    "<rootDir>/../../../node_modules"
   ],
   "moduleFileExtensions": ["js", "jsx"],
   "moduleDirectories": ["node_modules"],
