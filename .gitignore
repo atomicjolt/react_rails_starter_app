@@ -15,6 +15,7 @@ secrets.js
 *.iml
 .env
 .vscode/
+yarn-error.log
 
 config/secrets.js
 s3_website.yml
