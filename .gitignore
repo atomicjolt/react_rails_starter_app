@@ -48,6 +48,7 @@ bower.json
 client/node_modules
 node_modules
 npm-debug.log
+yarn-error.log
 
 # avoid adding built files
 /public/system
