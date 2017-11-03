@@ -71,6 +71,7 @@ Metrics/BlockLength:
     - spec/**/**
     - config/*
     - lib/tasks/*
+    - Guardfile
 
 Style/ClassVars:
   Description: 'Avoid the use of class variables.'
