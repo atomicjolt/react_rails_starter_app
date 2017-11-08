@@ -10,7 +10,7 @@
     "test": "./tests.sh",
     "test_debug": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; node debug ./node_modules/jest/bin/jest --runInBand --config=config/jest_config.json; cd ..; cd ..; done",
     "watch": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; yarn watch; cd ..; cd ..; done",
-    "hot": "node ./client/node_modules/atomic-reactor/webpack.hot.js",
+    "hot": "node ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack",
     "hot_pack": "node ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack",
     "hot_lint": "node ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack --lint",
     "live": "node ./client/node_modules/atomic-reactor/server.js",
