@@ -17,7 +17,7 @@
     "build_dev": "node ./client/node_modules/atomic-reactor/build.js",
     "build_dev_pack": "node ./client/node_modules/atomic-reactor/build.js --onlyPack",
     "build": "node ./client/node_modules/atomic-reactor/build.js --release",
-    "build_pack": "node ./client/node_modules/atomic-reactor/build.js --release --onlyPack",
+    "build_pack": "node ./client/node_modules/atomic-reactor/build.js --release --onlyPack --noClean",
     "ball": "node ./client/node_modules/atomic-reactor/build.js --release && ./client/node_modules/s3-website/s3-website.js create",
     "release": "node ./client/node_modules/atomic-reactor/build.js --release && ./client/node_modules/s3-website/s3-website.js deploy",
     "lint": "cd ./client && eslint js",
