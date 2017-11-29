@@ -1,10 +1,13 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-type Props = {
-  children?: React.Node
-}
+import Errors from './errors';
 
-export default class Index extends React.Component<Props, {}> {
+export default class Index extends React.Component {
+
+  static propTypes = {
+    children: PropTypes.node
+  }
 
   constructor() {
     super();
@@ -14,6 +17,7 @@ export default class Index extends React.Component<Props, {}> {
   render() {
     return (
       <div>
+        <Errors />
         {this.props.children || ''}
       </div>
     );
