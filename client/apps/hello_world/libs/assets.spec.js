@@ -1,4 +1,4 @@
-import _      from 'lodash';
+import _ from 'lodash';
 import assets from './assets';
 
 jest.mock('./assets.js');
