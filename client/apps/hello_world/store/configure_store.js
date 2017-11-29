@@ -1,6 +1,6 @@
 import configureStore from 'atomic-fuel/libs/store/configure_store';
-import rootReducer    from '../reducers/index';
-import API            from '../middleware/api';
+import rootReducer from '../reducers/index';
+import API from '../middleware/api';
 
 const middleware = [API];
 
