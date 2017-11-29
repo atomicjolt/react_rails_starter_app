@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     post    "sign_in"               => "sessions#create"
     get     "sign_up"               => "devise/registrations#new"
     delete  "sign_out"              => "sessions#destroy"
+    get     "sign_out"              => "sessions#destroy"
   end
 
   resources :users
