@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%= stylesheet_link_tag 'client', media: 'all' %>
     <%= render 'layouts/head' %>
   </head>
   <body>
+    <%= render "layouts/show_environment" %>
     <%= yield %>
   </body>
 </html>
