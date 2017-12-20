@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:700');
+
+.aj-env-banner {
+  height: 26px;
+  width: 200px;
+  background: #272121;
+  font-family: ‘Roboto’, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #FCCC0F;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 24px;
+  letter-spacing: 1px;
+
+  position: fixed;
+  top: 35px;
+  right: -55px;
+  border: 1px solid white;
+  z-index: 999;
+  pointer-events: none;
+
+  transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
