@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe AuthToken do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
   end
 
   it "issues a valid jwt for the user id" do
