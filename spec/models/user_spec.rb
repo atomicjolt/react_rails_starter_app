@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe User, type: :model do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     @attr = {
       name: "Example User",
       email: "user@example.com",
@@ -39,20 +39,20 @@ describe User, type: :model do
   end
 
   it "should reject duplicate email addresses" do
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     user_with_duplicate_email = User.new(@attr.merge(email: user.email))
     expect(user_with_duplicate_email).to be_invalid
   end
 
   it "should reject email addresses identical up to case" do
     email = "a_random_uppercase_email@example.com"
-    FactoryGirl.create(:user, email: email)
+    FactoryBot.create(:user, email: email)
     user_with_duplicate_email = User.new(@attr.merge(email: email.upcase))
     expect(user_with_duplicate_email).to be_invalid
   end
 
   it "should raise an exception if an attempt is made to write a duplicate email to the database" do
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     user_with_duplicate_email = User.new(@attr.merge(email: user.email))
     expect do
       user_with_duplicate_email.save(validate: false)
@@ -71,7 +71,7 @@ describe User, type: :model do
 
   describe "password validations" do
     it "should require a password" do
-      user = FactoryGirl.build(:user, @attr.merge(password: "", password_confirmation: ""))
+      user = FactoryBot.build(:user, @attr.merge(password: "", password_confirmation: ""))
       expect(user).to be_invalid
     end
 
@@ -100,7 +100,7 @@ describe User, type: :model do
 
   describe "display_name" do
     it "should provide the name" do
-      user = FactoryGirl.create(:user, name: "test guy")
+      user = FactoryBot.create(:user, name: "test guy")
       expect(user.display_name).to eq("test guy")
     end
   end
@@ -115,7 +115,7 @@ describe User, type: :model do
     end
     describe "for_auth" do
       before do
-        @user = FactoryGirl.create(:user, email: @existing_email)
+        @user = FactoryBot.create(:user, email: @existing_email)
         @user.authentications.create!(uid: @uid, provider: @provider, provider_url: @provider_url)
       end
       describe "user already exists" do
@@ -195,7 +195,7 @@ describe User, type: :model do
         @new_email = "newtest@example.com"
       end
       it "should add an authentication for an existing user account" do
-        user = FactoryGirl.create(:user, email: "test@example.com")
+        user = FactoryBot.create(:user, email: "test@example.com")
         auth = get_omniauth(
           "uuid" => @uid,
           "provider" => @provider,
@@ -248,13 +248,13 @@ describe User, type: :model do
   describe "roles" do
     describe "add_to_role" do
       it "adds the user to given role" do
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         user.add_to_role("thefoo")
         expect(user.role?("thefoo")).to be true
       end
       it "adds the user to given role with a context" do
         context_id = "asdf"
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         user.add_to_role("thefoo", context_id)
         expect(user.role?("thefoo", context_id)).to be true
       end
@@ -262,7 +262,7 @@ describe User, type: :model do
     describe "has_role?" do
       it "checks to see if the user is any of the specified roles with context" do
         context_id = "asdf"
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         user.add_to_role("thefoo", context_id)
         user.add_to_role("thewall")
         expect(user.has_role?(context_id, "thefoo", "brick")).to be true
@@ -272,7 +272,7 @@ describe User, type: :model do
     end
     describe "any_role?" do
       it "checks to see if the user is any of the specified roles" do
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         user.add_to_role("thefoo")
         user.add_to_role("thewall")
         expect(user.any_role?("thewall", "brick")).to be true

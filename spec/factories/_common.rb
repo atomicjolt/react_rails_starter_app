@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :domain do |n|
     "www.example#{n}.com"
   end
