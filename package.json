@@ -13,6 +13,8 @@
     "hot": "node ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack",
     "hot_pack": "node ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack",
     "hot_lint": "node ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack --lint",
+    "hot_debug": "node --nolazy --inspect-brk=9229 ./client/node_modules/atomic-reactor/webpack.hot.js",
+    "hot_pack_debug": "node --nolazy --inspect-brk=9229 ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack",
     "live": "node ./client/node_modules/atomic-reactor/server.js",
     "build_dev": "node ./client/node_modules/atomic-reactor/build.js",
     "build_dev_pack": "node ./client/node_modules/atomic-reactor/build.js --onlyPack",

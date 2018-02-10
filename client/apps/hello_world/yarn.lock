@@ -300,9 +300,9 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-atomic-fuel@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/atomic-fuel/-/atomic-fuel-1.2.1.tgz#36ad3108a6cbe63dbc97a27b8ac8f0b3370d1fc3"
+atomic-fuel@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/atomic-fuel/-/atomic-fuel-1.2.3.tgz#7ec8efa1a2c1fd20b95b33901305f53e0efa7cd0"
   dependencies:
     atomic-reactor "^1.0.2"
     babel-cli "^6.26.0"
