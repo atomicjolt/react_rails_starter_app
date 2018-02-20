@@ -3,6 +3,7 @@
    "region": "us-east-1",
    "uploadDir": "build/prod",
    "prefix": "",
+   "exclude": [],
    "corsConfiguration": [
       {
          "AllowedMethods": [

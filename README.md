@@ -69,7 +69,9 @@ Example options.json
   "port": 8080,
   "onlyPack": true,
   "noClean": false,
-  "rootOutput": false
+  "rootOutput": false,
+  "codeSplittingOff": true, // Turn off code splitting
+  "extractCssOff": true     // Turn off css extraction
 }
 `
 
@@ -83,8 +85,6 @@ In webpack.json
   "buildSuffix": ".js",     // Change the build suffix. Default is _bundle.js
   "filename": "[name]",     // Change the output file name. Default is based on production/development
   "chunkFilename": "[id]",  // Change the chunkFilename. Default is based on production/development
-  "codeSplittingOff": true, // Turn off code splitting
-  "extractCssOff": true     // Turn off css extraction
 }
 `
 
