@@ -404,8 +404,14 @@ Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
   Enabled: true
 
-Style/TrailingCommaInLiteral:
-  Description: 'Checks for trailing comma in array and hash literals.'
+Style/TrailingCommaInArrayLiteral:
+  Description: 'Checks for trailing comma in array literals.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
+  EnforcedStyleForMultiline: comma
+  Enabled: true
+
+Style/TrailingCommaInHashLiteral:
+  Description: 'Checks for trailing comma in hash literals.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
   EnforcedStyleForMultiline: comma
   Enabled: true
@@ -468,7 +474,7 @@ Lint/CircularArgumentReference:
   Description: "Don't refer to the keyword argument in the default value."
   Enabled: false
 
-Lint/ConditionPosition:
+Layout/ConditionPosition:
   Description: >-
                  Checks for condition placed in a confusing position relative to
                  the keyword.
@@ -540,13 +546,6 @@ Lint/RequireParentheses:
 
 Lint/UnderscorePrefixedVariableName:
   Description: 'Do not use prefix `_` for a variable that is used.'
-  Enabled: false
-
-Lint/UnneededDisable:
-  Description: >-
-                 Checks for rubocop:disable comments that can be removed.
-                 Note: this cop is not disabled when disabling all cops.
-                 It must be explicitly disabled.
   Enabled: false
 
 Lint/Void:
