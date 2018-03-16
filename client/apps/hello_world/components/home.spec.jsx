@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
 import Home from './home';
 
 jest.mock('../libs/assets.js');
@@ -18,7 +17,4 @@ describe('home', () => {
     expect(result).toBeDefined();
   });
 
-  it('matches the snapshot', () => {
-    expect(result).toMatchSnapshot();
-  });
 });
