@@ -1,25 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import { Route, Switch } from 'react-router';
 import Errors from './errors';
+import Home from '../home';
+import NotFound from '../common/not_found';
 
 export default class Index extends React.Component {
-
-  static propTypes = {
-    children: PropTypes.node
-  }
-
-  constructor() {
-    super();
-    this.state = {};
-  }
 
   render() {
     return (
       <div>
         <Errors />
-        {this.props.children || ''}
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="*" component={NotFound} />
+        </Switch>
       </div>
     );
   }
+
 }
