@@ -1,5 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :role do
-    name { FactoryGirl.generate(:name) }
+    name { FactoryBot.generate(:name) }
   end
 end

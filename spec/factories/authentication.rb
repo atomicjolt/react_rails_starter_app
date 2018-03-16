@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :authentication do
     user
-    provider { FactoryGirl.generate(:name) }
-    token { FactoryGirl.generate(:name) }
-    secret { FactoryGirl.generate(:password) }
-    provider_url { FactoryGirl.generate(:uri) }
+    provider { FactoryBot.generate(:name) }
+    token { FactoryBot.generate(:name) }
+    secret { FactoryBot.generate(:password) }
+    provider_url { FactoryBot.generate(:uri) }
 
     factory :authentication_facebook do
       provider "facebook"

@@ -1,8 +1,8 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
-    name { FactoryGirl.generate(:name) }
-    email { FactoryGirl.generate(:email) }
-    password { FactoryGirl.generate(:password) }
+    name { FactoryBot.generate(:name) }
+    email { FactoryBot.generate(:email) }
+    password { FactoryBot.generate(:password) }
     after(:build, &:confirm)
 
     factory :user_facebook do

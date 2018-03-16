@@ -8,7 +8,7 @@ describe ApplicationController, type: :controller do
     respond_to :json
 
     def index
-      render text: "User: #{@user.display_name}"
+      render plain: "User: #{@user.display_name}"
     end
   end
 
@@ -29,7 +29,7 @@ describe ApplicationController, type: :controller do
 
   context "valid authorization header" do
     it "should be authorized" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       user.confirm
       user_token = AuthToken.issue_token({ user_id: user.id })
       request.headers["Authorization"] = user_token
