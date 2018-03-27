@@ -14,12 +14,12 @@ end
 gem "rails", "5.1.5"
 
 # Database
-gem "pg", "~> 0.21"
+gem "pg"
 
 # authentication, authorization, integrations
 gem "attr_encrypted"
 gem "cancancan"
-gem "devise", "4.4.1" # 4.4.2 has bug the prevents specs from passing. We can remove this lock when > 4.4.2 is released.
+gem "devise"
 gem "jwt", "~> 1.5.0" # json web token
 gem "oauth", "~> 0.5.0"
 gem "omniauth"
