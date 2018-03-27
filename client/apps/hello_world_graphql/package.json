@@ -28,8 +28,6 @@
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
-    "enzyme": "^3.1.0",
-    "enzyme-adapter-react-15": "^1.0.2",
     "redux-devtools": "^3.4.0"
   }
 }
