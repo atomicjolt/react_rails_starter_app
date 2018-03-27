@@ -14,7 +14,7 @@ end
 gem "rails", "5.1.5"
 
 # Database
-gem "pg", "~> 0.21"
+gem "pg"
 
 # authentication, authorization, integrations
 gem "attr_encrypted"
