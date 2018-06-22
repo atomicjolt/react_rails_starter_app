@@ -1,9 +1,10 @@
 {
+  "name": "client",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "./node_modules/jest/bin/jest.js --config=config/jest_config.json",
-    "watch": "./node_modules/jest/bin/jest.js --config=config/jest_config.json --watch",
-    "postinstall": "node node_modules/phantomjs-prebuilt/install.js && for dir in apps/*; do cd \"$dir\" || continue; yarn; cd ..; cd ..; done",
+    "test": "jest --config=config/jest_config.json",
+    "watch": "jest --config=config/jest_config.json --watch",
     "nuke": "rm -rf node_modules && for dir in apps/*; do cd \"$dir\" || continue; rm -rf node_modules; cd ..; cd ..; done"
   },
   "dependencies": {
@@ -11,7 +12,7 @@
     "superagent": "^3.8.2"
   },
   "devDependencies": {
-    "atomic-reactor": "^1.1.6",
+    "atomic-reactor": "^2.0.1",
     "dotenv": "4.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
