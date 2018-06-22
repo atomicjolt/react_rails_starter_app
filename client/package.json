@@ -23,7 +23,7 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^7.7.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^21.2.1",
+    "jest": "^23.1.0",
     "nock": "^9.2.3",
     "phantomjs-prebuilt": "^2.1.16",
     "react-test-renderer": "^16.2.0"
