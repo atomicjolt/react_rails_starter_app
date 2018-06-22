@@ -1,9 +1,10 @@
 {
+  "name": "client",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "./node_modules/jest/bin/jest.js --config=config/jest_config.json",
-    "watch": "./node_modules/jest/bin/jest.js --config=config/jest_config.json --watch",
-    "postinstall": "node node_modules/phantomjs-prebuilt/install.js && for dir in apps/*; do cd \"$dir\" || continue; yarn; cd ..; cd ..; done",
+    "test": "jest --config=config/jest_config.json",
+    "watch": "jest --config=config/jest_config.json --watch",
     "nuke": "rm -rf node_modules && for dir in apps/*; do cd \"$dir\" || continue; rm -rf node_modules; cd ..; cd ..; done"
   },
   "dependencies": {
@@ -11,7 +12,6 @@
     "superagent": "^3.8.2"
   },
   "devDependencies": {
-    "atomic-reactor": "^1.1.6",
     "dotenv": "4.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -22,7 +22,7 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^7.7.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^21.2.1",
+    "jest": "^23.1.0",
     "nock": "^9.2.3",
     "phantomjs-prebuilt": "^2.1.16",
     "react-test-renderer": "^16.2.0"

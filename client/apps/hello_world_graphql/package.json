@@ -1,8 +1,10 @@
 {
+  "name": "hello_world_graphql",
+  "version": "1.0.0",
   "scripts": {
-    "test": "./node_modules/jest/bin/jest.js --config=config/jest_config.json",
-    "watch": "./node_modules/jest/bin/jest.js --config=config/jest_config.json --watch",
-    "test_debug": " node debug ./node_modules/jest/bin/jest --runInBand --config=config/jest_config.json;"
+    "test": "jest --config=config/jest_config.json",
+    "watch": "jest --config=config/jest_config.json --watch",
+    "test_debug": "node inspect jest --runInBand --config=config/jest_config.json;"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.1.7",
@@ -28,6 +30,7 @@
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
+    "jest": "^23.1.0",
     "redux-devtools": "^3.4.0"
   }
 }

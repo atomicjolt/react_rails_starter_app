@@ -6,26 +6,25 @@
   "license": "MIT",
   "homepage": "https://github.com/atomicjolt/react_client_starter_app",
   "scripts": {
-    "postinstall": "cd ./client && yarn",
     "test": "./tests.sh",
-    "test_debug": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; node debug ./node_modules/jest/bin/jest --runInBand --config=config/jest_config.json; cd ..; cd ..; done",
+    "test_debug": "./tests_debug.sh",
     "watch": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; yarn watch; cd ..; cd ..; done",
-    "hot": "node ./client/node_modules/atomic-reactor/webpack.hot.js",
-    "hot_pack": "node ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack",
-    "hot_lint": "node ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack --lint",
-    "hot_debug": "node --nolazy --inspect-brk=9229 ./client/node_modules/atomic-reactor/webpack.hot.js",
-    "hot_pack_debug": "node --nolazy --inspect-brk=9229 ./client/node_modules/atomic-reactor/webpack.hot.js --hotPack",
-    "live": "node ./client/node_modules/atomic-reactor/server.js",
-    "build_dev": "node ./client/node_modules/atomic-reactor/build.js",
-    "build_dev_pack": "node ./client/node_modules/atomic-reactor/build.js --onlyPack",
-    "build": "node ./client/node_modules/atomic-reactor/build.js --release",
-    "build_pack": "node ./client/node_modules/atomic-reactor/build.js --release --onlyPack",
-    "ball": "node ./client/node_modules/atomic-reactor/build.js --release && ./client/node_modules/s3-website/s3-website.js create",
-    "release": "node ./client/node_modules/atomic-reactor/build.js --release && ./client/node_modules/s3-website/s3-website.js deploy",
+    "hot": "atomic-webpack-hot --configDir=client/config",
+    "hot_pack": "atomic-webpack-hot --hotPack --configDir=client/config",
+    "hot_lint": "atomic-webpack-hot --hotPack --lint --configDir=client/config",
+    "hot_debug": "node --nolazy --inspect-brk=9229 ./node_modules/atomic-reactor/webpack.hot.js --configDir=client/config",
+    "hot_pack_debug": "node --nolazy --inspect-brk=9229 ./node_modules/atomic-reactor/webpack.hot.js --hotPack --configDir=client/config",
+    "live": "atomic-webpack-server --configDir=client/config",
+    "build_dev": "atomic-webpack-build --configDir=client/config",
+    "build_dev_pack": "atomic-webpack-build --onlyPack --configDir=client/config",
+    "build": "atomic-webpack-build --release --configDir=client/config",
+    "build_pack": "atomic-webpack-build --release --onlyPack --configDir=client/config",
+    "ball": "atomic-webpack-build --release --configDir=client/config && ./node_modules/s3-website/s3-website.js create",
+    "release": "atomic-webpack-build --release --configDir=client/config && ./node_modules/s3-website/s3-website.js deploy",
     "lint": "cd ./client && eslint js",
     "nuke": "rm -rf node_modules && cd ./client && yarn nuke",
-    "inspect_reactor": "\"${EDITOR:-vi}\" ./client/node_modules/atomic-reactor",
-    "inspect_fuel": "\"${EDITOR:-vi}\" ./client/apps/hello_world/node_modules/atomic-fuel"
+    "inspect_reactor": "\"${EDITOR:-vi}\" ./node_modules/atomic-reactor",
+    "inspect_fuel": "\"${EDITOR:-vi}\" ./node_modules/atomic-fuel"
   },
   "repository": {
     "type": "git",
@@ -36,5 +35,10 @@
   ],
   "dependencies": {
     "del": "^3.0.0"
-  }
+  },
+  "devDependencies": {
+    "atomic-reactor": "^2.0.2"
+  },
+  "private": true,
+  "workspaces": ["client", "client/apps/*"]
 }
