@@ -25,6 +25,7 @@
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
+    "react-hot-loader": "^4.3.4",
     "react-proxy-loader": "^0.3.5",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2"

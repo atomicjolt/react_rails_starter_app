@@ -8,5 +8,12 @@ const middleware = [API];
 // make the modifications in this file by extending the configureStore
 // or copy pasting the code into this file.
 export default function(initialState) {
-  return configureStore(initialState, rootReducer, middleware);
+  const store = configureStore(initialState, rootReducer, middleware);
+  if (module.hot) {
+    module.hot.accept('../reducers', () => {
+      const nextRootReducer = require("../reducers/index").default;
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+  return store;
 }
