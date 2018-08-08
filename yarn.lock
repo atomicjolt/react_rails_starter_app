@@ -540,9 +540,9 @@ atomic-reactor@^1.1.9:
     webpack-dev-middleware "^1.10.2"
     webpack-hot-middleware "^2.18.0"
 
-atomic-reactor@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/atomic-reactor/-/atomic-reactor-2.0.2.tgz#65a39ed46c07d803f60e066fae1dbf56aed6f18b"
+atomic-reactor@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/atomic-reactor/-/atomic-reactor-3.0.0.tgz#dc763751efabde6b75a0fd596b4d1290b3ee3a8d"
   dependencies:
     assets-webpack-plugin "^3.5.1"
     autoprefixer "^7.1.1"
@@ -5603,9 +5603,9 @@ lodash@4.17.10, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, 
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
-lodash@4.17.4:
-  version "4.17.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+lodash@4.17.5:
+  version "4.17.5"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
 lodash@~2.4.1:
   version "2.4.2"
@@ -7133,6 +7133,17 @@ react-dom@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-hot-loader@^4.3.4:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.3.4.tgz#4f9bdd55bb20d77a6ae8931fa1c187e5f0ce6279"
+  dependencies:
+    fast-levenshtein "^2.0.6"
+    global "^4.3.0"
+    hoist-non-react-statics "^2.5.0"
+    prop-types "^15.6.1"
+    react-lifecycles-compat "^3.0.4"
+    shallowequal "^1.0.2"
+
 react-hot-loader@next:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.0.0.tgz#3452fa9bc0d0ba9dfc5b0ccfa25101ca8dbd2de2"
@@ -7154,6 +7165,10 @@ react-json-tree@^0.11.0:
     babel-runtime "^6.6.1"
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
+
+react-lifecycles-compat@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
 react-proxy-loader@^0.3.5:
   version "0.3.5"

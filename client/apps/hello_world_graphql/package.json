@@ -20,11 +20,12 @@
     "graphql": "^0.12.3",
     "graphql-tag": "^2.5.0",
     "history": "^4.7.2",
-    "lodash": "4.17.4",
+    "lodash": "4.17.5",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
+    "react-hot-loader": "^4.3.4",
     "react-proxy-loader": "^0.3.5",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2"

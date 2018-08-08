@@ -9,9 +9,10 @@
     "test": "./tests.sh",
     "test_debug": "./tests_debug.sh",
     "watch": "cd ./client && for dir in apps/*; do cd \"$dir\" || continue; yarn watch; cd ..; cd ..; done",
-    "hot": "atomic-webpack-hot --hotPack --configDir=client/config",
-    "hot_pack": "atomic-webpack-hot --hotPack --configDir=client/config",
-    "hot_lint": "atomic-webpack-hot --hotPack --lint --configDir=client/config",
+    "hot": "atomic-webpack-dev --configDir=client/config --hot --hotPack",
+    "dev": "atomic-webpack-dev --configDir=client/config --hotPack",
+    "hot_pack": "atomic-webpack-dev --hotPack --configDir=client/config",
+    "hot_lint": "atomic-webpack-dev --hotPack --lint --configDir=client/config",
     "hot_debug": "node --nolazy --inspect-brk=9229 ./node_modules/atomic-reactor/webpack.hot.js --configDir=client/config",
     "hot_pack_debug": "node --nolazy --inspect-brk=9229 ./node_modules/atomic-reactor/webpack.hot.js --hotPack --configDir=client/config",
     "live": "atomic-webpack-server --configDir=client/config",
@@ -37,7 +38,7 @@
     "del": "^3.0.0"
   },
   "devDependencies": {
-    "atomic-reactor": "^2.0.2"
+    "atomic-reactor": "^3.0.0"
   },
   "private": true,
   "workspaces": ["client", "client/apps/*"]
