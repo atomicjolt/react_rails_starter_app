@@ -3,4 +3,4 @@
 # Exit if any subcommand fails
 set -e
 
-bundle exec rake
+bundle exec rspec
