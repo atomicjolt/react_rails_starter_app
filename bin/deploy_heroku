@@ -12,9 +12,10 @@ function finish {
 }
 trap finish EXIT
 
-RAILS_ENV=production rake assets:precompile
+RAILS_ENV=production bundle exec rake assets:precompile
 
 git add -f public/assets
+git add -f config/assets
 
 rsync `readlink config/secrets.yml` config/secrets.yml
 git add -f config/secrets.yml
