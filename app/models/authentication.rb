@@ -27,7 +27,6 @@ class Authentication < ApplicationRecord
       username: info["nickname"],
       provider: auth["provider"],
       provider_url: provider_url,
-      json_response: auth.to_json,
     }
     if credentials = auth["credentials"]
       attributes[:token] = credentials["token"]
