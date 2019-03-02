@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181127204956) do
+ActiveRecord::Schema.define(version: 20190219201006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(version: 20181127204956) do
     t.datetime "updated_at"
     t.string "context_id"
     t.index ["context_id"], name: "index_permissions_on_context_id"
-    t.index ["role_id", "user_id", "context_id"], name: "index_permissions_on_role_id_and_user_id_and_context_id"
-    t.index ["role_id", "user_id"], name: "index_permissions_on_role_id_and_user_id"
+    t.index ["role_id", "user_id", "context_id"], name: "index_permissions_on_role_id_and_user_id_and_context_id", unique: true
+    t.index ["role_id", "user_id"], name: "index_permissions_on_role_id_and_user_id", unique: true, where: "(context_id IS NULL)"
   end
 
   create_table "roles", force: :cascade do |t|
