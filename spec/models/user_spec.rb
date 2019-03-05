@@ -71,7 +71,7 @@ describe User, type: :model do
 
   describe "password validations" do
     it "should require a password" do
-      user = FactoryBot.build(:user, @attr.merge(password: "", password_confirmation: ""))
+      user = User.new(@attr.merge(password: "", password_confirmation: ""))
       expect(user).to be_invalid
     end
 
