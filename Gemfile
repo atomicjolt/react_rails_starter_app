@@ -69,6 +69,10 @@ group :development do
   gem "web-console"
 end
 
+group :linter do
+  gem "rubocop"
+end
+
 group :development, :test do
   gem "byebug", platform: :mri
   gem "dotenv-rails"
@@ -76,7 +80,6 @@ group :development, :test do
   gem "faker"
   gem "guard-rspec", require: false
   gem "rspec-rails"
-  gem "rubocop"
 end
 
 group :test do
