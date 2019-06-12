@@ -70,6 +70,9 @@ group :development do
 end
 
 group :linter do
+  gem "pronto"
+  gem "pronto-eslint_npm", require: false
+  gem "pronto-rubocop", require: false
   gem "rubocop"
 end
 
