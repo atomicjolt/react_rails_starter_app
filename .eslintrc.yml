@@ -1,7 +1,4 @@
 ---
-ecmaFeatures:
-  jsx: true
-  modules: true
 env:
   browser: true
   es6: true
@@ -23,7 +20,7 @@ globals:
   jasmine: false
   module: false
   jest: false
-  __DEV__: false
+  require: false
 rules:
   linebreak-style:
     - error

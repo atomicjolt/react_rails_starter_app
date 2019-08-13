@@ -65,3 +65,9 @@ rerun.txt
 
 # Becasue ben is weird
 /.idea/
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

@@ -1,11 +1,7 @@
 <% content_for :head do -%>
-  <%= webpack_styles_tag "hello_world", "hello_world" %>
+  <%= stylesheet_pack_tag "hello_world" %>
 <% end -%>
 
 <%= render "shared/default_client_settings" %>
-<%= webpack_manifest_script("hello_world") %>
 <div id="main-app"></div>
-
-<%= webpack_bundle_tag "hello_world", "hello_world_manifest" %>
-<%= webpack_bundle_tag "hello_world", "hello_world_vendor" %>
-<%= webpack_bundle_tag "hello_world", "hello_world" %>
+<%= javascript_packs_with_chunks_tag "hello_world", "data-turbolinks-track": "reload" %>
