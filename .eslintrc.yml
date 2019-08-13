@@ -23,6 +23,7 @@ globals:
   jasmine: false
   module: false
   jest: false
+  require: false
 rules:
   linebreak-style:
     - error
