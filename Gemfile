@@ -43,6 +43,9 @@ gem "rack-cors", require: "rack/cors"
 # Paging
 gem "will_paginate"
 
+# Javascript
+gem "webpacker"
+
 group :development do
   # UI
   gem "autoprefixer-rails"
