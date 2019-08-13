@@ -9,7 +9,8 @@
     "test": "jest --config package.json",
     "test_debug": "node inspect jest --runInBand --config=config/jest_config.json || SUCCESS=false",
     "hot": "./bin/webpack-dev-server",
-    "lint": "eslint js",
+    "lint": "eslint client",
+    "lint_fix": "eslint client --fix",
     "nuke": "rm -rf node_modules",
     "inspect_fuel": "\"${EDITOR:-vi}\" ./node_modules/atomic-fuel"
   },
@@ -71,6 +72,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
     "babel-preset-es2015": "^6.24.1",
     "enzyme": "^3.3.0",
