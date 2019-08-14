@@ -11,7 +11,10 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "5.1.7"
+gem "rails", "5.2.3"
+
+# Improve boot time
+gem 'bootsnap', require: false
 
 # Database
 gem "pg"
