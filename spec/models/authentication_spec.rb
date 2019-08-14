@@ -1,7 +1,12 @@
-require "spec_helper"
+require "rails_helper"
 
 describe Authentication, type: :model do
+  before do
+    @user = FactoryBot.create(:user)
+  end
+
   it { should belong_to :user }
+
   it "Requires the provider" do
     authentication = FactoryBot.build(:authentication, provider: nil)
     expect(authentication.save).to eq(false)
@@ -17,20 +22,19 @@ describe Authentication, type: :model do
     it "is false for duplicate provider" do
       provider = "asdf1234"
       uid = "1234aoeu"
-      user_id = 3
       provider_url = "example.com"
       create(
         :authentication,
         provider: provider,
         uid: uid,
-        user_id: user_id,
+        user: @user,
         provider_url: provider_url,
       )
       authentication = build(
         :authentication,
         provider: provider,
         uid: uid,
-        user_id: user_id,
+        user: @user,
         provider_url: provider_url,
       )
       expect(authentication.valid?(provider)).to be false
@@ -46,7 +50,7 @@ describe Authentication, type: :model do
   describe "for_auth" do
     it "finds an authentication given an auth object from omniauth" do
       auth = get_canvas_auth
-      attributes = Authentication.authentication_attrs_from_auth(auth)
+      attributes = Authentication.authentication_attrs_from_auth(auth).merge(user_id: @user.id)
       Authentication.create!(attributes)
       authentication = Authentication.for_auth(auth)
       expect(authentication.provider_url).to eq auth["info"]["url"]
@@ -68,10 +72,10 @@ describe Authentication, type: :model do
       auth2 = get_canvas_auth(canvas2)
 
       attributes1 = Authentication.authentication_attrs_from_auth(auth1)
-      Authentication.create!(attributes1)
+      @user.authentications.create!(attributes1)
 
       attributes2 = Authentication.authentication_attrs_from_auth(auth2)
-      Authentication.create!(attributes2)
+      @user.authentications.create!(attributes2)
 
       authentication1 = Authentication.for_auth(auth1)
       authentication2 = Authentication.for_auth(auth2)
