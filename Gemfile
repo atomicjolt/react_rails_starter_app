@@ -14,7 +14,7 @@ end
 gem "rails", "5.2.3"
 
 # Improve boot time
-gem 'bootsnap', require: false
+gem "bootsnap", require: false
 
 # Database
 gem "pg"
