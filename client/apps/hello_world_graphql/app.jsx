@@ -11,6 +11,7 @@ import { withClientState } from 'apollo-link-state';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { Router } from 'react-router';
 import { Route } from 'react-router-dom';
+import { Jwt } from 'atomic-fuel/libs/loaders/jwt';
 import settings from './settings';
 
 import appHistory from './history';
@@ -20,6 +21,9 @@ import './styles/styles';
 
 // Polyfill es6 promises for IE
 es6Promise.polyfill();
+
+const jwt = new Jwt(window.DEFAULT_JWT, window.DEFAULT_SETTINGS.api_url);
+jwt.enableRefresh();
 
 class Root extends React.PureComponent {
   static propTypes = {
@@ -58,7 +62,7 @@ if (!_.isEmpty(settings.api_url)) {
   const authenticationLink = new ApolloLink((operation, forward) => {
     operation.setContext({
       headers: {
-        authorization: `Bearer ${window.DEFAULT_JWT}`
+        authorization: `Bearer ${jwt.currentJwt}`
       }
     });
     return forward(operation);
