@@ -1,34 +1,34 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+
 import assets from '../libs/assets';
 
-export class Home extends React.Component {
-  static propTypes = {
-    data: PropTypes.shape({
-      welcomeMessage: PropTypes.string,
-    })
+export const GET_WELCOME = gql`
+  query {
+    welcomeMessage @client
   }
+`;
 
-  render() {
-    const img = assets('./images/atomicjolt.jpg');
+export default function home() {
+  const { loading, error, data } = useQuery(GET_WELCOME);
 
-    return (
-      <div>
-        <img src={img} alt="Atomic Jolt Logo" />
-        <p>{this.props.data.welcomeMessage} by <a href="http://www.atomicjolt.com">Atomic Jolt</a></p>
-      </div>
-    );
-  }
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  const img = assets('./images/atomicjolt.jpg');
+
+  return (
+    <div>
+      <img src={img} alt="Atomic Jolt Logo" />
+      <p>
+        {data.welcomeMessage}
+      </p>
+      <p>
+        by
+        <a href="http://www.atomicjolt.com">Atomic Jolt</a>
+      </p>
+    </div>
+  );
+
 }
-
-export default compose(
-  graphql(
-    gql`
-      query {
-        welcomeMessage @client
-      }
-    `
-  )
-)(Home);
