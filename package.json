@@ -7,7 +7,8 @@
   "homepage": "https://github.com/atomicjolt/react_rails_starter_app",
   "scripts": {
     "test": "jest --config package.json",
-    "test_debug": "node inspect jest --runInBand --config=config/jest_config.json || SUCCESS=false",
+    "test_update": "jest -u --config package.json",
+    "test_debug": "node inspect jest --runInBand --config package.json || SUCCESS=false",
     "hot": "./bin/webpack-dev-server",
     "lint": "eslint client",
     "lint_fix": "eslint client --fix",
@@ -19,8 +20,8 @@
     "url": "https://github.com/atomicjolt/react_rails_starter_app"
   },
   "keywords": [
-    "react",
-    "rails",
+    "React",
+    "Rails",
     "Atomic Jolt"
   ],
   "jest": {
