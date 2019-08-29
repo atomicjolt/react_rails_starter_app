@@ -1,7 +1,7 @@
 <% content_for :head do -%>
-  <%= stylesheet_pack_tag "hello_world" %>
+  <%= stylesheet_pack_tag "hello_world_graphql" %>
 <% end -%>
 
 <%= render "shared/default_client_settings" %>
 <div id="main-app"></div>
-<%= javascript_packs_with_chunks_tag "hello_world", "data-turbolinks-track": "reload" %>
+<%= javascript_packs_with_chunks_tag "hello_world_graphql", "data-turbolinks-track": "reload" %>
