@@ -1716,10 +1716,10 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-atomic-fuel@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/atomic-fuel/-/atomic-fuel-4.0.0.tgz#4f7fe37afc8f8c735fa5308b30c2a9610dc0d334"
-  integrity sha512-2hOSeayQxVsQhK8NJnC5mbVcMtjPaq23XnC06dKohParzgf7+IIKBVRJX0dm6KfD2/5CX0AOKvM2PpX51fpKxg==
+atomic-fuel@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/atomic-fuel/-/atomic-fuel-4.0.1.tgz#432c49adbb42ab2ea472d6f01b4f28882c957ada"
+  integrity sha512-8Zkjju7TGjKelzxVQqw6FOqBA/sV3lzI0W1hnrN+xqNCHbT65UkOXFiXi1pVgIHGSBif829/0kj/7vJbL6Dukw==
 
 autoprefixer@^9.6.1:
   version "9.6.1"
