@@ -63,7 +63,6 @@ rerun.txt
 /coverage/
 /spec/tmp
 
-# Becasue ben is weird
 /.idea/
 /public/packs
 /public/packs-test
@@ -71,3 +70,4 @@ rerun.txt
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+.vscode
