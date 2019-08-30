@@ -33,7 +33,7 @@ describe('home', () => {
 
   it('renders the home component', async() => {
     let testRenderer;
-    act(() => {
+    await act(async() => {
       testRenderer = TestRenderer.create(
         <MockedProvider mocks={mocks} addTypename={false}>
           <Home />
