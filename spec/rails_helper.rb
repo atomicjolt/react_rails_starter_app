@@ -59,6 +59,9 @@ RSpec.configure do |config|
     ensure
       DatabaseCleaner.clean
     end
+
+    # compile js once before tests run
+    Webpacker.compile
   end
 
   config.append_after(:each) do
