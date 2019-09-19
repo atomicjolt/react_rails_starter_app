@@ -48,6 +48,8 @@ default: &default
     - .gif
     - .jpeg
     - .jpg
+    - .gql
+    - .graphql
 
 development:
   <<: *default

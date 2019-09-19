@@ -33,6 +33,10 @@
       "node_modules",
       "<rootDir>/client"
     ],
+    "transform": {
+      "\\.(gql|graphql)$": "jest-transform-graphql",
+      ".*": "babel-jest"
+    },
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "./client/testing/__mocks__/file_mock.js",
       "\\.(sass|scss|css|less)$": "./client/testing/__mocks__/style_mock.js"
@@ -100,6 +104,7 @@
     "eslint-plugin-react-hooks": "^2.0.1",
     "eventsource-polyfill": "^0.9.6",
     "jest": "^24.9.0",
+    "jest-transform-graphql": "^2.1.0",
     "nock": "^11.3.4",
     "react-test-renderer": "^16.9.0",
     "wait-for-expect": "^2.0.0",
