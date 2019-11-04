@@ -52,6 +52,9 @@ gem "webpacker"
 # Assets
 gem "sassc-rails"
 
+# This is only here because we are on ruby 2.4. When we upgrade ruby we can remove this
+gem "sprockets", "~>3.7.2"
+
 group :development do
   # UI
   gem "autoprefixer-rails"
