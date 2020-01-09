@@ -1,3 +1,4 @@
-ruby 2.4.6
-nodejs 8.16.0
+ruby 2.5.7
+nodejs 10.18.0
 postgres 9.5.19
+pg_config 9.5.19
