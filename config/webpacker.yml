@@ -61,9 +61,9 @@ development:
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
     https: false
-    host: localhost
-    port: 3035
-    public: localhost:3035
+    # This path is setup in .env and requires that an entry be added to nginx
+    # usually via bin/setup. NOTE be sure to update this value in each project
+    public: rsa-assets.atomicjolt.xyz
     hmr: false
     # Inline should be set to true if using HMR
     inline: true
