@@ -64,9 +64,12 @@ development:
     # This path is setup in .env and requires that an entry be added to nginx
     # usually via bin/setup. NOTE be sure to update this value in each project
     public: rsa-assets.atomicjolt.xyz
+    # hot module reload requires additional setup in each client app
     hmr: false
-    # Inline should be set to true if using HMR
-    inline: true
+    # 'inline' causes the brower to refresh when changes occur. This does not
+    # work in an lti app, since it will refresh the iframe and fail to load the
+    # app again. It should be set to true if using HMR
+    inline: false
     overlay: true
     compress: true
     disable_host_check: true
