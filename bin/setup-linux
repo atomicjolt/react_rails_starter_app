@@ -92,7 +92,7 @@ then
   IFS=, SUBDOMAINS=($APP_SUBDOMAINS)
   for SUBDOMAIN in "${SUBDOMAINS[@]}"; do
 
-    cat >> "/nginx/sites-enabled/${APP_SUBDOMAIN}.conf" <<-EOFSINGLE
+    cat >> "/nginx/sites-available/${APP_SUBDOMAIN}.conf" <<-EOFSINGLE
 
 server {
 
