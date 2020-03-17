@@ -16,7 +16,7 @@ FactoryBot.define do
   end
 
   sequence :password do |n|
-    "password_#{n}"
+    Devise.friendly_token(20)
   end
 
   sequence :title do |n|

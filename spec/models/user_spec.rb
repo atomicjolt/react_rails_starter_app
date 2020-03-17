@@ -3,11 +3,12 @@ require "rails_helper"
 describe User, type: :model do
   before do
     @user = FactoryBot.create(:user)
+    password = Devise.friendly_token(20)
     @attr = {
       name: "Example User",
       email: "user@example.com",
-      password: "foobar888",
-      password_confirmation: "foobar888",
+      password: password,
+      password_confirmation: password,
     }
   end
 
@@ -95,6 +96,32 @@ describe User, type: :model do
 
     it "should set the encrypted password attribute" do
       expect(@user.encrypted_password).to be_present
+    end
+
+    # TODO: Remove spec after
+    # Legacy password verify related methods
+    # has been removed.
+    it "should convert from bcrypt to pbkdf2" do
+      encrypted_password = "$2a$10$xy03gIYDO8YchJXAPSkIpeLv0019GEzKz1nkcd3RstMTYIZUlii5O"
+      user = FactoryBot.create(
+        :user,
+        name: "Example User",
+        email: "user@example.com",
+        password: nil,
+        encrypted_password: encrypted_password,
+      )
+
+      expect(user.encrypted_password).to eq(encrypted_password)
+      expect(user.password_salt).to eq(nil)
+
+      user.update(
+        password: @attr[:password],
+        password_confirmation: @attr[:password_confirmation],
+      )
+
+      expect(user.encrypted_password).to_not eq(encrypted_password)
+      expect(user.encrypted_password.start_with?("$2a$10$")).to eq(false)
+      expect(user.password_salt).to be_present
     end
   end
 
