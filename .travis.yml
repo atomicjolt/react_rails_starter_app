@@ -33,6 +33,7 @@ before_install:
   - cp config/secrets.example.yml config/secrets.yml
   - cp config/ci.database.yml config/database.yml
   - cp .env.example .env
+  - gem install bundler:1.17.3
   - nvm install 8.16.0
   - nvm use 8.16.0
   - npm install -g yarn
