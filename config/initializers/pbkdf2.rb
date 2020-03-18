@@ -4,7 +4,10 @@ module Devise
   module Encryptable
     module Encryptors
       class Pbkdf2 < Base
-        def self.digest(password, stretches, salt, _pepper)
+        def self.digest(password, stretches, salt, pepper)
+          if pepper.present?
+            password = "#{password}#{pepper}"
+          end
           pbkdf2 = PBKDF2.new do |p|
             p.password = password
             p.salt = salt
