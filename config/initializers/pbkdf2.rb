@@ -1,5 +1,3 @@
-require "pbkdf2"
-
 module Devise
   module Encryptable
     module Encryptors
@@ -8,13 +6,16 @@ module Devise
           if pepper.present?
             password = "#{password}#{pepper}"
           end
-          pbkdf2 = PBKDF2.new do |p|
-            p.password = password
-            p.salt = salt
-            p.iterations = stretches
-            p.hash_function = OpenSSL::Digest::SHA512
-          end
-          pbkdf2.hex_string
+          digest = OpenSSL::Digest::SHA512.new
+          keylen = digest.digest_length
+          pbkdf2 = OpenSSL::KDF.pbkdf2_hmac(
+            password,
+            salt: salt,
+            iterations: stretches,
+            length: keylen,
+            hash: digest,
+          )
+          ::Digest::SHA512.hexdigest(pbkdf2)
         end
       end
     end

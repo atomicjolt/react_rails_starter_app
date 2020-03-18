@@ -24,7 +24,6 @@ gem "attr_encrypted"
 gem "cancancan"
 gem "devise"
 gem "devise-encryptable"
-gem "pbkdf2-ruby"
 gem "jwt", "~> 1.5.0" # json web token
 gem "oauth", "~> 0.5.0"
 gem "omniauth"
