@@ -17,6 +17,10 @@ module Devise
           )
           ::Digest::SHA512.hexdigest(pbkdf2)
         end
+
+        def self.salt(stretches)
+          Devise.friendly_token(64)
+        end
       end
     end
   end
