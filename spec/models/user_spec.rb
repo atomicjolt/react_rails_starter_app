@@ -121,6 +121,7 @@ describe User, type: :model do
 
       expect(user.encrypted_password).to_not eq(encrypted_password)
       expect(user.encrypted_password.start_with?("$2a$10$")).to eq(false)
+      expect(user.encrypted_password.start_with?("$pbkdf2_hmac$")).to eq(true)
       expect(user.password_salt).to be_present
     end
   end

@@ -15,11 +15,24 @@ module Devise
             length: keylen,
             hash: digest,
           )
-          ::Digest::SHA512.hexdigest(pbkdf2)
+          hexdigest = ::Digest::SHA512.hexdigest(pbkdf2)
+          "$pbkdf2_hmac$#{stretches}$#{hexdigest}"
         end
 
         def self.salt(stretches)
           Devise.friendly_token(64)
+        end
+
+        def self.compare(encrypted_password, password, _stretches, salt, pepper)
+          _version, iterations, _password_hash = self.split_hash(encrypted_password)
+          Devise.secure_compare(encrypted_password, digest(password, iterations, salt, pepper))
+        end
+
+        private
+
+        def self.split_hash(encrypted_password)
+          _, version, iterations, password_hash = encrypted_password.split('$')
+          return version.to_str, iterations.to_i, password_hash.to_str
         end
       end
     end
