@@ -19,21 +19,20 @@ module Devise
           "$pbkdf2_hmac$#{stretches}$#{hexdigest}"
         end
 
-        def self.salt(stretches)
+        def self.salt(_stretches)
           Devise.friendly_token(64)
         end
 
         def self.compare(encrypted_password, password, _stretches, salt, pepper)
-          _version, iterations, _password_hash = self.split_hash(encrypted_password)
+          _version, iterations, _password_hash = split_hash(encrypted_password)
           Devise.secure_compare(encrypted_password, digest(password, iterations, salt, pepper))
         end
 
-        private
-
         def self.split_hash(encrypted_password)
-          _, version, iterations, password_hash = encrypted_password.split('$')
-          return version.to_str, iterations.to_i, password_hash.to_str
+          _, version, iterations, password_hash = encrypted_password.split("$")
+          [version.to_str, iterations.to_i, password_hash.to_str]
         end
+        private_class_method :split_hash
       end
     end
   end
