@@ -16,7 +16,7 @@ module Devise
             hash: digest,
           )
           hexdigest = ::Digest::SHA512.hexdigest(pbkdf2)
-          "$pbkdf2_hmac$#{stretches}$#{hexdigest}"
+          "$PBKDF2-HMAC-SHA512$#{stretches}$#{hexdigest}"
         end
 
         def self.salt(_stretches)
