@@ -2,7 +2,7 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :confirmable,
+  devise :database_authenticatable, :registerable, :confirmable, :encryptable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   has_many :authentications, dependent: :destroy, inverse_of: :user
@@ -153,4 +153,44 @@ class User < ApplicationRecord
     sortable_name[0]
   end
 
+  # TODO: Remove once every user account has converted
+  # from bcrypt to the new hashing algorithm: pbkdf2 with sha512
+  # User.where(password_salt: nil).count
+  # User.where("encrypted_password ILIKE '$2a$10$%'").count
+  # Inspired by https://stackoverflow.com/a/17844479/1477165
+  ####################################################
+  #
+  # START Legacy password verify related methods
+  #
+  alias :devise_valid_password? :valid_password?
+
+  def valid_password?(password)
+    if has_legacy_password?
+      return false unless valid_legacy_password?(password)
+      convert_legacy_password!(password)
+      true
+    else
+      super(password)
+    end
+  end
+
+  def has_legacy_password?
+    password_salt.blank?
+  end
+  protected :has_legacy_password?
+
+  def convert_legacy_password!(password)
+    self.password = password
+    save
+  end
+  protected :convert_legacy_password!
+
+  def valid_legacy_password?(password)
+    Devise::Encryptor.compare(self.class, encrypted_password, password)
+  end
+  protected :valid_legacy_password?
+  #
+  # END Legacy password verify related methods
+  #
+  ####################################################
 end
