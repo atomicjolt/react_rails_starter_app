@@ -21,10 +21,9 @@ bin/bootstrap
 # Create config file for the app / site.
 cat > "/usr/local/etc/nginx/servers/${APP_SUBDOMAIN}.conf" <<-EOF
 server {
-    listen *:443;
+    listen *:443 ssl;
     server_name ${ASSETS_SUBDOMAIN}.atomicjolt.xyz;
 
-    ssl on;
     ssl_session_cache         builtin:1000  shared:SSL:10m;
     ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers               HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
@@ -57,11 +56,16 @@ server {
 }
 
 server {
+    listen *:80;
+    server_name ${ASSETS_SUBDOMAIN}.atomicjolt.xyz;
+    return 301 https://${ASSETS_SUBDOMAIN}.atomicjolt.xyz\$request_uri;
+}
 
-    listen *:443;
+server {
+
+    listen *:443 ssl;
     server_name ${APP_SUBDOMAIN}.atomicjolt.xyz;
 
-    ssl on;
     ssl_session_cache         builtin:1000  shared:SSL:10m;
     ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers               HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
@@ -82,6 +86,12 @@ server {
 
     }
 }
+server {
+    listen *:80;
+    server_name ${APP_SUBDOMAIN}.atomicjolt.xyz;
+    return 301 https://${APP_SUBDOMAIN}.atomicjolt.xyz\$request_uri;
+}
+
 EOF
 
 #Add app subdomains
@@ -94,10 +104,9 @@ then
 
 server {
 
-  listen *:443;
+  listen *:443 ssl;
   server_name ${SUBDOMAIN}.atomicjolt.xyz;
 
-  ssl on;
   ssl_session_cache         builtin:1000  shared:SSL:10m;
   ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
   ssl_ciphers               HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
@@ -119,6 +128,13 @@ server {
 
   }
 }
+
+server {
+    listen *:80;
+    server_name ${SUBDOMAIN}.atomicjolt.xyz;
+    return 301 https://${SUBDOMAIN}.atomicjolt.xyz\$request_uri;
+}
+
 EOFSINGLE
   done
 fi
