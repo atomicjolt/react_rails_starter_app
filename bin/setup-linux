@@ -59,6 +59,12 @@ server {
 }
 
 server {
+    listen *:80;
+    server_name ${ASSETS_SUBDOMAIN}.atomicjolt.xyz;
+    return 301 https://${ASSETS_SUBDOMAIN}.atomicjolt.xyz\$request_uri;
+}
+
+server {
 
     listen *:443;
     server_name ${APP_SUBDOMAIN}.atomicjolt.xyz;
@@ -83,6 +89,12 @@ server {
       proxy_pass         http://127.0.0.1:${APP_PORT}/;
 
     }
+}
+
+server {
+    listen *:80;
+    server_name ${APP_SUBDOMAIN}.atomicjolt.xyz;
+    return 301 https://${APP_SUBDOMAIN}.atomicjolt.xyz\$request_uri;
 }
 EOF
 
@@ -120,6 +132,12 @@ server {
     proxy_pass         http://127.0.0.1:${APP_PORT}/;
 
   }
+}
+
+server {
+    listen *:80;
+    server_name ${SUBDOMAIN}.atomicjolt.xyz;
+    return 301 https://${SUBDOMAIN}.atomicjolt.xyz\$request_uri;
 }
 EOFSINGLE
   done
