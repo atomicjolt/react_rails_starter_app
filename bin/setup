@@ -56,6 +56,12 @@ server {
 }
 
 server {
+    listen *:80;
+    server_name ${ASSETS_SUBDOMAIN}.atomicjolt.xyz;
+    return 301 https://${ASSETS_SUBDOMAIN}.atomicjolt.xyz\$request_uri;
+}
+
+server {
 
     listen *:443 ssl;
     server_name ${APP_SUBDOMAIN}.atomicjolt.xyz;
@@ -80,6 +86,12 @@ server {
 
     }
 }
+server {
+    listen *:80;
+    server_name ${APP_SUBDOMAIN}.atomicjolt.xyz;
+    return 301 https://${APP_SUBDOMAIN}.atomicjolt.xyz\$request_uri;
+}
+
 EOF
 
 #Add app subdomains
@@ -116,6 +128,13 @@ server {
 
   }
 }
+
+server {
+    listen *:80;
+    server_name ${SUBDOMAIN}.atomicjolt.xyz;
+    return 301 https://${SUBDOMAIN}.atomicjolt.xyz\$request_uri;
+}
+
 EOFSINGLE
   done
 fi
