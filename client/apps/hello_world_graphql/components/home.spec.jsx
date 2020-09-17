@@ -10,6 +10,7 @@ const mocks = [
   {
     request: {
       query: GET_WELCOME,
+      variables: { name: 'World' },
     },
     result: {
       data: {
