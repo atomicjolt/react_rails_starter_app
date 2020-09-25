@@ -5,13 +5,17 @@ import { useQuery } from '@apollo/react-hooks';
 import assets from '../libs/assets';
 
 export const GET_WELCOME = gql`
-  query {
-    welcomeMessage @client
+  query getWelcome($name: String!) {
+    welcomeMessage(name: $name)
   }
 `;
 
 export default function home() {
-  const { loading, error, data } = useQuery(GET_WELCOME);
+  const { loading, error, data } = useQuery(GET_WELCOME, {
+    variables: {
+      name: 'World',
+    },
+  });
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
