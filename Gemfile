@@ -24,7 +24,7 @@ gem "attr_encrypted"
 gem "cancancan"
 gem "devise"
 gem "jwt", "~> 1.5.0" # json web token
-gem "oauth", "~> 0.5.0"
+gem "oauth", "~> 0.5.5"
 gem "omniauth"
 
 # Email
